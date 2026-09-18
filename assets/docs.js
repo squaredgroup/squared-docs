@@ -246,3 +246,86 @@ function hydrateSquaredIconlyUI(){
   });
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hydrateSquaredIconlyUI,{once:true});else hydrateSquaredIconlyUI();
+
+
+/* =========================================================
+   Squared Help Center v6.0 — editorial & responsive layer
+   ========================================================= */
+(()=>{
+  const topSearch=document.querySelector('.topbar [data-search-open]');
+  if(topSearch){
+    topSearch.classList.add('command-search');
+    if(window.SQIconly&&!topSearch.querySelector('.sq-iconly')){
+      topSearch.insertAdjacentHTML('afterbegin',SQIconly.icon('search','regular','sm'));
+    }
+  }
+
+  const article=document.querySelector('.article');
+  if(article){
+    const head=article.querySelector('.article-head');
+    const words=(article.innerText||'').trim().split(/\s+/).filter(Boolean).length;
+    const mins=Math.max(1,Math.round(words/210));
+    const path=location.pathname.toLowerCase();
+    let difficulty='Essentiel';
+    if(path.includes('development')||path.includes('security')||path.includes('velo')||path.includes('architecture'))difficulty='Avancé';
+    else if(path.includes('wix/')||path.includes('workspace/')||path.includes('design-system/'))difficulty='Intermédiaire';
+
+    if(head&&!head.querySelector('.v6-article-stats')){
+      const row=document.createElement('div');
+      row.className='v6-article-stats';
+      row.innerHTML=
+        '<span>'+(window.SQIconly?SQIconly.icon('time','regular','xs'):'')+mins+' min de lecture</span>'+
+        '<span>·</span><span>'+difficulty+'</span>'+
+        '<span>·</span><span>Mis à jour le 18 sept. 2026</span>';
+      const meta=head.querySelector('.article-meta');
+      meta?meta.insertAdjacentElement('afterend',row):head.appendChild(row);
+    }
+
+    const blocks=[...article.querySelectorAll('.doc-block[id]')];
+    if(blocks.length>1&&!document.querySelector('.v6-mobile-toc')){
+      const wrap=document.createElement('div');
+      wrap.className='v6-mobile-toc';
+      const select=document.createElement('select');
+      select.setAttribute('aria-label','Sur cette page');
+      select.innerHTML='<option value="">Sur cette page…</option>'+blocks.map(b=>'<option value="#'+b.id+'">'+(b.querySelector('h2')?.textContent||b.id)+'</option>').join('');
+      select.addEventListener('change',()=>{if(select.value)document.querySelector(select.value)?.scrollIntoView({behavior:'smooth',block:'start'})});
+      wrap.appendChild(select);
+      article.insertBefore(wrap,article.firstElementChild?.nextSibling||article.firstChild);
+    }
+  }
+
+  document.querySelectorAll('.callout').forEach(el=>{
+    if(el.querySelector('.v6-callout-icon')||!window.SQIconly)return;
+    const icon=document.createElement('span');
+    icon.className='v6-callout-icon';
+    let key='faq';
+    const text=(el.textContent||'').toLowerCase();
+    if(el.classList.contains('danger')||text.includes('sécurité')||text.includes('secret'))key='security';
+    else if(el.classList.contains('warning')||text.includes('attention'))key='incidents';
+    else if(text.includes('conseil')||text.includes('astuce'))key='start';
+    icon.innerHTML=SQIconly.icon(key,'outline','sm');
+    const target=el.querySelector('div')||el;
+    target.insertBefore(icon,target.firstChild);
+  });
+
+  if(window.SQIconly){
+    const observer=new MutationObserver(()=>{
+      document.querySelectorAll('.forum-empty:not([data-v6-empty])').forEach(el=>{
+        el.dataset.v6Empty='1';
+        if(el.querySelector('.sq-empty-icon'))return;
+        const icon=document.createElement('span');
+        icon.className='sq-empty-icon';
+        icon.innerHTML=SQIconly.icon('search','regular','lg');
+        el.prepend(icon);
+        el.classList.add('sq-empty-state');
+      });
+    });
+    observer.observe(document.body,{childList:true,subtree:true});
+    observer.takeRecords();
+    document.querySelectorAll('.forum-empty').forEach(el=>{
+      if(el.dataset.v6Empty)return;
+      el.dataset.v6Empty='1';el.classList.add('sq-empty-state');
+      const icon=document.createElement('span');icon.className='sq-empty-icon';icon.innerHTML=SQIconly.icon('search','regular','lg');el.prepend(icon);
+    });
+  }
+})();
