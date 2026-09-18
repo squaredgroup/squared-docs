@@ -112,3 +112,5 @@
 .hc-sub-icon{width:16px!important;min-width:16px!important}
 .hc-sub-icon .sq-iconly{width:13px!important;height:13px!important}
 .hc-nav-group{margin-bottom:10px}
+
+.hc-staff-item{display:none!important}.hc-staff-item.visible{display:block!important}
