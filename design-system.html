@@ -1,26 +1,5 @@
-<!doctype html><html lang="fr" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#F7F7F4"><meta name="robots" content="index,follow"><title>Design System — Squared Docs</title><meta name="description" content="Fondations visuelles et règles d’interface communes à la documentation et aux produits Squared : typographie, couleur, layout, composants, motion et accessibilité."><meta property="og:type" content="website"><meta property="og:title" content="Design System — Squared Docs"><meta property="og:description" content="Fondations visuelles et règles d’interface communes à la documentation et aux produits Squared : typographie, couleur, layout, composants, motion et accessibilité."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/docs.css"></head><body><div id="progress" class="progress"></div><div class="app">
-<aside class="sidebar" id="sidebar">
-  <a class="brand" href="index.html"><span class="brand-mark">S²</span><span class="brand-copy"><strong>SQUARED HELP</strong><span>Support · Docs · Community</span></span></a>
-  <button class="side-search" data-search-open><span>⌕</span><span>Rechercher</span><kbd>⌘K</kbd></button>
-  <nav>
-    <div class="nav-group"><div class="nav-title">Documentation</div>
-      <a class="nav-link " href="index.html"><span class="nav-ico">⌂</span>Accueil</a><a class="nav-link" href="support.html"><span class="nav-ico">SUP</span>Support</a><a class="nav-link" href="community.html"><span class="nav-ico">COM</span>Communauté</a>
-      <a class="nav-link " href="wix-studio.html"><span class="nav-ico">WX</span>Wix Studio</a>
-      <a class="nav-link " href="workspace.html"><span class="nav-ico">WS</span>Squared Workspace</a>
-      <a class="nav-link active" href="design-system.html"><span class="nav-ico">DS</span>Design System</a>
-    </div>
-    <div class="nav-group"><div class="nav-title">Engineering & Ops</div>
-      <a class="nav-link " href="process.html"><span class="nav-ico">OP</span>Process & Ops</a>
-      <a class="nav-link " href="development.html"><span class="nav-ico">&lt;/&gt;</span>Développement</a>
-      <a class="nav-link " href="security.html"><span class="nav-ico">SEC</span>Sécurité</a>
-    </div>
-    <div class="nav-group"><div class="nav-title">Communauté</div>
-      <a class="nav-link " href="changelog.html"><span class="nav-ico">↺</span>Changelog</a>
-      <a class="nav-link " href="community.html"><span class="nav-ico">?</span>Communauté</a>
-    </div>
-  </nav>
-  <div class="sidebar-foot"><strong>Squared Help Center · v3.0</strong>Light par défaut · Dark disponible<br>Documentation versionnée sur GitHub.</div>
-</aside><main class="main">
+<!doctype html><html lang="fr" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#F7F7F4"><meta name="robots" content="index,follow"><title>Design System — Squared Docs</title><meta name="description" content="Fondations visuelles et règles d’interface communes à la documentation et aux produits Squared : typographie, couleur, layout, composants, motion et accessibilité."><meta property="og:type" content="website"><meta property="og:title" content="Design System — Squared Docs"><meta property="og:description" content="Fondations visuelles et règles d’interface communes à la documentation et aux produits Squared : typographie, couleur, layout, composants, motion et accessibilité."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/docs.css"><link rel="stylesheet" href="assets/sidebar.css"></head><body><div id="progress" class="progress"></div><div class="app">
+<aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main">
 <header class="topbar"><button class="icon-btn mobile-menu" id="menuBtn" aria-label="Ouvrir le menu">☰</button><div class="crumbs"><a href="index.html">Squared Docs</a><span>›</span><strong>Design System</strong></div><div class="top-actions"><button class="btn hide-mobile" data-search-open>Rechercher <span>⌘K</span></button><a class="btn hide-mobile" href="community.html">Contribuer</a><button class="icon-btn" id="themeBtn" aria-label="Changer de thème">◐</button></div></header><div class="shell"><div class="article-layout"><article class="article"><header class="article-head"><div class="eyebrow">Design · Squared Docs</div><h1>Design System</h1><p>Fondations visuelles et règles d’interface communes à la documentation et aux produits Squared : typographie, couleur, layout, composants, motion et accessibilité.</p><div class="article-meta"><span class="pill live">Fondations</span><span class="pill">Mise à jour · 18.09.2026</span><span class="pill">Versionnée</span></div></header>
  <section class="doc-block" id="principles"><h2>Principes</h2><p>Le design Squared privilégie la clarté, la hiérarchie et la précision. Les interfaces doivent être immédiatement lisibles avant d’être décoratives.</p><ul><li>Une action principale clairement identifiable.</li><li>Des niveaux de texte cohérents et peu nombreux.</li><li>Des espacements réguliers plutôt que des ajustements locaux.</li><li>Un contraste suffisant dans les thèmes clair et sombre.</li></ul></section>
  <section class="doc-block" id="type"><h2>Typographie</h2><p>Space Grotesk est la police de référence de la documentation. Utiliser le poids et la taille pour créer la hiérarchie ; ne pas multiplier les styles arbitraires.</p><div class="code"><div class="code-head"><span>CSS</span><button data-copy="font-family: 'Space Grotesk', sans-serif;">Copier</button></div><pre>font-family: "Space Grotesk", sans-serif;</pre></div></section>
@@ -37,4 +16,4 @@
     </div>
     <div class="search-results" id="searchResults"></div>
   </div>
-</div><div class="toast" id="toast">Copié</div><script src="assets/docs.js"></script></body></html>
+</div><div class="toast" id="toast">Copié</div><script src="assets/sidebar.js"></script><script src="assets/docs.js"></script></body></html>
