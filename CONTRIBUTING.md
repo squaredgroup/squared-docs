@@ -65,3 +65,10 @@ Pour une nouvelle page :
 4. ajouter la nouvelle route une seule fois dans la configuration de `assets/sidebar.js`.
 
 Les ancres ou chapitres propres à une page doivent utiliser un sommaire local, pas la sidebar globale.
+
+
+## Icônes
+
+Toutes les icônes fonctionnelles du Help Center utilisent Iconly. Voir [ICON_SYSTEM.md](ICON_SYSTEM.md).
+
+Ne pas ajouter d’emoji, de sigle ou d’autre pack d’icônes dans l’interface.
