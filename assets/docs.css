@@ -551,3 +551,49 @@ html[data-theme="dark"] .icon-btn.danger:hover{
 @media(max-width:760px){
   .server-group-head{align-items:flex-start}
 }
+
+
+/* Squared Group extended module monitoring */
+.server-more{
+  margin-top:10px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:color-mix(in srgb,var(--panel) 96%,transparent);
+  overflow:hidden;
+}
+.server-more summary{
+  list-style:none;
+  cursor:pointer;
+  min-height:42px;
+  padding:0 13px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  font-size:9px;
+  font-weight:600;
+  color:var(--text);
+}
+.server-more summary::-webkit-details-marker{display:none}
+.server-more summary:after{
+  content:"+";
+  margin-left:auto;
+  color:var(--muted);
+  font-size:14px;
+  font-weight:400;
+}
+.server-more[open] summary{
+  border-bottom:1px solid var(--line);
+}
+.server-more[open] summary:after{content:"−"}
+.server-more summary span{
+  margin-left:auto;
+  margin-right:10px;
+  font-size:7.5px;
+  font-weight:500;
+  color:var(--muted);
+}
+.server-more .server-status-list{
+  border-top:0;
+  padding:0 13px;
+}
