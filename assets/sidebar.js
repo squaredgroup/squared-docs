@@ -19,7 +19,7 @@ const groups=[
 {id:'help',title:'Centre d’aide',open:true,items:[
  {href:'index.html',icon:'⌂',label:'Accueil'},
  {href:'support.html',icon:'SUP',label:'Support'},
- {href:'community.html',icon:'COM',label:'Communauté'},
+ {href:'forum.html',icon:'COM',label:'Forum'},
  {href:'changelog.html',icon:'NEW',label:'Nouveautés'}]},
 {id:'docs',title:'Documentation',open:true,items:[
  {href:'getting-started.html',icon:'GO',label:'Bien démarrer'},
