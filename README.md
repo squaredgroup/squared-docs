@@ -59,3 +59,25 @@ Chaque page contient uniquement :
 Puis charge `assets/sidebar.js`. Toute modification de la navigation globale doit être faite dans ce fichier unique.
 
 Les pages d'article utilisent leur propre sommaire local pour les sections internes ; la sidebar reste réservée à la navigation globale du Help Center.
+
+
+## Backend natif
+
+Le forum et le support utilisent un projet Supabase dédié : **Squared Help Center**.
+
+Fonctions couvertes :
+- authentification ;
+- profils ;
+- catégories ;
+- discussions ;
+- réponses ;
+- votes ;
+- réactions ;
+- favoris ;
+- notifications ;
+- signalements ;
+- support privé ;
+- rôles de modération ;
+- stockage d’avatars.
+
+Les règles d’accès sont protégées par RLS. GitHub n’est pas utilisé comme interface utilisateur du forum ou du support.
