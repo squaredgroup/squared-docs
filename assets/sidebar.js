@@ -97,6 +97,7 @@ if(!document.querySelector('link[rel="icon"]')){const icon=document.createElemen
 const groups=[
 {id:'help',title:'Centre d’aide',open:true,items:[
  {href:'index.html',icon:'home',label:'Accueil'},
+ {href:'search.html',icon:'search',label:'Recherche'},
  {href:'support.html',icon:'support',label:'Support'},
  {href:'forum.html',icon:'forum',label:'Forum'},
  {href:'changelog.html',icon:'changelog',label:'Nouveautés'}]},
@@ -145,11 +146,17 @@ const groups=[
    {href:'security/security-public-docs.html',label:'Documentation publique'},
    {href:'security/security-incidents.html',label:'Incidents'}]}]},
 {id:'resources',title:'Ressources',open:false,items:[
- {href:'status.html',icon:'status',label:'Statut'},
- {href:'server-status.html',icon:'status',label:'États des serveurs'},
- {href:'profile.html',icon:'account',label:'Mon compte'},
- {href:'bookmarks.html',icon:'favorite',label:'Favoris'},
- {href:'notifications.html',icon:'notifications',label:'Notifications'},
+ {href:'status.html',icon:'status',label:'Status Center',children:[
+   {href:'server-status.html',label:'États des serveurs'},
+   {href:'incidents.html',label:'Incidents'},
+   {href:'scheduled-maintenance.html',label:'Maintenance planifiée'}]},
+ {href:'profile.html',icon:'account',label:'Mon compte',children:[
+   {href:'account-settings.html',label:'Compte & interface'},
+   {href:'notification-settings.html',label:'Notifications'},
+   {href:'my-activity.html',label:'Mon activité'},
+   {href:'bookmarks.html',label:'Favoris'},
+   {href:'my-tickets.html',label:'Mes tickets'}]},
+ {href:'admin.html',icon:'security',label:'Admin'},
  {href:'https://github.com/squaredgroup/squared-docs',icon:'source',label:'Code source',external:true},
  {href:'https://www.squaredgroup.studio/',icon:'group',label:'Squared Group',external:true}]}
 ];
@@ -169,7 +176,11 @@ const childKey=c=>{
   if(h.includes('roles')||h.includes('access'))return 'access'; if(h.includes('navigation'))return 'navigation'; if(h.includes('projects'))return 'projects'; if(h.includes('documents'))return 'documents';
   if(h.includes('typography'))return 'typography'; if(h.includes('colors'))return 'colors'; if(h.includes('components'))return 'components'; if(h.includes('motion'))return 'motion'; if(h.includes('accessibility'))return 'accessibility';
   if(h.includes('git'))return 'git'; if(h.includes('architecture'))return 'architecture'; if(h.includes('testing'))return 'testing'; if(h.includes('release'))return 'release';
-  if(h.includes('secrets'))return 'secrets'; if(h.includes('incidents'))return 'incidents'; return 'book';
+  if(h.includes('secrets'))return 'secrets'; if(h.includes('incidents'))return 'incidents';
+  if(h.includes('server-status'))return 'status'; if(h.includes('maintenance'))return 'time';
+  if(h.includes('account-settings'))return 'account'; if(h.includes('notification-settings'))return 'notifications';
+  if(h.includes('my-activity'))return 'activity'; if(h.includes('bookmarks'))return 'favorite'; if(h.includes('my-tickets'))return 'support';
+  return 'book';
 };
 const children=i=>(i.children||[]).map(c=>'<a class="hc-sub-link'+(activeFor(c.href)?' active':'')+'" href="'+esc(localHref(c.href))+'"'+(activeFor(c.href)?' aria-current="page"':'')+'><span class="hc-sub-icon">'+SQIconly.icon(childKey(c),activeFor(c.href)?'fill':'regular','sm')+'</span><span>'+esc(c.label)+'</span></a>').join('');
 const items=g=>g.items.map(i=>{
@@ -187,7 +198,7 @@ host.innerHTML='<a class="hc-brand" href="'+localHref('index.html')+'"><img clas
 '<button class="hc-search" id="searchTrigger" data-search-open type="button"><span class="hc-search-icon">'+SQIconly.icon('search','regular','sm')+'</span><span>Rechercher de l’aide</span><kbd>⌘K</kbd></button>'+
 '<button class="hc-collapse" id="sidebarCollapse" type="button" aria-label="Réduire la navigation"><span>'+SQIconly.icon('collapse','regular','sm')+'</span><span>Réduire la navigation</span></button>'+
 '<nav class="hc-nav">'+groups.map(g=>{const open=groupOpen(g);return '<section class="hc-nav-group'+(open?' open':'')+'" data-group="'+g.id+'"><button class="hc-nav-group-trigger" type="button" aria-expanded="'+(open?'true':'false')+'"><span class="hc-nav-title">'+g.title+'</span><span class="hc-nav-chevron">▾</span></button><div class="hc-nav-group-body">'+items(g)+'</div></section>';}).join('')+'</nav>'+
-'<div class="hc-sidebar-foot"><strong>Squared Help Center · v6.1</strong>Navigation centralisée · sections repliables<br><a href="'+localHref('changelog.html')+'">Voir les nouveautés →</a></div>';
+'<div class="hc-sidebar-foot"><strong>Squared Help Center · v7.0</strong>Navigation centralisée · sections repliables<br><a href="'+localHref('changelog.html')+'">Voir les nouveautés →</a></div>';
 host.classList.add('hc-sidebar');
 {
   const openItems=[...host.querySelectorAll('.hc-item.has-children.child-open')];
