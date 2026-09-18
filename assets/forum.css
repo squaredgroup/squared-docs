@@ -63,3 +63,8 @@
 .forum-dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}.forum-dialog-head h2{font-size:16px;margin:0}.forum-dialog-head p{font-size:9px;color:var(--muted);margin:3px 0 0}.forum-dialog-close{width:30px;height:30px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);cursor:pointer}
 .forum-preview{border:1px dashed var(--line);border-radius:11px;background:var(--bg);padding:12px;min-height:90px;font-size:10px;color:var(--muted);line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
 .char-count{font-size:8px;color:var(--muted-2);text-align:right;margin-top:4px}
+
+
+/* Iconly forum controls */
+.forum-cat-icon .sq-iconly{font-size:15px}.topic-actions .sq-iconly,.reply-actions .sq-iconly{margin-right:5px}.notification-dot{position:relative}
+.account-chip>.sq-iconly{font-size:15px}.forum-dialog-close .sq-iconly{font-size:14px}
