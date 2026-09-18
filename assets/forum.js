@@ -254,10 +254,10 @@ async function initTopic(){
     else if(session)box.innerHTML='<form class="reply-form" id="replyForm"><label for="replyBody" style="font-size:9px;font-weight:700">Votre réponse</label><textarea class="forum-textarea" id="replyBody" required minlength="2" maxlength="15000" placeholder="Écrivez une réponse utile et précise…"></textarea><div class="form-actions"><button class="btn green" type="submit">'+(window.SQIconly?SQIconly.icon('arrowRight','regular','sm'):'')+'<span>Publier la réponse</span></button></div><div class="forum-alert" id="replyAlert"></div></form>';
     else box.innerHTML='<div class="forum-auth-card"><strong>Vous souhaitez répondre ?</strong><p>Connectez-vous pour participer à la discussion.</p><a class="btn green" href="'+loginUrl()+'">Se connecter</a></div>';
     $("#replyForm")?.addEventListener("submit",async e=>{e.preventDefault();clearAlert("replyAlert");const body=$("#replyBody").value.trim();const {error}=await supabase.from("forum_replies").insert({topic_id:id,author_id:session.user.id,body});if(error)alertBox("replyAlert",error.message);else location.reload()});
-    $$$("[data-vote-kind]").forEach(b=>b.addEventListener("click",()=>vote(b.dataset.voteKind,b.dataset.voteId,Number(b.dataset.vote))));
-    $$$("[data-react-kind]").forEach(b=>b.addEventListener("click",()=>toggleReaction(b.dataset.reactKind,b.dataset.reactId,b.dataset.emoji)));
+    $$("[data-vote-kind]").forEach(b=>b.addEventListener("click",()=>vote(b.dataset.voteKind,b.dataset.voteId,Number(b.dataset.vote))));
+    $$("[data-react-kind]").forEach(b=>b.addEventListener("click",()=>toggleReaction(b.dataset.reactKind,b.dataset.reactId,b.dataset.emoji)));
     $("[data-bookmark]")?.addEventListener("click",e=>toggleBookmark(e.currentTarget.dataset.bookmark));
-    $$$("[data-report-kind]").forEach(b=>b.addEventListener("click",()=>reportContent(b.dataset.reportKind,b.dataset.reportId)));
+    $$("[data-report-kind]").forEach(b=>b.addEventListener("click",()=>reportContent(b.dataset.reportKind,b.dataset.reportId)));
     $("[data-edit-topic]")?.addEventListener("click",()=>editTopic(topic));
     $$("[data-edit-reply]").forEach(b=>b.addEventListener("click",()=>{const r=replies.find(x=>x.id===b.dataset.editReply);if(r)editReply(r)}));
     $$("[data-solution]").forEach(b=>b.addEventListener("click",async()=>{const {error}=await supabase.rpc("accept_forum_reply",{p_reply:b.dataset.solution});if(error)alert(error.message);else location.reload()}));
