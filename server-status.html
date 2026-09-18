@@ -34,7 +34,7 @@
 <header class="article-head" style="max-width:800px;margin:0 auto 28px">
   <div class="eyebrow">Infrastructure · Monitoring</div>
   <h1>États des serveurs</h1>
-  <p>Vérification technique des composants nécessaires au Help Center, au forum et au support privé. Les tests sont exécutés depuis votre navigateur.</p>
+  <p>Vérification technique de l’écosystème Squared : site officiel, modules publics, Squared Workspace, Help Center, forum, support et backend. Les tests sont exécutés depuis votre navigateur.</p>
   <div class="article-meta">
     <span class="pill" id="serverOverallBadge">Vérification en cours…</span>
     <span class="pill" id="serverCheckedAt">Initialisation…</span>
@@ -43,77 +43,101 @@
 
 <div class="server-summary">
   <div class="server-summary-card">
-    <div class="server-summary-top"><strong>Frontend</strong><span class="server-summary-icon" data-icon-key="development"></span></div>
-    <p id="summaryFrontend">Vérification en cours…</p>
+    <div class="server-summary-top"><strong>Squared Group</strong><span class="server-summary-icon" data-icon-key="group"></span></div>
+    <p id="summarySquaredGroup">Vérification en cours…</p>
   </div>
   <div class="server-summary-card">
-    <div class="server-summary-top"><strong>Domaine & HTTPS</strong><span class="server-summary-icon" data-icon-key="security"></span></div>
-    <p id="summaryDomain">Vérification en cours…</p>
+    <div class="server-summary-top"><strong>Squared Workspace</strong><span class="server-summary-icon" data-icon-key="workspace"></span></div>
+    <p id="summaryWorkspace">Vérification en cours…</p>
   </div>
   <div class="server-summary-card">
-    <div class="server-summary-top"><strong>Supabase</strong><span class="server-summary-icon" data-icon-key="workspace"></span></div>
-    <p id="summarySupabase">Vérification en cours…</p>
+    <div class="server-summary-top"><strong>Help Center</strong><span class="server-summary-icon" data-icon-key="start"></span></div>
+    <p id="summaryHelpCenter">Vérification en cours…</p>
   </div>
   <div class="server-summary-card">
-    <div class="server-summary-top"><strong>Realtime</strong><span class="server-summary-icon" data-icon-key="status"></span></div>
-    <p id="summaryRealtime">Vérification en cours…</p>
+    <div class="server-summary-top"><strong>Backend</strong><span class="server-summary-icon" data-icon-key="status"></span></div>
+    <p id="summaryBackend">Vérification en cours…</p>
   </div>
 </div>
 
 <section class="section" style="padding-top:6px">
   <div class="section-head">
-    <div><h2>Détail des services</h2><p>Chaque état indique ce qui a réellement été testé dans cette session.</p></div>
+    <div><h2>Écosystème Squared</h2><p>Les services sont regroupés par produit. Les pages externes sont testées en disponibilité réseau ; les services internes disposent de contrôles plus précis.</p></div>
     <button class="btn" id="refreshServerStatus">Relancer les vérifications</button>
   </div>
 
-  <div class="server-status-list">
-    <div class="server-row" data-service="frontend">
-      <div><strong>Frontend · GitHub Pages</strong><p>Chargement du site et des fichiers statiques.</p></div>
-      <span class="server-badge checking" data-state>Vérification…</span>
-      <span class="server-meta" data-latency>—</span>
-      <span class="server-meta">Public</span>
+  <div class="server-group">
+    <div class="server-group-head"><div><span class="server-group-icon" data-icon-key="group"></span><span><strong>Squared Group — Site officiel</strong><small>www.squaredgroup.studio</small></span></div><span class="server-badge checking" data-group-state="squared-group">Vérification…</span></div>
+    <div class="server-status-list">
+      <div class="server-row" data-service="squared-site">
+        <div><strong>Site principal</strong><p>Accueil et frontend public Squared Group.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">Wix Studio</span>
+      </div>
+      <div class="server-row" data-service="site-services">
+        <div><strong>Services</strong><p>Catalogue des prestations et services Squared Group.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">/services</span>
+      </div>
+      <div class="server-row" data-service="site-projects">
+        <div><strong>Projets</strong><p>Portfolio et projets du groupe.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">/projects</span>
+      </div>
+      <div class="server-row" data-service="site-products">
+        <div><strong>Produits</strong><p>Apps et outils numériques de Squared Group.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">/products</span>
+      </div>
+      <div class="server-row" data-service="site-contact">
+        <div><strong>Contact</strong><p>Point de contact public du groupe.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">/contact</span>
+      </div>
+      <div class="server-row" data-service="site-resources">
+        <div><strong>Ressources</strong><p>Guides, outils et analyses publiques.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">/resources</span>
+      </div>
+      <div class="server-row" data-service="site-agency">
+        <div><strong>Agency</strong><p>Présentation de l’agence et de son offre.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">/agency</span>
+      </div>
+      <div class="server-row" data-service="site-build">
+        <div><strong>Squared Build</strong><p>Page produit / formation Squared Build.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">/squared-build</span>
+      </div>
     </div>
+  </div>
 
-    <div class="server-row" data-service="domain">
-      <div><strong>DNS & HTTPS · docs.squaredgroup.studio</strong><p>Domaine personnalisé et connexion chiffrée.</p></div>
-      <span class="server-badge checking" data-state>Vérification…</span>
-      <span class="server-meta" data-latency>—</span>
-      <span class="server-meta">Public</span>
+  <div class="server-group">
+    <div class="server-group-head"><div><span class="server-group-icon" data-icon-key="workspace"></span><span><strong>Squared Workspace</strong><small>App & portail client / équipe</small></span></div><span class="server-badge checking" data-group-state="workspace">Vérification…</span></div>
+    <div class="server-status-list">
+      <div class="server-row" data-service="workspace-app">
+        <div><strong>App Squared Workspace</strong><p>Disponibilité du portail principal Workspace.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">workspace.squaredgroup.studio</span>
+      </div>
+      <div class="server-row" data-service="workspace-landing">
+        <div><strong>Workspace — page publique</strong><p>Présentation publique de Workspace sur le site Squared Group.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">/workspace</span>
+      </div>
     </div>
+  </div>
 
-    <div class="server-row" data-service="auth">
-      <div><strong>Supabase Auth</strong><p>Service d’authentification et gestion des sessions.</p></div>
-      <span class="server-badge checking" data-state>Vérification…</span>
-      <span class="server-meta" data-latency>—</span>
-      <span class="server-meta">Paris</span>
+  <div class="server-group">
+    <div class="server-group-head"><div><span class="server-group-icon" data-icon-key="start"></span><span><strong>Squared Help Center</strong><small>Documentation, communauté & support</small></span></div><span class="server-badge checking" data-group-state="help-center">Vérification…</span></div>
+    <div class="server-status-list">
+      <div class="server-row" data-service="frontend">
+        <div><strong>Help Center frontend</strong><p>Chargement du site et des fichiers statiques.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">GitHub Pages</span>
+      </div>
+      <div class="server-row" data-service="domain">
+        <div><strong>DNS & HTTPS</strong><p>Domaine docs.squaredgroup.studio et connexion chiffrée.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">TLS</span>
+      </div>
+      <div class="server-row" data-service="forum">
+        <div><strong>Forum communauté</strong><p>Lecture des catégories et données publiques du forum.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">Public</span>
+      </div>
+      <div class="server-row" data-service="support">
+        <div><strong>Support privé</strong><p>Backend des tickets et conversations privées.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">RLS</span>
+      </div>
     </div>
+  </div>
 
-    <div class="server-row" data-service="database">
-      <div><strong>Supabase Database / REST</strong><p>Accès public contrôlé à la base du Help Center.</p></div>
-      <span class="server-badge checking" data-state>Vérification…</span>
-      <span class="server-meta" data-latency>—</span>
-      <span class="server-meta">Paris</span>
-    </div>
-
-    <div class="server-row" data-service="forum">
-      <div><strong>Forum communauté</strong><p>Lecture des catégories publiques et disponibilité des données forum.</p></div>
-      <span class="server-badge checking" data-state>Vérification…</span>
-      <span class="server-meta" data-latency>—</span>
-      <span class="server-meta">Public</span>
-    </div>
-
-    <div class="server-row" data-service="realtime">
-      <div><strong>Supabase Realtime</strong><p>Canal temps réel utilisé pour les nouvelles réponses et notifications.</p></div>
-      <span class="server-badge checking" data-state>Vérification…</span>
-      <span class="server-meta" data-latency>—</span>
-      <span class="server-meta">WebSocket</span>
-    </div>
-
-    <div class="server-row" data-service="support">
-      <div><strong>Support privé</strong><p>Disponibilité du backend utilisé par les tickets. Le contenu reste protégé par RLS.</p></div>
-      <span class="server-badge checking" data-state>Vérification…</span>
-      <span class="server-meta" data-latency>—</span>
-      <span class="server-meta">Privé</span>
+  <div class="server-group">
+    <div class="server-group-head"><div><span class="server-group-icon" data-icon-key="status"></span><span><strong>Backend Help Center</strong><small>Supabase · Paris</small></span></div><span class="server-badge checking" data-group-state="backend">Vérification…</span></div>
+    <div class="server-status-list">
+      <div class="server-row" data-service="auth">
+        <div><strong>Supabase Auth</strong><p>Authentification et sessions.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">Paris</span>
+      </div>
+      <div class="server-row" data-service="database">
+        <div><strong>Supabase Database / REST</strong><p>Données communauté, profils et support.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">Paris</span>
+      </div>
+      <div class="server-row" data-service="realtime">
+        <div><strong>Supabase Realtime</strong><p>Notifications et nouvelles réponses en temps réel.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">WebSocket</span>
+      </div>
     </div>
   </div>
 </section>
@@ -121,7 +145,7 @@
 <section class="section">
   <div class="section-head"><div><h2>Comment interpréter cette page</h2><p>Le statut évite d’afficher une disponibilité fictive.</p></div></div>
   <div class="grid cols-3">
-    <div class="role-card"><span class="role-label">Opérationnel</span><h3>Test réussi</h3><p>Le composant a répondu correctement depuis votre navigateur lors de la dernière vérification.</p></div>
+    <div class="role-card"><span class="role-label">Opérationnel</span><h3>Test réussi</h3><p>Le composant a répondu correctement depuis votre navigateur. Pour un site externe, cela valide sa disponibilité réseau, pas toutes ses fonctions internes.</p></div>
     <div class="role-card"><span class="role-label" style="color:var(--orange)">Partiel</span><h3>Test incomplet</h3><p>Le service répond, mais certaines fonctions demandent une session ou ne peuvent pas être entièrement vérifiées publiquement.</p></div>
     <div class="role-card"><span class="role-label" style="color:var(--red)">Indisponible</span><h3>Test échoué</h3><p>Le composant n’a pas répondu dans le délai attendu ou a retourné une erreur.</p></div>
   </div>
