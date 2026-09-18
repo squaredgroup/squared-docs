@@ -141,3 +141,14 @@
   .topic-stats{grid-column:2}
   .v6-profile-quick{grid-template-columns:1fr 1fr}
 }
+
+
+@media(max-width:680px){
+  .topic-page .sticky-topic-actions{
+    position:sticky;bottom:8px;z-index:35;
+    padding:7px;border:1px solid var(--line);border-radius:11px;
+    background:color-mix(in srgb,var(--bg-2) 94%,transparent);
+    backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(0,0,0,.08);
+  }
+  .topic-page .sticky-topic-actions .mini-action{min-height:36px}
+}
