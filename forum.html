@@ -1,5 +1,64 @@
-<!doctype html><html lang="fr" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#F7F7F4"><meta name="robots" content="index,follow"><title>Forum — Squared Help Center</title><meta name="description" content="Communauté native du Squared Help Center : questions, réponses, idées, discussions et annonces."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/docs.css"><link rel="stylesheet" href="assets/sidebar.css"><link rel="stylesheet" href="assets/forum.css"></head><body data-forum-page="forum"><div id="progress" class="progress"></div><div class="app"><aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main"><header class="topbar"><button class="icon-btn mobile-menu" id="menuBtn">☰</button><div class="crumbs"><a href="index.html">Help Center</a><span>›</span><strong>Forum</strong></div><div class="top-actions"><button class="btn hide-mobile" data-search-open>Rechercher <span>⌘K</span></button><a class="btn hide-mobile" href="forum.html">Forum</a><a class="btn hide-mobile" href="support.html">Support</a><span id="forumAccount"></span><button class="icon-btn" id="themeBtn">◐</button></div></header><div class="forum-shell">
-<section class="forum-hero"><div class="eyebrow">Squared Help Center · Community</div><h1>Forum<br><span class="muted">Squared.</span></h1><p>Posez une question, partagez une idée, échangez avec la communauté et retrouvez les réponses directement dans le Help Center.</p><div class="hero-actions"><button class="btn green" id="newTopicBtn">Nouvelle discussion</button><a class="btn" href="getting-started.html">Règles & démarrage</a></div></section>
-<div class="forum-toolbar"><div class="forum-toolbar-left"><input class="forum-input" id="forumSearch" type="search" placeholder="Rechercher dans les discussions…"><select class="forum-select" id="forumSort"><option value="recent">Activité récente</option><option value="popular">Populaires</option><option value="unanswered">Sans réponse</option><option value="resolved">Résolues</option></select></div><div class="forum-toolbar-right"><span class="pill" id="forumCount">0 discussion</span></div></div>
-<div class="forum-grid"><section class="forum-panel"><div class="forum-panel-head"><h2>Discussions</h2><span>Communauté</span></div><div class="topic-list" id="forumTopics"><div class="loading">Chargement…</div></div></section><aside class="forum-side"><div class="forum-panel"><div class="forum-panel-head"><h2>Catégories</h2></div><div class="forum-category-list" id="forumCategories"></div></div><div class="forum-auth-card forum-rules-v5"><strong>Avant de publier</strong><p>Recherchez d’abord, soyez précis, restez factuel et ne partagez aucune donnée confidentielle.</p><a class="btn" href="getting-started.html">Lire les bonnes pratiques</a></div><div class="forum-auth-card"><strong>Votre espace communauté</strong><p>Connectez-vous pour publier, répondre, voter, enregistrer des sujets et recevoir des notifications.</p><a class="btn" href="login.html?next=forum.html">Se connecter / créer un compte</a></div></aside></div>
-<footer class="footer"><span>© 2026 Squared Group · Help Center</span><span class="footer-links"><a href="index.html">Accueil</a><a href="forum.html">Forum</a><a href="support.html">Support</a></span></footer></div></main></div><div class="search-modal" id="searchModal" role="dialog" aria-modal="true"><div class="search-box"><div class="search-head"><input id="searchInput" type="search" placeholder="Rechercher une réponse, un guide, une procédure…" autocomplete="off"><button class="search-close" id="searchClose">Esc</button></div><div class="search-results" id="searchResults"></div></div></div><div class="toast" id="toast">Copié</div><script src="assets/sidebar.js"></script><script src="assets/docs.js"></script><script type="module" src="assets/forum.js"></script></body></html>
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#F7F7F4">
+<meta name="robots" content="index,follow">
+<title>Forum — Squared Help Center</title>
+<meta name="description" content="Communauté native du Squared Help Center : questions, réponses, idées et annonces.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/sidebar.css">
+<link rel="stylesheet" href="assets/forum.css">
+</head><body data-forum-page="forum">
+<div id="progress" class="progress"></div><div class="app"><aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main">
+<header class="topbar">
+  <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Ouvrir le menu"></button>
+  <div class="crumbs"><a href="index.html">Help Center</a><span>›</span><strong>Forum</strong></div>
+  <div class="top-actions">
+    <button class="btn command-search hide-mobile" data-search-open><span>Rechercher</span><span class="keyboard-hint">⌘K</span></button>
+    <span id="forumAccount"></span>
+    <button class="icon-btn" id="quickActionsBtn" aria-label="Actions rapides"></button>
+    <button class="icon-btn" id="themeBtn" aria-label="Changer de thème"></button>
+  </div>
+</header>
+<div class="forum-shell">
+<section class="forum-hero">
+  <div class="eyebrow">Squared Community</div>
+  <h1>Forum.</h1>
+  <p>Questions, idées, retours et solutions partagées. Recherchez avant de publier et transformez les bonnes réponses en connaissance durable.</p>
+  <div class="hero-actions"><button class="btn green" id="newTopicBtn">Nouvelle discussion</button><a class="btn" href="community-guidelines.html">Règles de communauté</a></div>
+</section>
+<div class="forum-toolbar">
+  <div class="forum-toolbar-left"><input class="forum-input" id="forumSearch" type="search" placeholder="Rechercher dans les discussions…"><select class="forum-select" id="forumSort"><option value="recent">Récentes</option><option value="popular">Populaires</option><option value="unanswered">Sans réponse</option><option value="resolved">Résolues</option></select></div>
+  <div class="forum-toolbar-right"><span class="pill" id="forumCount">0 discussion</span></div>
+</div>
+<div class="forum-grid">
+  <section>
+    <div class="forum-panel-head"><h2>Discussions</h2><span>Activité récente</span></div>
+    <div class="topic-list" id="forumTopics"><div class="loading">Chargement…</div></div>
+  </section>
+  <aside class="forum-side">
+    <div class="forum-panel"><div class="forum-panel-head"><h2>Catégories</h2></div><div class="forum-category-list" id="forumCategories"></div></div>
+    <div class="forum-auth-card forum-rules-v5"><strong>Publier utile</strong><p>Une question précise, sans donnée sensible, obtient de meilleures réponses.</p><a class="btn" href="asking-for-help.html">Comment demander de l’aide</a></div>
+    <div class="forum-auth-card"><strong>Votre communauté</strong><p>Connectez-vous pour répondre, voter, enregistrer et suivre vos discussions.</p><a class="btn" href="login.html?next=forum.html">Se connecter</a></div>
+  </aside>
+</div>
+<footer class="footer"><span>© 2026 Squared Group · Help Center</span><span class="footer-links"><a href="community-guidelines.html">Règles</a><a href="support.html">Support privé</a></span></footer>
+</div></main></div><div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-label="Recherche globale">
+  <div class="search-box">
+    <div class="search-head"><input id="searchInput" type="search" placeholder="Rechercher un guide, une procédure, un sujet…" autocomplete="off"><button class="search-close" id="searchClose">Esc</button></div>
+    <div class="search-filters">
+      <button class="filter-chip active" data-filter="Tout">Tout</button>
+      <button class="filter-chip" data-filter="Guide">Guides</button>
+      <button class="filter-chip" data-filter="Produit">Produits</button>
+      <button class="filter-chip" data-filter="Dev">Dev</button>
+      <button class="filter-chip" data-filter="Sécurité">Sécurité</button>
+      <button class="filter-chip" data-filter="Communauté">Communauté</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div><div class="toast" id="toast">Copié</div><script src="assets/sidebar.js"></script><script src="assets/docs.js"></script><script type="module" src="assets/forum.js"></script></body></html>
