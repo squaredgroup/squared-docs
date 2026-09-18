@@ -29,6 +29,12 @@ async function currentSession(){
   const {data:{session}}=await client.auth.getSession();
   return session;
 }
+async function currentProfile(){
+  const session=await currentSession();
+  if(!session)return null;
+  const {data}=await client.from("profiles").select("id,role,display_name,username").eq("id",session.user.id).maybeSingle();
+  return data||null;
+}
 
-window.SQSearchBackend={search,event,currentSession,client};
+window.SQSearchBackend={search,event,currentSession,currentProfile,client};
 window.dispatchEvent(new CustomEvent("sq:backend-ready"));
