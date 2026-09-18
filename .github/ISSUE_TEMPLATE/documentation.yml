@@ -1,0 +1,32 @@
+name: Erreur ou amélioration de documentation
+description: Signaler un contenu faux, obsolète, incomplet ou difficile à comprendre.
+title: "[Docs] "
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page concernée
+      placeholder: https://docs.squaredgroup.studio/...
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problème
+      description: Décrivez précisément ce qui est incorrect ou insuffisant.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Proposition
+      description: Quelle correction ou amélioration serait préférable ?
+    validations:
+      required: false
+  - type: checkboxes
+    id: security
+    attributes:
+      label: Vérification
+      options:
+        - label: Cette issue ne contient aucun secret ni donnée confidentielle.
+          required: true
