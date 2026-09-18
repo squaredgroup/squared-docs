@@ -146,13 +146,24 @@ async function load(){
 }
 
 $("#refreshServerStatus")?.addEventListener("click",async()=>{
-  const btn=$("#refreshServerStatus");btn.disabled=true;btn.textContent="Vérification…";
+  const btn=$("#refreshServerStatus");
+  btn.disabled=true;
+  const original=btn.textContent;
+  btn.textContent="Actualisation…";
   try{
-    await fetch(SUPABASE_URL+"/functions/v1/status-monitor-v2",{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"});
-    await new Promise(r=>setTimeout(r,1200));
+    const {data:{session}}=await db.auth.getSession();
+    if(session){
+      const {error}=await db.rpc("request_status_refresh");
+      if(!error){
+        await new Promise(r=>setTimeout(r,1400));
+        location.reload();
+        return;
+      }
+    }
     location.reload();
   }catch{
-    btn.disabled=false;btn.textContent="Relancer les vérifications";
+    btn.disabled=false;
+    btn.textContent=original;
   }
 });
 
