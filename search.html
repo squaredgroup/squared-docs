@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#F7F7F4">
+<meta name="robots" content="noindex,follow">
+<title>Recherche — Squared Help Center</title>
+<meta name="description" content="Recherche universelle dans la documentation, la communauté et vos demandes Squared.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/sidebar.css">
+<link rel="stylesheet" href="assets/forum.css">
+</head>
+<body data-search-page="universal">
+<div id="progress" class="progress"></div>
+<div class="app">
+<aside class="sidebar hc-sidebar" id="sidebar"></aside>
+<main class="main">
+<header class="topbar">
+  <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Ouvrir le menu"></button>
+  <div class="crumbs"><a href="index.html">Help Center</a><span>›</span><strong>Recherche</strong></div>
+  <div class="top-actions">
+    <span id="forumAccount"></span>
+    <button class="icon-btn" id="quickActionsBtn" aria-label="Actions rapides"></button>
+    <button class="icon-btn" id="themeBtn" aria-label="Changer de thème"></button>
+  </div>
+</header>
+
+<div class="forum-shell">
+<section class="forum-hero" style="border-bottom:0">
+  <div class="eyebrow">Squared Search</div>
+  <h1>Recherche universelle.</h1>
+  <p>Documentation, forum, nouveautés et vos demandes personnelles dans une seule recherche.</p>
+</section>
+
+<div class="universal-search-box">
+  <span class="universal-search-icon" data-icon-key="search"></span>
+  <input id="universalSearchInput" type="search" placeholder="Rechercher une réponse, une procédure, un sujet…" autocomplete="off" autofocus>
+  <kbd>Enter</kbd>
+</div>
+
+<div class="forum-filter-tabs" id="universalSearchFilters">
+  <button class="forum-filter-tab active" data-kind="all">Tout</button>
+  <button class="forum-filter-tab" data-kind="knowledge">Documentation</button>
+  <button class="forum-filter-tab" data-kind="forum">Communauté</button>
+  <button class="forum-filter-tab" data-kind="ticket">Mes demandes</button>
+</div>
+
+<div class="search-page-layout">
+  <section>
+    <div class="forum-panel-head"><h2>Résultats</h2><span id="universalResultCount">0 résultat</span></div>
+    <div id="universalSearchResults" class="universal-results">
+      <div class="sq-empty-state"><span class="sq-empty-icon" data-icon-key="search"></span><strong>Commencez à rechercher</strong><p>Essayez « Workspace », « responsive », « connexion » ou une question complète.</p></div>
+    </div>
+  </section>
+
+  <aside class="search-side">
+    <div class="forum-panel">
+      <div class="forum-panel-head"><h2>Recherches récentes</h2></div>
+      <div id="searchHistory" class="search-history"></div>
+    </div>
+    <div class="forum-auth-card">
+      <strong>Vous ne trouvez rien ?</strong>
+      <p>Une recherche sans résultat indique souvent qu’un article manque.</p>
+      <a class="btn" href="forum-new.html">Poser une question</a>
+      <a class="btn" href="support.html">Support privé</a>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer"><span>© 2026 Squared Group · Help Center</span><span class="footer-links"><a href="index.html">Accueil</a><a href="forum.html">Forum</a></span></footer>
+</div>
+</main>
+</div>
+
+<div class="toast" id="toast">Copié</div>
+<script src="assets/sidebar.js"></script>
+<script src="assets/docs.js"></script>
+<script type="module" src="assets/forum.js"></script>
+<script type="module" src="assets/search-app.js"></script>
+</body>
+</html>
