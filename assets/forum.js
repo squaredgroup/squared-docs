@@ -78,6 +78,18 @@ function topicRow(t){
   ].join("");
   return '<a class="topic-row" href="forum-topic.html?id='+encodeURIComponent(t.id)+'">'+avatar(t.author)+'<span><span class="topic-title"><strong>'+esc(t.title)+'</strong>'+badges+'</span><span class="topic-body-preview">'+esc(t.body)+'</span><span class="topic-meta"><span>'+esc(t.category?.name||"Discussion")+'</span><span>·</span><span>'+esc(t.author?.display_name||t.author?.username||"Membre")+'</span><span>·</span><span>'+ago(t.last_activity_at)+'</span></span></span><span class="topic-stats"><span class="topic-stat"><strong>'+t.reply_count+'</strong><span>rép.</span></span><span class="topic-stat"><strong>'+t.vote_score+'</strong><span>votes</span></span><span class="topic-stat"><strong>'+t.view_count+'</strong><span>vues</span></span></span></a>';
 }
+
+async function initHome(){
+  const host=$("#homeForumTopics");if(!host)return;
+  try{
+    const topics=await getTopics();
+    const list=topics.slice(0,4);
+    host.innerHTML=list.length?list.map(t=>'<a class="home-discussion-row" href="forum-topic.html?id='+encodeURIComponent(t.id)+'">'+avatar(t.author)+'<span><strong>'+esc(t.title)+'</strong><span>'+esc(t.category?.name||"Discussion")+' · '+esc(t.author?.display_name||"Membre")+' · '+ago(t.last_activity_at)+'</span></span><em>'+t.reply_count+' rép.</em></a>').join(""):'<div class="forum-empty"><strong>Le forum est prêt</strong>Soyez le premier à ouvrir une discussion.</div>';
+  }catch(e){
+    host.innerHTML='<div class="forum-empty"><strong>Activité indisponible</strong>Le reste du Help Center reste accessible.</div>';
+  }
+}
+
 async function initForum(){
   const catsHost=$("#forumCategories"),topicsHost=$("#forumTopics");
   if(!catsHost||!topicsHost)return;
@@ -238,6 +250,15 @@ async function initProfile(){
   ]);
   const own=session?.user.id===p.id;
   mount.innerHTML='<div class="profile-grid"><aside class="profile-card">'+avatar(p)+'<h2>'+esc(p.display_name)+'</h2><p>@'+esc(p.username)+'</p><p>'+esc(p.bio||"Aucune bio.")+'</p>'+(p.role!=="member"?'<span class="badge green">'+esc(p.role)+'</span>':"")+'<div class="profile-stats"><div class="profile-stat"><strong>'+(topics||0)+'</strong><span>Sujets</span></div><div class="profile-stat"><strong>'+(replies||0)+'</strong><span>Réponses</span></div><div class="profile-stat"><strong>'+p.reputation+'</strong><span>Réputation</span></div></div></aside><section>'+(own?'<form class="form-card" id="profileForm"><div class="form-group"><label>Nom affiché</label><input class="forum-input" id="profileName" value="'+esc(p.display_name)+'" maxlength="80"></div><div class="form-group"><label>Nom d’utilisateur</label><input class="forum-input" id="profileUsername" value="'+esc(p.username)+'" maxlength="40"></div><div class="form-group"><label>Bio</label><textarea class="forum-textarea" id="profileBio" maxlength="500">'+esc(p.bio||"")+'</textarea></div><div class="form-group"><label>Avatar</label><input type="file" id="profileAvatar" accept="image/png,image/jpeg,image/webp"><div class="form-help">PNG, JPG ou WebP · 2 Mo max.</div></div><div class="form-actions"><button class="btn green" type="submit">Enregistrer</button></div><div class="forum-alert" id="profileAlert"></div></form>':'<div class="forum-panel"><div class="forum-panel-head"><h2>Profil public</h2></div><div style="padding:15px;font-size:10px;color:var(--muted)">Ce membre participe à la communauté Squared.</div></div>')+'</section></div>';
+  const activityHost=$("#profileActivity");
+  if(activityHost){
+    const [pt,pr]=await Promise.all([
+      supabase.from("forum_topics").select("id,title,last_activity_at").eq("author_id",p.id).order("last_activity_at",{ascending:false}).limit(5),
+      supabase.from("forum_replies").select("id,topic_id,body,created_at").eq("author_id",p.id).order("created_at",{ascending:false}).limit(5)
+    ]);
+    const items=[...(pt.data||[]).map(x=>({kind:"Sujet",title:x.title,href:"forum-topic.html?id="+x.id,date:x.last_activity_at})),...(pr.data||[]).map(x=>({kind:"Réponse",title:x.body.slice(0,70),href:"forum-topic.html?id="+x.topic_id,date:x.created_at}))].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,7);
+    activityHost.innerHTML=items.length?items.map(x=>'<a class="quick-row" href="'+x.href+'"><span class="quick-num">'+esc(x.kind.slice(0,3).toUpperCase())+'</span><span><strong>'+esc(x.title)+'</strong><span>'+ago(x.date)+'</span></span><em>Ouvrir →</em></a>').join(""):'<div class="forum-empty">Aucune activité publique.</div>';
+  }
   $("#profileForm")?.addEventListener("submit",async e=>{e.preventDefault();clearAlert("profileAlert");let avatar_url=p.avatar_url;const file=$("#profileAvatar").files[0];if(file){if(file.size>2097152){alertBox("profileAlert","Fichier trop volumineux.");return}const ext=(file.name.split(".").pop()||"png").toLowerCase();const path=session.user.id+"/"+Date.now()+"."+ext;const up=await supabase.storage.from("forum-avatars").upload(path,file,{upsert:true});if(up.error){alertBox("profileAlert",up.error.message);return}avatar_url=supabase.storage.from("forum-avatars").getPublicUrl(path).data.publicUrl}const payload={display_name:$("#profileName").value.trim(),username:$("#profileUsername").value.trim(),bio:$("#profileBio").value.trim()||null,avatar_url};const {error}=await supabase.from("profiles").update(payload).eq("id",session.user.id);if(error)alertBox("profileAlert",error.message);else{alertBox("profileAlert","Profil enregistré.","success");setTimeout(()=>location.reload(),500)}});
 }
 async function initNotifications(){
@@ -245,14 +266,26 @@ async function initNotifications(){
   if(!session){location.href=loginUrl();return}
   const {data,error}=await supabase.from("notifications").select(`id,type,title,body,is_read,created_at,topic_id,reply_id,support_ticket_id,actor:profiles!notifications_actor_id_fkey(id,display_name,username,avatar_url)`).order("created_at",{ascending:false}).limit(100);
   if(error){host.innerHTML='<div class="forum-empty">'+esc(error.message)+'</div>';return}
-  host.innerHTML=data?.length?data.map(n=>{const href=n.support_ticket_id?"support-ticket.html?id="+n.support_ticket_id:n.topic_id?"forum-topic.html?id="+n.topic_id:"#";return '<a class="notification-row'+(n.is_read?"":" unread")+'" href="'+href+'"><span><strong>'+esc(n.title)+'</strong><span>'+esc(n.body||"")+' · '+ago(n.created_at)+'</span></span><span>'+avatar(n.actor)+'</span></a>'}).join(""):'<div class="forum-empty"><strong>Aucune notification</strong>Vous êtes à jour.</div>';
+  let filter="all";
+  const render=()=>{
+    const list=(data||[]).filter(n=>filter==="all"||(filter==="forum"&&["reply","mention","solution","moderation"].includes(n.type))||(filter==="support"&&n.type==="support")||(filter==="unread"&&!n.is_read));
+    host.innerHTML=list.length?list.map(n=>{const href=n.support_ticket_id?"support-ticket.html?id="+n.support_ticket_id:n.topic_id?"forum-topic.html?id="+n.topic_id:"#";return '<a class="notification-row'+(n.is_read?"":" unread")+'" href="'+href+'"><span><strong>'+esc(n.title)+'</strong><span>'+esc(n.body||"")+' · '+ago(n.created_at)+'</span></span><span>'+avatar(n.actor)+'</span></a>'}).join(""):'<div class="forum-empty"><strong>Aucune notification</strong>Aucun élément dans ce filtre.</div>';
+  };
+  $(".forum-filter-tab[data-notif-filter]").forEach(b=>b.addEventListener("click",()=>{$(".forum-filter-tab[data-notif-filter]").forEach(x=>x.classList.remove("active"));b.classList.add("active");filter=b.dataset.notifFilter;render()}));
   $("#markReadBtn")?.addEventListener("click",async()=>{await supabase.rpc("mark_notifications_read");location.reload()});
+  render();
 }
 async function initSupport(){
   const list=$("#ticketList"),form=$("#ticketForm");if(!list||!form)return;
   if(!session){$("#supportGuest").hidden=false;form.hidden=true;list.innerHTML='<div class="forum-empty"><strong>Connectez-vous pour suivre vos demandes</strong>Vos tickets restent privés entre vous et le support.</div>';return}
   $("#supportGuest").hidden=true;form.hidden=false;
   const {data,error}=await supabase.from("support_tickets").select(`id,subject,category,priority,status,created_at,last_activity_at,requester_id,assigned_to,requester:profiles!support_tickets_requester_id_fkey(id,display_name,username,avatar_url)`).order("last_activity_at",{ascending:false});
+  if(!error){
+    const all=data||[],open=all.filter(t=>!["resolved","closed"].includes(t.status)).length,waiting=all.filter(t=>t.status==="waiting_user").length,resolved=all.filter(t=>["resolved","closed"].includes(t.status)).length;
+    if($("#supportOpenCount"))$("#supportOpenCount").textContent=open;
+    if($("#supportWaitingCount"))$("#supportWaitingCount").textContent=waiting;
+    if($("#supportResolvedCount"))$("#supportResolvedCount").textContent=resolved;
+  }
   if(error)list.innerHTML='<div class="forum-empty">'+esc(error.message)+'</div>';
   else list.innerHTML=data?.length?data.map(t=>'<a class="ticket-row" href="support-ticket.html?id='+t.id+'"><span><strong>'+esc(t.subject)+'</strong><span>'+esc(t.category)+' · '+ago(t.last_activity_at)+(staff(me)?" · "+esc(t.requester?.display_name||"Membre"):"")+'</span></span><span class="ticket-status">'+esc(t.status)+'</span></a>').join(""):'<div class="forum-empty"><strong>Aucune demande</strong>Créez un ticket si votre problème nécessite une réponse privée.</div>';
   form.addEventListener("submit",async e=>{e.preventDefault();clearAlert("ticketAlert");const payload={requester_id:session.user.id,subject:$("#ticketSubject").value.trim(),description:$("#ticketDescription").value.trim(),category:$("#ticketCategory").value};const {data,error}=await supabase.from("support_tickets").insert(payload).select("id").single();if(error)alertBox("ticketAlert",error.message);else location.href="support-ticket.html?id="+data.id});
@@ -288,7 +321,10 @@ async function initBookmarks(){
   `).eq("user_id",session.user.id).order("created_at",{ascending:false});
   if(error){host.innerHTML='<div class="forum-empty"><strong>Erreur</strong>'+esc(error.message)+'</div>';return}
   const topics=(data||[]).map(x=>x.topic).filter(Boolean);
-  host.innerHTML=topics.length?topics.map(topicRow).join(""):'<div class="forum-empty"><strong>Aucun favori</strong>Enregistrez une discussion depuis sa page pour la retrouver ici.</div>';
+  let query="";
+  const render=()=>{const list=topics.filter(t=>!query||(t.title+" "+t.body+" "+(t.category?.name||"")).toLowerCase().includes(query));host.innerHTML=list.length?list.map(topicRow).join(""):'<div class="forum-empty"><strong>Aucun favori</strong>'+(query?"Aucun favori ne correspond à votre recherche.":"Enregistrez une discussion depuis sa page pour la retrouver ici.")+'</div>'};
+  $("#bookmarkSearch")?.addEventListener("input",e=>{query=e.target.value.trim().toLowerCase();render()});
+  render();
 }
 
 async function initModeration(){
@@ -322,7 +358,8 @@ async function initModeration(){
 async function init(){
   await initAuth();
   const page=document.body.dataset.forumPage||"";
-  if(page==="forum")await initForum();
+  if(page==="home")await initHome();
+  else if(page==="forum")await initForum();
   else if(page==="topic")await initTopic();
   else if(page==="new-topic")await initNewTopic();
   else if(page==="login")await initLogin();
