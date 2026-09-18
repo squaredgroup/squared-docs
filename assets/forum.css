@@ -37,3 +37,23 @@
 .loading{padding:32px;text-align:center;color:var(--muted);font-size:10px}.skeleton{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--soft),var(--panel-2),var(--soft));background-size:200% 100%;animation:shimmer 1.3s infinite}.skeleton+.skeleton{margin-top:8px}@keyframes shimmer{to{background-position:-200% 0}}
 @media(max-width:980px){.forum-grid{grid-template-columns:1fr}.forum-side{display:grid;grid-template-columns:1fr 1fr;gap:12px}.profile-grid{grid-template-columns:1fr}.profile-card{text-align:left}.profile-card .avatar{margin:0 0 12px}}
 @media(max-width:680px){.forum-shell{padding:26px 14px 70px}.forum-toolbar{align-items:stretch;flex-direction:column}.forum-toolbar-left,.forum-toolbar-right{width:100%}.forum-input{width:100%;min-width:0}.topic-row{grid-template-columns:36px minmax(0,1fr)}.topic-stats{grid-column:2;grid-template-columns:repeat(3,1fr);text-align:left;margin-top:4px}.forum-side{grid-template-columns:1fr}.form-card{padding:15px}.auth-wrap{margin:25px auto}.topic-head-card{padding:15px}.profile-stats{grid-template-columns:repeat(3,1fr)}}
+
+/* Squared Community & Support v5.0 */
+.forum-shell{max-width:1240px;padding:38px 42px 92px}.forum-hero{padding:18px 0 32px}.forum-hero h1{font-size:clamp(38px,5vw,66px)}.forum-hero p{font-size:11.5px;line-height:1.65}
+.forum-toolbar{position:sticky;top:62px;z-index:45;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(14px);padding:10px 0;margin:10px 0 12px}
+.forum-panel{border-radius:15px;box-shadow:var(--shadow-xs)}.forum-panel-head{padding:12px 14px}.forum-panel-head h2{font-size:11px}
+.forum-grid{grid-template-columns:minmax(0,1fr) 246px;gap:12px}.forum-side{position:sticky;top:122px}
+.topic-row{padding:13px 14px;grid-template-columns:40px minmax(0,1fr) auto}.topic-row:hover{background:color-mix(in srgb,var(--panel-2) 72%,transparent)}.topic-title strong{font-size:11px}.topic-body-preview{font-size:8.5px}.topic-meta{font-size:7.5px}.topic-stat strong{font-size:9px}
+.forum-category-list{padding:6px}.forum-cat{padding:9px}.forum-cat-icon{width:28px;height:28px}.forum-cat strong{font-size:9.5px}
+.forum-auth-card{border-radius:14px;padding:14px}.forum-auth-card strong{font-size:10px}
+.form-card{border-radius:16px;padding:18px;box-shadow:var(--shadow-xs)}.forum-input,.forum-select,.forum-textarea{border-radius:9px;background:color-mix(in srgb,var(--panel) 97%,transparent)}
+.topic-page{max-width:920px;margin:0 auto}.topic-head-card{border-radius:16px;padding:18px;box-shadow:var(--shadow-xs)}.topic-head-title{font-size:clamp(25px,3.6vw,39px)}.topic-content{font-size:11.5px}
+.reply-card{border-radius:13px;padding:13px;box-shadow:var(--shadow-xs)}.reply-card.solution{box-shadow:inset 3px 0 0 var(--green),var(--shadow-xs)}
+.profile-card{border-radius:15px;box-shadow:var(--shadow-xs)}.auth-card{box-shadow:var(--shadow-md)}
+.notification-row,.ticket-row{padding:12px 14px}.notification-row:hover,.ticket-row:hover{background:var(--panel-2)}
+.ticket-message{box-shadow:var(--shadow-xs)}
+.forum-filter-tabs{display:flex;gap:5px;flex-wrap:wrap;margin:12px 0}.forum-filter-tab{height:29px;padding:0 9px;border:1px solid var(--line);background:var(--panel);border-radius:999px;color:var(--muted);font:inherit;font-size:8px;cursor:pointer}.forum-filter-tab.active{background:var(--text);border-color:var(--text);color:var(--bg)}
+.support-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}.support-summary{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:12px}.support-summary strong{font-size:18px;display:block}.support-summary span{font-size:7.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.sticky-topic-actions{position:sticky;bottom:12px;margin-top:14px;padding:7px;background:color-mix(in srgb,var(--bg-2) 92%,transparent);backdrop-filter:blur(15px);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-sm)}
+@media(max-width:980px){.forum-side{position:static}.forum-grid{grid-template-columns:1fr}.support-summary-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:680px){.forum-shell{padding:24px 14px 72px}.forum-toolbar{top:62px}.support-summary-grid{grid-template-columns:1fr}.topic-row{grid-template-columns:34px minmax(0,1fr)}}
