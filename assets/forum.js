@@ -264,6 +264,23 @@ async function initSupportTicket(){
   supabase.channel("support-"+id).on("postgres_changes",{event:"INSERT",schema:"public",table:"support_ticket_messages",filter:"ticket_id=eq."+id},()=>location.reload()).subscribe();
 }
 
+
+async function initBookmarks(){
+  const host=$("#bookmarksList");if(!host)return;
+  if(!session){location.href=loginUrl();return}
+  const {data,error}=await supabase.from("forum_bookmarks").select(`
+    topic_id,created_at,
+    topic:forum_topics!forum_bookmarks_topic_id_fkey(
+      id,title,body,status,is_pinned,is_featured,view_count,reply_count,vote_score,last_activity_at,created_at,author_id,category_id,
+      category:forum_categories!forum_topics_category_id_fkey(id,slug,name,icon,kind),
+      author:profiles!forum_topics_author_id_fkey(id,username,display_name,avatar_url,role,reputation)
+    )
+  `).eq("user_id",session.user.id).order("created_at",{ascending:false});
+  if(error){host.innerHTML='<div class="forum-empty"><strong>Erreur</strong>'+esc(error.message)+'</div>';return}
+  const topics=(data||[]).map(x=>x.topic).filter(Boolean);
+  host.innerHTML=topics.length?topics.map(topicRow).join(""):'<div class="forum-empty"><strong>Aucun favori</strong>Enregistrez une discussion depuis sa page pour la retrouver ici.</div>';
+}
+
 async function initModeration(){
   const mount=$("#moderationMount");if(!mount)return;
   if(!session){location.href=loginUrl();return}
@@ -304,5 +321,6 @@ async function init(){
   else if(page==="support")await initSupport();
   else if(page==="support-ticket")await initSupportTicket();
   else if(page==="moderation")await initModeration();
+  else if(page==="bookmarks")await initBookmarks();
 }
 init();
