@@ -190,3 +190,13 @@ if(location.hash.startsWith('#chapitre-')&&location.pathname.endsWith('/'))locat
     feedback.querySelectorAll('[data-helpful]').forEach(b=>b.addEventListener('click',()=>sendFeedback(b.dataset.helpful==='true')));
   }
 })();
+
+(()=>{
+  const top=document.querySelector('.top-actions');if(!top)return;
+  if(!document.getElementById('forumAccount')&&!document.querySelector('[data-v5-account]')){
+    const parts=location.pathname.split('/').filter(Boolean),folder=parts.length>1?parts[parts.length-2]:'',nested=['wix','workspace','design-system','development','security'].includes(folder),p=nested?'../':'';
+    const a=document.createElement('a');a.className='icon-btn';a.href=p+'profile.html';a.dataset.v5Account='1';a.title='Mon compte';a.textContent='ME';
+    const q=document.getElementById('quickActionsBtn'),theme=document.getElementById('themeBtn');top.insertBefore(a,q||theme||null);
+  }
+  window.v5AccountFallback=true;
+})();
