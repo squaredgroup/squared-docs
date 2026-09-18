@@ -75,6 +75,13 @@ const ensureModernStack=()=>{
     link.dataset.sqTailwind='1';
     document.head.appendChild(link);
   }
+  if(!document.querySelector('script[data-sq-search-backend]')){
+    const searchScript=document.createElement('script');
+    searchScript.type='module';
+    searchScript.src=localHref('assets/search-backend.js');
+    searchScript.dataset.sqSearchBackend='1';
+    document.head.appendChild(searchScript);
+  }
   if(!document.querySelector('script[data-sq-react-ui]')){
     const script=document.createElement('script');
     script.type='module';
