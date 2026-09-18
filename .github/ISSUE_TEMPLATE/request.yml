@@ -1,0 +1,32 @@
+name: Demande de guide
+description: Proposer un nouveau sujet, une procédure ou un module documentaire.
+title: "[Request] "
+body:
+  - type: input
+    id: topic
+    attributes:
+      label: Sujet
+      placeholder: Exemple : procédure de livraison client
+    validations:
+      required: true
+  - type: textarea
+    id: need
+    attributes:
+      label: Besoin
+      description: Pourquoi cette documentation serait-elle utile ?
+    validations:
+      required: true
+  - type: textarea
+    id: audience
+    attributes:
+      label: Public concerné
+      description: Collaborateur, designer, développeur, client, responsable, etc.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Périmètre souhaité
+      description: Quelles questions cette future page devrait-elle couvrir ?
+    validations:
+      required: false
