@@ -141,3 +141,23 @@ Elle vérifie depuis le navigateur :
 - la disponibilité du backend support.
 
 Le script dédié est `assets/server-status.js`. Les tests n’exposent aucun secret privé et utilisent uniquement la clé publishable déjà prévue pour le frontend.
+
+
+### Extension écosystème
+
+Le monitoring couvre maintenant **Squared Group et Squared Workspace** en plus du Help Center.
+
+Routes Wix vérifiées depuis la configuration publiée du site :
+- `https://www.squaredgroup.studio/`
+- `/services`
+- `/projects`
+- `/products`
+- `/contact`
+- `/resources`
+- `/agency`
+- `/squared-build`
+- `/workspace`
+
+L’app principale Squared Workspace est testée via `https://workspace.squaredgroup.studio/`.
+
+Pour les sites externes, le navigateur teste leur accessibilité réseau avec une requête `no-cors`. Un statut vert signifie donc que la ressource est joignable depuis le navigateur ; il ne constitue pas encore une preuve de santé de chaque fonction backend interne.
