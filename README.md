@@ -85,7 +85,7 @@ Les règles d’accès sont protégées par RLS. GitHub n’est pas utilisé com
 
 ## Forum et support natifs
 
-Depuis la v5.0, la communauté et le support ne redirigent plus vers GitHub.
+Depuis la v6.0, la communauté et le support ne redirigent plus vers GitHub.
 
 Le frontend est hébergé par GitHub Pages, mais les données fonctionnelles sont stockées dans le projet Supabase dédié **Squared Help Center**.
 
@@ -103,9 +103,9 @@ Pages principales :
 GitHub reste uniquement la source de code et l’historique technique.
 
 
-## Expérience v5.0
+## Expérience v6.0
 
-La v5.0 ajoute une couche produit commune au Help Center :
+La v6.0 ajoute une couche produit commune au Help Center :
 
 - logo officiel dans le hero d’accueil ;
 - sidebar compacte et mode mini ;
