@@ -18,3 +18,23 @@
 .hc-sidebar-foot{margin:16px 3px 0;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font-size:8.5px;color:var(--muted);line-height:1.5}.hc-sidebar-foot strong{display:block;color:var(--text);font-size:9px;margin-bottom:2px}.hc-sidebar-foot a{color:var(--muted);text-decoration:none}.hc-sidebar-foot a:hover{color:var(--green)}
 @media(max-width:860px){.sidebar.hc-sidebar{width:min(86vw,300px);padding:18px 12px}.hc-brand-logo{width:36px;height:36px}}
 @media print{.sidebar.hc-sidebar{display:none!important}}
+
+/* v5 mini sidebar */
+.hc-collapse{margin:2px 2px 4px;width:calc(100% - 4px);height:30px;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--muted);font:inherit;font-size:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.hc-collapse:hover{background:var(--panel-2);color:var(--text)}
+@media(min-width:861px){
+  body.sidebar-mini{--sidebar:76px}
+  body.sidebar-mini .sidebar.hc-sidebar{width:76px;padding-left:9px;padding-right:9px}
+  body.sidebar-mini .hc-brand{justify-content:center;padding-left:0;padding-right:0}
+  body.sidebar-mini .hc-brand-logo{width:36px;height:36px}
+  body.sidebar-mini .hc-brand-copy,body.sidebar-mini .hc-search span:not(:first-child),body.sidebar-mini .hc-search kbd,body.sidebar-mini .hc-nav-title,body.sidebar-mini .hc-nav-chevron,body.sidebar-mini .hc-nav-link>span:last-child,body.sidebar-mini .hc-sub-toggle,body.sidebar-mini .hc-sub-links,body.sidebar-mini .hc-sidebar-foot,body.sidebar-mini .hc-collapse span:last-child{display:none!important}
+  body.sidebar-mini .hc-search{width:40px;margin-left:auto;margin-right:auto;justify-content:center;padding:0}
+  body.sidebar-mini .hc-nav-group{margin:4px 0}
+  body.sidebar-mini .hc-nav-group-trigger{height:4px;padding:0;pointer-events:none}
+  body.sidebar-mini .hc-nav-group-body{display:block!important}
+  body.sidebar-mini .hc-nav-link{margin:1px 0;padding:9px 0;justify-content:center}
+  body.sidebar-mini .hc-nav-ico{width:auto;min-width:0;text-align:center}
+  body.sidebar-mini .hc-item.has-children>.hc-nav-link{padding-right:0}
+  body.sidebar-mini .main{margin-left:76px}
+  body.sidebar-mini .hc-collapse{width:40px;margin-left:auto;margin-right:auto}
+}
