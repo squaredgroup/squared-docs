@@ -12,17 +12,17 @@ function relative(path){
 function Icon({name,style="outline"}){
   const html=window.SQIconly?.icon?.(name,style,"sm")||"";
   return h("span",{
-    className:"tw-inline-flex tw-items-center tw-justify-center",
+    className:"inline-flex items-center justify-center",
     dangerouslySetInnerHTML:{__html:html}
   });
 }
 
 function DockButton({label,icon,onClick,href,danger=false}){
   const className=[
-    "tw-flex","tw-h-9","tw-w-9","tw-items-center","tw-justify-center","tw-rounded-lg",
-    "tw-border","tw-border-transparent","tw-transition","tw-duration-150",
-    danger?"tw-text-rose-500":"tw-text-[var(--muted)]",
-    "hover:tw-bg-[var(--panel-2)]","hover:tw-text-[var(--text)]"
+    "flex","h-9","w-9","items-center","justify-center","rounded-lg",
+    "border","border-transparent","transition","duration-150",
+    danger?"text-rose-500":"text-[var(--muted)]",
+    "hover:bg-[var(--panel-2)]","hover:text-[var(--text)]"
   ].join(" ");
 
   const props={
@@ -69,14 +69,14 @@ function ModernDock(){
   const openSearch=()=>document.querySelector("[data-search-open]")?.click();
 
   return h("div",{
-      className:"sq-react-dock tw-fixed tw-bottom-4 tw-right-4 tw-z-[420] tw-hidden xl:tw-flex tw-items-center tw-gap-1 tw-rounded-xl tw-p-1.5 tw-shadow-lg sq-glass",
+      className:"sq-react-dock fixed bottom-4 right-4 z-[420] hidden xl:flex items-center gap-1 rounded-xl p-1.5 shadow-lg sq-glass",
       style:{position:"fixed",right:"16px",bottom:"16px",zIndex:420}
     },
     h("div",{
-      className:"tw-flex tw-h-9 tw-items-center tw-gap-2 tw-rounded-lg tw-px-2.5 tw-text-[10px] tw-font-medium tw-text-[var(--muted)]",
+      className:"flex h-9 items-center gap-2 rounded-lg px-2.5 text-[10px] font-medium text-[var(--muted)]",
       title:online?"Connexion active":"Hors ligne"
     },
-      h("span",{className:"tw-h-2 tw-w-2 tw-rounded-full "+(online?"tw-bg-[#7BE84E]":"tw-bg-rose-500")}),
+      h("span",{className:"h-2 w-2 rounded-full "+(online?"bg-[#7BE84E]":"bg-rose-500")}),
       collapsed?null:h("span",null,pageLabel)
     ),
     collapsed?null:h(React.Fragment,null,
