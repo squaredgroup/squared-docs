@@ -4,9 +4,15 @@
   <url><loc>https://docs.squaredgroup.studio/getting-started.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/faq.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/quick-guides.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/asking-for-help.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/community-guidelines.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/support-privacy.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/support.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/forum.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/status.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/server-status.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/incidents.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/scheduled-maintenance.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/changelog.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/wix-studio.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/workspace.html</loc><lastmod>2026-09-18</lastmod></url>
@@ -22,10 +28,26 @@
   <url><loc>https://docs.squaredgroup.studio/wix/wix-publishing.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/wix/wix-troubleshooting.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/workspace/workspace-overview.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-roles.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-activation.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-installation.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-account.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/workspace/workspace-navigation.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-members.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-roles.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-clients.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-collaborators.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-departments.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/workspace/workspace-projects.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-missions.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-tasks.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-planning.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-messages.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/workspace/workspace-documents.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-contracts.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-invitations.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-notifications.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-shortcuts.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-search.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/workspace/workspace-troubleshooting.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/design-system/ds-foundations.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/design-system/ds-typography.html</loc><lastmod>2026-09-18</lastmod></url>
@@ -43,26 +65,4 @@
   <url><loc>https://docs.squaredgroup.studio/security/security-secrets.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/security/security-public-docs.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/security/security-incidents.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/asking-for-help.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/community-guidelines.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/support-privacy.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/server-status.html</loc><lastmod>2026-09-18</lastmod></url>\n  <url><loc>https://docs.squaredgroup.studio/search.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/admin.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/scheduled-maintenance.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-activation.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-installation.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-account.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-members.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-clients.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-collaborators.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-departments.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-missions.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-tasks.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-planning.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-messages.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-notifications.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-contracts.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-invitations.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-shortcuts.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/workspace/workspace-search.html</loc><lastmod>2026-09-18</lastmod></url>
 </urlset>
