@@ -1,0 +1,13 @@
+{
+  "name": "squared-help-center",
+  "version": "6.1.0",
+  "private": true,
+  "description": "Squared Help Center — static-first documentation with React islands and Tailwind CSS.",
+  "scripts": {
+    "build:tailwind": "npx @tailwindcss/cli -i ./src/tailwind.css -o ./assets/tailwind.generated.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "tailwindcss": "^4.3.0"
+  }
+}
