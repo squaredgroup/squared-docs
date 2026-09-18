@@ -34,7 +34,7 @@
 <header class="article-head" style="max-width:800px;margin:0 auto 28px">
   <div class="eyebrow">Infrastructure · Monitoring</div>
   <h1>États des serveurs</h1>
-  <p>Vérification technique de l’écosystème Squared : site officiel, modules publics, Squared Workspace, Help Center, forum, support et backend. Les tests sont exécutés depuis votre navigateur.</p>
+  <p>Monitoring technique persistant de l’écosystème Squared : site officiel, modules publics, Squared Workspace, Help Center, forum, support et backend. Les vérifications sont exécutées côté serveur toutes les 5 minutes.</p>
   <div class="article-meta">
     <span class="pill" id="serverOverallBadge">Vérification en cours…</span>
     <span class="pill" id="serverCheckedAt">Initialisation…</span>
@@ -63,7 +63,7 @@
 <section class="section" style="padding-top:6px">
   <div class="section-head">
     <div><h2>Écosystème Squared</h2><p>Les services sont regroupés par produit. Les pages externes sont testées en disponibilité réseau ; les services internes disposent de contrôles plus précis.</p></div>
-    <button class="btn" id="refreshServerStatus">Relancer les vérifications</button>
+    <button class="btn" id="refreshServerStatus">Actualiser l’état</button>
   </div>
 
   <div class="server-group" id="squared-group">
@@ -153,7 +153,7 @@
 <section class="section">
   <div class="section-head"><div><h2>Comment interpréter cette page</h2><p>Le statut évite d’afficher une disponibilité fictive.</p></div></div>
   <div class="grid cols-3">
-    <div class="role-card"><span class="role-label">Opérationnel</span><h3>Test réussi</h3><p>Le composant a répondu correctement depuis votre navigateur. Pour un site externe, cela valide sa disponibilité réseau, pas toutes ses fonctions internes.</p></div>
+    <div class="role-card"><span class="role-label">Opérationnel</span><h3>Test réussi</h3><p>Le composant a répondu correctement au monitor serveur. Pour un site externe, cela valide sa disponibilité réseau depuis l’infrastructure de monitoring, pas l’intégralité de ses fonctions internes.</p></div>
     <div class="role-card"><span class="role-label" style="color:var(--orange)">Partiel</span><h3>Test incomplet</h3><p>Le service répond, mais certaines fonctions demandent une session ou ne peuvent pas être entièrement vérifiées publiquement.</p></div>
     <div class="role-card"><span class="role-label" style="color:var(--red)">Indisponible</span><h3>Test échoué</h3><p>Le composant n’a pas répondu dans le délai attendu ou a retourné une erreur.</p></div>
   </div>
