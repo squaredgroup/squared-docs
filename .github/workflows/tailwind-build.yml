@@ -1,0 +1,53 @@
+name: Build Tailwind CSS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - "assets/react-ui.js"
+      - "package.json"
+      - "*.html"
+      - "wix/**/*.html"
+      - "workspace/**/*.html"
+      - "design-system/**/*.html"
+      - "development/**/*.html"
+      - "security/**/*.html"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-tailwind:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Tailwind
+        run: npm install
+
+      - name: Build Tailwind CSS
+        run: npm run build:tailwind
+
+      - name: Commit generated CSS
+        shell: bash
+        run: |
+          if git diff --quiet -- assets/tailwind.generated.css; then
+            echo "Tailwind CSS already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/tailwind.generated.css
+          git commit -m "build: compile Tailwind CSS"
+          git push
