@@ -111,7 +111,7 @@ $('#menuBtn').addEventListener('click',()=>sidebar.classList.toggle('open'));
 $$('.nav-link').forEach(a=>a.addEventListener('click',()=>sidebar.classList.remove('open')));
 $('#printBtn').addEventListener('click',()=>window.print());
 // Scroll progress + scrollspy
-const prog=$('#progress'), docSections=$('.doc-section'), scrollSections=[$('.hero[id]'), ...docSections].filter(Boolean), navLinks=$('.nav-link');
+const prog=$('#progress'), docSections=[...document.querySelectorAll('.doc-section')], scrollSections=[document.querySelector('.hero[id]'), ...docSections].filter(Boolean), navLinks=[...document.querySelectorAll('.nav-link')];
 function onScroll(){
   const d=document.documentElement, max=d.scrollHeight-d.clientHeight; prog.style.width=(max>0?((d.scrollTop/max)*100):0)+'%';
   let active=scrollSections[0]; const y=window.scrollY+130; for(const s of scrollSections) if(s.offsetTop<=y) active=s;
@@ -127,7 +127,7 @@ $$('[data-checklist] input').forEach(i=>{const k='sq-docs-check:'+i.dataset.key;
 const toast=$('#toast'); function showToast(t){toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1500)}
 $$('.anchor-btn').forEach(b=>b.addEventListener('click',async()=>{const u=location.href.split('#')[0]+b.dataset.copy;try{await navigator.clipboard.writeText(u);showToast('Lien copié')}catch{location.hash=b.dataset.copy;showToast('Lien prêt à copier')}}));
 // Next buttons
-$('[data-next]').forEach((b,idx)=>{if(idx===docSections.length-1){b.textContent='Retour à Squared Docs ↑';b.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));}else b.addEventListener('click',()=>docSections[idx+1].scrollIntoView({behavior:'smooth'}));});
+[...document.querySelectorAll('[data-next]')].forEach((b,idx)=>{if(idx===docSections.length-1){b.textContent='Retour à Squared Docs ↑';b.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));}else b.addEventListener('click',()=>docSections[idx+1].scrollIntoView({behavior:'smooth'}));});
 // Search
 const modal=$('#searchModal'), input=$('#searchInput'), results=$('#searchResults');
 function openSearch(){modal.classList.add('open');input.value='';renderResults('');setTimeout(()=>input.focus(),30)}
