@@ -161,3 +161,28 @@ Routes Wix vérifiées depuis la configuration publiée du site :
 L’app principale Squared Workspace est testée via `https://workspace.squaredgroup.studio/`.
 
 Pour les sites externes, le navigateur teste leur accessibilité réseau avec une requête `no-cors`. Un statut vert signifie donc que la ressource est joignable depuis le navigateur ; il ne constitue pas encore une preuve de santé de chaque fonction backend interne.
+
+
+#### Modules complémentaires monitorés
+
+La page États des serveurs peut également déplier les modules publics suivants du site officiel :
+
+- Pricing
+- About
+- FAQ
+- Start a Project
+- Solutions
+- Process
+- Team
+- Clients
+- Partners
+- Roadmap
+- Jobs
+- Press
+- Newsletter
+- Booking
+- Security
+- Accessibility
+- Testimonials
+
+Ces routes proviennent de la configuration Wix publiée du site Squared Group.
