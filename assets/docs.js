@@ -203,3 +203,12 @@ if(location.hash.startsWith('#chapitre-')&&location.pathname.endsWith('/'))locat
   }
   window.v5AccountFallback=true;
 })();
+(()=>{
+  const filters=[...document.querySelectorAll('[data-changelog-filter]')],updates=[...document.querySelectorAll('[data-change-type]')];
+  if(!filters.length||!updates.length)return;
+  filters.forEach(btn=>btn.addEventListener('click',()=>{
+    filters.forEach(x=>x.classList.remove('active'));btn.classList.add('active');
+    const type=btn.dataset.changelogFilter;
+    updates.forEach(u=>u.hidden=type!=='all'&&u.dataset.changeType!==type);
+  }));
+})();
