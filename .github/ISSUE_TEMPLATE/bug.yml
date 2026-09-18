@@ -1,0 +1,44 @@
+name: Bug ou problème technique
+description: Signaler un comportement reproductible lié au Help Center ou à une ressource documentée.
+title: "[Bug] "
+body:
+  - type: input
+    id: area
+    attributes:
+      label: Produit ou zone concernée
+      placeholder: Wix Studio, Help Center, Workspace…
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Objectif
+      description: Que cherchiez-vous à faire ?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Étapes pour reproduire
+      description: Décrivez le scénario minimal.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Résultat observé
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Résultat attendu
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Vérification
+      options:
+        - label: J’ai vérifié que cette Issue ne contient aucun secret, token, donnée client ou information confidentielle.
+          required: true
