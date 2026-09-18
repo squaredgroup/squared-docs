@@ -1,6 +1,6 @@
-# Contribuer à Squared Docs
+# Contribuer à Squared Help Center
 
-Squared Docs doit rester précis, lisible, versionné et sûr.
+Squared Help Center doit rester précis, lisible, versionné et sûr.
 
 ## Types de contribution
 
@@ -51,3 +51,17 @@ Ne jamais publier :
 ## Questions et demandes
 
 Utiliser les templates GitHub Issues disponibles depuis la page Questions & contributions du site.
+
+
+## Navigation
+
+Ne jamais recopier manuellement la sidebar dans une page. La navigation globale est générée par `assets/sidebar.js` et stylée par `assets/sidebar.css`.
+
+Pour une nouvelle page :
+
+1. ajouter le placeholder `<aside class="sidebar hc-sidebar" id="sidebar"></aside>` ;
+2. charger `assets/sidebar.css` ;
+3. charger `assets/sidebar.js` avant `assets/docs.js` ;
+4. ajouter la nouvelle route une seule fois dans la configuration de `assets/sidebar.js`.
+
+Les ancres ou chapitres propres à une page doivent utiliser un sommaire local, pas la sidebar globale.
