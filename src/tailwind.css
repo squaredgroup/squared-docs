@@ -3,12 +3,6 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 @source "../assets/react-ui.js";
-@source "../*.html";
-@source "../wix/**/*.html";
-@source "../workspace/**/*.html";
-@source "../design-system/**/*.html";
-@source "../development/**/*.html";
-@source "../security/**/*.html";
 
 @theme {
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
