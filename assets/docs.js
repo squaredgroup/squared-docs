@@ -79,3 +79,114 @@ $$('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const target=b
 function toast(t){const el=$('#toast');if(!el)return;el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1400)}
 const blocks=$$('.doc-block[id]'),toc=$('#articleToc');if(toc&&blocks.length){toc.innerHTML='<strong>Sur cette page</strong>'+blocks.map(b=>'<a href="#'+b.id+'">'+b.querySelector('h2')?.textContent+'</a>').join('');const links=$$('a',toc);const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))})},{rootMargin:'-20% 0px -70%'});blocks.forEach(b=>io.observe(b))}
 if(location.hash.startsWith('#chapitre-')&&location.pathname.endsWith('/'))location.href=hrefFor('wix-studio.html')+location.hash;
+
+
+/* =========================================================
+   Squared Help Center v5.0 — global product interactions
+   ========================================================= */
+(()=>{
+  const rootPathParts=location.pathname.split('/').filter(Boolean);
+  const nestedDirs=new Set(['wix','workspace','design-system','development','security']);
+  const currentFolder=rootPathParts.length>1?rootPathParts[rootPathParts.length-2]:'';
+  const pfx=nestedDirs.has(currentFolder)?'../':'';
+  const local=p=>pfx+p;
+
+  // Quick actions
+  const actionsHost=document.querySelector('.top-actions');
+  if(actionsHost){
+    let trigger=document.getElementById('quickActionsBtn');
+    if(!trigger){
+      trigger=document.createElement('button');
+      trigger.className='icon-btn';
+      trigger.id='quickActionsBtn';
+      trigger.type='button';
+      trigger.setAttribute('aria-label','Actions rapides');
+      trigger.textContent='＋';
+      const theme=document.getElementById('themeBtn');
+      theme?actionsHost.insertBefore(trigger,theme):actionsHost.appendChild(trigger);
+    }
+    const menu=document.createElement('div');
+    menu.className='quick-actions-menu';
+    menu.id='quickActionsMenu';
+    menu.innerHTML=
+      '<a class="quick-action-item" href="'+local('forum-new.html')+'"><span>Q&A</span><span><strong>Nouvelle discussion</strong><em>Poser une question à la communauté</em></span></a>'+
+      '<a class="quick-action-item" href="'+local('support.html')+'"><span>SUP</span><span><strong>Nouvelle demande</strong><em>Ouvrir un ticket support privé</em></span></a>'+
+      '<button class="quick-action-item" type="button" data-v5-copy-link><span>↗</span><span><strong>Copier le lien</strong><em>Partager cette page</em></span></button>'+
+      '<button class="quick-action-item" type="button" data-v5-focus><span>F</span><span><strong>Mode focus</strong><em>Masquer la navigation pour lire</em></span></button>';
+    actionsHost.appendChild(menu);
+    trigger.addEventListener('click',e=>{e.stopPropagation();menu.classList.toggle('open')});
+    document.addEventListener('click',e=>{if(!menu.contains(e.target)&&e.target!==trigger)menu.classList.remove('open')});
+    menu.querySelector('[data-v5-copy-link]')?.addEventListener('click',async()=>{
+      try{await navigator.clipboard.writeText(location.href);toast('Lien copié')}catch{toast('Copie impossible')}
+      menu.classList.remove('open');
+    });
+    menu.querySelector('[data-v5-focus]')?.addEventListener('click',()=>{document.body.classList.toggle('focus-mode');menu.classList.remove('open')});
+  }
+
+  // Focus mode escape control
+  if(document.querySelector('.article-layout')&&!document.querySelector('.focus-exit')){
+    const b=document.createElement('button');b.className='btn focus-exit';b.type='button';b.textContent='Quitter le mode focus';b.addEventListener('click',()=>document.body.classList.remove('focus-mode'));document.body.appendChild(b);
+  }
+
+  // Keyboard navigation: g then key.
+  let gTimer=null,gArmed=false;
+  document.addEventListener('keydown',e=>{
+    if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;
+    const key=e.key.toLowerCase();
+    if(key==='g'){
+      gArmed=true;clearTimeout(gTimer);gTimer=setTimeout(()=>gArmed=false,900);return;
+    }
+    if(gArmed){
+      const destinations={h:'index.html',f:'forum.html',s:'support.html',p:'profile.html'};
+      if(destinations[key]){e.preventDefault();location.href=local(destinations[key])}
+      gArmed=false;clearTimeout(gTimer);
+    }
+    if(e.shiftKey&&key==='f'&&document.querySelector('.article-layout')){
+      e.preventDefault();document.body.classList.toggle('focus-mode');
+    }
+  });
+
+  // Rich article footer: related content + feedback.
+  const article=document.querySelector('.article');
+  if(article&&!document.querySelector('.article-feedback-v5')){
+    const path=location.pathname.toLowerCase();
+    let related=[
+      ['Bien démarrer','getting-started.html'],
+      ['Guides rapides','quick-guides.html'],
+      ['Forum','forum.html']
+    ];
+    if(path.includes('/wix/')||path.endsWith('/wix-studio.html'))related=[['Responsive','wix/wix-responsive.html'],['CMS & données','wix/wix-cms.html'],['Publication','wix/wix-publishing.html']];
+    else if(path.includes('/workspace/')||path.endsWith('/workspace.html'))related=[['Rôles & accès','workspace/workspace-roles.html'],['Projets & tâches','workspace/workspace-projects.html'],['Documents & livrables','workspace/workspace-documents.html']];
+    else if(path.includes('/design-system/')||path.endsWith('/design-system.html'))related=[['Composants','design-system/ds-components.html'],['Accessibilité','design-system/ds-accessibility.html'],['Motion','design-system/ds-motion.html']];
+    else if(path.includes('/development/')||path.endsWith('/development.html'))related=[['Git & branches','development/dev-git.html'],['Tests & QA','development/dev-testing.html'],['Release','development/dev-release.html']];
+    else if(path.includes('/security/')||path.endsWith('/security.html'))related=[['Documentation publique','security/security-public-docs.html'],['Accès & permissions','security/security-access.html'],['Incidents','security/security-incidents.html']];
+
+    const resolveRel=href=>{
+      if(pfx&&href.includes('/'))return '../'+href;
+      if(pfx&&!href.includes('/'))return '../'+href;
+      return href;
+    };
+    const tools=document.createElement('div');tools.className='article-tools';
+    tools.innerHTML='<div class="article-tool-card"><strong>Continuer</strong><p>Guides complémentaires liés à cette page.</p><div class="article-tool-actions">'+related.map(x=>'<a class="btn" href="'+resolveRel(x[1])+'">'+x[0]+'</a>').join('')+'</div></div><div class="article-tool-card"><strong>Besoin de plus d’aide ?</strong><p>Passez de la documentation à la communauté ou au support.</p><div class="article-tool-actions"><a class="btn" href="'+local('forum.html')+'">Forum</a><a class="btn" href="'+local('support.html')+'">Support privé</a></div></div>';
+    article.appendChild(tools);
+
+    const feedback=document.createElement('div');feedback.className='article-feedback-v5';
+    feedback.innerHTML='<div><strong>Cet article vous a-t-il aidé ?</strong><p>Votre retour améliore directement le Help Center.</p></div><div class="article-feedback-actions"><button class="btn" data-helpful="true">Oui</button><button class="btn" data-helpful="false">Non</button></div>';
+    article.appendChild(feedback);
+
+    const sendFeedback=async helpful=>{
+      let comment=null;
+      if(!helpful)comment=prompt('Qu’est-ce qui manque ou reste difficile à comprendre ? (optionnel)')||null;
+      try{
+        const res=await fetch('https://rhlkwuxpqvfgfuguzkfm.supabase.co/rest/v1/doc_feedback',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','apikey':'sb_publishable_8w-ywogKyIToaTTs05Ubfg_Uc2lAF58','Prefer':'return=minimal'},
+          body:JSON.stringify({page_path:location.pathname,helpful,comment})
+        });
+        if(!res.ok)throw new Error('feedback');
+        feedback.innerHTML='<div><strong>Merci pour votre retour.</strong><p>Il a bien été enregistré.</p></div>';
+      }catch{toast('Retour non enregistré — réessayez plus tard')}
+    };
+    feedback.querySelectorAll('[data-helpful]').forEach(b=>b.addEventListener('click',()=>sendFeedback(b.dataset.helpful==='true')));
+  }
+})();
