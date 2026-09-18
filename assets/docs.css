@@ -597,3 +597,16 @@ html[data-theme="dark"] .icon-btn.danger:hover{
   border-top:0;
   padding:0 13px;
 }
+
+
+/* =========================================================
+   REACT ISLANDS + TAILWIND FALLBACK
+   ========================================================= */
+.sq-react-dock{
+  font-family:"Space Grotesk",sans-serif;
+  color:var(--text);
+}
+#sq-react-ui-root:empty{display:none}
+@media(max-width:1279px){
+  .sq-react-dock{display:none!important}
+}
