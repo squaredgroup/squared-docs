@@ -1,0 +1,27 @@
+@layer theme, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@source "../assets/react-ui.js";
+@source "../*.html";
+@source "../wix/**/*.html";
+@source "../workspace/**/*.html";
+@source "../design-system/**/*.html";
+@source "../development/**/*.html";
+@source "../security/**/*.html";
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --color-squared: #7BE84E;
+}
+
+@utility sq-glass {
+  background: color-mix(in srgb, var(--bg-2) 92%, transparent);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+}
+
+@utility sq-surface {
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
