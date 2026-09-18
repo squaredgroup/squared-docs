@@ -31,6 +31,7 @@ const MAP={
   "site-security":"sg-security",
   "site-accessibility":"sg-accessibility",
   "site-testimonials":"sg-testimonials",
+  "workspace-native":"workspace-native",
   "workspace-app":"workspace-app",
   "workspace-landing":"workspace-public",
   "frontend":"help-center",
@@ -44,7 +45,7 @@ const MAP={
 
 const GROUPS={
   "squared-group":["squared-site","site-services","site-projects","site-products","site-contact","site-resources","site-agency","site-build","site-pricing","site-about","site-faq","site-start-project","site-solutions","site-process","site-team","site-clients","site-partners","site-roadmap","site-jobs","site-press","site-newsletter","site-book","site-security","site-accessibility","site-testimonials"],
-  workspace:["workspace-app","workspace-landing"],
+  workspace:["workspace-native","workspace-app","workspace-landing"],
   "help-center":["frontend","domain","forum","support"],
   backend:["auth","database","realtime"]
 };
@@ -79,7 +80,7 @@ function renderExtras(){
 }
 
 function worst(keys){
-  const states=keys.map(k=>services[k]?.current_status).filter(Boolean);
+  const states=keys.map(k=>services[k]).filter(Boolean).filter(c=>c.aggregate_status!==false).map(c=>c.current_status);
   if(!states.length)return "unknown";
   if(states.some(s=>s==="major_outage"))return "major_outage";
   if(states.some(s=>s==="partial_outage"))return "partial_outage";
@@ -121,9 +122,12 @@ async function load(){
     if(!row||!comp)return;
     services[key]=comp;
     const state=row.querySelector("[data-state]"),lat=row.querySelector("[data-latency]");
-    if(state){state.className="server-badge "+stateClass(comp.current_status);state.textContent=stateLabel(comp.current_status)}
+    let label=stateLabel(comp.current_status),cls=stateClass(comp.current_status);
+    if(comp.lifecycle==="development"){label="En développement";cls="checking"}
+    else if(comp.lifecycle==="beta"&&comp.current_status==="unknown"){label="Beta · suivi manuel";cls="warn"}
+    if(state){state.className="server-badge "+cls;state.textContent=label}
     const u=up[comp.id];
-    if(lat)lat.textContent=(comp.response_ms!=null?comp.response_ms+" ms":"—")+(u?.uptime_percent!=null?" · "+Number(u.uptime_percent).toFixed(2)+"%":"");
+    if(lat)lat.textContent=(comp.aggregate_status===false?comp.lifecycle.toUpperCase():(comp.response_ms!=null?comp.response_ms+" ms":"—")+(u?.uptime_percent!=null?" · "+Number(u.uptime_percent).toFixed(2)+"%":""));
   });
   renderGroups();
 
