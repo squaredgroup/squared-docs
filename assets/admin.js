@@ -79,7 +79,8 @@ async function loadKnowledge(){
     db.from("doc_feedback").select("*").eq("helpful",false).order("created_at",{ascending:false}).limit(30)
   ]);
   $("#knowledgeCount").textContent=(docs||[]).length+" documents";
-  $("#knowledgeList").innerHTML=(docs||[]).map(d=>'<a class="admin-list-row" href="'+esc(d.href)+'"><span><strong>'+esc(d.title)+'</strong><small>'+esc(d.product||d.kind)+' · '+esc(d.difficulty)+'</small></span><span class="badge '+(d.next_review_at&&new Date(d.next_review_at)<new Date()?"red":"")+'">'+esc(d.status)+'</span></a>').join("");
+  $("#knowledgeList").innerHTML=(docs||[]).map(d=>'<div class="admin-list-row"><span><strong>'+esc(d.title)+'</strong><small>'+esc(d.product||d.kind)+' · '+esc(d.difficulty)+(d.next_review_at?' · prochaine revue '+fmt(d.next_review_at):'')+'</small></span><span style="display:flex;gap:5px;align-items:center"><a class="mini-action" href="'+esc(d.href)+'">Ouvrir</a><button class="mini-action" data-review-doc="'+d.id+'">Revu</button><span class="badge '+(d.next_review_at&&new Date(d.next_review_at)<new Date()?"red":"")+'">'+esc(d.status)+'</span></span></div>').join("");
+  $("[data-review-doc]").forEach(b=>b.addEventListener("click",async()=>{const now=new Date(),next=new Date(now.getTime()+120*86400000);const {error}=await db.from("knowledge_documents").update({last_reviewed_at:now.toISOString(),next_review_at:next.toISOString()}).eq("id",b.dataset.reviewDoc);if(error)alert(error.message);else loadKnowledge()}));
   $("#knowledgeFeedback").innerHTML=(feedback||[]).length?(feedback||[]).map(f=>'<div class="admin-list-row"><span><strong>'+esc(f.page_path)+'</strong><small>'+esc(f.comment||"Sans commentaire")+'</small></span><span>'+fmt(f.created_at)+'</span></div>').join(""):empty("Aucun retour négatif","Les articles n’ont pas reçu de feedback négatif.");
 }
 
@@ -102,7 +103,8 @@ async function loadSupport(){
   $("#supportInbox").innerHTML=rows.length?rows.map(t=>'<a class="admin-list-row" href="support-ticket.html?id='+t.id+'"><span><strong>#SQ-'+String(t.ticket_number).padStart(5,"0")+' · '+esc(t.subject)+'</strong><small>'+esc(t.product)+' · '+esc(t.requester?.display_name||"Membre")+' · '+esc(t.priority)+'</small></span><span class="badge">'+esc(t.status)+'</span></a>').join(""):empty("Inbox vide","Aucun ticket support.");
 
   const {data:macros}=await db.from("support_macros").select("*").order("name");
-  $("#supportMacros").innerHTML=(macros||[]).map(m=>'<div class="admin-list-row"><span><strong>'+esc(m.name)+'</strong><small>'+esc(m.body.slice(0,90))+'</small></span><span class="badge">'+(m.is_active?"active":"off")+'</span></div>').join("");
+  $("#supportMacros").innerHTML=(macros||[]).map(m=>'<div class="admin-list-row"><span><strong>'+esc(m.name)+'</strong><small>'+esc(m.body.slice(0,90))+'</small></span><span style="display:flex;gap:5px;align-items:center"><button class="mini-action" data-toggle-macro="'+m.id+'" data-active="'+(m.is_active?"1":"0")+'">'+(m.is_active?"Désactiver":"Activer")+'</button><span class="badge">'+(m.is_active?"active":"off")+'</span></span></div>').join("");
+  $("[data-toggle-macro]").forEach(b=>b.addEventListener("click",async()=>{await db.from("support_macros").update({is_active:b.dataset.active!=="1"}).eq("id",b.dataset.toggleMacro);loadSupport()}));
 }
 
 async function loadStatus(){
@@ -114,6 +116,8 @@ async function loadStatus(){
   components=comps||[];
   $("#statusComponents").innerHTML=components.map(c=>'<div class="admin-list-row"><span><strong>'+esc(c.name)+'</strong><small>'+esc(c.product)+' · '+(c.response_ms??"—")+' ms</small></span><span class="server-badge '+(c.current_status==="operational"?"ok":c.current_status==="degraded"?"warn":c.current_status==="unknown"?"checking":"down")+'">'+esc(c.current_status)+'</span></div>').join("");
   $("#incidentComponents").innerHTML=components.map(c=>'<option value="'+c.id+'">'+esc(c.product+" — "+c.name)+'</option>').join("");
+  $("#maintenanceComponents").innerHTML=components.map(c=>'<option value="'+c.id+'">'+esc(c.product+" — "+c.name)+'</option>').join("");
+  $("#incidentUpdateIncident").innerHTML=(incidents||[]).filter(i=>i.status!=="resolved").map(i=>'<option value="'+i.id+'">'+esc(i.title)+'</option>').join("");
   $("#incidentList").innerHTML=(incidents||[]).length?(incidents||[]).map(i=>'<a class="admin-list-row" href="incident.html?id='+i.id+'"><span><strong>'+esc(i.title)+'</strong><small>'+esc(i.severity)+' · '+fmt(i.started_at)+'</small></span><span class="badge">'+esc(i.status)+'</span></a>').join(""):empty("Aucun incident","Aucun incident enregistré.");
   $("#maintenanceList").innerHTML=(maintenance||[]).length?(maintenance||[]).map(m=>'<div class="admin-list-row"><span><strong>'+esc(m.title)+'</strong><small>'+fmt(m.starts_at)+' → '+fmt(m.ends_at)+'</small></span><span class="badge">'+esc(m.status)+'</span></div>').join(""):empty("Aucune maintenance","Aucune maintenance planifiée.");
 }
@@ -137,6 +141,14 @@ async function loadAnalytics(){
   $("#pageAnalytics").innerHTML=Object.entries(pCounts).sort((a,b)=>b[1]-a[1]).slice(0,20).map(([p,n])=>'<div class="admin-list-row"><span><strong>'+esc(p)+'</strong></span><span>'+n+'</span></div>').join("")||empty("Pas encore de trafic","Les pages populaires apparaîtront ici.");
 }
 
+$("#macroCreateForm")?.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const {error}=await db.from("support_macros").insert({name:$("#macroName").value.trim(),category:$("#macroCategory").value.trim()||null,body:$("#macroBody").value.trim(),created_by:me.id});
+  $("#macroAlert").className="forum-alert show "+(error?"error":"success");
+  $("#macroAlert").textContent=error?error.message:"Macro créée.";
+  if(!error){e.currentTarget.reset();loadSupport()}
+});
+
 $("#incidentCreateForm")?.addEventListener("submit",async e=>{
   e.preventDefault();
   const selected=[...$("#incidentComponents").selectedOptions].map(x=>x.value);
@@ -152,16 +164,31 @@ $("#incidentCreateForm")?.addEventListener("submit",async e=>{
   location.reload();
 });
 
+$("#incidentUpdateForm")?.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const id=$("#incidentUpdateIncident").value,status=$("#incidentUpdateStatus").value,message=$("#incidentUpdateMessage").value.trim();
+  if(!id)return;
+  const patch={status};
+  if(status==="resolved")patch.resolved_at=new Date().toISOString();else patch.resolved_at=null;
+  const {error}=await db.from("incidents").update(patch).eq("id",id);
+  if(!error)await db.from("incident_updates").insert({incident_id:id,status,message,author_id:me.id});
+  $("#incidentUpdateAlert").className="forum-alert show "+(error?"error":"success");
+  $("#incidentUpdateAlert").textContent=error?error.message:"Mise à jour publiée.";
+  if(!error){e.currentTarget.reset();loadStatus()}
+});
+
 $("#maintenanceCreateForm")?.addEventListener("submit",async e=>{
   e.preventDefault();
-  const {error}=await db.from("maintenance_windows").insert({
+  const selected=[...$("#maintenanceComponents").selectedOptions].map(x=>x.value);
+  const {data:maintenance,error}=await db.from("maintenance_windows").insert({
     title:$("#maintenanceTitle").value.trim(),
     description:"",
     starts_at:new Date($("#maintenanceStart").value).toISOString(),
     ends_at:new Date($("#maintenanceEnd").value).toISOString(),
     created_by:me.id
-  });
+  }).select("id").single();
   if(error){$("#maintenanceAlert").className="forum-alert show error";$("#maintenanceAlert").textContent=error.message;return}
+  if(selected.length)await db.from("maintenance_components").insert(selected.map(component_id=>({maintenance_id:maintenance.id,component_id})));
   location.reload();
 });
 
