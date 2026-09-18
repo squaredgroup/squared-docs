@@ -122,6 +122,7 @@ const groups=[
    {href:'security/security-incidents.html',label:'Incidents'}]}]},
 {id:'resources',title:'Ressources',open:false,items:[
  {href:'status.html',icon:'status',label:'Statut'},
+ {href:'server-status.html',icon:'status',label:'États des serveurs'},
  {href:'profile.html',icon:'account',label:'Mon compte'},
  {href:'bookmarks.html',icon:'favorite',label:'Favoris'},
  {href:'notifications.html',icon:'notifications',label:'Notifications'},
