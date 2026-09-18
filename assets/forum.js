@@ -54,7 +54,7 @@ async function renderAccount(){
     return;
   }
   const n=await unreadCount();
-  host.innerHTML='<a class="account-chip" href="profile.html">'+avatar(me)+'<span>'+esc(me?.display_name||"Mon compte")+'</span>'+(n?'<span class="notification-dot">'+n+'</span>':'')+'</a><button class="icon-btn" id="forumLogout" title="Se déconnecter">↪</button>';
+  host.innerHTML='<a class="account-chip" href="profile.html">'+avatar(me)+'<span>'+esc(me?.display_name||"Mon compte")+'</span></a><a class="icon-btn" href="notifications.html" title="Notifications">🔔'+(n?'<span class="notification-dot">'+n+'</span>':'')+'</a>'+(staff(me)?'<a class="icon-btn" href="moderation.html" title="Modération">MOD</a>':'')+'<button class="icon-btn" id="forumLogout" title="Se déconnecter">↪</button>';
   $("#forumLogout")?.addEventListener("click",async()=>{await supabase.auth.signOut();location.href="index.html"});
 }
 async function getCategories(){
@@ -263,6 +263,35 @@ async function initSupportTicket(){
   $("#closeTicket")?.addEventListener("click",async()=>{await supabase.from("support_tickets").update({status:t.status==="closed"?"open":"closed"}).eq("id",id);location.reload()});
   supabase.channel("support-"+id).on("postgres_changes",{event:"INSERT",schema:"public",table:"support_ticket_messages",filter:"ticket_id=eq."+id},()=>location.reload()).subscribe();
 }
+
+async function initModeration(){
+  const mount=$("#moderationMount");if(!mount)return;
+  if(!session){location.href=loginUrl();return}
+  if(!staff(me)){mount.innerHTML='<div class="forum-empty"><strong>Accès refusé</strong>Cette page est réservée à l’équipe de modération.</div>';return}
+
+  const [{data:reports,error:rErr},{data:users,error:uErr},{data:cats,error:cErr},{data:tickets,error:tErr}]=await Promise.all([
+    supabase.from("forum_reports").select(`id,reason,details,status,created_at,topic_id,reply_id,reporter:profiles!forum_reports_reporter_id_fkey(id,display_name,username),topic:forum_topics!forum_reports_topic_id_fkey(id,title),reply:forum_replies!forum_reports_reply_id_fkey(id,body)`).order("created_at",{ascending:false}).limit(100),
+    supabase.from("profiles").select("id,username,display_name,avatar_url,role,is_banned,reputation,created_at").order("created_at",{ascending:false}).limit(200),
+    supabase.from("forum_categories").select("*").order("sort_order"),
+    supabase.from("support_tickets").select(`id,subject,status,priority,last_activity_at,requester:profiles!support_tickets_requester_id_fkey(id,display_name,username)`).neq("status","closed").order("last_activity_at",{ascending:false}).limit(50)
+  ]);
+  if(rErr||uErr||cErr||tErr){mount.innerHTML='<div class="forum-empty"><strong>Erreur</strong>'+esc((rErr||uErr||cErr||tErr).message)+'</div>';return}
+
+  mount.innerHTML='<div class="grid cols-2"><section class="forum-panel"><div class="forum-panel-head"><h2>Signalements</h2><span>'+(reports?.length||0)+'</span></div><div id="moderationReports"></div></section><section class="forum-panel"><div class="forum-panel-head"><h2>Tickets support ouverts</h2><span>'+(tickets?.length||0)+'</span></div><div id="moderationTickets"></div></section></div><section class="forum-panel" style="margin-top:16px"><div class="forum-panel-head"><h2>Catégories</h2></div><div id="moderationCategories"></div></section><section class="forum-panel" style="margin-top:16px"><div class="forum-panel-head"><h2>Membres</h2><span>'+(users?.length||0)+'</span></div><div id="moderationUsers"></div></section>';
+
+  $("#moderationReports").innerHTML=reports?.length?reports.map(r=>'<div class="ticket-row"><span><strong>'+esc(r.reason)+'</strong><span>'+esc(r.topic?.title||r.reply?.body?.slice(0,80)||"Contenu")+' · '+dt(r.created_at)+'</span></span><select class="forum-select" data-report-status="'+r.id+'"><option value="open">open</option><option value="reviewing">reviewing</option><option value="resolved">resolved</option><option value="dismissed">dismissed</option></select></div>').join(""):'<div class="forum-empty">Aucun signalement.</div>';
+  $("[data-report-status]").forEach(s=>{const r=reports.find(x=>x.id===s.dataset.reportStatus);s.value=r.status;s.addEventListener("change",async()=>{await supabase.from("forum_reports").update({status:s.value,reviewed_by:session.user.id,reviewed_at:new Date().toISOString()}).eq("id",r.id)})});
+
+  $("#moderationTickets").innerHTML=tickets?.length?tickets.map(t=>'<a class="ticket-row" href="support-ticket.html?id='+t.id+'"><span><strong>'+esc(t.subject)+'</strong><span>'+esc(t.requester?.display_name||"Membre")+' · '+ago(t.last_activity_at)+'</span></span><span class="ticket-status">'+esc(t.status)+'</span></a>').join(""):'<div class="forum-empty">Aucun ticket ouvert.</div>';
+
+  $("#moderationCategories").innerHTML=cats.map(cat=>'<div class="ticket-row"><span><strong>'+esc(cat.name)+'</strong><span>'+esc(cat.kind)+' · '+esc(cat.slug)+'</span></span><button class="mini-action" data-cat-lock="'+cat.id+'">'+(cat.is_locked?"Déverrouiller":"Verrouiller")+'</button></div>').join("");
+  $("[data-cat-lock]").forEach(b=>b.addEventListener("click",async()=>{const cat=cats.find(x=>x.id===b.dataset.catLock);await supabase.from("forum_categories").update({is_locked:!cat.is_locked}).eq("id",cat.id);location.reload()}));
+
+  $("#moderationUsers").innerHTML=users.map(u=>'<div class="ticket-row"><span style="display:flex;gap:9px;align-items:center">'+avatar(u)+'<span><strong>'+esc(u.display_name)+'</strong><span>@'+esc(u.username)+' · '+esc(u.role)+' · '+u.reputation+' pts</span></span></span><span style="display:flex;gap:6px;align-items:center"><button class="mini-action'+(u.is_banned?" active":"")+'" data-ban="'+u.id+'">'+(u.is_banned?"Réactiver":"Suspendre")+'</button>'+(me.role==="admin"?'<select class="forum-select" data-role="'+u.id+'"><option value="member">member</option><option value="moderator">moderator</option><option value="admin">admin</option></select>':'')+'</span></div>').join("");
+  $("[data-ban]").forEach(b=>b.addEventListener("click",async()=>{const u=users.find(x=>x.id===b.dataset.ban);await supabase.from("profiles").update({is_banned:!u.is_banned}).eq("id",u.id);location.reload()}));
+  $("[data-role]").forEach(s=>{const u=users.find(x=>x.id===s.dataset.role);s.value=u.role;s.addEventListener("change",async()=>{const {error}=await supabase.from("profiles").update({role:s.value}).eq("id",u.id);if(error)alert(error.message)})});
+}
+
 async function init(){
   await initAuth();
   const page=document.body.dataset.forumPage||"";
@@ -274,5 +303,6 @@ async function init(){
   else if(page==="notifications")await initNotifications();
   else if(page==="support")await initSupport();
   else if(page==="support-ticket")await initSupportTicket();
+  else if(page==="moderation")await initModeration();
 }
 init();
