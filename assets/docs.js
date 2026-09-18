@@ -20,8 +20,8 @@ const SEARCH=[
 {title:'Bien démarrer',desc:'Comprendre comment utiliser la documentation, la communauté et le support.',href:'getting-started.html',type:'Guide',icon:'GO',tags:'debut commencer aide recherche canal'},
 {title:'FAQ',desc:'Réponses courtes aux questions fréquentes.',href:'faq.html',type:'Guide',icon:'FAQ',tags:'questions reponses aide forum support'},
 {title:'Guides rapides',desc:'Procédures courtes pour les actions les plus fréquentes.',href:'quick-guides.html',type:'Guide',icon:'QG',tags:'quick guide procedure publication incident responsive'},
-{title:'Support',desc:'Choisir entre communauté, ticket public ou canal confidentiel.',href:'support.html',type:'Support',icon:'SUP',tags:'support aide contact ticket assistance'},
-{title:'Communauté',desc:'Forum public : questions, réponses, idées et annonces.',href:'community.html',type:'Communauté',icon:'COM',tags:'forum discussion question réponse idée github discussions'},
+{title:'Support privé',desc:'Créer et suivre une demande de support directement dans le Help Center.',href:'support.html',type:'Support',icon:'SUP',tags:'support aide contact ticket assistance privé'},
+{title:'Forum Squared',desc:'Questions, réponses, idées, annonces et échanges directement dans le Help Center.',href:'forum.html',type:'Communauté',icon:'COM',tags:'forum discussion question réponse idée communauté'},
 {title:'Statut',desc:'État et dépendances du Squared Help Center.',href:'status.html',type:'Ressource',icon:'STS',tags:'status statut incident disponibilité github pages'},
 {title:'Nouveautés',desc:'Historique des versions et changements du Help Center.',href:'changelog.html',type:'Mises à jour',icon:'NEW',tags:'changelog updates versions nouveautés'},
 
