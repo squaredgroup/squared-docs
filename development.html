@@ -1,10 +1,10 @@
 <!doctype html><html lang="fr" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#F7F7F4"><meta name="robots" content="index,follow"><title>Développement — Squared Docs</title><meta name="description" content="Conventions techniques pour maintenir des projets lisibles, testables, versionnés et sûrs : architecture, Git, revue, environnements, tests et releases."><meta property="og:type" content="website"><meta property="og:title" content="Développement — Squared Docs"><meta property="og:description" content="Conventions techniques pour maintenir des projets lisibles, testables, versionnés et sûrs : architecture, Git, revue, environnements, tests et releases."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/docs.css"></head><body><div id="progress" class="progress"></div><div class="app">
 <aside class="sidebar" id="sidebar">
-  <a class="brand" href="index.html"><span class="brand-mark">S²</span><span class="brand-copy"><strong>SQUARED DOCS</strong><span>Documentation · Squared Group</span></span></a>
+  <a class="brand" href="index.html"><span class="brand-mark">S²</span><span class="brand-copy"><strong>SQUARED HELP</strong><span>Support · Docs · Community</span></span></a>
   <button class="side-search" data-search-open><span>⌕</span><span>Rechercher</span><kbd>⌘K</kbd></button>
   <nav>
     <div class="nav-group"><div class="nav-title">Documentation</div>
-      <a class="nav-link " href="index.html"><span class="nav-ico">⌂</span>Accueil</a>
+      <a class="nav-link " href="index.html"><span class="nav-ico">⌂</span>Accueil</a><a class="nav-link" href="support.html"><span class="nav-ico">SUP</span>Support</a><a class="nav-link" href="community.html"><span class="nav-ico">COM</span>Communauté</a>
       <a class="nav-link " href="wix-studio.html"><span class="nav-ico">WX</span>Wix Studio</a>
       <a class="nav-link " href="workspace.html"><span class="nav-ico">WS</span>Squared Workspace</a>
       <a class="nav-link " href="design-system.html"><span class="nav-ico">DS</span>Design System</a>
@@ -16,10 +16,10 @@
     </div>
     <div class="nav-group"><div class="nav-title">Communauté</div>
       <a class="nav-link " href="changelog.html"><span class="nav-ico">↺</span>Changelog</a>
-      <a class="nav-link " href="community.html"><span class="nav-ico">?</span>Questions & contributions</a>
+      <a class="nav-link " href="community.html"><span class="nav-ico">?</span>Communauté</a>
     </div>
   </nav>
-  <div class="sidebar-foot"><strong>Squared Docs · v2.1</strong>Light par défaut · Dark disponible<br>Documentation versionnée sur GitHub.</div>
+  <div class="sidebar-foot"><strong>Squared Help Center · v3.0</strong>Light par défaut · Dark disponible<br>Documentation versionnée sur GitHub.</div>
 </aside><main class="main">
 <header class="topbar"><button class="icon-btn mobile-menu" id="menuBtn" aria-label="Ouvrir le menu">☰</button><div class="crumbs"><a href="index.html">Squared Docs</a><span>›</span><strong>Développement</strong></div><div class="top-actions"><button class="btn hide-mobile" data-search-open>Rechercher <span>⌘K</span></button><a class="btn hide-mobile" href="community.html">Contribuer</a><button class="icon-btn" id="themeBtn" aria-label="Changer de thème">◐</button></div></header><div class="shell"><div class="article-layout"><article class="article"><header class="article-head"><div class="eyebrow">Engineering · Squared Docs</div><h1>Développement</h1><p>Conventions techniques pour maintenir des projets lisibles, testables, versionnés et sûrs : architecture, Git, revue, environnements, tests et releases.</p><div class="article-meta"><span class="pill live">Fondations</span><span class="pill">Mise à jour · 18.09.2026</span><span class="pill">Versionnée</span></div></header>
  <section class="doc-block" id="principles"><h2>Principes d’engineering</h2><ul><li>Une source de vérité par fonctionnalité.</li><li>Des responsabilités clairement séparées.</li><li>Pas de secrets dans le code ou le dépôt.</li><li>Des changements petits, lisibles et réversibles.</li><li>Une vérification avant chaque release.</li></ul></section>
