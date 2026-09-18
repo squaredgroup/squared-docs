@@ -532,3 +532,22 @@ html[data-theme="dark"] .icon-btn.danger:hover{
   .server-badge,.server-meta{width:max-content}
   .server-summary{grid-template-columns:1fr}
 }
+
+
+/* Ecosystem server groups */
+.server-group{margin:0 0 28px}
+.server-group-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:0 0 10px;border-bottom:1px solid var(--line);
+}
+.server-group-head>div{display:flex;align-items:center;gap:9px}
+.server-group-head strong{display:block;font-size:11px}
+.server-group-head small{display:block;font-size:7.5px;color:var(--muted);margin-top:2px}
+.server-group-icon{
+  width:30px;height:30px;border-radius:9px;border:1px solid var(--line);
+  background:var(--panel);display:grid;place-items:center;color:var(--muted);
+}
+.server-group-icon .sq-iconly{width:15px;height:15px}
+@media(max-width:760px){
+  .server-group-head{align-items:flex-start}
+}
