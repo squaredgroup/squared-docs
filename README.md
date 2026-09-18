@@ -186,3 +186,42 @@ La page États des serveurs peut également déplier les modules publics suivant
 - Testimonials
 
 Ces routes proviennent de la configuration Wix publiée du site Squared Group.
+
+
+## Stack moderne
+
+Depuis la v6.1, le Help Center reste **static-first** pour la vitesse et le SEO, mais utilise aussi une couche moderne :
+
+### React 19
+`assets/react-ui.js` contient des React islands chargées en ESM. React améliore les zones interactives sans prendre le contrôle de toute la page HTML.
+
+Cette architecture évite :
+- un écran blanc au chargement ;
+- une migration massive des pages existantes ;
+- une dépendance à React pour lire la documentation.
+
+### Tailwind CSS v4
+Tailwind est compilé en CSS statique :
+
+```text
+src/tailwind.css
+→ @tailwindcss/cli
+→ assets/tailwind.generated.css
+```
+
+Le build est automatisé par :
+
+```text
+.github/workflows/tailwind-build.yml
+```
+
+Tailwind est importé **sans Preflight** pour ne pas réinitialiser les styles historiques du Help Center.
+
+### JavaScript progressif
+Les scripts historiques restent modulaires :
+- `assets/sidebar.js`
+- `assets/docs.js`
+- `assets/forum.js`
+- `assets/server-status.js`
+
+React complète ces scripts au lieu de les remplacer brutalement.
