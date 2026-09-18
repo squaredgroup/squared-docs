@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#F7F7F4">
+<meta name="robots" content="index,follow">
+<title>États des serveurs — Squared Help Center</title>
+<meta name="description" content="État détaillé et vérifications techniques des services du Squared Help Center.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/sidebar.css">
+<link rel="stylesheet" href="assets/forum.css">
+</head>
+<body data-forum-page="server-status">
+<div id="progress" class="progress"></div>
+<div class="app">
+<aside class="sidebar hc-sidebar" id="sidebar"></aside>
+<main class="main">
+<header class="topbar">
+  <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Ouvrir le menu"></button>
+  <div class="crumbs"><a href="index.html">Help Center</a><span>›</span><strong>États des serveurs</strong></div>
+  <div class="top-actions">
+    <button class="btn command-search hide-mobile" data-search-open><span>Rechercher</span><span class="keyboard-hint">⌘K</span></button>
+    <span id="forumAccount"></span>
+    <button class="icon-btn" id="quickActionsBtn" aria-label="Actions rapides"></button>
+    <button class="icon-btn" id="themeBtn" aria-label="Changer de thème"></button>
+  </div>
+</header>
+
+<div class="shell">
+<header class="article-head" style="max-width:800px;margin:0 auto 28px">
+  <div class="eyebrow">Infrastructure · Monitoring</div>
+  <h1>États des serveurs</h1>
+  <p>Vérification technique des composants nécessaires au Help Center, au forum et au support privé. Les tests sont exécutés depuis votre navigateur.</p>
+  <div class="article-meta">
+    <span class="pill" id="serverOverallBadge">Vérification en cours…</span>
+    <span class="pill" id="serverCheckedAt">Initialisation…</span>
+  </div>
+</header>
+
+<div class="server-summary">
+  <div class="server-summary-card">
+    <div class="server-summary-top"><strong>Frontend</strong><span class="server-summary-icon" data-icon-key="development"></span></div>
+    <p id="summaryFrontend">Vérification en cours…</p>
+  </div>
+  <div class="server-summary-card">
+    <div class="server-summary-top"><strong>Domaine & HTTPS</strong><span class="server-summary-icon" data-icon-key="security"></span></div>
+    <p id="summaryDomain">Vérification en cours…</p>
+  </div>
+  <div class="server-summary-card">
+    <div class="server-summary-top"><strong>Supabase</strong><span class="server-summary-icon" data-icon-key="workspace"></span></div>
+    <p id="summarySupabase">Vérification en cours…</p>
+  </div>
+  <div class="server-summary-card">
+    <div class="server-summary-top"><strong>Realtime</strong><span class="server-summary-icon" data-icon-key="status"></span></div>
+    <p id="summaryRealtime">Vérification en cours…</p>
+  </div>
+</div>
+
+<section class="section" style="padding-top:6px">
+  <div class="section-head">
+    <div><h2>Détail des services</h2><p>Chaque état indique ce qui a réellement été testé dans cette session.</p></div>
+    <button class="btn" id="refreshServerStatus">Relancer les vérifications</button>
+  </div>
+
+  <div class="server-status-list">
+    <div class="server-row" data-service="frontend">
+      <div><strong>Frontend · GitHub Pages</strong><p>Chargement du site et des fichiers statiques.</p></div>
+      <span class="server-badge checking" data-state>Vérification…</span>
+      <span class="server-meta" data-latency>—</span>
+      <span class="server-meta">Public</span>
+    </div>
+
+    <div class="server-row" data-service="domain">
+      <div><strong>DNS & HTTPS · docs.squaredgroup.studio</strong><p>Domaine personnalisé et connexion chiffrée.</p></div>
+      <span class="server-badge checking" data-state>Vérification…</span>
+      <span class="server-meta" data-latency>—</span>
+      <span class="server-meta">Public</span>
+    </div>
+
+    <div class="server-row" data-service="auth">
+      <div><strong>Supabase Auth</strong><p>Service d’authentification et gestion des sessions.</p></div>
+      <span class="server-badge checking" data-state>Vérification…</span>
+      <span class="server-meta" data-latency>—</span>
+      <span class="server-meta">Paris</span>
+    </div>
+
+    <div class="server-row" data-service="database">
+      <div><strong>Supabase Database / REST</strong><p>Accès public contrôlé à la base du Help Center.</p></div>
+      <span class="server-badge checking" data-state>Vérification…</span>
+      <span class="server-meta" data-latency>—</span>
+      <span class="server-meta">Paris</span>
+    </div>
+
+    <div class="server-row" data-service="forum">
+      <div><strong>Forum communauté</strong><p>Lecture des catégories publiques et disponibilité des données forum.</p></div>
+      <span class="server-badge checking" data-state>Vérification…</span>
+      <span class="server-meta" data-latency>—</span>
+      <span class="server-meta">Public</span>
+    </div>
+
+    <div class="server-row" data-service="realtime">
+      <div><strong>Supabase Realtime</strong><p>Canal temps réel utilisé pour les nouvelles réponses et notifications.</p></div>
+      <span class="server-badge checking" data-state>Vérification…</span>
+      <span class="server-meta" data-latency>—</span>
+      <span class="server-meta">WebSocket</span>
+    </div>
+
+    <div class="server-row" data-service="support">
+      <div><strong>Support privé</strong><p>Disponibilité du backend utilisé par les tickets. Le contenu reste protégé par RLS.</p></div>
+      <span class="server-badge checking" data-state>Vérification…</span>
+      <span class="server-meta" data-latency>—</span>
+      <span class="server-meta">Privé</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>Comment interpréter cette page</h2><p>Le statut évite d’afficher une disponibilité fictive.</p></div></div>
+  <div class="grid cols-3">
+    <div class="role-card"><span class="role-label">Opérationnel</span><h3>Test réussi</h3><p>Le composant a répondu correctement depuis votre navigateur lors de la dernière vérification.</p></div>
+    <div class="role-card"><span class="role-label" style="color:var(--orange)">Partiel</span><h3>Test incomplet</h3><p>Le service répond, mais certaines fonctions demandent une session ou ne peuvent pas être entièrement vérifiées publiquement.</p></div>
+    <div class="role-card"><span class="role-label" style="color:var(--red)">Indisponible</span><h3>Test échoué</h3><p>Le composant n’a pas répondu dans le délai attendu ou a retourné une erreur.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="banner">
+    <div><h3>Un service semble indisponible ?</h3><p>Ouvrez une demande avec l’heure, le service concerné, votre navigateur et le message d’erreur observé.</p></div>
+    <div class="banner-actions"><a class="btn" href="status.html">Statut général</a><a class="btn green" href="support.html">Signaler un incident</a></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>© 2026 Squared Group · Help Center</span>
+  <span class="footer-links"><a href="status.html">Statut général</a><a href="support.html">Support</a></span>
+</footer>
+</div>
+</main>
+</div>
+
+<div class="search-modal" id="searchModal" role="dialog" aria-modal="true">
+  <div class="search-box">
+    <div class="search-head"><input id="searchInput" type="search" placeholder="Rechercher un guide, une procédure, un sujet…" autocomplete="off"><button class="search-close" id="searchClose">Esc</button></div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+<div class="toast" id="toast">Copié</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/docs.js"></script>
+<script type="module" src="assets/forum.js"></script>
+<script type="module" src="assets/server-status.js"></script>
+</body>
+</html>
