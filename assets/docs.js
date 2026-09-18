@@ -74,10 +74,75 @@ const SEARCH=[
 
 const modal=$('#searchModal'),input=$('#searchInput'),results=$('#searchResults');let filter='Tout';
 function norm(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}
-function render(q=''){if(!results)return;const nq=norm(q.trim());let list=SEARCH.filter(x=>(filter==='Tout'||x.type===filter)&&(!nq||norm(x.title+' '+x.desc+' '+x.tags+' '+x.type).includes(nq)));results.innerHTML=list.length?list.slice(0,24).map(x=>{const href=hrefFor(x.href),external=/^https?:\/\//.test(x.href);return '<a class="search-result" href="'+href+'"'+(external?' target="_blank" rel="noreferrer"':'')+'><span class="result-ico">'+(window.SQIconly?SQIconly.legacy(x.icon,'outline','md'):x.icon)+'</span><span><strong>'+x.title+'</strong><p>'+x.desc+'</p></span><em>'+x.type+'</em></a>'}).join(''):'<div class="search-empty">Aucun résultat.</div>'}
+let searchRequestId=0,searchLogTimer=null,lastLoggedQuery='';
+
+function localSearch(q=''){
+  const nq=norm(q.trim());
+  return SEARCH.filter(x=>(filter==='Tout'||x.type===filter)&&(!nq||norm(x.title+' '+x.desc+' '+x.tags+' '+x.type).includes(nq))).slice(0,24).map(x=>({
+    kind:'local',title:x.title,description:x.desc,href:x.href,category:x.type,icon:x.icon
+  }));
+}
+
+function remoteFilter(item){
+  if(filter==='Tout')return true;
+  if(filter==='Guide')return item.kind==='knowledge';
+  if(filter==='Communauté')return item.kind==='forum';
+  if(filter==='Support')return item.kind==='ticket';
+  if(filter==='Produit')return ['Squared Workspace','Wix Studio','Design System'].includes(item.category);
+  if(filter==='Dev')return item.category==='Engineering';
+  if(filter==='Sécurité')return item.category==='Security'||item.category==='Sécurité';
+  return true;
+}
+
+function renderSearchRows(list){
+  if(!results)return;
+  results.innerHTML=list.length?list.slice(0,24).map(x=>{
+    const href=hrefFor(x.href),external=/^https?:\/\//.test(x.href);
+    const icon=x.icon||(x.kind==='forum'?'COM':x.kind==='ticket'?'SUP':'QG');
+    return '<a class="search-result" data-search-kind="'+(x.kind||'knowledge')+'" data-search-href="'+x.href+'" href="'+href+'"'+(external?' target="_blank" rel="noreferrer"':'')+'><span class="result-ico">'+(window.SQIconly?SQIconly.legacy(icon,'outline','md'):icon)+'</span><span><strong>'+x.title+'</strong><p>'+(x.description||'')+'</p></span><em>'+(x.category||x.kind||'Résultat')+'</em></a>';
+  }).join(''):'<div class="search-empty">Aucun résultat. Essayez une autre formulation ou ouvrez le support.</div>';
+}
+
+async function render(q=''){
+  if(!results)return;
+  const query=q.trim();
+  const requestId=++searchRequestId;
+
+  if(query.length<2){
+    renderSearchRows(localSearch(query));
+    return;
+  }
+
+  results.innerHTML='<div class="search-empty">Recherche dans la documentation et la communauté…</div>';
+
+  try{
+    if(!window.SQSearchBackend)throw new Error('BACKEND_NOT_READY');
+    const data=await window.SQSearchBackend.search(query,30);
+    if(requestId!==searchRequestId)return;
+    renderSearchRows((data||[]).filter(remoteFilter));
+
+    clearTimeout(searchLogTimer);
+    searchLogTimer=setTimeout(()=>{
+      if(query!==lastLoggedQuery){
+        lastLoggedQuery=query;
+        window.SQSearchBackend?.event('search',{query,metadata:{results:(data||[]).length,source:'global-modal'}}).catch(()=>{});
+      }
+    },550);
+  }catch{
+    if(requestId!==searchRequestId)return;
+    renderSearchRows(localSearch(query));
+  }
+}
+
 function openSearch(){if(!modal)return;modal.classList.add('open');if(input){input.value='';setTimeout(()=>input.focus(),20)}render('')}
 function closeSearch(){modal?.classList.remove('open')}
-$$('[data-search-open],#searchTrigger').forEach(b=>b.addEventListener('click',openSearch));$('#searchClose')?.addEventListener('click',closeSearch);modal?.addEventListener('click',e=>{if(e.target===modal)closeSearch()});input?.addEventListener('input',()=>render(input.value));
+$$('[data-search-open],#searchTrigger').forEach(b=>b.addEventListener('click',openSearch));$('#searchClose')?.addEventListener('click',closeSearch);modal?.addEventListener('click',e=>{if(e.target===modal)closeSearch()});
+let inputTimer=null;
+input?.addEventListener('input',()=>{clearTimeout(inputTimer);inputTimer=setTimeout(()=>render(input.value),160)});
+results?.addEventListener('click',e=>{
+  const a=e.target.closest('.search-result');
+  if(a)window.SQSearchBackend?.event('search_click',{query:input?.value||'',target_href:a.dataset.searchHref||a.getAttribute('href'),metadata:{kind:a.dataset.searchKind||'unknown'}}).catch(()=>{});
+});
 $$('.filter-chip').forEach(b=>b.addEventListener('click',()=>{$$('.filter-chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render(input?.value||'')}));
 addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch()}else if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();openSearch()}else if(e.key==='Escape')closeSearch()});
 $$('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const target=b.dataset.copy;let text=target.startsWith('#')?$(target)?.textContent:target;try{await navigator.clipboard.writeText(text||'');toast('Copié')}catch{toast('Copie impossible')}}));
@@ -330,3 +395,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     });
   }
 })();
+
+window.addEventListener('sq:backend-ready',()=>{
+  window.SQSearchBackend?.event('page_view',{metadata:{title:document.title,referrer:document.referrer||null}}).catch(()=>{});
+},{once:true});
