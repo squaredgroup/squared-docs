@@ -66,5 +66,5 @@
 
 
 /* Iconly forum controls */
-.forum-cat-icon .sq-iconly{font-size:15px}.topic-actions .sq-iconly,.reply-actions .sq-iconly{margin-right:5px}.notification-dot{position:relative}
-.account-chip>.sq-iconly{font-size:15px}.forum-dialog-close .sq-iconly{font-size:14px}
+.forum-cat-icon .sq-iconly{width:15px;height:15px}.topic-actions .sq-iconly,.reply-actions .sq-iconly{margin-right:5px}.notification-dot{position:relative}
+.account-chip>.sq-iconly{width:15px;height:15px}.forum-dialog-close .sq-iconly{width:14px;height:14px}
