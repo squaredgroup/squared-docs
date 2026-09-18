@@ -170,7 +170,7 @@ const groups=[
    {href:'my-activity.html',label:'Mon activité'},
    {href:'bookmarks.html',label:'Favoris'},
    {href:'my-tickets.html',label:'Mes tickets'}]},
- {href:'admin.html',icon:'security',label:'Admin'},
+ {href:'admin.html',icon:'security',label:'Admin',staff:true},
  {href:'https://github.com/squaredgroup/squared-docs',icon:'source',label:'Code source',external:true},
  {href:'https://www.squaredgroup.studio/',icon:'group',label:'Squared Group',external:true}]}
 ];
@@ -203,7 +203,7 @@ const items=g=>g.items.map(i=>{
  const active=activeFor(i.href);
  const openChild=has&&childOpen(i);
  const href=i.external?i.href:localHref(i.href);
- return '<div class="hc-item'+(has?' has-children':'')+((childActive||openChild)?' child-open':'')+'" data-item-href="'+esc(i.href)+'">'+
+ return '<div class="hc-item'+(has?' has-children':'')+((childActive||openChild)?' child-open':'')+(i.staff?' hc-staff-item':'')+'" data-item-href="'+esc(i.href)+'">'+
  '<a class="hc-nav-link'+(active?' active':'')+(childActive?' active-parent':'')+'" href="'+esc(href)+'"'+(i.external?' target="_blank" rel="noreferrer"':'')+(active?' aria-current="page"':'')+'><span class="hc-nav-ico">'+SQIconly.icon(i.icon,(active||childActive)?'fill':'outline','md')+'</span><span>'+esc(i.label)+'</span>'+(i.external?'<span class="hc-nav-external">'+SQIconly.icon('external','regular','sm')+'</span>':'')+'</a>'+
  (has?'<button class="hc-sub-toggle" type="button" aria-label="Afficher ou masquer les sous-pages">'+SQIconly.icon('chevron','regular','sm')+'</button><div class="hc-sub-links">'+children(i)+'</div>':'')+
  '</div>';
@@ -245,4 +245,10 @@ host.querySelectorAll('.hc-sub-toggle').forEach(btn=>btn.addEventListener('click
   }
 }));
 host.querySelectorAll('.hc-nav-link,.hc-sub-link').forEach(a=>a.addEventListener('click',()=>{if(innerWidth<=860)host.classList.remove('open');}));
+window.addEventListener('sq:backend-ready',async()=>{
+  try{
+    const p=await window.SQSearchBackend?.currentProfile?.();
+    if(p&&['admin','moderator'].includes(p.role))host.querySelectorAll('.hc-staff-item').forEach(x=>x.classList.add('visible'));
+  }catch{}
+},{once:true});
 })();
