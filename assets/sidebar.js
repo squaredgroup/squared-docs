@@ -157,7 +157,7 @@ host.innerHTML='<a class="hc-brand" href="'+localHref('index.html')+'"><img clas
 '<button class="hc-search" id="searchTrigger" data-search-open type="button"><span class="hc-search-icon">'+SQIconly.icon('search','regular','sm')+'</span><span>Rechercher de l’aide</span><kbd>⌘K</kbd></button>'+
 '<button class="hc-collapse" id="sidebarCollapse" type="button" aria-label="Réduire la navigation"><span>'+SQIconly.icon('collapse','regular','sm')+'</span><span>Réduire la navigation</span></button>'+
 '<nav class="hc-nav">'+groups.map(g=>{const open=groupOpen(g);return '<section class="hc-nav-group'+(open?' open':'')+'" data-group="'+g.id+'"><button class="hc-nav-group-trigger" type="button" aria-expanded="'+(open?'true':'false')+'"><span class="hc-nav-title">'+g.title+'</span><span class="hc-nav-chevron">▾</span></button><div class="hc-nav-group-body">'+items(g)+'</div></section>';}).join('')+'</nav>'+
-'<div class="hc-sidebar-foot"><strong>Squared Help Center · v5.0</strong>Navigation centralisée · sections repliables<br><a href="'+localHref('changelog.html')+'">Voir les nouveautés →</a></div>';
+'<div class="hc-sidebar-foot"><strong>Squared Help Center · v6.0</strong>Navigation centralisée · sections repliables<br><a href="'+localHref('changelog.html')+'">Voir les nouveautés →</a></div>';
 host.classList.add('hc-sidebar');
 if(innerWidth>860&&getNavState('sq-help-sidebar-mini')==='1')document.body.classList.add('sidebar-mini');
 document.getElementById('sidebarCollapse')?.addEventListener('click',()=>{document.body.classList.toggle('sidebar-mini');setNavState('sq-help-sidebar-mini',document.body.classList.contains('sidebar-mini')?'1':'0');});
