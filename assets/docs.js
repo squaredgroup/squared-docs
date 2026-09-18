@@ -412,6 +412,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   }
 })();
 
-window.addEventListener('sq:backend-ready',()=>{
-  window.SQSearchBackend?.event('page_view',{metadata:{title:document.title,referrer:document.referrer||null}}).catch(()=>{});
-},{once:true});
+const sqLogPageView=()=>window.SQSearchBackend?.event('page_view',{metadata:{title:document.title,referrer:document.referrer||null}}).catch(()=>{});
+if(window.SQSearchBackend)sqLogPageView();
+else window.addEventListener('sq:backend-ready',sqLogPageView,{once:true});
