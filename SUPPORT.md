@@ -1,45 +1,47 @@
 # Support — Squared Help Center
 
-Le Help Center suit un principe simple : **rechercher → demander à la communauté → ouvrir un ticket → utiliser un canal privé si nécessaire**.
+Le Help Center suit un principe simple : **rechercher → forum → support privé**.
 
 ## 1. Rechercher
 
 Commencez par la recherche du Help Center et les articles de la base de connaissances.
 
-## 2. Communauté
+## 2. Forum natif
 
-Utilisez GitHub Discussions pour :
+Utilisez `forum.html` pour :
 
 - poser une question générale ;
 - demander un conseil ;
 - partager une idée ;
 - échanger autour d’un produit ou d’un workflow ;
-- consulter les annonces.
+- suivre les annonces et solutions acceptées.
 
-## 3. Issues
+Le forum est directement intégré à `docs.squaredgroup.studio` et utilise Supabase pour les comptes, sujets, réponses, votes, favoris et notifications.
 
-Utilisez GitHub Issues pour :
+## 3. Support privé
 
-- un bug reproductible ;
-- une erreur de documentation ;
-- un lien cassé ;
-- une demande de documentation clairement définie.
+Utilisez `support.html` pour une demande qui ne doit pas être publique.
 
-Une Issue doit contenir un objectif, un contexte, un résultat observé et un résultat attendu.
+Chaque utilisateur authentifié peut :
 
-## 4. Demande confidentielle
+- créer une demande ;
+- suivre son statut ;
+- répondre dans un fil privé ;
+- recevoir des notifications lorsque le support répond.
 
-GitHub Discussions et Issues sont publics. N’y publiez jamais :
+Les membres de l’équipe habilités peuvent assigner, prioriser et traiter les demandes.
+
+## 4. Sécurité
+
+Le forum est public. Le support est privé par RLS côté backend.
+
+Ne publiez jamais sur le forum :
 
 - mots de passe ;
 - tokens ou clés API ;
-- données personnelles ;
-- données clients ;
+- données personnelles sensibles ;
+- données clients non publiques ;
 - contrats ou documents confidentiels ;
 - informations d’infrastructure sensibles.
 
-Pour ces sujets, utilisez le canal officiel Squared Group via https://www.squaredgroup.studio/.
-
-## Périmètre
-
-Le dépôt Squared Docs sert au support documentaire et communautaire. Il ne constitue pas un système de ticketing privé.
+GitHub est utilisé uniquement pour le code source et la maintenance technique du Help Center.
