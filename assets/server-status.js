@@ -6,7 +6,7 @@ const $=s=>document.querySelector(s);
 const services={};
 
 const GROUPS={
-  "squared-group":["squared-site","site-services","site-projects","site-products","site-contact","site-resources","site-agency","site-build"],
+  "squared-group":["squared-site","site-services","site-projects","site-products","site-contact","site-resources","site-agency","site-build","site-pricing","site-about","site-faq","site-start-project","site-solutions","site-process","site-team","site-clients","site-partners","site-roadmap","site-jobs","site-press","site-newsletter","site-book","site-security","site-accessibility","site-testimonials"],
   "workspace":["workspace-app","workspace-landing"],
   "help-center":["frontend","domain","forum","support"],
   "backend":["auth","database","realtime"]
@@ -84,6 +84,38 @@ async function probeExternal(name,url){
   return result;
 }
 
+
+const EXTRA_SITE_MODULES=[
+  ["site-pricing","Tarifs & prestations","https://www.squaredgroup.studio/pricing","/pricing"],
+  ["site-about","À propos","https://www.squaredgroup.studio/about","/about"],
+  ["site-faq","FAQ","https://www.squaredgroup.studio/faqs","/faqs"],
+  ["site-start-project","Démarrer un projet","https://www.squaredgroup.studio/start-a-project","/start-a-project"],
+  ["site-solutions","Solutions","https://www.squaredgroup.studio/solutions","/solutions"],
+  ["site-process","Notre méthode","https://www.squaredgroup.studio/process","/process"],
+  ["site-team","Équipe","https://www.squaredgroup.studio/team-members","/team-members"],
+  ["site-clients","Clients","https://www.squaredgroup.studio/clients","/clients"],
+  ["site-partners","Partenaires","https://www.squaredgroup.studio/partners","/partners"],
+  ["site-roadmap","Roadmap","https://www.squaredgroup.studio/roadmap-items","/roadmap-items"],
+  ["site-jobs","Carrières","https://www.squaredgroup.studio/jobs","/jobs"],
+  ["site-press","Presse & médias","https://www.squaredgroup.studio/press-items","/press-items"],
+  ["site-newsletter","Newsletter","https://www.squaredgroup.studio/newsletter","/newsletter"],
+  ["site-book","Réserver un appel","https://www.squaredgroup.studio/book","/book"],
+  ["site-security","Sécurité","https://www.squaredgroup.studio/security","/security"],
+  ["site-accessibility","Accessibilité","https://www.squaredgroup.studio/accessibility","/accessibility"],
+  ["site-testimonials","Témoignages clients","https://www.squaredgroup.studio/testimonials","/testimonials"]
+];
+
+function renderExtraModules(){
+  const host=$("#serverExtraModules");
+  if(!host)return;
+  host.innerHTML=EXTRA_SITE_MODULES.map(([key,label,,path])=>
+    '<div class="server-row" data-service="'+key+'"><div><strong>'+label+'</strong><p>Module public Squared Group.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">'+path+'</span></div>'
+  ).join("");
+  const count=$("#serverExtraCount");
+  if(count)count.textContent=EXTRA_SITE_MODULES.length+" modules";
+}
+renderExtraModules();
+
 async function checkAll(){
   document.querySelectorAll('[data-service]').forEach(row=>{
     const badge=row.querySelector('[data-state]');
@@ -103,7 +135,8 @@ async function checkAll(){
     probeExternal("site-contact","https://www.squaredgroup.studio/contact"),
     probeExternal("site-resources","https://www.squaredgroup.studio/resources"),
     probeExternal("site-agency","https://www.squaredgroup.studio/agency"),
-    probeExternal("site-build","https://www.squaredgroup.studio/squared-build")
+    probeExternal("site-build","https://www.squaredgroup.studio/squared-build"),
+    ...EXTRA_SITE_MODULES.map(([key,,url])=>probeExternal(key,url))
   ]);
 
   // Squared Workspace — app + public landing page.
