@@ -174,13 +174,64 @@ async function toggleBookmark(topicId){
   else await supabase.from("forum_bookmarks").insert({user_id:session.user.id,topic_id:topicId});
   location.reload();
 }
+
+function closeForumDialog(){
+  document.querySelector('.forum-dialog-backdrop')?.remove();
+}
+function openForumDialog({title,description="",content="",showTitle=false,confirmLabel="Enregistrer"}){
+  return new Promise(resolve=>{
+    closeForumDialog();
+    const wrap=document.createElement('div');
+    wrap.className='forum-dialog-backdrop';
+    wrap.innerHTML='<div class="forum-dialog" role="dialog" aria-modal="true"><div class="forum-dialog-head"><div><h2>'+esc(title)+'</h2><p>'+esc(description)+'</p></div><button class="forum-dialog-close" type="button">×</button></div><form id="forumDialogForm">'+(showTitle?'<div class="form-group"><label>Titre</label><input class="forum-input" id="forumDialogTitle" maxlength="180" style="width:100%"></div>':'')+'<div class="form-group"><label>Contenu</label><textarea class="forum-textarea" id="forumDialogBody" maxlength="20000"></textarea><div class="char-count" id="forumDialogCount">0</div></div><div class="form-actions"><button class="btn" type="button" data-cancel>Annuler</button><button class="btn green" type="submit">'+esc(confirmLabel)+'</button></div></form></div>';
+    document.body.appendChild(wrap);
+    const body=$('#forumDialogBody',wrap),titleInput=$('#forumDialogTitle',wrap),count=$('#forumDialogCount',wrap);
+    if(showTitle&&titleInput)titleInput.value=content.title||'';
+    body.value=showTitle?(content.body||''):(typeof content==='string'?content:(content.body||''));
+    const update=()=>count.textContent=body.value.length+' caractère'+(body.value.length>1?'s':'');
+    body.addEventListener('input',update);update();
+    const done=value=>{wrap.remove();resolve(value)};
+    $('.forum-dialog-close',wrap).addEventListener('click',()=>done(null));
+    $('[data-cancel]',wrap).addEventListener('click',()=>done(null));
+    wrap.addEventListener('click',e=>{if(e.target===wrap)done(null)});
+    $('#forumDialogForm',wrap).addEventListener('submit',e=>{e.preventDefault();done(showTitle?{title:titleInput.value.trim(),body:body.value.trim()}:{body:body.value.trim()})});
+    setTimeout(()=>showTitle?titleInput?.focus():body.focus(),20);
+  });
+}
+async function editTopic(topic){
+  if(!requireAuth())return;
+  const value=await openForumDialog({title:"Modifier la discussion",description:"Mettez à jour le titre ou le contenu.",content:{title:topic.title,body:topic.body},showTitle:true,confirmLabel:"Enregistrer"});
+  if(!value)return;
+  if(value.title.length<5||value.body.length<10){alert("Le titre ou le contenu est trop court.");return}
+  const {error}=await supabase.from("forum_topics").update({title:value.title,body:value.body}).eq("id",topic.id);
+  if(error)alert(error.message);else location.reload();
+}
+async function editReply(reply){
+  if(!requireAuth())return;
+  const value=await openForumDialog({title:"Modifier la réponse",description:"Corrigez ou complétez votre réponse.",content:reply.body,confirmLabel:"Enregistrer"});
+  if(!value)return;
+  if(value.body.length<2){alert("La réponse est trop courte.");return}
+  const {error}=await supabase.from("forum_replies").update({body:value.body}).eq("id",reply.id);
+  if(error)alert(error.message);else location.reload();
+}
+
 async function reportContent(kind,id){
   if(!requireAuth())return;
-  const reason=prompt("Motif du signalement (spam, contenu inapproprié, information sensible…) :");
-  if(!reason)return;
-  const details=prompt("Détails complémentaires (optionnel) :")||null;
-  const {error}=await supabase.from("forum_reports").insert({reporter_id:session.user.id,[kind+"_id"]:id,reason,details});
-  if(error)alert(error.message);else alert("Signalement envoyé.");
+  closeForumDialog();
+  const wrap=document.createElement('div');
+  wrap.className='forum-dialog-backdrop';
+  wrap.innerHTML='<div class="forum-dialog"><div class="forum-dialog-head"><div><h2>Signaler ce contenu</h2><p>Utilisez le signalement uniquement pour un problème réel.</p></div><button class="forum-dialog-close" type="button">×</button></div><form id="reportForm"><div class="form-group"><label>Motif</label><select class="forum-select" id="reportReason" style="width:100%"><option value="spam">Spam</option><option value="contenu inapproprié">Contenu inapproprié</option><option value="information sensible">Information sensible</option><option value="hors sujet">Hors sujet</option><option value="autre">Autre</option></select></div><div class="form-group"><label>Détails</label><textarea class="forum-textarea" id="reportDetails" maxlength="2000" placeholder="Ajoutez du contexte si nécessaire…"></textarea></div><div class="form-actions"><button class="btn" type="button" data-cancel>Annuler</button><button class="btn green" type="submit">Envoyer le signalement</button></div></form></div>';
+  document.body.appendChild(wrap);
+  const close=()=>wrap.remove();
+  $('.forum-dialog-close',wrap).addEventListener('click',close);
+  $('[data-cancel]',wrap).addEventListener('click',close);
+  wrap.addEventListener('click',e=>{if(e.target===wrap)close()});
+  $('#reportForm',wrap).addEventListener('submit',async e=>{
+    e.preventDefault();
+    const reason=$('#reportReason',wrap).value,details=$('#reportDetails',wrap).value.trim()||null;
+    const {error}=await supabase.from("forum_reports").insert({reporter_id:session.user.id,[kind+"_id"]:id,reason,details});
+    if(error)alert(error.message);else{close();alert("Signalement envoyé.")}
+  });
 }
 async function initTopic(){
   const host=$("#topicMount");if(!host)return;
@@ -193,7 +244,7 @@ async function initTopic(){
     const bmark=await bookmarked(id);
     const owner=session?.user.id===topic.author_id,canStaff=staff(me);
     const rc=reactionCounts(reacts,"topic",id);
-    host.innerHTML='<div class="topic-page"><div class="topic-head-card"><div class="topic-author-line">'+avatar(topic.author)+'<span><strong>'+esc(topic.author?.display_name||topic.author?.username||"Membre")+'</strong><span>'+esc(topic.category?.name||"Discussion")+' · '+dt(topic.created_at)+'</span></span></div><h1 class="topic-head-title">'+esc(topic.title)+'</h1><div class="topic-content">'+nl(topic.body)+'</div><div class="reaction-row">'+["👍","❤️","🎉"].map(x=>'<button class="reaction" data-react-kind="topic" data-react-id="'+id+'" data-emoji="'+x+'">'+x+' '+(rc[x]||0)+'</button>').join("")+'</div><div class="topic-actions"><button class="mini-action" data-vote-kind="topic" data-vote-id="'+id+'" data-vote="1">▲ '+topic.vote_score+'</button><button class="mini-action" data-bookmark="'+id+'">'+(bmark?"★ Enregistré":"☆ Enregistrer")+'</button>'+(owner?'<button class="mini-action" data-resolve="'+id+'">'+(topic.status==="resolved"?"Rouvrir":"Marquer résolu")+'</button>':"")+(canStaff?'<button class="mini-action" data-pin="'+id+'">'+(topic.is_pinned?"Désépingler":"Épingler")+'</button><button class="mini-action" data-lock="'+id+'">'+(topic.status==="locked"?"Déverrouiller":"Verrouiller")+'</button>':"")+'<button class="mini-action danger" data-report-kind="topic" data-report-id="'+id+'">Signaler</button></div></div><div class="forum-panel"><div class="forum-panel-head"><h2>Réponses</h2><span>'+replies.length+'</span></div><div class="reply-list" id="replyList"></div></div><div id="replyBox"></div></div>';
+    host.innerHTML='<div class="topic-page"><div class="topic-head-card"><div class="topic-author-line">'+avatar(topic.author)+'<span><strong>'+esc(topic.author?.display_name||topic.author?.username||"Membre")+'</strong><span>'+esc(topic.category?.name||"Discussion")+' · '+dt(topic.created_at)+'</span></span></div><h1 class="topic-head-title">'+esc(topic.title)+'</h1><div class="topic-content">'+nl(topic.body)+'</div><div class="reaction-row">'+["👍","❤️","🎉"].map(x=>'<button class="reaction" data-react-kind="topic" data-react-id="'+id+'" data-emoji="'+x+'">'+x+' '+(rc[x]||0)+'</button>').join("")+'</div><div class="topic-actions sticky-topic-actions"><button class="mini-action" data-vote-kind="topic" data-vote-id="'+id+'" data-vote="1">▲ '+topic.vote_score+'</button><button class="mini-action" data-bookmark="'+id+'">'+(bmark?"★ Enregistré":"☆ Enregistrer")+'</button>'+(owner?'<button class="mini-action" data-edit-topic="'+id+'">Modifier</button><button class="mini-action" data-resolve="'+id+'">'+(topic.status==="resolved"?"Rouvrir":"Marquer résolu")+'</button>':"")+(canStaff?'<button class="mini-action" data-pin="'+id+'">'+(topic.is_pinned?"Désépingler":"Épingler")+'</button><button class="mini-action" data-lock="'+id+'">'+(topic.status==="locked"?"Déverrouiller":"Verrouiller")+'</button>':"")+'<button class="mini-action danger" data-report-kind="topic" data-report-id="'+id+'">Signaler</button></div></div><div class="forum-panel"><div class="forum-panel-head"><h2>Réponses</h2><span>'+replies.length+'</span></div><div class="reply-list" id="replyList"></div></div><div id="replyBox"></div></div>';
     const list=$("#replyList");list.innerHTML=replies.length?replies.map(r=>{const counts=reactionCounts(reacts,"reply",r.id);return '<article class="reply-card'+(r.is_solution?" solution":"")+'"><div class="reply-head"><div class="reply-user">'+avatar(r.author)+'<span><strong>'+esc(r.author?.display_name||r.author?.username||"Membre")+'</strong><span>'+dt(r.created_at)+(r.edited_at?" · modifié":"")+'</span></span></div>'+(r.is_solution?'<span class="badge green">Solution</span>':"")+'</div><div class="reply-body">'+nl(r.body)+'</div><div class="reaction-row">'+["👍","❤️","🎉"].map(x=>'<button class="reaction" data-react-kind="reply" data-react-id="'+r.id+'" data-emoji="'+x+'">'+x+' '+(counts[x]||0)+'</button>').join("")+'</div><div class="reply-actions"><button class="mini-action" data-vote-kind="reply" data-vote-id="'+r.id+'" data-vote="1">▲ '+r.vote_score+'</button>'+((owner||canStaff)&&!r.is_solution?'<button class="mini-action" data-solution="'+r.id+'">Accepter comme solution</button>':"")+'<button class="mini-action danger" data-report-kind="reply" data-report-id="'+r.id+'">Signaler</button></div></article>'}).join(""):'<div class="forum-empty">Aucune réponse pour le moment.</div>';
     const box=$("#replyBox");
     if(topic.status==="locked"||topic.status==="archived")box.innerHTML='<div class="forum-alert show error">Cette discussion est fermée.</div>';
@@ -204,7 +255,9 @@ async function initTopic(){
     $$("[data-react-kind]").forEach(b=>b.addEventListener("click",()=>toggleReaction(b.dataset.reactKind,b.dataset.reactId,b.dataset.emoji)));
     $("[data-bookmark]")?.addEventListener("click",e=>toggleBookmark(e.currentTarget.dataset.bookmark));
     $$("[data-report-kind]").forEach(b=>b.addEventListener("click",()=>reportContent(b.dataset.reportKind,b.dataset.reportId)));
-    $$("[data-solution]").forEach(b=>b.addEventListener("click",async()=>{const {error}=await supabase.rpc("accept_forum_reply",{p_reply:b.dataset.solution});if(error)alert(error.message);else location.reload()}));
+    $("[data-edit-topic]")?.addEventListener("click",()=>editTopic(topic));
+    $("[data-edit-reply]").forEach(b=>b.addEventListener("click",()=>{const r=replies.find(x=>x.id===b.dataset.editReply);if(r)editReply(r)}));
+    $("[data-solution]").forEach(b=>b.addEventListener("click",async()=>{const {error}=await supabase.rpc("accept_forum_reply",{p_reply:b.dataset.solution});if(error)alert(error.message);else location.reload()}));
     $("[data-resolve]")?.addEventListener("click",async()=>{const {error}=await supabase.from("forum_topics").update({status:topic.status==="resolved"?"open":"resolved"}).eq("id",id);if(error)alert(error.message);else location.reload()});
     $("[data-pin]")?.addEventListener("click",async()=>{await supabase.from("forum_topics").update({is_pinned:!topic.is_pinned}).eq("id",id);location.reload()});
     $("[data-lock]")?.addEventListener("click",async()=>{await supabase.from("forum_topics").update({status:topic.status==="locked"?"open":"locked"}).eq("id",id);location.reload()});
@@ -218,6 +271,9 @@ async function initNewTopic(){
     const cats=await getCategories();
     const usable=cats.filter(c=>staff(me)||(!c.is_locked&&c.kind!=="announcement"));
     $("#newTopicCategory").innerHTML=usable.map(c=>'<option value="'+c.id+'">'+esc(c.name)+'</option>').join("");
+    const preview=$("#topicPreview"),counter=$("#topicChars"),bodyInput=$("#newTopicBody"),titleInput=$("#newTopicTitle");
+    const refreshPreview=()=>{if(preview)preview.innerHTML='<strong>'+esc(titleInput?.value||"Aperçu du titre")+'</strong><br><br>'+nl(bodyInput?.value||"Votre contenu apparaîtra ici.");if(counter)counter.textContent=(bodyInput?.value.length||0)+" / 20 000";};
+    bodyInput?.addEventListener("input",refreshPreview);titleInput?.addEventListener("input",refreshPreview);refreshPreview();
     form.addEventListener("submit",async e=>{e.preventDefault();clearAlert("newTopicAlert");const title=$("#newTopicTitle").value.trim(),body=$("#newTopicBody").value.trim(),category_id=$("#newTopicCategory").value;const {data,error}=await supabase.from("forum_topics").insert({author_id:session.user.id,category_id,title,body}).select("id").single();if(error)alertBox("newTopicAlert",error.message);else location.href="forum-topic.html?id="+data.id});
   }catch(e){alertBox("newTopicAlert",e.message)}
 }
@@ -298,7 +354,7 @@ async function initSupportTicket(){
   if(error||!t){mount.innerHTML='<div class="forum-empty">Demande introuvable ou accès refusé.</div>';return}
   const {data:msgs}=await supabase.from("support_ticket_messages").select(`id,body,is_internal,created_at,edited_at,author_id,author:profiles!support_ticket_messages_author_id_fkey(id,display_name,username,avatar_url,role)`).eq("ticket_id",id).order("created_at");
   const canStaff=staff(me);
-  mount.innerHTML='<div class="topic-page"><div class="topic-head-card"><div class="topic-author-line">'+avatar(t.requester)+'<span><strong>'+esc(t.requester?.display_name||"Membre")+'</strong><span>'+dt(t.created_at)+' · '+esc(t.category)+'</span></span></div><h1 class="topic-head-title">'+esc(t.subject)+'</h1><div class="topic-content">'+nl(t.description)+'</div><div class="topic-actions"><span class="badge '+(t.status==="resolved"?"green":"blue")+'">'+esc(t.status)+'</span><span class="badge">'+esc(t.priority)+'</span>'+(canStaff?'<button class="mini-action" id="assignSelf">M’assigner</button><select class="forum-select" id="ticketStatus"><option value="open">open</option><option value="in_progress">in_progress</option><option value="waiting_user">waiting_user</option><option value="resolved">resolved</option><option value="closed">closed</option></select>':'<button class="mini-action" id="closeTicket">'+(t.status==="closed"?"Rouvrir":"Fermer la demande")+'</button>')+'</div></div><div class="forum-panel"><div class="forum-panel-head"><h2>Échanges</h2><span>'+(msgs?.length||0)+'</span></div><div class="ticket-thread" id="ticketThread" style="padding:12px"></div></div>'+(t.status!=="closed"||canStaff?'<form class="reply-form" id="ticketReplyForm"><label style="font-size:9px;font-weight:700">Répondre</label><textarea class="forum-textarea" id="ticketReplyBody" required></textarea>'+(canStaff?'<label style="font-size:8px;color:var(--muted)"><input type="checkbox" id="ticketInternal"> Note interne</label>':"")+'<div class="form-actions"><button class="btn green" type="submit">Envoyer</button></div><div class="forum-alert" id="ticketReplyAlert"></div></form>':'<div class="forum-alert show">Cette demande est fermée.</div>')+'</div>';
+  mount.innerHTML='<div class="topic-page"><div class="topic-head-card"><div class="topic-author-line">'+avatar(t.requester)+'<span><strong>'+esc(t.requester?.display_name||"Membre")+'</strong><span>'+dt(t.created_at)+' · '+esc(t.category)+'</span></span></div><h1 class="topic-head-title">'+esc(t.subject)+'</h1><div class="topic-content">'+nl(t.description)+'</div><div class="topic-actions sticky-topic-actions"><span class="badge '+(t.status==="resolved"?"green":"blue")+'">'+esc(t.status)+'</span><span class="badge">'+esc(t.priority)+'</span>'+(canStaff?'<button class="mini-action" id="assignSelf">M’assigner</button><select class="forum-select" id="ticketStatus"><option value="open">open</option><option value="in_progress">in_progress</option><option value="waiting_user">waiting_user</option><option value="resolved">resolved</option><option value="closed">closed</option></select>':'<button class="mini-action" id="closeTicket">'+(t.status==="closed"?"Rouvrir":"Fermer la demande")+'</button>')+'</div></div><div class="forum-panel"><div class="forum-panel-head"><h2>Échanges</h2><span>'+(msgs?.length||0)+'</span></div><div class="ticket-thread" id="ticketThread" style="padding:12px"></div></div>'+(t.status!=="closed"||canStaff?'<form class="reply-form" id="ticketReplyForm"><label style="font-size:9px;font-weight:700">Répondre</label><textarea class="forum-textarea" id="ticketReplyBody" required></textarea>'+(canStaff?'<label style="font-size:8px;color:var(--muted)"><input type="checkbox" id="ticketInternal"> Note interne</label>':"")+'<div class="form-actions"><button class="btn green" type="submit">Envoyer</button></div><div class="forum-alert" id="ticketReplyAlert"></div></form>':'<div class="forum-alert show">Cette demande est fermée.</div>')+'</div>';
   $("#ticketThread").innerHTML=msgs?.length?msgs.map(m=>'<article class="ticket-message'+(staff(m.author)?" staff":"")+(m.is_internal?" internal":"")+'"><div class="reply-user">'+avatar(m.author)+'<span><strong>'+esc(m.author?.display_name||"Membre")+'</strong><span>'+dt(m.created_at)+(m.is_internal?" · note interne":"")+'</span></span></div><div class="reply-body">'+nl(m.body)+'</div></article>').join(""):'<div class="forum-empty">Aucun échange pour le moment.</div>';
   $("#ticketReplyForm")?.addEventListener("submit",async e=>{e.preventDefault();const {error}=await supabase.from("support_ticket_messages").insert({ticket_id:id,author_id:session.user.id,body:$("#ticketReplyBody").value.trim(),is_internal:canStaff&&$("#ticketInternal")?.checked});if(error)alertBox("ticketReplyAlert",error.message);else location.reload()});
   $("#assignSelf")?.addEventListener("click",async()=>{await supabase.from("support_tickets").update({assigned_to:session.user.id,status:"in_progress"}).eq("id",id);location.reload()});
