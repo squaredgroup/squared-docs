@@ -51,8 +51,17 @@
       <h2 style="font-size:14px;margin:0 0 5px">Ouvrir un ticket</h2>
       <p style="font-size:8.5px;color:var(--muted);margin:0 0 14px">Donnez le contexte, l’impact et le résultat attendu.</p>
       <div class="form-group"><label>Sujet</label><input class="forum-input" id="ticketSubject" required minlength="5" maxlength="180" style="width:100%"></div>
+      <div class="form-group"><label>Produit</label><select class="forum-select" id="ticketProduct" style="width:100%">
+        <option value="Squared Workspace">Squared Workspace</option>
+        <option value="Squared Group">Squared Group</option>
+        <option value="Help Center">Help Center</option>
+        <option value="Wix Studio">Wix Studio</option>
+        <option value="Other">Autre</option>
+      </select></div>
       <div class="form-group"><label>Catégorie</label><select class="forum-select" id="ticketCategory" style="width:100%"><option value="general">Général</option><option value="technical">Technique</option><option value="account">Compte</option><option value="billing">Facturation</option><option value="security">Sécurité</option><option value="other">Autre</option></select></div>
       <div class="form-group"><label>Description</label><textarea class="forum-textarea" id="ticketDescription" required minlength="10" maxlength="12000" placeholder="Que se passe-t-il ? Qu’attendez-vous ?"></textarea></div>
+      <div class="form-group"><label>Pièces jointes</label><input class="forum-input" id="ticketFiles" type="file" multiple accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,application/zip" style="width:100%;padding-top:8px"><div class="form-help">Jusqu’à 10 Mo par fichier. N’ajoutez jamais de secret ou de donnée inutile.</div></div>
+      <div id="supportSuggestions" class="support-suggestions" hidden></div>
       <div class="form-actions"><button class="btn green" type="submit">Créer la demande</button></div>
       <div class="forum-alert" id="ticketAlert"></div>
     </form>
