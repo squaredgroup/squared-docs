@@ -133,7 +133,7 @@ async function load(){
 
   const checked=(components||[]).map(x=>x.last_checked_at).filter(Boolean).sort().at(-1);
   $("#serverCheckedAt").textContent=checked?"Dernier check · "+new Intl.DateTimeFormat("fr-FR",{dateStyle:"short",timeStyle:"medium"}).format(new Date(checked)):"Aucun check";
-  const allStates=Object.values(services).map(x=>x.current_status);
+  const allStates=Object.values(services).filter(x=>x.aggregate_status!==false).map(x=>x.current_status);
   const bad=allStates.filter(x=>["major_outage","partial_outage"].includes(x)).length,warn=allStates.filter(x=>x==="degraded").length;
   $("#serverOverallBadge").className="pill "+(!bad&&!warn?"live":"");
   $("#serverOverallBadge").textContent=bad?bad+" incident"+(bad>1?"s":""):warn?warn+" service"+(warn>1?"s":"")+" dégradé"+(warn>1?"s":""):"Tous les services opérationnels";
