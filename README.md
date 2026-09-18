@@ -118,3 +118,10 @@ La v5.0 ajoute une couche produit commune au Help Center :
 - filtres notifications / changelog ;
 - recherche dans les favoris ;
 - FAQ en accordéon.
+
+
+## Icônes
+
+Toutes les icônes fonctionnelles du Help Center utilisent Iconly. Voir [ICON_SYSTEM.md](ICON_SYSTEM.md).
+
+Ne pas ajouter d’emoji, de sigle ou d’autre pack d’icônes dans l’interface.
