@@ -66,7 +66,7 @@
     <div class="admin-metric-grid" id="supportMetrics"></div>
     <div class="admin-grid-two">
       <div class="forum-panel"><div class="forum-panel-head"><h2>Inbox</h2></div><div id="supportInbox"></div></div>
-      <div class="forum-panel"><div class="forum-panel-head"><h2>Macros</h2></div><div id="supportMacros"></div></div>
+      <div><div class="forum-panel"><div class="forum-panel-head"><h2>Macros</h2></div><div id="supportMacros"></div></div><form class="form-card" id="macroCreateForm" style="margin-top:10px"><h2 style="font-size:13px;margin:0 0 10px">Nouvelle macro</h2><div class="form-group"><label>Nom</label><input class="forum-input" id="macroName" required style="width:100%"></div><div class="form-group"><label>Catégorie</label><input class="forum-input" id="macroCategory" style="width:100%"></div><div class="form-group"><label>Réponse</label><textarea class="forum-textarea" id="macroBody" required></textarea></div><div class="form-actions"><button class="btn green" type="submit">Créer</button></div><div class="forum-alert" id="macroAlert"></div></form></div>
     </div>
   </section>
 
@@ -83,11 +83,19 @@
           <div class="form-group"><label>Composants affectés</label><select class="forum-select" id="incidentComponents" multiple size="7" style="width:100%"></select></div>
           <div class="form-actions"><button class="btn green" type="submit">Créer l’incident</button></div><div class="forum-alert" id="incidentAlert"></div>
         </form>
+        <form class="form-card" id="incidentUpdateForm" style="margin-top:12px">
+          <h2 style="font-size:14px;margin:0 0 12px">Publier une mise à jour</h2>
+          <div class="form-group"><label>Incident</label><select class="forum-select" id="incidentUpdateIncident" required style="width:100%"></select></div>
+          <div class="form-group"><label>Statut</label><select class="forum-select" id="incidentUpdateStatus" style="width:100%"><option value="investigating">Investigating</option><option value="identified">Identified</option><option value="monitoring">Monitoring</option><option value="resolved">Resolved</option></select></div>
+          <div class="form-group"><label>Message public</label><textarea class="forum-textarea" id="incidentUpdateMessage" required></textarea></div>
+          <div class="form-actions"><button class="btn green" type="submit">Publier</button></div><div class="forum-alert" id="incidentUpdateAlert"></div>
+        </form>
         <form class="form-card" id="maintenanceCreateForm" style="margin-top:12px">
           <h2 style="font-size:14px;margin:0 0 12px">Maintenance planifiée</h2>
           <div class="form-group"><label>Titre</label><input class="forum-input" id="maintenanceTitle" required style="width:100%"></div>
           <div class="form-group"><label>Début</label><input class="forum-input" id="maintenanceStart" type="datetime-local" required style="width:100%"></div>
           <div class="form-group"><label>Fin</label><input class="forum-input" id="maintenanceEnd" type="datetime-local" required style="width:100%"></div>
+          <div class="form-group"><label>Composants concernés</label><select class="forum-select" id="maintenanceComponents" multiple size="7" style="width:100%"></select></div>
           <div class="form-actions"><button class="btn green" type="submit">Planifier</button></div><div class="forum-alert" id="maintenanceAlert"></div>
         </form>
       </div>
