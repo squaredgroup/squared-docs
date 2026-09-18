@@ -1,37 +1,57 @@
 # Squared Help Center — Icon System
 
-Le Help Center utilise **Iconly** comme système d’icônes fonctionnelles.
+Le Help Center utilise **Iconly v2 Essential** comme famille d’icônes fonctionnelles.
 
-## Styles
+Source technique : `react-iconly`, implémentation open-source MIT du pack Iconly v2 Essential.
 
-- **Outline** — style par défaut : navigation, actions, cartes, champs et outils.
-- **Fill / Solid Glyph** — état actif, notification importante, favori actif, navigation active.
-- **Regular / Line Art** — éléments secondaires, sous-navigation, aides et micro-actions.
+## Styles Squared
 
-Dans le code :
+- **Outline** — style principal de navigation et d’action. Basé sur Iconly Light avec un trait légèrement renforcé.
+- **Regular** — Iconly Light avec le stroke régulier d’origine.
+- **Fill** — Iconly Bold. Utilisé uniquement pour un état actif, sélectionné ou important.
 
-- `outline` → `ci-outline`
-- `fill` → `ci-glyph`
-- `regular` → `ci-line`
+## Règle d’utilisation
 
-## Source
+| Contexte | Style |
+|---|---|
+| Navigation inactive | Outline |
+| Navigation active | Fill |
+| Sous-navigation | Regular |
+| Boutons / actions | Outline ou Regular |
+| Favori inactif | Outline |
+| Favori actif | Fill |
+| Notification normale | Outline |
+| Notification avec nouvel élément | Fill |
+| Sécurité / statut validé | Fill uniquement si état confirmé |
 
-Le frontend charge la bibliothèque publique Iconly via :
+## Architecture
 
-```html
-https://cdn.iconly.ai/iconly/public/iconly.js
+Les SVG sont embarqués dans le projet et rendus en **24×24**. Aucun service externe n’est nécessaire à l’exécution.
+
+Le renderer central est exposé via :
+
+```js
+window.SQIconly
 ```
 
-Le mapping central est défini dans `assets/sidebar.js` via `window.SQIconly`.
+Les définitions sources sont conservées dans :
 
-## Règles
+```text
+assets/iconly-v2.js
+```
 
-1. Ne jamais utiliser d’emoji comme icône d’interface.
-2. Ne jamais utiliser de sigle comme `SUP`, `COM`, `STS`, `WX` dans une boîte d’icône visible.
-3. Ne pas mélanger plusieurs familles d’icônes.
-4. Le logo Squared reste un asset de marque et n’est jamais remplacé par Iconly.
-5. L’état actif utilise en priorité **Fill**.
-6. Les sous-pages utilisent en priorité **Regular / Line Art**.
-7. Les contrôles standards utilisent **Outline**.
+et intégrées au runtime commun de la sidebar.
 
-Les emojis sont autorisés uniquement comme **réactions communautaires** au contenu du forum.
+## Règles Squared
+
+1. Aucun emoji comme icône d’interface.
+2. Aucun sigle comme `SUP`, `COM`, `STS`, `WX`, etc. à la place d’une icône.
+3. Une taille standard de **17 px** dans la navigation principale.
+4. Sous-navigation : environ **13 px**.
+5. Pas de mélange avec Font Awesome, Material Icons ou une autre famille.
+6. Le logo Squared est un asset de marque et n’est jamais remplacé par une icône.
+7. Les emojis restent autorisés uniquement comme réactions de contenu dans le forum.
+
+## Licence
+
+L’implémentation `react-iconly` utilisée comme source des tracés Iconly v2 est distribuée sous licence MIT.
