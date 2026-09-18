@@ -133,3 +133,8 @@ body.focus-mode .sidebar{transform:translateX(-110%)}body.focus-mode .main{margi
 .card-icon .sq-iconly,.cat-ico .sq-iconly{font-size:18px}.big-ico .sq-iconly{font-size:19px}.home-command-icon .sq-iconly{font-size:17px}.topic-ico .sq-iconly{font-size:14px}.result-ico .sq-iconly{font-size:16px}.forum-cat-icon .sq-iconly{font-size:15px}
 .icon-btn .sq-iconly{font-size:17px}.btn>.sq-iconly,.btn .sq-iconly{font-size:14px}.mini-action .sq-iconly{font-size:13px}
 .search-icon .sq-iconly{font-size:19px}.quick-action-item>span:first-child{display:flex;align-items:center;justify-content:center}.quick-action-item>span:first-child .sq-iconly{font-size:15px}
+
+
+/* Prevent legacy glyph flash before Iconly hydration */
+#menuBtn,#themeBtn,#quickActionsBtn,.search-icon{font-size:0}
+#menuBtn .sq-iconly,#themeBtn .sq-iconly,#quickActionsBtn .sq-iconly,.search-icon .sq-iconly{font-size:17px}
