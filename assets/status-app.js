@@ -27,6 +27,46 @@ async function overview(){
 
   $("#activeIncidents").innerHTML=(incidents||[]).length?(incidents||[]).map(i=>incidentRow(i)).join(""):empty("Aucun incident actif","Tous les services fonctionnent normalement selon les données disponibles.");
   $("#upcomingMaintenance").innerHTML=(maintenance||[]).length?(maintenance||[]).map(m=>maintenanceRow(m)).join(""):empty("Aucune maintenance planifiée","Aucune intervention n’est actuellement programmée.");
+  await subscriptionsUI(components||[]);
+}
+
+
+async function subscriptionsUI(components){
+  const host=$("#statusSubscriptions");if(!host)return;
+  const {data:{session}}=await db.auth.getSession();
+  if(!session){
+    host.innerHTML='<div class="forum-auth-card"><strong>Connectez-vous pour suivre les incidents</strong><p>Choisissez les produits à surveiller et recevez les alertes dans le Help Center.</p><a class="btn green" href="login.html?next=status.html">Se connecter</a></div>';
+    return;
+  }
+
+  const [{data:subs},{data:prefs}]=await Promise.all([
+    db.from("status_subscriptions").select("component_id").eq("user_id",session.user.id),
+    db.from("notification_preferences").select("*").eq("user_id",session.user.id).maybeSingle()
+  ]);
+  const selected=new Set((subs||[]).map(x=>x.component_id));
+  const groups={};components.forEach(c=>(groups[c.product]??=[]).push(c));
+  const allIncidentPref=prefs?.status_incidents===true;
+
+  host.innerHTML='<div class="status-subscription-grid">'+Object.entries(groups).map(([product,items])=>{
+    const ids=items.map(x=>x.id),all=ids.length&&ids.every(id=>selected.has(id));
+    return '<button class="status-subscription-card'+(all?' active':'')+'" data-sub-product="'+esc(product)+'"><span><strong>'+esc(product)+'</strong><small>'+items.length+' composants</small></span><span class="sq-switch '+(all?'on':'')+'"></span></button>';
+  }).join("")+'</div><div class="form-help" style="margin-top:9px">Les notifications incident doivent également être activées dans vos <a href="notification-settings.html">préférences de notifications</a>.</div>';
+
+  $("[data-sub-product]",host).forEach(btn=>btn.addEventListener("click",async()=>{
+    const product=btn.dataset.subProduct,items=groups[product]||[],ids=items.map(x=>x.id);
+    const enabled=ids.length&&ids.every(id=>selected.has(id));
+    if(enabled){
+      await db.from("status_subscriptions").delete().eq("user_id",session.user.id).in("component_id",ids);
+      ids.forEach(id=>selected.delete(id));
+    }else{
+      const missing=ids.filter(id=>!selected.has(id));
+      if(missing.length)await db.from("status_subscriptions").upsert(missing.map(component_id=>({user_id:session.user.id,component_id})));
+      missing.forEach(id=>selected.add(id));
+      if(!allIncidentPref)await db.from("notification_preferences").upsert({user_id:session.user.id,status_incidents:true});
+    }
+    btn.classList.toggle("active",!enabled);
+    btn.querySelector(".sq-switch")?.classList.toggle("on",!enabled);
+  }));
 }
 
 function incidentRow(i){
