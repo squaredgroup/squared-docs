@@ -1,0 +1,40 @@
+name: Question
+description: Poser une question sur Squared Docs, un produit ou une procédure documentée.
+title: "[Question] "
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Domaine
+      options:
+        - Wix Studio
+        - Squared Workspace
+        - Design System
+        - Process & Ops
+        - Développement
+        - Sécurité
+        - Squared Docs
+        - Autre
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Objectif
+      description: Que cherchez-vous à faire ou à comprendre ?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexte
+      description: Produit, page, rôle, environnement ou étape concernée.
+    validations:
+      required: true
+  - type: textarea
+    id: blocker
+    attributes:
+      label: Ce qui bloque
+      description: Résultat observé, message d'erreur ou point incompris.
+    validations:
+      required: true
