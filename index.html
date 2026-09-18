@@ -13,9 +13,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/docs.css"><link rel="stylesheet" href="assets/sidebar.css">
+<link rel="stylesheet" href="assets/docs.css"><link rel="stylesheet" href="assets/sidebar.css"><link rel="stylesheet" href="assets/forum.css">
 </head>
-<body>
+<body data-forum-page="home">
 <div id="progress" class="progress"></div>
 <div class="app">
 <aside class="sidebar hc-sidebar" id="sidebar"></aside>
@@ -25,15 +25,19 @@
   <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Ouvrir le menu">☰</button>
   <div class="crumbs"><strong>Squared Help Center</strong></div>
   <div class="top-actions">
-    <a class="btn hide-mobile" href="forum.html">Communauté</a>
-    <a class="btn hide-mobile" href="support.html">Obtenir de l’aide</a>
+    <button class="btn hide-mobile" data-search-open>Rechercher <span class="keyboard-hint">⌘K</span></button>
+    <a class="btn hide-mobile" href="forum.html">Forum</a>
+    <a class="btn hide-mobile" href="support.html">Support</a>
+    <span id="forumAccount"></span>
+    <button class="icon-btn" id="quickActionsBtn" aria-label="Actions rapides">＋</button>
     <button class="icon-btn" id="themeBtn" aria-label="Changer de thème">◐</button>
   </div>
 </header>
 
 <div class="shell">
 <section class="help-hero">
-  <div class="eyebrow">Squared Group · Help Center</div>
+  <img class="help-hero-logo" src="assets/logo-squared.png" alt="Squared Group">
+  <div class="home-logo-lockup"><span>Squared Group · Help Center</span></div>
   <h1>Comment pouvons-nous<br>vous aider ?</h1>
   <p>Recherchez une réponse, parcourez les guides, posez une question à la communauté ou contactez le support.</p>
   <div class="help-search" data-search-open role="button" tabindex="0">
@@ -45,6 +49,17 @@
     <a class="support-path" href="#knowledge"><span class="big-ico">KB</span><span><h3>Trouver une réponse</h3><p>Guides, procédures, FAQ et ressources techniques.</p></span></a>
     <a class="support-path" href="forum.html"><span class="big-ico">?</span><span><h3>Demander à la communauté</h3><p>Questions, réponses, idées et conversations ouvertes.</p></span></a>
     <a class="support-path" href="support.html"><span class="big-ico">→</span><span><h3>Contacter le support</h3><p>Choisir le bon canal selon votre problème.</p></span></a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>Que voulez-vous faire ?</h2><p>Accédez directement au bon espace selon votre besoin.</p></div></div>
+  <div class="home-command-grid">
+    <a class="home-command" href="getting-started.html"><span class="home-command-icon">GO</span><span><strong>Découvrir le Help Center</strong><span>Comprendre la recherche, les guides et les canaux d’aide.</span></span></a>
+    <a class="home-command" href="forum-new.html"><span class="home-command-icon">Q&A</span><span><strong>Poser une question</strong><span>Créer une discussion dans la communauté Squared.</span></span></a>
+    <a class="home-command" href="support.html"><span class="home-command-icon">SUP</span><span><strong>Ouvrir une demande</strong><span>Contacter le support dans un espace privé.</span></span></a>
+    <a class="home-command" href="quick-guides.html"><span class="home-command-icon">QG</span><span><strong>Exécuter une procédure</strong><span>Retrouver les actions les plus courantes en quelques étapes.</span></span></a>
+    <a class="home-command" href="status.html"><span class="home-command-icon">STS</span><span><strong>Vérifier le statut</strong><span>Voir les dépendances et la disponibilité du Help Center.</span></span></a>
   </div>
 </section>
 
@@ -79,6 +94,26 @@
     <a class="popular-article" href="process.html#incident"><span class="pnum">04</span><span><strong>Gérer un incident</strong><span>Stabiliser, qualifier, corriger et documenter.</span></span><em>Ops →</em></a>
     <a class="popular-article" href="security/security-public-docs.html"><span class="pnum">05</span><span><strong>Ce qui peut être public</strong><span>Protéger les informations sensibles dans la documentation.</span></span><em>SEC →</em></a>
     <a class="popular-article" href="development/dev-git.html"><span class="pnum">06</span><span><strong>Conventions Git</strong><span>Commits, changements lisibles et versionnement.</span></span><em>Dev →</em></a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>En ce moment</h2><p>Activité récente de la communauté et état du Help Center.</p></div><a href="forum.html">Voir toute la communauté →</a></div>
+  <div class="home-live-grid">
+    <div class="home-discussions">
+      <div class="home-discussions-head"><h3>Discussions récentes</h3><a href="forum.html">Forum →</a></div>
+      <div id="homeForumTopics"><div class="loading">Chargement des discussions…</div></div>
+    </div>
+    <div class="home-status-card">
+      <div class="home-status-head"><strong>État des services</strong><span class="status-orb" aria-hidden="true"></span></div>
+      <div class="home-status-list">
+        <div class="home-status-row"><span>Help Center</span><em>Opérationnel</em></div>
+        <div class="home-status-row"><span>Forum & comptes</span><em>Opérationnel</em></div>
+        <div class="home-status-row"><span>Support privé</span><em>Opérationnel</em></div>
+        <div class="home-status-row"><span>Documentation</span><em>Opérationnel</em></div>
+      </div>
+      <div style="margin-top:14px"><a class="btn" href="status.html">Détails du statut</a></div>
+    </div>
   </div>
 </section>
 
