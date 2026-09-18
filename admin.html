@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#F7F7F4"><meta name="robots" content="noindex,nofollow">
+<title>Admin — Squared Help Center</title>
+<meta name="description" content="Console d’administration du Squared Help Center.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/docs.css"><link rel="stylesheet" href="assets/sidebar.css"><link rel="stylesheet" href="assets/forum.css">
+</head>
+<body data-admin-page="help-center">
+<div id="progress" class="progress"></div>
+<div class="app"><aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main">
+<header class="topbar">
+<button class="icon-btn mobile-menu" id="menuBtn" aria-label="Menu"></button>
+<div class="crumbs"><a href="index.html">Help Center</a><span>›</span><strong>Admin</strong></div>
+<div class="top-actions"><button class="btn command-search hide-mobile" data-search-open><span>Rechercher</span><span class="keyboard-hint">⌘K</span></button><span id="forumAccount"></span><button class="icon-btn" id="quickActionsBtn"></button><button class="icon-btn" id="themeBtn"></button></div>
+</header>
+
+<div class="forum-shell">
+<section class="forum-hero">
+<div class="eyebrow">Squared Help Admin</div>
+<h1>Control Center.</h1>
+<p>Knowledge, communauté, support, status et analytics dans une seule console.</p>
+</section>
+
+<div id="adminGate"><div class="loading">Vérification des droits…</div></div>
+
+<div id="adminApp" hidden>
+  <div class="admin-tabs">
+    <button class="admin-tab active" data-admin-tab="overview">Overview</button>
+    <button class="admin-tab" data-admin-tab="knowledge">Knowledge</button>
+    <button class="admin-tab" data-admin-tab="community">Community</button>
+    <button class="admin-tab" data-admin-tab="support">Support</button>
+    <button class="admin-tab" data-admin-tab="status">Status</button>
+    <button class="admin-tab" data-admin-tab="analytics">Analytics</button>
+  </div>
+
+  <section class="admin-panel active" data-admin-panel="overview">
+    <div class="admin-metric-grid" id="adminMetrics"></div>
+    <div class="admin-grid-two">
+      <div class="forum-panel"><div class="forum-panel-head"><h2>À traiter</h2></div><div id="adminAttention"></div></div>
+      <div class="forum-panel"><div class="forum-panel-head"><h2>État écosystème</h2></div><div id="adminStatusSummary"></div></div>
+    </div>
+  </section>
+
+  <section class="admin-panel" data-admin-panel="knowledge">
+    <div class="section-head"><div><h2>Knowledge</h2><p>Articles publiés, obsolescence et feedback.</p></div><a class="btn" href="search.html">Tester la recherche</a></div>
+    <div class="admin-grid-two">
+      <div class="forum-panel"><div class="forum-panel-head"><h2>Documents</h2><span id="knowledgeCount"></span></div><div id="knowledgeList"></div></div>
+      <div class="forum-panel"><div class="forum-panel-head"><h2>Feedback négatif</h2></div><div id="knowledgeFeedback"></div></div>
+    </div>
+  </section>
+
+  <section class="admin-panel" data-admin-panel="community">
+    <div class="section-head"><div><h2>Community</h2><p>Sujets, rapports et membres.</p></div><a class="btn" href="forum.html">Ouvrir le forum</a></div>
+    <div class="admin-grid-two">
+      <div class="forum-panel"><div class="forum-panel-head"><h2>Signalements</h2></div><div id="communityReports"></div></div>
+      <div class="forum-panel"><div class="forum-panel-head"><h2>Discussions récentes</h2></div><div id="communityTopics"></div></div>
+    </div>
+  </section>
+
+  <section class="admin-panel" data-admin-panel="support">
+    <div class="section-head"><div><h2>Support Desk</h2><p>Tickets, SLA et macros.</p></div><a class="btn" href="support.html">Vue support</a></div>
+    <div class="admin-metric-grid" id="supportMetrics"></div>
+    <div class="admin-grid-two">
+      <div class="forum-panel"><div class="forum-panel-head"><h2>Inbox</h2></div><div id="supportInbox"></div></div>
+      <div class="forum-panel"><div class="forum-panel-head"><h2>Macros</h2></div><div id="supportMacros"></div></div>
+    </div>
+  </section>
+
+  <section class="admin-panel" data-admin-panel="status">
+    <div class="section-head"><div><h2>Status Center</h2><p>Composants, incidents et maintenance.</p></div><a class="btn" href="server-status.html">États des serveurs</a></div>
+    <div class="admin-grid-two">
+      <div class="forum-panel"><div class="forum-panel-head"><h2>Composants</h2></div><div id="statusComponents"></div></div>
+      <div>
+        <form class="form-card" id="incidentCreateForm">
+          <h2 style="font-size:14px;margin:0 0 12px">Nouvel incident</h2>
+          <div class="form-group"><label>Titre</label><input class="forum-input" id="incidentTitle" required style="width:100%"></div>
+          <div class="form-group"><label>Sévérité</label><select class="forum-select" id="incidentSeverity" style="width:100%"><option value="minor">Minor</option><option value="major">Major</option><option value="critical">Critical</option></select></div>
+          <div class="form-group"><label>Résumé</label><textarea class="forum-textarea" id="incidentSummary" required></textarea></div>
+          <div class="form-group"><label>Composants affectés</label><select class="forum-select" id="incidentComponents" multiple size="7" style="width:100%"></select></div>
+          <div class="form-actions"><button class="btn green" type="submit">Créer l’incident</button></div><div class="forum-alert" id="incidentAlert"></div>
+        </form>
+        <form class="form-card" id="maintenanceCreateForm" style="margin-top:12px">
+          <h2 style="font-size:14px;margin:0 0 12px">Maintenance planifiée</h2>
+          <div class="form-group"><label>Titre</label><input class="forum-input" id="maintenanceTitle" required style="width:100%"></div>
+          <div class="form-group"><label>Début</label><input class="forum-input" id="maintenanceStart" type="datetime-local" required style="width:100%"></div>
+          <div class="form-group"><label>Fin</label><input class="forum-input" id="maintenanceEnd" type="datetime-local" required style="width:100%"></div>
+          <div class="form-actions"><button class="btn green" type="submit">Planifier</button></div><div class="forum-alert" id="maintenanceAlert"></div>
+        </form>
+      </div>
+    </div>
+    <div class="admin-grid-two" style="margin-top:12px">
+      <div class="forum-panel"><div class="forum-panel-head"><h2>Incidents</h2></div><div id="incidentList"></div></div>
+      <div class="forum-panel"><div class="forum-panel-head"><h2>Maintenances</h2></div><div id="maintenanceList"></div></div>
+    </div>
+  </section>
+
+  <section class="admin-panel" data-admin-panel="analytics">
+    <div class="section-head"><div><h2>Analytics</h2><p>Usage, recherche, contenu et support.</p></div></div>
+    <div class="admin-metric-grid" id="analyticsMetrics"></div>
+    <div class="admin-grid-two">
+      <div class="forum-panel"><div class="forum-panel-head"><h2>Recherches fréquentes</h2></div><div id="searchAnalytics"></div></div>
+      <div class="forum-panel"><div class="forum-panel-head"><h2>Pages populaires</h2></div><div id="pageAnalytics"></div></div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer"><span>Squared Help Admin</span><span class="footer-links"><a href="index.html">Help Center</a><a href="status.html">Status</a></span></footer>
+</div>
+</main></div>
+<script src="assets/sidebar.js"></script><script src="assets/docs.js"></script><script type="module" src="assets/forum.js"></script><script type="module" src="assets/admin.js"></script>
+</body></html>
