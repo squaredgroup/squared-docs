@@ -1,5 +1,6 @@
 const $=(s,c=document)=>c.querySelector(s), $$=(s,c=document)=>[...c.querySelectorAll(s)];
 const root=document.documentElement;
+const SQIconly=window.SQIconly;
 function getStore(k){try{return localStorage.getItem(k)}catch{return null}}
 function setStore(k,v){try{localStorage.setItem(k,v)}catch{}}
 const saved=getStore('sq-docs-theme');root.dataset.theme=saved||'light';
