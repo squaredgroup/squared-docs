@@ -4,7 +4,8 @@ const subdirs=new Set(['wix','workspace','design-system','development','security
 const parts=location.pathname.split('/').filter(Boolean);
 let currentKey='index.html';
 if(parts.length){
-  const file=(parts[parts.length-1]||'index.html').toLowerCase();
+  const raw=(parts[parts.length-1]||'index.html').toLowerCase();
+  const file=raw.includes('.')?raw:'index.html';
   const folder=parts.length>1?parts[parts.length-2].toLowerCase():'';
   currentKey=subdirs.has(folder)?folder+'/'+file:file;
 }
