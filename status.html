@@ -1,6 +1,66 @@
-<!doctype html><html lang="fr" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#F7F7F4"><meta name="robots" content="index,follow"><title>Statut — Squared Help Center</title><meta name="description" content="État et dépendances du Squared Help Center. Cette page distingue les vérifications locales des services qui nécessitent une source externe."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/docs.css"><link rel="stylesheet" href="assets/sidebar.css"></head><body><div id="progress" class="progress"></div><div class="app"><aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main"><header class="topbar"><button class="icon-btn mobile-menu" id="menuBtn">☰</button><div class="crumbs"><a href="index.html">Help Center</a><span>›</span><strong>Statut</strong></div><div class="top-actions"><button class="btn hide-mobile" data-search-open>Rechercher <span>⌘K</span></button><a class="btn hide-mobile" href="support.html">Support</a><button class="icon-btn" id="themeBtn">◐</button></div></header><div class="shell"><div class="status-service-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 22px">
-    <div class="home-status-card"><div class="home-status-head"><strong>Help Center</strong><span class="status-orb"></span></div><div class="home-status-row"><span>Frontend</span><em>Opérationnel</em></div></div>
-    <div class="home-status-card"><div class="home-status-head"><strong>Forum</strong><span class="status-orb"></span></div><div class="home-status-row"><span>Supabase</span><em>Opérationnel</em></div></div>
-    <div class="home-status-card"><div class="home-status-head"><strong>Support privé</strong><span class="status-orb"></span></div><div class="home-status-row"><span>Tickets</span><em>Opérationnel</em></div></div>
-    <div class="home-status-card"><div class="home-status-head"><strong>Documentation</strong><span class="status-orb"></span></div><div class="home-status-row"><span>Pages</span><em>Opérationnel</em></div></div>
-  </div><div class="article-layout"><article class="article"><header class="article-head"><div class="eyebrow">Centre d’aide · Disponibilité</div><h1>Statut</h1><p>État et dépendances du Squared Help Center. Cette page distingue les vérifications locales des services qui nécessitent une source externe.</p><div class="article-meta"><span class="pill live">Statut</span><span class="pill">Mis à jour · 18.09.2026</span></div></header><section class="doc-block" id="help-center"><h2>Help Center</h2><p><strong>Opérationnel.</strong> Si vous consultez cette page depuis le domaine officiel, le frontend GitHub Pages et le domaine sont accessibles depuis votre connexion actuelle.</p></section><section class="doc-block" id="github"><h2>GitHub Pages & dépôt</h2><p>Le site dépend de GitHub Pages pour l’hébergement et de GitHub pour le dépôt, Issues et Discussions. Pour un incident GitHub global, consultez la page de statut officielle de GitHub.</p><p><a href="https://www.githubstatus.com/" target="_blank" rel="noreferrer">GitHub Status ↗</a></p></section><section class="doc-block" id="domain"><h2>Domaine & HTTPS</h2><p>Le domaine personnalisé est <strong>docs.squaredgroup.studio</strong>. Le DNS est géré depuis Wix et le certificat HTTPS est provisionné par GitHub Pages.</p></section><section class="doc-block" id="backend"><h2>Backend Community & Support</h2><p><strong>Opérationnel lors de la dernière vérification.</strong> Le projet Supabase dédié <strong>Squared Help Center</strong> héberge l’authentification, le forum, les profils, notifications et tickets support privés. Région : Paris (eu-west-3).</p><p>Dernière vérification : 18 septembre 2026.</p></section><section class="doc-block" id="workspace"><h2>Squared Workspace</h2><p>Le Help Center ne réalise pas encore de monitoring automatique de Squared Workspace. L’absence d’alerte ici ne doit pas être interprétée comme une mesure temps réel de l’ERP.</p><div class="callout "><span class="callout-bar"></span><div><strong>Transparence</strong><p>Cette page ne doit jamais afficher un statut « opérationnel » fictif pour un service qui n’est pas réellement monitoré.</p></div></div></section><section class="doc-block" id="incident"><h2>Signaler un incident</h2><p>Pour un problème Help Center, utilisez le <a href="support.html">Support</a>. Pour une panne affectant plusieurs utilisateurs, documentez l’heure, le périmètre, le symptôme et l’impact avant toute correction.</p></section></article><aside class="aside-toc" id="articleToc"></aside></div><footer class="footer"><span>© 2026 Squared Group · Help Center</span><span class="footer-links"><a href="index.html">Accueil</a><a href="support.html">Support</a><a href="community.html">Communauté</a></span></footer></div></main></div><div class="search-modal" id="searchModal" role="dialog" aria-modal="true"><div class="search-box"><div class="search-head"><input id="searchInput" type="search" placeholder="Rechercher une réponse, un guide, une procédure…" autocomplete="off"><button class="search-close" id="searchClose">Esc</button></div><div class="search-results" id="searchResults"></div></div></div><div class="toast" id="toast">Copié</div><script src="assets/sidebar.js"></script><script src="assets/docs.js"></script></body></html>
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#F7F7F4">
+<meta name="robots" content="index,follow">
+<title>Statut — Squared Help Center</title>
+<meta name="description" content="État des composants du Squared Help Center et de ses dépendances.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/sidebar.css">
+
+</head><body>
+<div id="progress" class="progress"></div><div class="app"><aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main">
+<header class="topbar">
+  <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Ouvrir le menu"></button>
+  <div class="crumbs"><a href="index.html">Help Center</a><span>›</span><strong>Statut</strong></div>
+  <div class="top-actions">
+    <button class="btn command-search hide-mobile" data-search-open><span>Rechercher</span><span class="keyboard-hint">⌘K</span></button>
+    
+    <button class="icon-btn" id="quickActionsBtn" aria-label="Actions rapides"></button>
+    <button class="icon-btn" id="themeBtn" aria-label="Changer de thème"></button>
+  </div>
+</header>
+<div class="shell">
+<header class="article-head" style="max-width:760px;margin:0 auto 30px">
+  <div class="eyebrow">Squared Help Center · Status</div>
+  <h1>État des services</h1>
+  <p>Vue transparente des composants qui font fonctionner la documentation, la communauté et le support.</p>
+  <div class="article-meta"><span class="pill live">Aucun incident connu</span><span class="pill">Vérifié · 18.09.2026</span></div>
+</header>
+
+<div class="status-service-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 30px">
+  <div class="home-status-card"><div class="home-status-head"><strong>Help Center</strong><span class="status-orb"></span></div><div class="home-status-row"><span>Frontend</span><em>Opérationnel</em></div></div>
+  <div class="home-status-card"><div class="home-status-head"><strong>Forum</strong><span class="status-orb"></span></div><div class="home-status-row"><span>Supabase</span><em>Opérationnel</em></div></div>
+  <div class="home-status-card"><div class="home-status-head"><strong>Support privé</strong><span class="status-orb"></span></div><div class="home-status-row"><span>Tickets</span><em>Opérationnel</em></div></div>
+  <div class="home-status-card"><div class="home-status-head"><strong>Documentation</strong><span class="status-orb"></span></div><div class="home-status-row"><span>Pages</span><em>Opérationnel</em></div></div>
+</div>
+
+<div class="article-layout">
+<article class="article">
+  <section class="doc-block" id="hosting"><h2>Hébergement & domaine</h2><p>Le Help Center est publié via GitHub Pages sur <strong>docs.squaredgroup.studio</strong>. Le DNS est géré côté domaine Squared Group et le certificat HTTPS est provisionné par GitHub Pages.</p></section>
+  <section class="doc-block" id="backend"><h2>Community & Support</h2><p>Les comptes, discussions, réponses, notifications et tickets privés reposent sur le projet Supabase dédié <strong>Squared Help Center</strong>, hébergé en région Paris.</p></section>
+  <section class="doc-block" id="monitoring"><h2>Ce qui est réellement monitoré</h2><p>Cette page reflète les vérifications effectuées sur le Help Center. Elle ne prétend pas mesurer en temps réel tous les produits Squared qui ne disposent pas encore d’un monitoring automatisé.</p></section>
+  <section class="doc-block" id="incident"><h2>Vous constatez un incident ?</h2><p>Si un problème affecte plusieurs utilisateurs ou bloque un parcours critique, utilisez le <a href="support.html">support privé</a> avec l’heure, le périmètre, le symptôme et l’impact observé.</p></section>
+</article>
+<aside class="aside-toc" id="articleToc"></aside>
+</div>
+<footer class="footer"><span>© 2026 Squared Group · Help Center</span><span class="footer-links"><a href="support.html">Signaler un problème</a><a href="index.html">Accueil</a></span></footer>
+</div></main></div><div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-label="Recherche globale">
+  <div class="search-box">
+    <div class="search-head"><input id="searchInput" type="search" placeholder="Rechercher un guide, une procédure, un sujet…" autocomplete="off"><button class="search-close" id="searchClose">Esc</button></div>
+    <div class="search-filters">
+      <button class="filter-chip active" data-filter="Tout">Tout</button>
+      <button class="filter-chip" data-filter="Guide">Guides</button>
+      <button class="filter-chip" data-filter="Produit">Produits</button>
+      <button class="filter-chip" data-filter="Dev">Dev</button>
+      <button class="filter-chip" data-filter="Sécurité">Sécurité</button>
+      <button class="filter-chip" data-filter="Communauté">Communauté</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div><div class="toast" id="toast">Copié</div><script src="assets/sidebar.js"></script><script src="assets/docs.js"></script></body></html>
