@@ -64,8 +64,8 @@ const groups=[
    {href:'security/security-incidents.html',label:'Incidents'}]}]},
 {id:'resources',title:'Ressources',open:false,items:[
  {href:'status.html',icon:'STS',label:'Statut'},
- {href:'https://github.com/squaredgroup/squared-docs/discussions',icon:'Q&A',label:'Forum',external:true},
- {href:'https://github.com/squaredgroup/squared-docs/issues',icon:'ISS',label:'Tickets publics',external:true},
+ {href:'community.html',icon:'Q&A',label:'Forum'},
+ {href:'support.html#issue',icon:'ISS',label:'Tickets publics'},
  {href:'https://www.squaredgroup.studio/',icon:'SG',label:'Squared Group',external:true}]}
 ];
 const activeFor=(href)=>currentKey===href.toLowerCase();
