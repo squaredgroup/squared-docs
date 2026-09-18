@@ -47,6 +47,19 @@
   };
 
   window.SQIconly={MAP,LEGACY,icon,legacy,replaceLegacy,resolve};
+
+  const hydrate=()=>replaceLegacy(document);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hydrate,{once:true});else hydrate();
+  if(document.body){
+    const mo=new MutationObserver(records=>{
+      for(const rec of records)for(const node of rec.addedNodes){
+        if(node.nodeType!==1)continue;
+        if(node.matches?.('.card-icon,.cat-ico,.big-ico,.home-command-icon,.topic-ico,.result-ico,.forum-cat-icon'))replaceLegacy(node.parentElement||document);
+        else if(node.querySelector?.('.card-icon,.cat-ico,.big-ico,.home-command-icon,.topic-ico,.result-ico,.forum-cat-icon'))replaceLegacy(node);
+      }
+    });
+    mo.observe(document.body,{childList:true,subtree:true});
+  }
 })();
 (()=>{
 const host=document.getElementById('sidebar');if(!host)return;
