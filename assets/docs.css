@@ -314,3 +314,25 @@ html[data-theme="dark"] .btn.green{background:var(--text);color:var(--bg);border
 @media(prefers-reduced-motion:reduce){
   *,*:before,*:after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
+
+
+/* v6 finishing details */
+.v6-callout-icon{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--panel-2);color:var(--muted);margin-bottom:7px}
+.v6-callout-icon .sq-iconly{width:14px;height:14px}
+.callout.warning .v6-callout-icon{color:var(--orange)}
+.callout.danger .v6-callout-icon{color:var(--red)}
+.callout{padding:13px 14px}
+.callout .callout-bar{width:2px}
+@keyframes sqFadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.help-hero,.article-head,.forum-hero{animation:sqFadeUp .32s ease both}
+.card,.home-command,.category-card,.popular-article,.topic-row{animation:sqFadeUp .28s ease both}
+@media(max-width:760px){
+  .btn,.icon-btn,.hc-nav-link,.forum-cat,.mini-action{min-height:40px}
+  .top-actions>.icon-btn{width:40px}
+  .forum-input,.forum-select{min-height:44px}
+  .forum-textarea{font-size:16px}
+  .v6-mobile-toc select{height:44px}
+}
+@media(prefers-reduced-motion:reduce){
+  .help-hero,.article-head,.forum-hero,.card,.home-command,.category-card,.popular-article,.topic-row{animation:none!important}
+}
