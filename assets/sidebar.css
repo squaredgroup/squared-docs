@@ -1,0 +1,17 @@
+:root{--sidebar:284px}
+.sidebar.hc-sidebar{width:var(--sidebar);padding:22px 16px 18px;border-right:1px solid var(--line);background:color-mix(in srgb,var(--bg-2) 94%,transparent);backdrop-filter:blur(18px);overflow:auto}
+.hc-brand{display:flex;align-items:center;gap:11px;padding:0 8px 18px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--text)}
+.hc-brand-mark{width:36px;height:36px;border-radius:11px;background:var(--text);color:var(--bg);display:grid;place-items:center;font-size:12px;font-weight:900;letter-spacing:-.06em;flex:0 0 auto}
+.hc-brand-copy strong{display:block;font-size:13px;letter-spacing:.08em;line-height:1.2}.hc-brand-copy span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.hc-search{margin:16px 4px 12px;height:40px;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:var(--muted);display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer;font:inherit;width:calc(100% - 8px);text-align:left}
+.hc-search:hover{border-color:color-mix(in srgb,var(--green) 45%,var(--line));color:var(--text)}
+.hc-search kbd{margin-left:auto;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:2px 5px;font-size:9px;color:var(--muted-2)}
+.hc-nav-group{margin:17px 0}.hc-nav-title{padding:0 10px 7px;color:var(--muted-2);font-size:9px;letter-spacing:.16em;text-transform:uppercase;font-weight:800}
+.hc-nav-link{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;text-decoration:none;color:var(--muted);font-size:11px;line-height:1.3;margin:2px 0;transition:.16s}
+.hc-nav-link:hover{background:var(--panel-2);color:var(--text)}.hc-nav-link.active{background:var(--green-soft);color:var(--text);font-weight:600}
+.hc-nav-ico{width:28px;min-width:28px;color:var(--muted-2);font-size:9px;font-weight:900;text-align:left}.hc-nav-link.active .hc-nav-ico{color:var(--green)}
+.hc-divider{height:1px;background:var(--line);margin:14px 8px}
+.hc-sidebar-foot{margin:24px 5px 0;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--panel);font-size:10px;color:var(--muted);line-height:1.5}
+.hc-sidebar-foot strong{display:block;color:var(--text);margin-bottom:3px}.hc-sidebar-foot a{color:var(--muted);text-decoration:none}.hc-sidebar-foot a:hover{color:var(--green)}
+@media(max-width:860px){.sidebar.hc-sidebar{width:min(88vw,320px)}}
+@media print{.sidebar.hc-sidebar{display:none!important}}
