@@ -81,3 +81,23 @@ Fonctions couvertes :
 - stockage d’avatars.
 
 Les règles d’accès sont protégées par RLS. GitHub n’est pas utilisé comme interface utilisateur du forum ou du support.
+
+
+## Forum et support natifs
+
+Depuis la v4.0, la communauté et le support ne redirigent plus vers GitHub.
+
+Le frontend est hébergé par GitHub Pages, mais les données fonctionnelles sont stockées dans le projet Supabase dédié **Squared Help Center**.
+
+Pages principales :
+- `forum.html`
+- `forum-topic.html`
+- `forum-new.html`
+- `profile.html`
+- `bookmarks.html`
+- `notifications.html`
+- `support.html`
+- `support-ticket.html`
+- `moderation.html`
+
+GitHub reste uniquement la source de code et l’historique technique.
