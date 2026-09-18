@@ -24,7 +24,10 @@ const groups=[
 {id:'docs',title:'Documentation',open:true,items:[
  {href:'getting-started.html',icon:'GO',label:'Bien démarrer'},
  {href:'faq.html',icon:'FAQ',label:'FAQ'},
- {href:'quick-guides.html',icon:'QG',label:'Guides rapides'}]},
+ {href:'quick-guides.html',icon:'QG',label:'Guides rapides'},
+ {href:'asking-for-help.html',icon:'ASK',label:'Demander de l’aide'},
+ {href:'community-guidelines.html',icon:'RULE',label:'Règles communauté'},
+ {href:'support-privacy.html',icon:'PRV',label:'Confidentialité support'}]},
 {id:'products',title:'Produits',open:true,items:[
  {href:'wix-studio.html',icon:'WX',label:'Wix Studio',children:[
    {href:'wix/wix-overview.html',label:'Vue d’ensemble'},
