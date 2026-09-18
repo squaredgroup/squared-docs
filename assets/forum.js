@@ -55,7 +55,7 @@ async function renderAccount(){
     return;
   }
   const n=await unreadCount();
-  host.innerHTML='<a class="account-chip" href="profile.html">'+avatar(me)+'<span>'+esc(me?.display_name||"Mon compte")+'</span></a><a class="icon-btn" href="notifications.html" title="Notifications">'+(window.SQIconly?SQIconly.icon('notifications',n?'fill':'outline','md'):'')+(n?'<span class="notification-dot">'+n+'</span>':'')+'</a>'+(staff(me)?'<a class="icon-btn" href="moderation.html" title="Modération">'+(window.SQIconly?SQIconly.icon('security','fill','md'):'')+'</a>':'')+'<button class="icon-btn danger" id="forumLogout" title="Se déconnecter" aria-label="Se déconnecter">'+(window.SQIconly?SQIconly.icon('logout','outline','md'):'')+'</button>';
+  host.innerHTML='<a class="account-chip" href="profile.html">'+avatar(me)+'<span>'+esc(me?.display_name||"Mon compte")+'</span></a><a class="icon-btn" href="notifications.html" title="Notifications">'+(window.SQIconly?SQIconly.icon('notifications',n?'fill':'outline','md'):'')+(n?'<span class="notification-dot">'+n+'</span>':'')+'</a>'+(staff(me)?'<a class="icon-btn" href="'+(me.role==="admin"?"admin.html":"moderation.html")+'" title="'+(me.role==="admin"?"Admin Help Center":"Modération")+'">'+(window.SQIconly?SQIconly.icon('security','fill','md'):'')+'</a>':'')+'<button class="icon-btn danger" id="forumLogout" title="Se déconnecter" aria-label="Se déconnecter">'+(window.SQIconly?SQIconly.icon('logout','outline','md'):'')+'</button>';
   $("#forumLogout")?.addEventListener("click",async()=>{await supabase.auth.signOut();location.href="index.html"});
 }
 async function getCategories(){
