@@ -125,3 +125,19 @@ La v6.0 ajoute une couche produit commune au Help Center :
 Toutes les icônes fonctionnelles du Help Center utilisent Iconly. Voir [ICON_SYSTEM.md](ICON_SYSTEM.md).
 
 Ne pas ajouter d’emoji, de sigle ou d’autre pack d’icônes dans l’interface.
+
+
+## États des serveurs
+
+La page `server-status.html` fournit une vue technique distincte du statut général.
+
+Elle vérifie depuis le navigateur :
+- le frontend GitHub Pages ;
+- le domaine personnalisé et HTTPS ;
+- Supabase Auth ;
+- Supabase REST / Database ;
+- les données publiques du forum ;
+- Supabase Realtime ;
+- la disponibilité du backend support.
+
+Le script dédié est `assets/server-status.js`. Les tests n’exposent aucun secret privé et utilisent uniquement la clé publishable déjà prévue pour le frontend.
