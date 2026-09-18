@@ -323,12 +323,12 @@ async function initProfile(){
 async function initNotifications(){
   const host=$("#notificationsList");if(!host)return;
   if(!session){location.href=loginUrl();return}
-  const {data,error}=await supabase.from("notifications").select(`id,type,title,body,is_read,created_at,topic_id,reply_id,support_ticket_id,actor:profiles!notifications_actor_id_fkey(id,display_name,username,avatar_url)`).order("created_at",{ascending:false}).limit(100);
+  const {data,error}=await supabase.from("notifications").select(`id,type,title,body,is_read,created_at,topic_id,reply_id,support_ticket_id,incident_id,actor:profiles!notifications_actor_id_fkey(id,display_name,username,avatar_url)`).order("created_at",{ascending:false}).limit(100);
   if(error){host.innerHTML='<div class="forum-empty">'+esc(error.message)+'</div>';return}
   let filter="all";
   const render=()=>{
-    const list=(data||[]).filter(n=>filter==="all"||(filter==="forum"&&["reply","mention","solution","moderation"].includes(n.type))||(filter==="support"&&n.type==="support")||(filter==="unread"&&!n.is_read));
-    host.innerHTML=list.length?list.map(n=>{const href=n.support_ticket_id?"support-ticket.html?id="+n.support_ticket_id:n.topic_id?"forum-topic.html?id="+n.topic_id:"#";return '<a class="notification-row'+(n.is_read?"":" unread")+'" href="'+href+'"><span><strong>'+esc(n.title)+'</strong><span>'+esc(n.body||"")+' · '+ago(n.created_at)+'</span></span><span>'+avatar(n.actor)+'</span></a>'}).join(""):'<div class="forum-empty"><strong>Aucune notification</strong>Aucun élément dans ce filtre.</div>';
+    const list=(data||[]).filter(n=>filter==="all"||(filter==="forum"&&["reply","mention","solution","moderation"].includes(n.type))||(filter==="support"&&n.type==="support")||(filter==="status"&&n.type==="status")||(filter==="unread"&&!n.is_read));
+    host.innerHTML=list.length?list.map(n=>{const href=n.incident_id?"incident.html?id="+n.incident_id:n.support_ticket_id?"support-ticket.html?id="+n.support_ticket_id:n.topic_id?"forum-topic.html?id="+n.topic_id:"#";return '<a class="notification-row'+(n.is_read?"":" unread")+'" href="'+href+'"><span><strong>'+esc(n.title)+'</strong><span>'+esc(n.body||"")+' · '+ago(n.created_at)+'</span></span><span>'+avatar(n.actor)+'</span></a>'}).join(""):'<div class="forum-empty"><strong>Aucune notification</strong>Aucun élément dans ce filtre.</div>';
   };
   $(".forum-filter-tab[data-notif-filter]").forEach(b=>b.addEventListener("click",()=>{$(".forum-filter-tab[data-notif-filter]").forEach(x=>x.classList.remove("active"));b.classList.add("active");filter=b.dataset.notifFilter;render()}));
   $("#markReadBtn")?.addEventListener("click",async()=>{await supabase.rpc("mark_notifications_read");location.reload()});
