@@ -1,0 +1,40 @@
+<!doctype html><html lang="fr" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#F7F7F4"><meta name="robots" content="index,follow"><title>Design System — Squared Docs</title><meta name="description" content="Fondations visuelles et règles d’interface communes à la documentation et aux produits Squared : typographie, couleur, layout, composants, motion et accessibilité."><meta property="og:type" content="website"><meta property="og:title" content="Design System — Squared Docs"><meta property="og:description" content="Fondations visuelles et règles d’interface communes à la documentation et aux produits Squared : typographie, couleur, layout, composants, motion et accessibilité."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/docs.css"></head><body><div id="progress" class="progress"></div><div class="app">
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="index.html"><span class="brand-mark">S²</span><span class="brand-copy"><strong>SQUARED DOCS</strong><span>Documentation · Squared Group</span></span></a>
+  <button class="side-search" data-search-open><span>⌕</span><span>Rechercher</span><kbd>⌘K</kbd></button>
+  <nav>
+    <div class="nav-group"><div class="nav-title">Documentation</div>
+      <a class="nav-link " href="index.html"><span class="nav-ico">⌂</span>Accueil</a>
+      <a class="nav-link " href="wix-studio.html"><span class="nav-ico">WX</span>Wix Studio</a>
+      <a class="nav-link " href="workspace.html"><span class="nav-ico">WS</span>Squared Workspace</a>
+      <a class="nav-link active" href="design-system.html"><span class="nav-ico">DS</span>Design System</a>
+    </div>
+    <div class="nav-group"><div class="nav-title">Engineering & Ops</div>
+      <a class="nav-link " href="process.html"><span class="nav-ico">OP</span>Process & Ops</a>
+      <a class="nav-link " href="development.html"><span class="nav-ico">&lt;/&gt;</span>Développement</a>
+      <a class="nav-link " href="security.html"><span class="nav-ico">SEC</span>Sécurité</a>
+    </div>
+    <div class="nav-group"><div class="nav-title">Communauté</div>
+      <a class="nav-link " href="changelog.html"><span class="nav-ico">↺</span>Changelog</a>
+      <a class="nav-link " href="community.html"><span class="nav-ico">?</span>Questions & contributions</a>
+    </div>
+  </nav>
+  <div class="sidebar-foot"><strong>Squared Docs · v2.1</strong>Light par défaut · Dark disponible<br>Documentation versionnée sur GitHub.</div>
+</aside><main class="main">
+<header class="topbar"><button class="icon-btn mobile-menu" id="menuBtn" aria-label="Ouvrir le menu">☰</button><div class="crumbs"><a href="index.html">Squared Docs</a><span>›</span><strong>Design System</strong></div><div class="top-actions"><button class="btn hide-mobile" data-search-open>Rechercher <span>⌘K</span></button><a class="btn hide-mobile" href="community.html">Contribuer</a><button class="icon-btn" id="themeBtn" aria-label="Changer de thème">◐</button></div></header><div class="shell"><div class="article-layout"><article class="article"><header class="article-head"><div class="eyebrow">Design · Squared Docs</div><h1>Design System</h1><p>Fondations visuelles et règles d’interface communes à la documentation et aux produits Squared : typographie, couleur, layout, composants, motion et accessibilité.</p><div class="article-meta"><span class="pill live">Fondations</span><span class="pill">Mise à jour · 18.09.2026</span><span class="pill">Versionnée</span></div></header>
+ <section class="doc-block" id="principles"><h2>Principes</h2><p>Le design Squared privilégie la clarté, la hiérarchie et la précision. Les interfaces doivent être immédiatement lisibles avant d’être décoratives.</p><ul><li>Une action principale clairement identifiable.</li><li>Des niveaux de texte cohérents et peu nombreux.</li><li>Des espacements réguliers plutôt que des ajustements locaux.</li><li>Un contraste suffisant dans les thèmes clair et sombre.</li></ul></section>
+ <section class="doc-block" id="type"><h2>Typographie</h2><p>Space Grotesk est la police de référence de la documentation. Utiliser le poids et la taille pour créer la hiérarchie ; ne pas multiplier les styles arbitraires.</p><div class="code"><div class="code-head"><span>CSS</span><button data-copy="font-family: 'Space Grotesk', sans-serif;">Copier</button></div><pre>font-family: "Space Grotesk", sans-serif;</pre></div></section>
+ <section class="doc-block" id="color"><h2>Couleur</h2><p>Dans Squared Docs, le vert <strong>#7BE84E</strong> sert d’accent fonctionnel : focus, statut positif, navigation active et actions clés. Il ne doit pas devenir un fond omniprésent.</p><div class="callout "><span class="callout-bar"></span><div><strong>Accessibilité</strong><p>La couleur ne doit jamais être le seul signal d’un état. Toujours compléter avec texte, icône, label ou structure.</p></div></div></section>
+ <section class="doc-block" id="layout"><h2>Layout & espace</h2><p>Construire avec des containers, stacks et grids. Les paddings et gaps doivent venir d’une échelle cohérente. Éviter les marges négatives et les déplacements au pixel utilisés comme correctifs permanents.</p></section>
+ <section class="doc-block" id="components"><h2>Composants</h2><ul><li>Boutons : primaire, secondaire, texte/icône.</li><li>Cards : contenu, statut, action, métadonnée.</li><li>Callouts : information, avertissement, danger.</li><li>Inputs : label persistant, état focus visible, erreur explicite.</li><li>Navigation : position active toujours identifiable.</li></ul></section>
+ <section class="doc-block" id="motion"><h2>Motion</h2><p>Une animation doit clarifier un changement d’état, guider l’attention ou améliorer la continuité. Éviter les mouvements gratuits, les longues durées et les effets qui décalent la mise en page.</p></section>
+ <section class="doc-block" id="accessibility"><h2>Accessibilité</h2><p>Vérifier contraste, focus clavier, ordre de lecture, alternatives textuelles, tailles tactiles et fonctionnement sans dépendre uniquement du hover.</p></section></article><aside class="aside-toc" id="articleToc"></aside></div><footer class="footer"><span>© 2026 Squared Group · Squared Docs</span><span class="footer-links"><a href="changelog.html">Changelog</a><a href="community.html">Contribuer</a><a href="https://github.com/squaredgroup/squared-docs" target="_blank" rel="noreferrer">GitHub ↗</a></span></footer></div></main></div>
+<div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-label="Recherche globale">
+  <div class="search-box">
+    <div class="search-head"><input id="searchInput" type="search" placeholder="Rechercher un guide, une procédure, un sujet…" autocomplete="off"><button class="search-close" id="searchClose">Esc</button></div>
+    <div class="search-filters">
+      <button class="filter-chip active" data-filter="Tout">Tout</button><button class="filter-chip " data-filter="Guide">Guide</button><button class="filter-chip " data-filter="Produit">Produit</button><button class="filter-chip " data-filter="Design">Design</button><button class="filter-chip " data-filter="Ops">Ops</button><button class="filter-chip " data-filter="Dev">Dev</button><button class="filter-chip " data-filter="Sécurité">Sécurité</button><button class="filter-chip " data-filter="Communauté">Communauté</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div><div class="toast" id="toast">Copié</div><script src="assets/docs.js"></script></body></html>
