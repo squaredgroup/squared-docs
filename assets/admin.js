@@ -114,7 +114,7 @@ async function loadStatus(){
     db.from("maintenance_windows").select("*").order("starts_at",{ascending:false}).limit(30)
   ]);
   components=comps||[];
-  $("#statusComponents").innerHTML=components.map(c=>'<div class="admin-list-row"><span><strong>'+esc(c.name)+'</strong><small>'+esc(c.product)+' · '+(c.response_ms??"—")+' ms</small></span><span class="server-badge '+(c.current_status==="operational"?"ok":c.current_status==="degraded"?"warn":c.current_status==="unknown"?"checking":"down")+'">'+esc(c.current_status)+'</span></div>').join("");
+  $("#statusComponents").innerHTML=components.map(c=>'<div class="admin-list-row"><span><strong>'+esc(c.name)+'</strong><small>'+esc(c.product)+' · '+esc(c.lifecycle||"live")+(c.aggregate_status===false?' · hors agrégat':'')+' · '+(c.response_ms??"—")+' ms</small></span><span class="server-badge '+(c.current_status==="operational"?"ok":c.current_status==="degraded"?"warn":c.current_status==="unknown"?"checking":"down")+'">'+esc(c.current_status)+'</span></div>').join("");
   $("#incidentComponents").innerHTML=components.map(c=>'<option value="'+c.id+'">'+esc(c.product+" — "+c.name)+'</option>').join("");
   $("#maintenanceComponents").innerHTML=components.map(c=>'<option value="'+c.id+'">'+esc(c.product+" — "+c.name)+'</option>').join("");
   $("#incidentUpdateIncident").innerHTML=(incidents||[]).filter(i=>i.status!=="resolved").map(i=>'<option value="'+i.id+'">'+esc(i.title)+'</option>').join("");
