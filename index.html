@@ -5,176 +5,116 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#F7F7F4">
 <meta name="robots" content="index,follow">
-<title>Squared Help Center — Squared Group</title>
-<meta name="description" content="Centre d’aide officiel de Squared Group : documentation, support, communauté, guides, mises à jour et ressources.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Squared Help Center">
-<meta property="og:description" content="Documentation, support et communauté de Squared Group.">
+<title>Squared Help Center — Squared Help Center</title>
+<meta name="description" content="Documentation, communauté et support officiel de Squared Group.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/docs.css"><link rel="stylesheet" href="assets/sidebar.css"><link rel="stylesheet" href="assets/forum.css">
-</head>
-<body data-forum-page="home">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/sidebar.css">
+<link rel="stylesheet" href="assets/forum.css">
+</head><body data-forum-page="home">
 <div id="progress" class="progress"></div>
-<div class="app">
-<aside class="sidebar hc-sidebar" id="sidebar"></aside>
-
-<main class="main">
+<div class="app"><aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main">
 <header class="topbar">
-  <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Ouvrir le menu">☰</button>
-  <div class="crumbs"><strong>Squared Help Center</strong></div>
+  <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Ouvrir le menu"></button>
+  <div class="crumbs"><a href="index.html">Help Center</a></div>
   <div class="top-actions">
-    <button class="btn hide-mobile" data-search-open>Rechercher <span class="keyboard-hint">⌘K</span></button>
-    <a class="btn hide-mobile" href="forum.html">Forum</a>
-    <a class="btn hide-mobile" href="support.html">Support</a>
+    <button class="btn command-search hide-mobile" data-search-open><span>Rechercher</span><span class="keyboard-hint">⌘K</span></button>
     <span id="forumAccount"></span>
-    <button class="icon-btn" id="quickActionsBtn" aria-label="Actions rapides">＋</button>
-    <button class="icon-btn" id="themeBtn" aria-label="Changer de thème">◐</button>
+    <button class="icon-btn" id="quickActionsBtn" aria-label="Actions rapides"></button>
+    <button class="icon-btn" id="themeBtn" aria-label="Changer de thème"></button>
   </div>
 </header>
-
 <div class="shell">
 <section class="help-hero">
   <img class="help-hero-logo" src="assets/logo-squared.png" alt="Squared Group">
   <div class="home-logo-lockup"><span>Squared Group · Help Center</span></div>
   <h1>Comment pouvons-nous<br>vous aider ?</h1>
-  <p>Recherchez une réponse, parcourez les guides, posez une question à la communauté ou contactez le support.</p>
+  <p>Une seule interface pour trouver une réponse, apprendre un produit, poser une question ou obtenir une aide privée.</p>
   <div class="help-search" data-search-open role="button" tabindex="0">
-    <span class="search-icon">⌕</span>
+    <span class="search-icon" data-icon-key="search"></span>
     <button type="button">Rechercher dans le centre d’aide…</button>
     <kbd>⌘K</kbd>
   </div>
   <div class="support-paths">
-    <a class="support-path" href="#knowledge"><span class="big-ico">KB</span><span><h3>Trouver une réponse</h3><p>Guides, procédures, FAQ et ressources techniques.</p></span></a>
-    <a class="support-path" href="forum.html"><span class="big-ico">?</span><span><h3>Demander à la communauté</h3><p>Questions, réponses, idées et conversations ouvertes.</p></span></a>
-    <a class="support-path" href="support.html"><span class="big-ico">→</span><span><h3>Contacter le support</h3><p>Choisir le bon canal selon votre problème.</p></span></a>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-head"><div><h2>Que voulez-vous faire ?</h2><p>Accédez directement au bon espace selon votre besoin.</p></div></div>
-  <div class="home-command-grid">
-    <a class="home-command" href="getting-started.html"><span class="home-command-icon">GO</span><span><strong>Découvrir le Help Center</strong><span>Comprendre la recherche, les guides et les canaux d’aide.</span></span></a>
-    <a class="home-command" href="forum-new.html"><span class="home-command-icon">Q&A</span><span><strong>Poser une question</strong><span>Créer une discussion dans la communauté Squared.</span></span></a>
-    <a class="home-command" href="support.html"><span class="home-command-icon">SUP</span><span><strong>Ouvrir une demande</strong><span>Contacter le support dans un espace privé.</span></span></a>
-    <a class="home-command" href="quick-guides.html"><span class="home-command-icon">QG</span><span><strong>Exécuter une procédure</strong><span>Retrouver les actions les plus courantes en quelques étapes.</span></span></a>
-    <a class="home-command" href="status.html"><span class="home-command-icon">STS</span><span><strong>Vérifier le statut</strong><span>Voir les dépendances et la disponibilité du Help Center.</span></span></a>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-head"><div><h2>Commencer ici</h2><p>Les quatre accès les plus utiles pour comprendre le centre d’aide et agir rapidement.</p></div></div>
-  <div class="grid cols-4">
-    <a class="card live-card" href="getting-started.html"><div><div class="card-top"><span class="card-icon">GO</span><span class="status live">Départ</span></div><h3>Bien démarrer</h3><p>Recherche, canaux d’aide et niveaux d’intervention.</p></div><div class="card-foot"><span>5 min</span><span>Ouvrir →</span></div></a>
-    <a class="card" href="faq.html"><div><div class="card-top"><span class="card-icon">FAQ</span><span class="status">Réponses</span></div><h3>FAQ</h3><p>Les questions qui reviennent le plus souvent.</p></div><div class="card-foot"><span>Centre d’aide</span><span>Ouvrir →</span></div></a>
-    <a class="card" href="quick-guides.html"><div><div class="card-top"><span class="card-icon">QG</span><span class="status beta">Rapide</span></div><h3>Guides rapides</h3><p>Procédures courtes pour les actions courantes.</p></div><div class="card-foot"><span>How-to</span><span>Ouvrir →</span></div></a>
-    <a class="card" href="status.html"><div><div class="card-top"><span class="card-icon">STS</span><span class="status">Status</span></div><h3>Statut</h3><p>Dépendances, disponibilité et transparence.</p></div><div class="card-foot"><span>Systèmes</span><span>Ouvrir →</span></div></a>
+    <a class="support-path" href="#knowledge"><span class="big-ico" data-icon-key="start"></span><span><h3>Documentation</h3><p>Guides et procédures.</p></span></a>
+    <a class="support-path" href="forum.html"><span class="big-ico" data-icon-key="forum"></span><span><h3>Communauté</h3><p>Questions et échanges.</p></span></a>
+    <a class="support-path" href="support.html"><span class="big-ico" data-icon-key="support"></span><span><h3>Support privé</h3><p>Demandes confidentielles.</p></span></a>
   </div>
 </section>
 
 <section class="section" id="knowledge">
-  <div class="section-head"><div><h2>Base de connaissances</h2><p>Parcourez les principaux domaines du centre d’aide.</p></div><button class="btn" data-search-open>Tout rechercher</button></div>
+  <div class="section-head"><div><h2>Explorer la documentation</h2><p>Les domaines essentiels du Help Center.</p></div><button class="btn" data-search-open>Tout rechercher</button></div>
   <div class="category-grid">
-    <a class="category-card" href="wix-studio.html"><div class="cat-top"><span class="cat-ico">WX</span><span class="cat-count">29 chap. + 7 guides</span></div><h3>Wix Studio</h3><p>Responsive, CMS, SEO, Velo, publication et maintenance.</p><span class="cat-link">Parcourir →</span></a>
-    <a class="category-card" href="workspace.html"><div class="cat-top"><span class="cat-ico">WS</span><span class="cat-count">6 guides</span></div><h3>Squared Workspace</h3><p>Rôles, espaces, navigation, utilisation et opérations.</p><span class="cat-link">Parcourir →</span></a>
-    <a class="category-card" href="design-system.html"><div class="cat-top"><span class="cat-ico">DS</span><span class="cat-count">6 guides</span></div><h3>Design System</h3><p>Typographie, couleurs, composants, layout et accessibilité.</p><span class="cat-link">Parcourir →</span></a>
-    <a class="category-card" href="process.html"><div class="cat-top"><span class="cat-ico">OP</span><span class="cat-count">Ops</span></div><h3>Process & Ops</h3><p>QA, validation, publication, incident et rollback.</p><span class="cat-link">Parcourir →</span></a>
-    <a class="category-card" href="development.html"><div class="cat-top"><span class="cat-ico">&lt;/&gt;</span><span class="cat-count">5 guides</span></div><h3>Développement</h3><p>Git, architecture, code review, tests et releases.</p><span class="cat-link">Parcourir →</span></a>
-    <a class="category-card" href="security.html"><div class="cat-top"><span class="cat-ico">SEC</span><span class="cat-count">5 guides</span></div><h3>Sécurité</h3><p>Accès, secrets, données, permissions et incidents.</p><span class="cat-link">Parcourir →</span></a>
+    <a class="category-card" href="wix-studio.html"><div class="cat-top"><span class="cat-ico" data-icon-key="wix"></span><span class="cat-count">Guide complet</span></div><h3>Wix Studio</h3><p>Responsive, CMS, SEO, Velo, publication et maintenance.</p><span class="cat-link">Parcourir →</span></a>
+    <a class="category-card" href="workspace.html"><div class="cat-top"><span class="cat-ico" data-icon-key="workspace"></span><span class="cat-count">6 guides</span></div><h3>Squared Workspace</h3><p>Rôles, navigation, projets, documents et utilisation.</p><span class="cat-link">Parcourir →</span></a>
+    <a class="category-card" href="design-system.html"><div class="cat-top"><span class="cat-ico" data-icon-key="design"></span><span class="cat-count">6 guides</span></div><h3>Design System</h3><p>Fondations, typographie, couleurs, composants et accessibilité.</p><span class="cat-link">Parcourir →</span></a>
+    <a class="category-card" href="process.html"><div class="cat-top"><span class="cat-ico" data-icon-key="process"></span><span class="cat-count">Ops</span></div><h3>Process & Ops</h3><p>Validation, QA, publication, incident et rollback.</p><span class="cat-link">Parcourir →</span></a>
+    <a class="category-card" href="development.html"><div class="cat-top"><span class="cat-ico" data-icon-key="development"></span><span class="cat-count">5 guides</span></div><h3>Développement</h3><p>Git, architecture, tests, revue et release.</p><span class="cat-link">Parcourir →</span></a>
+    <a class="category-card" href="security.html"><div class="cat-top"><span class="cat-ico" data-icon-key="security"></span><span class="cat-count">5 guides</span></div><h3>Sécurité</h3><p>Accès, secrets, données publiques et incidents.</p><span class="cat-link">Parcourir →</span></a>
   </div>
 </section>
 
 <section class="section">
-  <div class="section-head"><div><h2>Articles populaires</h2><p>Les réponses les plus utiles pour commencer.</p></div></div>
+  <div class="section-head"><div><h2>Accès rapides</h2><p>Les actions les plus fréquentes sans détour.</p></div></div>
+  <div class="home-command-grid">
+    <a class="home-command" href="getting-started.html"><span class="home-command-icon" data-icon-key="start"></span><span><strong>Bien démarrer</strong><span>Comprendre le Help Center.</span></span></a>
+    <a class="home-command" href="quick-guides.html"><span class="home-command-icon" data-icon-key="quick"></span><span><strong>Guides rapides</strong><span>Exécuter une procédure.</span></span></a>
+    <a class="home-command" href="forum-new.html"><span class="home-command-icon" data-icon-key="forum"></span><span><strong>Poser une question</strong><span>Créer une discussion.</span></span></a>
+    <a class="home-command" href="support.html"><span class="home-command-icon" data-icon-key="support"></span><span><strong>Ouvrir un ticket</strong><span>Obtenir une aide privée.</span></span></a>
+    <a class="home-command" href="status.html"><span class="home-command-icon" data-icon-key="status"></span><span><strong>Voir le statut</strong><span>État des services.</span></span></a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>Articles essentiels</h2><p>Les réponses à connaître en priorité.</p></div></div>
   <div class="popular-grid">
-    <a class="popular-article" href="wix/wix-publishing.html"><span class="pnum">01</span><span><strong>Checklist avant publication</strong><span>Contrôler une modification avant de la mettre en ligne.</span></span><em>Wix →</em></a>
-    <a class="popular-article" href="wix/wix-cms.html"><span class="pnum">02</span><span><strong>Comprendre le CMS Wix</strong><span>Collections, champs, datasets et pages dynamiques.</span></span><em>Wix →</em></a>
-    <a class="popular-article" href="wix/wix-responsive.html"><span class="pnum">03</span><span><strong>Responsive et breakpoints</strong><span>Comprendre la cascade et les overrides.</span></span><em>Wix →</em></a>
-    <a class="popular-article" href="process.html#incident"><span class="pnum">04</span><span><strong>Gérer un incident</strong><span>Stabiliser, qualifier, corriger et documenter.</span></span><em>Ops →</em></a>
-    <a class="popular-article" href="security/security-public-docs.html"><span class="pnum">05</span><span><strong>Ce qui peut être public</strong><span>Protéger les informations sensibles dans la documentation.</span></span><em>SEC →</em></a>
-    <a class="popular-article" href="development/dev-git.html"><span class="pnum">06</span><span><strong>Conventions Git</strong><span>Commits, changements lisibles et versionnement.</span></span><em>Dev →</em></a>
+    <a class="popular-article" href="wix/wix-publishing.html"><span class="pnum">01</span><span><strong>Publier sans casser le site</strong><span>Checklist de validation et contrôle live.</span></span><em>Wix →</em></a>
+    <a class="popular-article" href="wix/wix-responsive.html"><span class="pnum">02</span><span><strong>Comprendre le responsive</strong><span>Breakpoints, cascade et overrides.</span></span><em>Wix →</em></a>
+    <a class="popular-article" href="asking-for-help.html"><span class="pnum">03</span><span><strong>Demander de l’aide efficacement</strong><span>Contexte, preuve et résultat attendu.</span></span><em>Aide →</em></a>
+    <a class="popular-article" href="security/security-public-docs.html"><span class="pnum">04</span><span><strong>Ce qui peut être public</strong><span>Règles de publication et données sensibles.</span></span><em>SEC →</em></a>
   </div>
 </section>
 
 <section class="section">
-  <div class="section-head"><div><h2>En ce moment</h2><p>Activité récente de la communauté et état du Help Center.</p></div><a href="forum.html">Voir toute la communauté →</a></div>
+  <div class="section-head"><div><h2>En ce moment</h2><p>Activité de la communauté et état du Help Center.</p></div><a href="forum.html">Voir le forum →</a></div>
   <div class="home-live-grid">
     <div class="home-discussions">
-      <div class="home-discussions-head"><h3>Discussions récentes</h3><a href="forum.html">Forum →</a></div>
+      <div class="home-discussions-head"><h3>Discussions récentes</h3><a href="forum.html">Tout voir →</a></div>
       <div id="homeForumTopics"><div class="loading">Chargement des discussions…</div></div>
     </div>
     <div class="home-status-card">
-      <div class="home-status-head"><strong>État des services</strong><span class="status-orb" aria-hidden="true"></span></div>
+      <div class="home-status-head"><strong>Services</strong><span class="status-orb"></span></div>
       <div class="home-status-list">
         <div class="home-status-row"><span>Help Center</span><em>Opérationnel</em></div>
         <div class="home-status-row"><span>Forum & comptes</span><em>Opérationnel</em></div>
         <div class="home-status-row"><span>Support privé</span><em>Opérationnel</em></div>
-        <div class="home-status-row"><span>Documentation</span><em>Opérationnel</em></div>
       </div>
-      <div style="margin-top:14px"><a class="btn" href="status.html">Détails du statut</a></div>
+      <div style="margin-top:12px"><a class="btn" href="status.html">Voir le statut</a></div>
     </div>
   </div>
 </section>
 
 <section class="section">
-  <div class="section-head"><div><h2>Communauté & support</h2><p>Quand la documentation ne suffit pas, passez au bon canal.</p></div></div>
-  <div class="community-preview">
-    <div class="community-panel">
-      <h3>Communauté Squared</h3>
-      <p>Un espace de discussion public pour poser des questions, partager des idées, répondre et suivre les annonces.</p>
-      <div class="topic-list">
-        <a class="topic" href="forum.html"><span class="topic-ico">Q&A</span><span><strong>Questions & réponses</strong><span>Demander de l’aide et marquer les réponses utiles.</span></span><em>Forum →</em></a>
-        <a class="topic" href="forum.html"><span class="topic-ico">IDEA</span><span><strong>Idées & feedback</strong><span>Proposer des améliorations et échanger avec la communauté.</span></span><em>Forum →</em></a>
-        <a class="topic" href="changelog.html"><span class="topic-ico">NEW</span><span><strong>Annonces & nouveautés</strong><span>Évolutions du Help Center et nouveaux guides.</span></span><em>Voir →</em></a>
-      </div>
-    </div>
-    <div class="support-panel">
-      <h3>Besoin d’aide directe ?</h3>
-      <p>Choisissez le niveau d’escalade adapté à votre situation.</p>
-      <div class="support-options">
-        <a class="support-option" href="support.html#community"><strong>Question générale</strong><span>Passer par la communauté.</span></a>
-        <a class="support-option" href="support.html"><strong>Bug / erreur de doc</strong><span>Créer une demande privée dans le Help Center.</span></a>
-        <a class="support-option" href="support.html#private"><strong>Demande confidentielle</strong><span>Utiliser le canal officiel Squared Group.</span></a>
-      </div>
-      <p class="help-note">Ne publiez jamais de donnée client, mot de passe, token ou secret dans un sujet public.</p>
-    </div>
-  </div>
+  <div class="banner"><div><h3>Vous ne trouvez toujours pas la réponse ?</h3><p>Passez de la documentation au forum, puis au support privé lorsque le contexte nécessite une intervention humaine.</p></div><div class="banner-actions"><a class="btn" href="forum.html">Forum</a><a class="btn green" href="support.html">Support privé</a></div></div>
 </section>
 
-<section class="section">
-  <div class="section-head"><div><h2>Nouveautés</h2><p>Les dernières évolutions du centre d’aide.</p></div><a href="changelog.html">Tout voir →</a></div>
-  <div class="timeline">
-    <div class="update"><time>18.09.2026</time><div><strong>Squared Help Center v5.0</strong><p>Refonte premium globale : logo dans le hero, design system renforcé, navigation compacte, actions rapides, mode focus, contenus liés, feedback articles, forum/support modernisés et activité live.</p></div><span class="version">5.0</span></div>
-    <div class="update"><time>18.09.2026</time><div><strong>Portail documentaire multi-domaines</strong><p>Ajout de Workspace, Design System, Process, Développement et Sécurité.</p></div><span class="version">2.1</span></div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="banner"><div><h3>Vous ne trouvez pas la réponse ?</h3><p>Le centre d’aide doit permettre de passer naturellement de la recherche au forum, puis au support lorsque le problème nécessite une intervention humaine.</p></div><div class="banner-actions"><a class="btn green" href="support.html">Obtenir de l’aide</a><a class="btn" href="forum.html">Ouvrir la communauté</a></div></div>
-</section>
-
-<footer class="footer"><span>© 2026 Squared Group · Help Center</span><span class="footer-links"><a href="changelog.html">Nouveautés</a><a href="forum.html">Communauté</a><a href="support.html">Support</a><a href="https://github.com/squaredgroup/squared-docs" target="_blank" rel="noreferrer">GitHub ↗</a></span></footer>
-</div>
-</main>
-</div>
-
+<footer class="footer"><span>© 2026 Squared Group · Help Center</span><span class="footer-links"><a href="changelog.html">Nouveautés</a><a href="forum.html">Communauté</a><a href="support.html">Support</a></span></footer>
+</div></main></div>
 <div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-label="Recherche globale">
   <div class="search-box">
-    <div class="search-head"><input id="searchInput" type="search" placeholder="Rechercher une réponse, un guide, une procédure…" autocomplete="off"><button class="search-close" id="searchClose">Esc</button></div>
+    <div class="search-head"><input id="searchInput" type="search" placeholder="Rechercher un guide, une procédure, un sujet…" autocomplete="off"><button class="search-close" id="searchClose">Esc</button></div>
     <div class="search-filters">
       <button class="filter-chip active" data-filter="Tout">Tout</button>
       <button class="filter-chip" data-filter="Guide">Guides</button>
       <button class="filter-chip" data-filter="Produit">Produits</button>
-      <button class="filter-chip" data-filter="Ops">Ops</button>
       <button class="filter-chip" data-filter="Dev">Dev</button>
       <button class="filter-chip" data-filter="Sécurité">Sécurité</button>
       <button class="filter-chip" data-filter="Communauté">Communauté</button>
     </div>
     <div class="search-results" id="searchResults"></div>
   </div>
-</div>
-<div class="toast" id="toast">Copié</div>
-<script src="assets/sidebar.js"></script><script src="assets/docs.js"></script>
-</body>
-</html>
+</div><div class="toast" id="toast">Copié</div>
+<script src="assets/sidebar.js"></script><script src="assets/docs.js"></script><script type="module" src="assets/forum.js"></script>
+</body></html>
