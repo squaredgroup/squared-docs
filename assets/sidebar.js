@@ -37,8 +37,9 @@
 
   const replaceLegacy=(root=document)=>{
     root.querySelectorAll('.card-icon,.cat-ico,.big-ico,.home-command-icon,.topic-ico,.result-ico,.forum-cat-icon').forEach(el=>{
-      if(el.dataset.iconlyReady==='1')return;
+      if(el.dataset.iconlyReady==='1'||el.querySelector('.sq-iconly')){el.dataset.iconlyReady='1';return;}
       const raw=(el.dataset.iconKey||el.textContent||'').trim();
+      if(!raw)return;
       const key=LEGACY[raw]||raw.toLowerCase();
       const style=el.classList.contains('big-ico')||el.classList.contains('home-command-icon')?'regular':'outline';
       el.innerHTML=icon(key,style,'md');
