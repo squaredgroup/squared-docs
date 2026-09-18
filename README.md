@@ -4,19 +4,32 @@ Documentation centrale de Squared Group.
 
 ## Structure
 
-- `index.html` — portail principal
-- `wix-studio.html` — guide complet Wix Studio
-- `workspace.html` — documentation produit Squared Workspace
-- `design-system.html` — fondations UI/UX
-- `process.html` — process et opérations
-- `development.html` — conventions engineering
-- `security.html` — sécurité et gouvernance
-- `changelog.html` — historique versionné
-- `community.html` — questions et contributions
-- `assets/docs.css` — design system du portail
-- `assets/docs.js` — thème, recherche et interactions
-- `assets/sidebar.css` — style de la navigation globale
-- `assets/sidebar.js` — source unique de la sidebar et calcul automatique de l’item actif
+### Centre d’aide
+- `index.html` — accueil
+- `getting-started.html` — bien démarrer
+- `faq.html` — FAQ
+- `quick-guides.html` — guides rapides
+- `support.html` — support
+- `community.html` — communauté
+- `status.html` — statut
+- `changelog.html` — nouveautés
+
+### Base de connaissances
+- `wix-studio.html` + `wix/`
+- `workspace.html` + `workspace/`
+- `design-system.html` + `design-system/`
+- `process.html`
+- `development.html` + `development/`
+- `security.html` + `security/`
+
+### Assets communs
+- `assets/docs.css`
+- `assets/docs.js`
+- `assets/sidebar.css`
+- `assets/sidebar.js`
+- `assets/logo-squared.png`
+
+La sidebar globale est générée depuis `assets/sidebar.js`. Les pages ne contiennent qu’un placeholder `<aside id="sidebar">`.
 
 ## Développement local
 
