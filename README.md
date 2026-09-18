@@ -85,7 +85,7 @@ Les règles d’accès sont protégées par RLS. GitHub n’est pas utilisé com
 
 ## Forum et support natifs
 
-Depuis la v6.0, la communauté et le support ne redirigent plus vers GitHub.
+Depuis la v4.0, la communauté et le support ne redirigent plus vers GitHub.
 
 Le frontend est hébergé par GitHub Pages, mais les données fonctionnelles sont stockées dans le projet Supabase dédié **Squared Help Center**.
 
@@ -129,64 +129,34 @@ Ne pas ajouter d’emoji, de sigle ou d’autre pack d’icônes dans l’interf
 
 ## États des serveurs
 
-La page `server-status.html` fournit une vue technique distincte du statut général.
+Le Status Center utilise désormais un **monitoring persistant côté serveur**.
 
-Elle vérifie depuis le navigateur :
-- le frontend GitHub Pages ;
-- le domaine personnalisé et HTTPS ;
+Architecture :
+
+```text
+Supabase Edge Function status-monitor-v2
+→ toutes les 5 minutes via pg_cron + pg_net
+→ service_components
+→ health_checks
+→ uptime 30 jours
+→ status.html / server-status.html
+```
+
+Le monitoring couvre :
+- Squared Group et ses principaux modules Wix ;
+- Squared Workspace public / web ;
+- Squared Help Center ;
 - Supabase Auth ;
-- Supabase REST / Database ;
-- les données publiques du forum ;
+- Supabase Database / REST ;
 - Supabase Realtime ;
-- la disponibilité du backend support.
+- Forum et support.
 
-Le script dédié est `assets/server-status.js`. Les tests n’exposent aucun secret privé et utilisent uniquement la clé publishable déjà prévue pour le frontend.
+Les réponses HTTP pouvant provenir d’un anti-bot sont distinguées d’une panne franche : un 401/403/429 ou certains timeouts deviennent **dégradés / non confirmés**, tandis qu’un 404 ou 5xx reste un signal fort de rupture.
 
-
-### Extension écosystème
-
-Le monitoring couvre maintenant **Squared Group et Squared Workspace** en plus du Help Center.
-
-Routes Wix vérifiées depuis la configuration publiée du site :
-- `https://www.squaredgroup.studio/`
-- `/services`
-- `/projects`
-- `/products`
-- `/contact`
-- `/resources`
-- `/agency`
-- `/squared-build`
-- `/workspace`
-
-L’app principale Squared Workspace est testée via `https://workspace.squaredgroup.studio/`.
-
-Pour les sites externes, le navigateur teste leur accessibilité réseau avec une requête `no-cors`. Un statut vert signifie donc que la ressource est joignable depuis le navigateur ; il ne constitue pas encore une preuve de santé de chaque fonction backend interne.
-
-
-#### Modules complémentaires monitorés
-
-La page États des serveurs peut également déplier les modules publics suivants du site officiel :
-
-- Pricing
-- About
-- FAQ
-- Start a Project
-- Solutions
-- Process
-- Team
-- Clients
-- Partners
-- Roadmap
-- Jobs
-- Press
-- Newsletter
-- Booking
-- Security
-- Accessibility
-- Testimonials
-
-Ces routes proviennent de la configuration Wix publiée du site Squared Group.
-
+Les incidents et maintenances sont désormais des objets persistants et publics via :
+- `incidents.html`
+- `incident.html?id=...`
+- `scheduled-maintenance.html`
 
 ## Stack moderne
 
@@ -225,3 +195,54 @@ Les scripts historiques restent modulaires :
 - `assets/server-status.js`
 
 React complète ces scripts au lieu de les remplacer brutalement.
+
+
+## Production Ready v7.0
+
+La v7 transforme le Help Center en infrastructure opérationnelle du groupe.
+
+### Recherche universelle
+- index `knowledge_documents` ;
+- recherche PostgreSQL Full Text ;
+- résultats documentation + forum + tickets personnels ;
+- page `search.html` ;
+- analytics des recherches et clics.
+
+### Squared Help Admin
+`admin.html` centralise :
+- Knowledge ;
+- feedbacks ;
+- communauté et signalements ;
+- Support Desk ;
+- macros ;
+- SLA ;
+- Status Center ;
+- incidents ;
+- maintenances ;
+- analytics.
+
+L’entrée Admin est masquée aux comptes non staff et les droits restent imposés côté RLS.
+
+### Support Desk
+- identifiants `SQ-xxxxx` ;
+- produit / catégorie / priorité ;
+- SLA première réponse et résolution ;
+- pièces jointes privées Storage ;
+- notes internes ;
+- macros ;
+- historique des changements ;
+- satisfaction après résolution ;
+- suggestions d’articles avant ouverture d’un ticket.
+
+### Account Center
+- compte et interface ;
+- préférences de notifications ;
+- activité ;
+- favoris ;
+- historique des tickets.
+
+### Community
+Le forum est initialisé avec des sujets officiels et permet maintenant de suivre une discussion pour recevoir les nouvelles réponses.
+
+### Workspace Knowledge Base
+La documentation Workspace couvre désormais activation, installation, compte, navigation, membres, rôles, clients, collaborateurs, pôles, projets, missions, tâches, planning, messages, documents, contrats, invitations, notifications, raccourcis, recherche et dépannage.
