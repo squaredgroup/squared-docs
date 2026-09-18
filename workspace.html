@@ -1,17 +1,91 @@
-<!doctype html><html lang="fr" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#F7F7F4"><meta name="robots" content="index,follow"><title>Squared Workspace — Squared Help Center</title><meta name="description" content="Référence produit pour comprendre l’organisation du Workspace, les types d’espace, les rôles, les principes de navigation et les règles d’exploitation."><meta property="og:type" content="website"><meta property="og:title" content="Squared Workspace — Squared Help Center"><meta property="og:description" content="Référence produit pour comprendre l’organisation du Workspace, les types d’espace, les rôles, les principes de navigation et les règles d’exploitation."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/docs.css"><link rel="stylesheet" href="assets/sidebar.css"></head><body><div id="progress" class="progress"></div><div class="app">
-<aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main">
-<header class="topbar"><button class="icon-btn mobile-menu" id="menuBtn" aria-label="Ouvrir le menu">☰</button><div class="crumbs"><a href="index.html">Help Center</a><span>›</span><strong>Squared Workspace</strong></div><div class="top-actions"><button class="btn hide-mobile" data-search-open>Rechercher <span>⌘K</span></button><a class="btn hide-mobile" href="community.html">Contribuer</a><button class="icon-btn" id="themeBtn" aria-label="Changer de thème">◐</button></div></header><div class="shell"><div class="article-layout"><article class="article"><header class="article-head"><div class="eyebrow">Produit · Help Center</div><h1>Squared Workspace</h1><p>Référence produit pour comprendre l’organisation du Workspace, les types d’espace, les rôles, les principes de navigation et les règles d’exploitation.</p><div class="article-meta"><span class="pill live">Fondations</span><span class="pill">Mise à jour · 18.09.2026</span><span class="pill">Versionnée</span></div></header>
- <section class="doc-block" id="vision"><h2>Vision produit</h2><p>Squared Workspace est l’environnement de travail qui centralise les opérations, projets, missions, tâches, planning, livrables, documents, contrats, messages et profils selon le rôle de la personne connectée.</p><div class="callout "><span class="callout-bar"></span><div><strong>Principe</strong><p>Un espace n’affiche pas tout à tout le monde. L’interface doit rester contextuelle : le rôle, l’organisation et les droits déterminent les modules visibles.</p></div></div></section>
- <section class="doc-block" id="roles"><h2>Rôles & espaces</h2><h3>Entreprise / équipe</h3><p>Les collaborateurs accèdent aux fonctions nécessaires à leur travail : projets, missions, tâches, planning, documents, messages et ressources internes.</p><h3>Client</h3><p>Le client doit voir un espace simplifié, centré sur ses projets, livrables, documents, contrats, échanges et actions attendues.</p><h3>Administration</h3><p>Les actions structurelles — rôles, permissions, configuration, données sensibles et restauration — restent réservées aux personnes habilitées.</p></section>
- <section class="doc-block" id="navigation"><h2>Navigation</h2><p>Une navigation Workspace doit être prévisible : même vocabulaire, même logique de hiérarchie, états actifs visibles et aucune fonctionnalité exposée sans utilité pour le rôle connecté.</p><ul><li>Dashboard : synthèse et priorités.</li><li>Projets / missions / tâches : exécution.</li><li>Planning : temporalité et coordination.</li><li>Livrables / documents / contrats : preuves et fichiers.</li><li>Messages : communication liée au travail.</li><li>Profil : identité, préférences et accès.</li></ul></section>
- <section class="doc-block" id="quality"><h2>Qualité d’expérience</h2><p>Chaque écran doit gérer les états chargement, vide, erreur, succès et permission insuffisante. Les empty states doivent expliquer l’état sans inventer une action impossible.</p><div class="callout "><span class="callout-bar"></span><div><strong>Règle produit</strong><p>Un écran vide n’est pas un écran cassé : il doit informer, orienter et rester cohérent avec le rôle de l’utilisateur.</p></div></div></section>
- <section class="doc-block" id="support"><h2>Support & signalement</h2><p>Pour toute anomalie, fournir la plateforme, la version, le rôle connecté, l’écran concerné, l’action réalisée, le résultat attendu et le résultat obtenu. Ajouter une capture uniquement si elle apporte une information utile.</p></section></article><aside class="aside-toc" id="articleToc"></aside></div><footer class="footer"><span>© 2026 Squared Group · Help Center</span><span class="footer-links"><a href="changelog.html">Changelog</a><a href="community.html">Contribuer</a><a href="https://github.com/squaredgroup/squared-docs" target="_blank" rel="noreferrer">GitHub ↗</a></span></footer></div></main></div>
-<div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-label="Recherche globale">
-  <div class="search-box">
-    <div class="search-head"><input id="searchInput" type="search" placeholder="Rechercher un guide, une procédure, un sujet…" autocomplete="off"><button class="search-close" id="searchClose">Esc</button></div>
-    <div class="search-filters">
-      <button class="filter-chip active" data-filter="Tout">Tout</button><button class="filter-chip " data-filter="Guide">Guide</button><button class="filter-chip " data-filter="Produit">Produit</button><button class="filter-chip " data-filter="Design">Design</button><button class="filter-chip " data-filter="Ops">Ops</button><button class="filter-chip " data-filter="Dev">Dev</button><button class="filter-chip " data-filter="Sécurité">Sécurité</button><button class="filter-chip " data-filter="Communauté">Communauté</button>
-    </div>
-    <div class="search-results" id="searchResults"></div>
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#F7F7F4">
+<meta name="robots" content="index,follow">
+<title>Squared Workspace — Squared Help Center</title>
+<meta name="description" content="Documentation complète de Squared Workspace : activation, rôles, clients, collaborateurs, projets, missions, tâches, planning, messages, documents, contrats et productivité.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/docs.css">
+<link rel="stylesheet" href="assets/sidebar.css">
+</head>
+<body>
+<div id="progress" class="progress"></div>
+<div class="app">
+<aside class="sidebar hc-sidebar" id="sidebar"></aside>
+<main class="main">
+<header class="topbar">
+  <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Menu"></button>
+  <div class="crumbs"><a href="index.html">Help Center</a><span>›</span><strong>Squared Workspace</strong></div>
+  <div class="top-actions"><button class="btn command-search hide-mobile" data-search-open><span>Rechercher</span><span class="keyboard-hint">⌘K</span></button><button class="icon-btn" id="quickActionsBtn"></button><button class="icon-btn" id="themeBtn"></button></div>
+</header>
+
+<div class="shell">
+<section class="help-hero" style="max-width:820px;padding-top:42px">
+  <div class="eyebrow">Produit · Documentation</div>
+  <h1>Squared Workspace</h1>
+  <p>La documentation de référence pour utiliser, administrer et comprendre l’environnement de travail Squared.</p>
+  <div class="help-search" data-search-open role="button" tabindex="0"><span class="search-icon" data-icon-key="search"></span><button type="button">Rechercher dans Workspace…</button><kbd>⌘K</kbd></div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>Commencer</h2><p>Accès, installation et fondations du produit.</p></div></div>
+  <div class="category-grid">
+    <a class="category-card" href="workspace/workspace-overview.html"><div class="cat-top"><span class="cat-ico" data-icon-key="workspace"></span><span class="cat-count">Fondations</span></div><h3>Vue d’ensemble</h3><p>Vision du produit, modules et expérience contextuelle.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-activation.html"><div class="cat-top"><span class="cat-ico" data-icon-key="access"></span><span class="cat-count">Démarrage</span></div><h3>Activation & accès</h3><p>Invitation, activation et premier accès à l’espace.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-installation.html"><div class="cat-top"><span class="cat-ico" data-icon-key="publish"></span><span class="cat-count">Apps</span></div><h3>Installation</h3><p>iOS, iPadOS, macOS et builds de test.</p><span class="cat-link">Ouvrir →</span></a>
   </div>
-</div><div class="toast" id="toast">Copié</div><script src="assets/sidebar.js"></script><script src="assets/docs.js"></script></body></html>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>Compte & organisation</h2><p>Identité, rôles, membres et structure de l’entreprise.</p></div></div>
+  <div class="category-grid">
+    <a class="category-card" href="workspace/workspace-account.html"><div class="cat-top"><span class="cat-ico" data-icon-key="account"></span><span class="cat-count">Compte</span></div><h3>Compte & profil</h3><p>Identité, préférences et sécurité du membre.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-roles.html"><div class="cat-top"><span class="cat-ico" data-icon-key="security"></span><span class="cat-count">Gouvernance</span></div><h3>Rôles & accès</h3><p>Permissions et visibilité selon les responsabilités.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-clients.html"><div class="cat-top"><span class="cat-ico" data-icon-key="group"></span><span class="cat-count">Externe</span></div><h3>Clients</h3><p>Un espace simplifié centré sur les projets et livrables.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-collaborators.html"><div class="cat-top"><span class="cat-ico" data-icon-key="account"></span><span class="cat-count">Équipe</span></div><h3>Collaborateurs</h3><p>Accès aux missions, tâches, planning et ressources utiles.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-departments.html"><div class="cat-top"><span class="cat-ico" data-icon-key="navigation"></span><span class="cat-count">Structure</span></div><h3>Pôles & structure</h3><p>Organisation durable des responsabilités du groupe.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-invitations.html"><div class="cat-top"><span class="cat-ico" data-icon-key="plus"></span><span class="cat-count">Accès</span></div><h3>Invitations</h3><p>Créer et sécuriser les accès clients et collaborateurs.</p><span class="cat-link">Ouvrir →</span></a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>Travail</h2><p>De l’objectif global à l’action quotidienne.</p></div></div>
+  <div class="category-grid">
+    <a class="category-card" href="workspace/workspace-projects.html"><div class="cat-top"><span class="cat-ico" data-icon-key="projects"></span><span class="cat-count">Pilotage</span></div><h3>Projets</h3><p>Objectifs, statuts et visibilité client/interne.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-missions.html"><div class="cat-top"><span class="cat-ico" data-icon-key="process"></span><span class="cat-count">Responsabilité</span></div><h3>Missions</h3><p>Niveau de responsabilité entre projet et tâche.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-tasks.html"><div class="cat-top"><span class="cat-ico" data-icon-key="quick"></span><span class="cat-count">Exécution</span></div><h3>Tâches</h3><p>Actions claires, responsables, statuts et critères de fin.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-planning.html"><div class="cat-top"><span class="cat-ico" data-icon-key="calendar"></span><span class="cat-count">Temps</span></div><h3>Planning</h3><p>Échéances, jalons et coordination.</p><span class="cat-link">Ouvrir →</span></a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>Collaboration & fichiers</h2><p>Échanges, preuves, livrables et documents contractuels.</p></div></div>
+  <div class="category-grid">
+    <a class="category-card" href="workspace/workspace-messages.html"><div class="cat-top"><span class="cat-ico" data-icon-key="forum"></span><span class="cat-count">Collaboration</span></div><h3>Messages</h3><p>Conserver les échanges dans leur contexte de travail.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-notifications.html"><div class="cat-top"><span class="cat-ico" data-icon-key="notifications"></span><span class="cat-count">Attention</span></div><h3>Notifications</h3><p>Signaux utiles, mentions et réduction du bruit.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-documents.html"><div class="cat-top"><span class="cat-ico" data-icon-key="documents"></span><span class="cat-count">Fichiers</span></div><h3>Documents & livrables</h3><p>Versions, fichiers remis et source de vérité.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-contracts.html"><div class="cat-top"><span class="cat-ico" data-icon-key="security"></span><span class="cat-count">Confidentiel</span></div><h3>Contrats</h3><p>Traçabilité, accès et version applicable.</p><span class="cat-link">Ouvrir →</span></a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>Productivité & support</h2><p>Aller plus vite sans perdre la clarté ni la sécurité.</p></div></div>
+  <div class="category-grid">
+    <a class="category-card" href="workspace/workspace-shortcuts.html"><div class="cat-top"><span class="cat-ico" data-icon-key="quick"></span><span class="cat-count">Productivité</span></div><h3>Raccourcis clavier</h3><p>Accélérer les commandes fréquentes.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-search.html"><div class="cat-top"><span class="cat-ico" data-icon-key="search"></span><span class="cat-count">Recherche</span></div><h3>Recherche & command palette</h3><p>Trouver rapidement un objet ou lancer une action.</p><span class="cat-link">Ouvrir →</span></a>
+    <a class="category-card" href="workspace/workspace-troubleshooting.html"><div class="cat-top"><span class="cat-ico" data-icon-key="troubleshooting"></span><span class="cat-count">Support</span></div><h3>Dépannage</h3><p>Accès, données manquantes, synchronisation et diagnostic.</p><span class="cat-link">Ouvrir →</span></a>
+  </div>
+</section>
+
+<section class="section"><div class="banner"><div><h3>Besoin d’aide sur Workspace ?</h3><p>Commencez par la recherche universelle. Pour une question réutilisable, utilisez le forum ; pour un compte réel ou un contexte confidentiel, ouvrez un ticket privé.</p></div><div class="banner-actions"><a class="btn" href="forum.html">Forum</a><a class="btn green" href="support.html">Support privé</a></div></div></section>
+
+<footer class="footer"><span>© 2026 Squared Group · Help Center</span><span class="footer-links"><a href="search.html">Recherche</a><a href="changelog.html">Nouveautés</a></span></footer>
+</div></main></div>
+<div class="search-modal" id="searchModal"><div class="search-box"><div class="search-head"><input id="searchInput" type="search" placeholder="Rechercher un guide Workspace…" autocomplete="off"><button class="search-close" id="searchClose">Esc</button></div><div class="search-results" id="searchResults"></div></div></div><div class="toast" id="toast">Copié</div>
+<script src="assets/sidebar.js"></script><script src="assets/docs.js"></script>
+</body></html>
