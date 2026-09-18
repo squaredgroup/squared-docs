@@ -682,3 +682,11 @@ html[data-theme="dark"] .icon-btn.danger:hover{
   .status-product-grid{grid-template-columns:1fr}
   .status-product-meta{align-items:flex-start;flex-direction:column;gap:4px}
 }
+
+
+.status-subscription-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.status-subscription-card{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:var(--text);padding:11px 12px;font:inherit;text-align:left;cursor:pointer}
+.status-subscription-card:hover{background:var(--panel-2)}
+.status-subscription-card.active{border-color:color-mix(in srgb,var(--green) 28%,var(--line));background:var(--green-soft)}
+.status-subscription-card strong{display:block;font-size:9.5px}.status-subscription-card small{display:block;font-size:7.5px;color:var(--muted);margin-top:2px}
+@media(max-width:900px){.status-subscription-grid{grid-template-columns:1fr 1fr}}@media(max-width:520px){.status-subscription-grid{grid-template-columns:1fr}}
