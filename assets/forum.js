@@ -215,8 +215,18 @@ async function initLogin(){
   if(session){$("#authAlready").innerHTML='<div class="forum-alert show success">Vous êtes déjà connecté. <a href="'+safeNext()+'">Continuer →</a></div>'}
   $$(".auth-tab").forEach(b=>b.addEventListener("click",()=>{$$(".auth-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");signIn.hidden=b.dataset.authTab!=="signin";signUp.hidden=b.dataset.authTab!=="signup"}));
   signIn.addEventListener("submit",async e=>{e.preventDefault();clearAlert("authAlert");const email=$("#loginEmail").value.trim(),password=$("#loginPassword").value;const {error}=await supabase.auth.signInWithPassword({email,password});if(error)alertBox("authAlert",error.message);else location.href=safeNext()});
-  signUp.addEventListener("submit",async e=>{e.preventDefault();clearAlert("authAlert");const display_name=$("#signupName").value.trim(),email=$("#signupEmail").value.trim(),password=$("#signupPassword").value;if(password.length<8){alertBox("authAlert","Le mot de passe doit contenir au moins 8 caractères.");return}const {data,error}=await supabase.auth.signUp({email,password,options:{data:{display_name}}});if(error)alertBox("authAlert",error.message);else if(data.session)location.href=safeNext();else alertBox("authAlert","Compte créé. Vérifiez votre e-mail pour confirmer votre adresse, puis revenez vous connecter.","success")});
+  signUp.addEventListener("submit",async e=>{e.preventDefault();clearAlert("authAlert");const display_name=$("#signupName").value.trim(),email=$("#signupEmail").value.trim(),password=$("#signupPassword").value;if(password.length<8){alertBox("authAlert","Le mot de passe doit contenir au moins 8 caractères.");return}const {data,error}=await supabase.auth.signUp({email,password,options:{data:{display_name},emailRedirectTo:location.origin+"/login.html?confirmed=1"}});if(error)alertBox("authAlert",error.message);else if(data.session)location.href=safeNext();else alertBox("authAlert","Compte créé. Vérifiez votre e-mail pour confirmer votre adresse, puis revenez vous connecter.","success")});
 }
+
+async function initForgotPassword(){
+  const form=$("#forgotPasswordForm");if(!form)return;
+  form.addEventListener("submit",async e=>{e.preventDefault();clearAlert("forgotAlert");const email=$("#forgotEmail").value.trim();const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:location.origin+"/reset-password.html"});if(error)alertBox("forgotAlert",error.message);else alertBox("forgotAlert","Un e-mail de réinitialisation a été envoyé.","success")});
+}
+async function initResetPassword(){
+  const form=$("#resetPasswordForm");if(!form)return;
+  form.addEventListener("submit",async e=>{e.preventDefault();clearAlert("resetAlert");const password=$("#resetPassword").value;if(password.length<8){alertBox("resetAlert","Le mot de passe doit contenir au moins 8 caractères.");return}const {error}=await supabase.auth.updateUser({password});if(error)alertBox("resetAlert",error.message);else{alertBox("resetAlert","Mot de passe mis à jour.","success");setTimeout(()=>location.href="profile.html",700)}})
+}
+
 async function initProfile(){
   const mount=$("#profileMount");if(!mount)return;
   const requested=new URLSearchParams(location.search).get("id")||session?.user.id;
@@ -317,6 +327,8 @@ async function init(){
   else if(page==="new-topic")await initNewTopic();
   else if(page==="login")await initLogin();
   else if(page==="profile")await initProfile();
+  else if(page==="forgot-password")await initForgotPassword();
+  else if(page==="reset-password")await initResetPassword();
   else if(page==="notifications")await initNotifications();
   else if(page==="support")await initSupport();
   else if(page==="support-ticket")await initSupportTicket();
