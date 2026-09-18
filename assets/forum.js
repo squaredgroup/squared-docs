@@ -334,35 +334,169 @@ async function initNotifications(){
   $("#markReadBtn")?.addEventListener("click",async()=>{await supabase.rpc("mark_notifications_read");location.reload()});
   render();
 }
+async function uploadSupportFiles(ticketId,messageId,files){
+  const list=[...(files||[])].filter(Boolean);
+  if(!list.length)return [];
+  const uploaded=[];
+  for(const file of list){
+    if(file.size>10485760)throw new Error(file.name+" dépasse 10 Mo.");
+    const safe=file.name.replace(/[^a-zA-Z0-9._-]+/g,"-");
+    const path=ticketId+"/"+session.user.id+"/"+Date.now()+"-"+crypto.randomUUID()+"-"+safe;
+    const {error:uploadError}=await supabase.storage.from("support-attachments").upload(path,file,{upsert:false,contentType:file.type||undefined});
+    if(uploadError)throw uploadError;
+    const row={
+      ticket_id:ticketId,
+      message_id:messageId||null,
+      uploader_id:session.user.id,
+      storage_path:path,
+      file_name:file.name,
+      mime_type:file.type||null,
+      size_bytes:file.size
+    };
+    const {data,error}=await supabase.from("support_attachments").insert(row).select("*").single();
+    if(error){
+      await supabase.storage.from("support-attachments").remove([path]);
+      throw error;
+    }
+    uploaded.push(data);
+  }
+  return uploaded;
+}
+
+async function signedSupportAttachments(rows){
+  const out=[];
+  for(const a of rows||[]){
+    const {data}=await supabase.storage.from("support-attachments").createSignedUrl(a.storage_path,900);
+    out.push({...a,signed_url:data?.signedUrl||null});
+  }
+  return out;
+}
+
+function supportAttachmentHtml(a){
+  const size=a.size_bytes?Math.max(1,Math.round(a.size_bytes/1024))+" Ko":"";
+  return '<a class="ticket-attachment" href="'+esc(a.signed_url||"#")+'" target="_blank" rel="noreferrer">'+(window.SQIconly?SQIconly.icon("documents","outline","sm"):"")+'<span><strong>'+esc(a.file_name)+'</strong><small>'+esc(size)+'</small></span></a>';
+}
+
 async function initSupport(){
   const list=$("#ticketList"),form=$("#ticketForm");if(!list||!form)return;
   if(!session){$("#supportGuest").hidden=false;form.hidden=true;list.innerHTML='<div class="forum-empty"><strong>Connectez-vous pour suivre vos demandes</strong>Vos tickets restent privés entre vous et le support.</div>';return}
   $("#supportGuest").hidden=true;form.hidden=false;
-  const {data,error}=await supabase.from("support_tickets").select(`id,subject,category,priority,status,created_at,last_activity_at,requester_id,assigned_to,requester:profiles!support_tickets_requester_id_fkey(id,display_name,username,avatar_url)`).order("last_activity_at",{ascending:false});
+
+  const {data,error}=await supabase.from("support_tickets").select(`id,ticket_number,subject,product,category,priority,status,created_at,last_activity_at,first_response_at,sla_first_response_due_at,sla_resolution_due_at,requester_id,assigned_to,requester:profiles!support_tickets_requester_id_fkey(id,display_name,username,avatar_url)`).order("last_activity_at",{ascending:false});
   if(!error){
     const all=data||[],open=all.filter(t=>!["resolved","closed"].includes(t.status)).length,waiting=all.filter(t=>t.status==="waiting_user").length,resolved=all.filter(t=>["resolved","closed"].includes(t.status)).length;
     if($("#supportOpenCount"))$("#supportOpenCount").textContent=open;
     if($("#supportWaitingCount"))$("#supportWaitingCount").textContent=waiting;
     if($("#supportResolvedCount"))$("#supportResolvedCount").textContent=resolved;
   }
+
   if(error)list.innerHTML='<div class="forum-empty">'+esc(error.message)+'</div>';
-  else list.innerHTML=data?.length?data.map(t=>'<a class="ticket-row" href="support-ticket.html?id='+t.id+'"><span><strong>'+esc(t.subject)+'</strong><span>'+esc(t.category)+' · '+ago(t.last_activity_at)+(staff(me)?" · "+esc(t.requester?.display_name||"Membre"):"")+'</span></span><span class="ticket-status">'+esc(t.status)+'</span></a>').join(""):'<div class="forum-empty"><strong>Aucune demande</strong>Créez un ticket si votre problème nécessite une réponse privée.</div>';
-  form.addEventListener("submit",async e=>{e.preventDefault();clearAlert("ticketAlert");const payload={requester_id:session.user.id,subject:$("#ticketSubject").value.trim(),description:$("#ticketDescription").value.trim(),category:$("#ticketCategory").value};const {data,error}=await supabase.from("support_tickets").insert(payload).select("id").single();if(error)alertBox("ticketAlert",error.message);else location.href="support-ticket.html?id="+data.id});
+  else list.innerHTML=data?.length?data.map(t=>{
+    const overdue=!["resolved","closed"].includes(t.status)&&((!t.first_response_at&&t.sla_first_response_due_at&&new Date(t.sla_first_response_due_at)<new Date())||(t.sla_resolution_due_at&&new Date(t.sla_resolution_due_at)<new Date()));
+    return '<a class="ticket-row" href="support-ticket.html?id='+t.id+'"><span><strong>#SQ-'+String(t.ticket_number).padStart(5,"0")+' · '+esc(t.subject)+'</strong><span>'+esc(t.product)+' · '+esc(t.category)+' · '+ago(t.last_activity_at)+(staff(me)?" · "+esc(t.requester?.display_name||"Membre"):"")+'</span></span><span style="display:flex;gap:5px;align-items:center">'+(overdue?'<span class="badge red">SLA</span>':'')+'<span class="ticket-status">'+esc(t.status)+'</span></span></a>';
+  }).join(""):'<div class="forum-empty"><strong>Aucune demande</strong>Créez un ticket si votre problème nécessite une réponse privée.</div>';
+
+  let suggestionTimer=null;
+  const suggest=()=>{
+    clearTimeout(suggestionTimer);
+    suggestionTimer=setTimeout(async()=>{
+      const q=($("#ticketSubject")?.value+" "+$("#ticketDescription")?.value).trim();
+      const box=$("#supportSuggestions");
+      if(!box||q.length<8||!window.SQSearchBackend){if(box)box.hidden=true;return}
+      try{
+        const rows=(await window.SQSearchBackend.search(q,6)).filter(x=>x.kind==="knowledge").slice(0,3);
+        if(!rows.length){box.hidden=true;return}
+        box.hidden=false;
+        box.innerHTML='<strong>Ces articles peuvent résoudre votre problème</strong>'+rows.map(r=>'<a href="'+esc(r.href)+'" target="_blank"><span>'+esc(r.title)+'</span><em>Ouvrir →</em></a>').join("")+'<small>Si aucun article ne répond au besoin, poursuivez la création du ticket.</small>';
+        window.SQSearchBackend.event("support_deflection",{query:q,metadata:{suggestions:rows.length}}).catch(()=>{});
+      }catch{box.hidden=true}
+    },500);
+  };
+  $("#ticketSubject")?.addEventListener("input",suggest);
+  $("#ticketDescription")?.addEventListener("input",suggest);
+
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();clearAlert("ticketAlert");
+    const payload={
+      requester_id:session.user.id,
+      subject:$("#ticketSubject").value.trim(),
+      description:$("#ticketDescription").value.trim(),
+      category:$("#ticketCategory").value,
+      product:$("#ticketProduct")?.value||"general"
+    };
+    const {data:ticket,error}=await supabase.from("support_tickets").insert(payload).select("id,ticket_number").single();
+    if(error){alertBox("ticketAlert",error.message);return}
+    try{
+      await uploadSupportFiles(ticket.id,null,$("#ticketFiles")?.files);
+      location.href="support-ticket.html?id="+ticket.id;
+    }catch(err){
+      alertBox("ticketAlert","Ticket créé, mais pièce jointe non envoyée : "+(err?.message||err));
+      setTimeout(()=>location.href="support-ticket.html?id="+ticket.id,1400);
+    }
+  });
 }
+
 async function initSupportTicket(){
   const mount=$("#supportTicketMount");if(!mount)return;
   if(!session){location.href=loginUrl();return}
   const id=new URLSearchParams(location.search).get("id");if(!id){mount.innerHTML='<div class="forum-empty">Demande introuvable.</div>';return}
-  const {data:t,error}=await supabase.from("support_tickets").select(`*,requester:profiles!support_tickets_requester_id_fkey(id,display_name,username,avatar_url),assigned:profiles!support_tickets_assigned_to_fkey(id,display_name,username,avatar_url)`).eq("id",id).maybeSingle();
+
+  const [{data:t,error},{data:msgs},{data:rawAttachments},{data:events}]=await Promise.all([
+    supabase.from("support_tickets").select(`*,requester:profiles!support_tickets_requester_id_fkey(id,display_name,username,avatar_url),assigned:profiles!support_tickets_assigned_to_fkey(id,display_name,username,avatar_url)`).eq("id",id).maybeSingle(),
+    supabase.from("support_ticket_messages").select(`id,body,is_internal,created_at,edited_at,author_id,author:profiles!support_ticket_messages_author_id_fkey(id,display_name,username,avatar_url,role)`).eq("ticket_id",id).order("created_at"),
+    supabase.from("support_attachments").select("*").eq("ticket_id",id).order("created_at"),
+    supabase.from("support_ticket_events").select("*,actor:profiles!support_ticket_events_actor_id_fkey(display_name)").eq("ticket_id",id).order("created_at")
+  ]);
+
   if(error||!t){mount.innerHTML='<div class="forum-empty">Demande introuvable ou accès refusé.</div>';return}
-  const {data:msgs}=await supabase.from("support_ticket_messages").select(`id,body,is_internal,created_at,edited_at,author_id,author:profiles!support_ticket_messages_author_id_fkey(id,display_name,username,avatar_url,role)`).eq("ticket_id",id).order("created_at");
   const canStaff=staff(me);
-  mount.innerHTML='<div class="topic-page"><div class="topic-head-card"><div class="topic-author-line">'+avatar(t.requester)+'<span><strong>'+esc(t.requester?.display_name||"Membre")+'</strong><span>'+dt(t.created_at)+' · '+esc(t.category)+'</span></span></div><h1 class="topic-head-title">'+esc(t.subject)+'</h1><div class="topic-content">'+nl(t.description)+'</div><div class="topic-actions sticky-topic-actions"><span class="badge '+(t.status==="resolved"?"green":"blue")+'">'+esc(t.status)+'</span><span class="badge">'+esc(t.priority)+'</span>'+(canStaff?'<button class="mini-action" id="assignSelf">M’assigner</button><select class="forum-select" id="ticketStatus"><option value="open">open</option><option value="in_progress">in_progress</option><option value="waiting_user">waiting_user</option><option value="resolved">resolved</option><option value="closed">closed</option></select>':'<button class="mini-action" id="closeTicket">'+(t.status==="closed"?"Rouvrir":"Fermer la demande")+'</button>')+'</div></div><div class="forum-panel"><div class="forum-panel-head"><h2>Échanges</h2><span>'+(msgs?.length||0)+'</span></div><div class="ticket-thread" id="ticketThread" style="padding:12px"></div></div>'+(t.status!=="closed"||canStaff?'<form class="reply-form" id="ticketReplyForm"><label style="font-size:9px;font-weight:700">Répondre</label><textarea class="forum-textarea" id="ticketReplyBody" required></textarea>'+(canStaff?'<label style="font-size:8px;color:var(--muted)"><input type="checkbox" id="ticketInternal"> Note interne</label>':"")+'<div class="form-actions"><button class="btn green" type="submit">'+(window.SQIconly?SQIconly.icon('arrowRight','regular','sm'):'')+'<span>Envoyer</span></button></div><div class="forum-alert" id="ticketReplyAlert"></div></form>':'<div class="forum-alert show">Cette demande est fermée.</div>')+'</div>';
-  $("#ticketThread").innerHTML=msgs?.length?msgs.map(m=>'<article class="ticket-message'+(staff(m.author)?" staff":"")+(m.is_internal?" internal":"")+'"><div class="reply-user">'+avatar(m.author)+'<span><strong>'+esc(m.author?.display_name||"Membre")+'</strong><span>'+dt(m.created_at)+(m.is_internal?" · note interne":"")+'</span></span></div><div class="reply-body">'+nl(m.body)+'</div></article>').join(""):'<div class="forum-empty">Aucun échange pour le moment.</div>';
-  $("#ticketReplyForm")?.addEventListener("submit",async e=>{e.preventDefault();const {error}=await supabase.from("support_ticket_messages").insert({ticket_id:id,author_id:session.user.id,body:$("#ticketReplyBody").value.trim(),is_internal:canStaff&&$("#ticketInternal")?.checked});if(error)alertBox("ticketReplyAlert",error.message);else location.reload()});
+  const attachments=await signedSupportAttachments(rawAttachments||[]);
+  const initialAttachments=attachments.filter(a=>!a.message_id);
+  const byMessage={};attachments.filter(a=>a.message_id).forEach(a=>(byMessage[a.message_id]??=[]).push(a));
+
+  let macros=[];
+  if(canStaff){
+    const {data}=await supabase.from("support_macros").select("*").eq("is_active",true).order("name");
+    macros=data||[];
+  }
+
+  const firstSla=t.first_response_at?"Réponse : "+dt(t.first_response_at):t.sla_first_response_due_at?"1re réponse avant "+dt(t.sla_first_response_due_at):"";
+  const resolutionSla=t.sla_resolution_due_at?"Résolution cible "+dt(t.sla_resolution_due_at):"";
+  const ticketLabel="#SQ-"+String(t.ticket_number).padStart(5,"0");
+
+  mount.innerHTML='<div class="support-ticket-layout"><section class="support-ticket-main"><div class="topic-head-card"><div class="topic-author-line">'+avatar(t.requester)+'<span><strong>'+esc(t.requester?.display_name||"Membre")+'</strong><span>'+ticketLabel+' · '+dt(t.created_at)+' · '+esc(t.product)+' · '+esc(t.category)+'</span></span></div><h1 class="topic-head-title">'+esc(t.subject)+'</h1><div class="topic-content">'+nl(t.description)+'</div>'+(initialAttachments.length?'<div class="ticket-attachments">'+initialAttachments.map(supportAttachmentHtml).join("")+'</div>':'')+'<div class="topic-actions sticky-topic-actions"><span class="badge '+(["resolved","closed"].includes(t.status)?"green":"blue")+'">'+esc(t.status)+'</span><span class="badge">'+esc(t.priority)+'</span><span class="badge">'+esc(t.product)+'</span></div></div><div class="forum-panel"><div class="forum-panel-head"><h2>Échanges</h2><span>'+(msgs?.length||0)+'</span></div><div class="ticket-thread" id="ticketThread" style="padding:12px"></div></div>'+(t.status!=="closed"||canStaff?'<form class="reply-form" id="ticketReplyForm"><label style="font-size:9px;font-weight:700">Répondre</label>'+(canStaff&&macros.length?'<select class="forum-select" id="ticketMacro" style="width:100%;margin-bottom:8px"><option value="">Insérer une macro…</option>'+macros.map(m=>'<option value="'+m.id+'">'+esc(m.name)+'</option>').join("")+'</select>':'')+'<textarea class="forum-textarea" id="ticketReplyBody" required></textarea><input class="forum-input" id="ticketReplyFiles" type="file" multiple accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,application/zip" style="width:100%;margin-top:8px;padding-top:8px">'+(canStaff?'<label style="font-size:8px;color:var(--muted);display:block;margin-top:8px"><input type="checkbox" id="ticketInternal"> Note interne</label>':"")+'<div class="form-actions"><button class="btn green" type="submit">'+(window.SQIconly?SQIconly.icon("arrowRight","regular","sm"):"")+'<span>Envoyer</span></button></div><div class="forum-alert" id="ticketReplyAlert"></div></form>':'<div class="forum-alert show">Cette demande est fermée.</div>')+(!canStaff&&["resolved","closed"].includes(t.status)?'<form class="reply-form" id="satisfactionForm"><strong style="font-size:10px">Votre satisfaction</strong><p style="font-size:8px;color:var(--muted)">Notez la résolution de cette demande.</p><select class="forum-select" id="satisfactionScore"><option value="5">5 — Excellent</option><option value="4">4 — Très bien</option><option value="3">3 — Correct</option><option value="2">2 — Insuffisant</option><option value="1">1 — Mauvais</option></select><textarea class="forum-textarea" id="satisfactionComment" placeholder="Commentaire optionnel"></textarea><div class="form-actions"><button class="btn" type="submit">Envoyer</button></div></form>':'')+'</section><aside class="support-ticket-side"><div class="forum-panel"><div class="forum-panel-head"><h2>Détails</h2></div><div class="ticket-side-content"><div><span>Ticket</span><strong>'+ticketLabel+'</strong></div><div><span>Produit</span><strong>'+esc(t.product)+'</strong></div><div><span>Priorité</span><strong>'+esc(t.priority)+'</strong></div><div><span>Assigné à</span><strong>'+esc(t.assigned?.display_name||"Non assigné")+'</strong></div><div><span>SLA</span><strong>'+esc(firstSla||"—")+'</strong><small>'+esc(resolutionSla)+'</small></div></div></div>'+(canStaff?'<div class="forum-panel"><div class="forum-panel-head"><h2>Actions staff</h2></div><div class="ticket-side-actions"><button class="mini-action" id="assignSelf">M’assigner</button><label>Statut<select class="forum-select" id="ticketStatus"><option value="open">open</option><option value="in_progress">in_progress</option><option value="waiting_user">waiting_user</option><option value="resolved">resolved</option><option value="closed">closed</option></select></label><label>Priorité<select class="forum-select" id="ticketPriority"><option value="low">low</option><option value="normal">normal</option><option value="high">high</option><option value="urgent">urgent</option></select></label></div></div>':'<button class="btn" id="closeTicket">'+(t.status==="closed"?"Rouvrir":"Fermer la demande")+'</button>')+'<div class="forum-panel"><div class="forum-panel-head"><h2>Historique</h2></div><div class="ticket-event-list">'+((events||[]).length?events.map(ev=>'<div class="ticket-event"><strong>'+esc(ev.event_type)+'</strong><span>'+esc(ev.from_value||"—")+' → '+esc(ev.to_value||"—")+'</span><small>'+dt(ev.created_at)+'</small></div>').join(""):'<div class="forum-empty">Aucun changement enregistré.</div>')+'</div></div></aside></div>';
+
+  $("#ticketThread").innerHTML=msgs?.length?msgs.map(m=>'<article class="ticket-message'+(staff(m.author)?" staff":"")+(m.is_internal?" internal":"")+'"><div class="reply-user">'+avatar(m.author)+'<span><strong>'+esc(m.author?.display_name||"Membre")+'</strong><span>'+dt(m.created_at)+(m.is_internal?" · note interne":"")+'</span></span></div><div class="reply-body">'+nl(m.body)+'</div>'+((byMessage[m.id]||[]).length?'<div class="ticket-attachments">'+byMessage[m.id].map(supportAttachmentHtml).join("")+'</div>':'')+'</article>').join(""):'<div class="forum-empty">Aucun échange pour le moment.</div>';
+
+  $("#ticketMacro")?.addEventListener("change",e=>{
+    const macro=macros.find(m=>m.id===e.target.value);
+    if(macro)$("#ticketReplyBody").value=macro.body;
+  });
+
+  $("#ticketReplyForm")?.addEventListener("submit",async e=>{
+    e.preventDefault();clearAlert("ticketReplyAlert");
+    const body=$("#ticketReplyBody").value.trim();
+    const {data:message,error}=await supabase.from("support_ticket_messages").insert({ticket_id:id,author_id:session.user.id,body,is_internal:canStaff&&$("#ticketInternal")?.checked}).select("id").single();
+    if(error){alertBox("ticketReplyAlert",error.message);return}
+    try{await uploadSupportFiles(id,message.id,$("#ticketReplyFiles")?.files)}catch(err){alertBox("ticketReplyAlert","Réponse envoyée, pièce jointe échouée : "+(err?.message||err));return}
+    location.reload();
+  });
+
   $("#assignSelf")?.addEventListener("click",async()=>{await supabase.from("support_tickets").update({assigned_to:session.user.id,status:"in_progress"}).eq("id",id);location.reload()});
-  if(canStaff){$("#ticketStatus").value=t.status;$("#ticketStatus").addEventListener("change",async e=>{await supabase.from("support_tickets").update({status:e.target.value}).eq("id",id);location.reload()})}
+  if(canStaff){
+    $("#ticketStatus").value=t.status;
+    $("#ticketPriority").value=t.priority;
+    $("#ticketStatus").addEventListener("change",async e=>{await supabase.from("support_tickets").update({status:e.target.value}).eq("id",id);location.reload()});
+    $("#ticketPriority").addEventListener("change",async e=>{await supabase.from("support_tickets").update({priority:e.target.value}).eq("id",id);location.reload()});
+  }
   $("#closeTicket")?.addEventListener("click",async()=>{await supabase.from("support_tickets").update({status:t.status==="closed"?"open":"closed"}).eq("id",id);location.reload()});
+
+  $("#satisfactionForm")?.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const {error}=await supabase.from("support_tickets").update({satisfaction_score:Number($("#satisfactionScore").value),satisfaction_comment:$("#satisfactionComment").value.trim()||null}).eq("id",id);
+    if(error)alert(error.message);else location.reload();
+  });
+
   supabase.channel("support-"+id).on("postgres_changes",{event:"INSERT",schema:"public",table:"support_ticket_messages",filter:"ticket_id=eq."+id},()=>location.reload()).subscribe();
 }
 
