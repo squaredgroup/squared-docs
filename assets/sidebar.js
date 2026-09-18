@@ -122,6 +122,8 @@ const groups=[
    {href:'workspace/workspace-activation.html',label:'Activation & accès'},
    {href:'workspace/workspace-installation.html',label:'Installation'},
    {href:'workspace/workspace-account.html',label:'Compte & profil'},
+   {href:'workspace/workspace-navigation.html',label:'Navigation'},
+   {href:'workspace/workspace-members.html',label:'Membres & organisations'},
    {href:'workspace/workspace-roles.html',label:'Rôles & accès'},
    {href:'workspace/workspace-clients.html',label:'Clients'},
    {href:'workspace/workspace-collaborators.html',label:'Collaborateurs'},
