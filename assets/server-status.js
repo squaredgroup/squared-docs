@@ -1,191 +1,158 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "./supabase-config.js";
 
-const client=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+const db=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 const $=s=>document.querySelector(s);
 const services={};
 
-const GROUPS={
-  "squared-group":["squared-site","site-services","site-projects","site-products","site-contact","site-resources","site-agency","site-build","site-pricing","site-about","site-faq","site-start-project","site-solutions","site-process","site-team","site-clients","site-partners","site-roadmap","site-jobs","site-press","site-newsletter","site-book","site-security","site-accessibility","site-testimonials"],
-  "workspace":["workspace-app","workspace-landing"],
-  "help-center":["frontend","domain","forum","support"],
-  "backend":["auth","database","realtime"]
+const MAP={
+  "squared-site":"squared-group",
+  "site-services":"sg-services",
+  "site-projects":"sg-projects",
+  "site-products":"sg-products",
+  "site-contact":"sg-contact",
+  "site-resources":"sg-resources",
+  "site-agency":"sg-agency",
+  "site-build":"sg-build",
+  "site-pricing":"sg-pricing",
+  "site-about":"sg-about",
+  "site-faq":"sg-faq",
+  "site-start-project":"sg-start-project",
+  "site-solutions":"sg-solutions",
+  "site-process":"sg-process",
+  "site-team":"sg-team",
+  "site-clients":"sg-clients",
+  "site-partners":"sg-partners",
+  "site-roadmap":"sg-roadmap",
+  "site-jobs":"sg-jobs",
+  "site-press":"sg-press",
+  "site-newsletter":"sg-newsletter",
+  "site-book":"sg-book",
+  "site-security":"sg-security",
+  "site-accessibility":"sg-accessibility",
+  "site-testimonials":"sg-testimonials",
+  "workspace-app":"workspace-app",
+  "workspace-landing":"workspace-public",
+  "frontend":"help-center",
+  "domain":"help-domain",
+  "forum":"help-forum",
+  "support":"help-support",
+  "auth":"help-auth",
+  "database":"help-database",
+  "realtime":"help-realtime"
 };
 
-function setState(name,state,label,latency="—"){
-  services[name]=state;
-  const row=document.querySelector('[data-service="'+name+'"]');
-  if(row){
-    const badge=row.querySelector('[data-state]');
-    const latencyEl=row.querySelector('[data-latency]');
-    if(badge){badge.className="server-badge "+state;badge.textContent=label}
-    if(latencyEl)latencyEl.textContent=latency;
-  }
-  updateGroups();
-  updateOverall();
-}
+const GROUPS={
+  "squared-group":["squared-site","site-services","site-projects","site-products","site-contact","site-resources","site-agency","site-build","site-pricing","site-about","site-faq","site-start-project","site-solutions","site-process","site-team","site-clients","site-partners","site-roadmap","site-jobs","site-press","site-newsletter","site-book","site-security","site-accessibility","site-testimonials"],
+  workspace:["workspace-app","workspace-landing"],
+  "help-center":["frontend","domain","forum","support"],
+  backend:["auth","database","realtime"]
+};
 
-function groupState(names){
-  const vals=names.map(n=>services[n]).filter(Boolean);
-  if(!vals.length)return "checking";
-  if(vals.some(v=>v==="down"))return "down";
-  if(vals.some(v=>v==="warn")||vals.length<names.length)return "warn";
-  return "ok";
-}
-
-function updateGroups(){
-  Object.entries(GROUPS).forEach(([key,names])=>{
-    const state=groupState(names);
-    const badge=document.querySelector('[data-group-state="'+key+'"]');
-    if(!badge)return;
-    badge.className="server-badge "+state;
-    badge.textContent=state==="ok"?"Opérationnel":state==="warn"?"Partiel":state==="down"?"Incident":"Vérification…";
-  });
-}
-
-function updateOverall(){
-  const vals=Object.values(services);
-  if(!vals.length)return;
-  const bad=vals.filter(v=>v==="down").length;
-  const warn=vals.filter(v=>v==="warn").length;
-  const ok=vals.filter(v=>v==="ok").length;
-  const badge=$("#serverOverallBadge");
-  if(badge){
-    badge.className="pill "+(!bad&&!warn?"live":"");
-    badge.textContent=bad?bad+" service"+(bad>1?"s":"")+" indisponible"+(bad>1?"s":""):warn?ok+" opérationnels · "+warn+" partiel"+(warn>1?"s":""):ok+" services opérationnels";
-  }
-  $("#serverCheckedAt").textContent="Vérifié · "+new Intl.DateTimeFormat("fr-FR",{hour:"2-digit",minute:"2-digit",second:"2-digit"}).format(new Date());
-
-  const groupLabel=(key,okText)=>{
-    const state=groupState(GROUPS[key]);
-    return state==="ok"?okText:state==="warn"?"Partiellement disponible":state==="down"?"Incident détecté":"Vérification…";
-  };
-  $("#summarySquaredGroup").textContent=groupLabel("squared-group","Site & modules accessibles");
-  $("#summaryWorkspace").textContent=groupLabel("workspace","App & page publique accessibles");
-  $("#summaryHelpCenter").textContent=groupLabel("help-center","Documentation & support accessibles");
-  $("#summaryBackend").textContent=groupLabel("backend","Services backend disponibles");
-}
-
-async function timed(fn,timeout=7000){
-  const start=performance.now();
-  const controller=new AbortController();
-  const timer=setTimeout(()=>controller.abort(),timeout);
-  try{
-    const result=await fn(controller.signal);
-    return {ok:true,ms:Math.round(performance.now()-start),result};
-  }catch(error){
-    return {ok:false,ms:Math.round(performance.now()-start),error};
-  }finally{clearTimeout(timer)}
-}
-
-async function probeExternal(name,url){
-  const result=await timed(signal=>fetch(url+"?sq-status="+Date.now(),{mode:"no-cors",cache:"no-store",signal}));
-  setState(name,result.ok?"ok":"down",result.ok?"Accessible":"Indisponible",result.ms+" ms");
-  return result;
-}
-
-
-const EXTRA_SITE_MODULES=[
-  ["site-pricing","Tarifs & prestations","https://www.squaredgroup.studio/pricing","/pricing"],
-  ["site-about","À propos","https://www.squaredgroup.studio/about","/about"],
-  ["site-faq","FAQ","https://www.squaredgroup.studio/faqs","/faqs"],
-  ["site-start-project","Démarrer un projet","https://www.squaredgroup.studio/start-a-project","/start-a-project"],
-  ["site-solutions","Solutions","https://www.squaredgroup.studio/solutions","/solutions"],
-  ["site-process","Notre méthode","https://www.squaredgroup.studio/process","/process"],
-  ["site-team","Équipe","https://www.squaredgroup.studio/team-members","/team-members"],
-  ["site-clients","Clients","https://www.squaredgroup.studio/clients","/clients"],
-  ["site-partners","Partenaires","https://www.squaredgroup.studio/partners","/partners"],
-  ["site-roadmap","Roadmap","https://www.squaredgroup.studio/roadmap-items","/roadmap-items"],
-  ["site-jobs","Carrières","https://www.squaredgroup.studio/jobs","/jobs"],
-  ["site-press","Presse & médias","https://www.squaredgroup.studio/press-items","/press-items"],
-  ["site-newsletter","Newsletter","https://www.squaredgroup.studio/newsletter","/newsletter"],
-  ["site-book","Réserver un appel","https://www.squaredgroup.studio/book","/book"],
-  ["site-security","Sécurité","https://www.squaredgroup.studio/security","/security"],
-  ["site-accessibility","Accessibilité","https://www.squaredgroup.studio/accessibility","/accessibility"],
-  ["site-testimonials","Témoignages clients","https://www.squaredgroup.studio/testimonials","/testimonials"]
+const EXTRA=[
+  ["site-pricing","Tarifs & prestations","/pricing"],
+  ["site-about","À propos","/about"],
+  ["site-faq","FAQ","/faqs"],
+  ["site-start-project","Démarrer un projet","/start-a-project"],
+  ["site-solutions","Solutions","/solutions"],
+  ["site-process","Notre méthode","/process"],
+  ["site-team","Équipe","/team-members"],
+  ["site-clients","Clients","/clients"],
+  ["site-partners","Partenaires","/partners"],
+  ["site-roadmap","Roadmap","/roadmap-items"],
+  ["site-jobs","Carrières","/jobs"],
+  ["site-press","Presse & médias","/press-items"],
+  ["site-newsletter","Newsletter","/newsletter"],
+  ["site-book","Réserver un appel","/book"],
+  ["site-security","Sécurité","/security"],
+  ["site-accessibility","Accessibilité","/accessibility"],
+  ["site-testimonials","Témoignages clients","/testimonials"]
 ];
 
-function renderExtraModules(){
-  const host=$("#serverExtraModules");
-  if(!host)return;
-  host.innerHTML=EXTRA_SITE_MODULES.map(([key,label,,path])=>
-    '<div class="server-row" data-service="'+key+'"><div><strong>'+label+'</strong><p>Module public Squared Group.</p></div><span class="server-badge checking" data-state>Vérification…</span><span class="server-meta" data-latency>—</span><span class="server-meta">'+path+'</span></div>'
-  ).join("");
-  const count=$("#serverExtraCount");
-  if(count)count.textContent=EXTRA_SITE_MODULES.length+" modules";
-}
-renderExtraModules();
+const stateClass=s=>s==="operational"?"ok":s==="degraded"||s==="maintenance"?"warn":s==="unknown"?"checking":"down";
+const stateLabel=s=>({operational:"Opérationnel",degraded:"Dégradé",partial_outage:"Incident partiel",major_outage:"Incident majeur",maintenance:"Maintenance",unknown:"Inconnu"}[s]||"Inconnu");
 
-async function checkAll(){
-  document.querySelectorAll('[data-service]').forEach(row=>{
-    const badge=row.querySelector('[data-state]');
-    const latency=row.querySelector('[data-latency]');
-    if(badge){badge.className="server-badge checking";badge.textContent="Vérification…"}
-    if(latency)latency.textContent="—";
-  });
-  document.querySelectorAll('[data-group-state]').forEach(b=>{b.className="server-badge checking";b.textContent="Vérification…"});
-  Object.keys(services).forEach(k=>delete services[k]);
-
-  // Squared Group — actual Wix public routes.
-  await Promise.all([
-    probeExternal("squared-site","https://www.squaredgroup.studio/"),
-    probeExternal("site-services","https://www.squaredgroup.studio/services"),
-    probeExternal("site-projects","https://www.squaredgroup.studio/projects"),
-    probeExternal("site-products","https://www.squaredgroup.studio/products"),
-    probeExternal("site-contact","https://www.squaredgroup.studio/contact"),
-    probeExternal("site-resources","https://www.squaredgroup.studio/resources"),
-    probeExternal("site-agency","https://www.squaredgroup.studio/agency"),
-    probeExternal("site-build","https://www.squaredgroup.studio/squared-build"),
-    ...EXTRA_SITE_MODULES.map(([key,,url])=>probeExternal(key,url))
-  ]);
-
-  // Squared Workspace — app + public landing page.
-  await Promise.all([
-    probeExternal("workspace-app","https://workspace.squaredgroup.studio/"),
-    probeExternal("workspace-landing","https://www.squaredgroup.studio/workspace")
-  ]);
-
-  // Help Center frontend and domain.
-  const front=await timed(signal=>fetch("index.html?health="+Date.now(),{cache:"no-store",signal}));
-  setState("frontend",front.ok&&front.result.ok?"ok":"down",front.ok&&front.result.ok?"Opérationnel":"Indisponible",front.ms+" ms");
-
-  const domainOk=location.protocol==="https:"&&location.hostname==="docs.squaredgroup.studio";
-  setState("domain",domainOk?"ok":"warn",domainOk?"HTTPS actif":"Contexte différent",domainOk?"TLS":"Local / secours");
-
-  // Supabase backend.
-  const auth=await timed(signal=>fetch(SUPABASE_URL+"/auth/v1/health",{headers:{apikey:SUPABASE_PUBLISHABLE_KEY},cache:"no-store",signal}));
-  setState("auth",auth.ok&&auth.result.ok?"ok":"down",auth.ok&&auth.result.ok?"Opérationnel":"Indisponible",auth.ms+" ms");
-
-  const db=await timed(signal=>fetch(SUPABASE_URL+"/rest/v1/forum_categories?select=id&limit=1",{headers:{apikey:SUPABASE_PUBLISHABLE_KEY},cache:"no-store",signal}));
-  setState("database",db.ok&&db.result.ok?"ok":"down",db.ok&&db.result.ok?"Opérationnel":"Indisponible",db.ms+" ms");
-  setState("forum",db.ok&&db.result.ok?"ok":"down",db.ok&&db.result.ok?"Opérationnel":"Indisponible",db.ms+" ms");
-  setState("support",db.ok&&db.result.ok?"ok":"down",db.ok&&db.result.ok?"Backend disponible":"Backend indisponible",db.ms+" ms");
-
-  const realtimeStart=performance.now();
-  let realtimeDone=false;
-  await new Promise(resolve=>{
-    const ch=client.channel("server-status-"+Date.now());
-    const timer=setTimeout(async()=>{
-      if(!realtimeDone){
-        realtimeDone=true;
-        setState("realtime","warn","Temps réel non confirmé",Math.round(performance.now()-realtimeStart)+" ms");
-        await client.removeChannel(ch);resolve();
-      }
-    },4500);
-    ch.subscribe(async status=>{
-      if(realtimeDone)return;
-      if(status==="SUBSCRIBED"){
-        realtimeDone=true;clearTimeout(timer);
-        setState("realtime","ok","Opérationnel",Math.round(performance.now()-realtimeStart)+" ms");
-        await client.removeChannel(ch);resolve();
-      }else if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"){
-        realtimeDone=true;clearTimeout(timer);
-        setState("realtime","warn","Connexion partielle",Math.round(performance.now()-realtimeStart)+" ms");
-        await client.removeChannel(ch);resolve();
-      }
-    });
-  });
+function renderExtras(){
+  const host=$("#serverExtraModules");if(!host)return;
+  host.innerHTML=EXTRA.map(([key,label,path])=>'<div class="server-row" data-service="'+key+'"><div><strong>'+label+'</strong><p>Module public Squared Group.</p></div><span class="server-badge checking" data-state>Chargement…</span><span class="server-meta" data-latency>—</span><span class="server-meta">'+path+'</span></div>').join("");
+  $("#serverExtraCount").textContent=EXTRA.length+" modules";
 }
 
-$("#refreshServerStatus")?.addEventListener("click",checkAll);
-checkAll();
+function worst(keys){
+  const states=keys.map(k=>services[k]?.current_status).filter(Boolean);
+  if(!states.length)return "unknown";
+  if(states.some(s=>s==="major_outage"))return "major_outage";
+  if(states.some(s=>s==="partial_outage"))return "partial_outage";
+  if(states.some(s=>s==="degraded"))return "degraded";
+  if(states.some(s=>s==="maintenance"))return "maintenance";
+  if(states.every(s=>s==="operational"))return "operational";
+  return "unknown";
+}
+
+function renderGroups(){
+  Object.entries(GROUPS).forEach(([group,keys])=>{
+    const s=worst(keys),el=document.querySelector('[data-group-state="'+group+'"]');
+    if(el){el.className="server-badge "+stateClass(s);el.textContent=stateLabel(s)}
+  });
+  const summary=(id,group,okText)=>{
+    const el=$(id);if(!el)return;
+    const s=worst(GROUPS[group]);el.textContent=s==="operational"?okText:stateLabel(s);
+  };
+  summary("#summarySquaredGroup","squared-group","Site & modules opérationnels");
+  summary("#summaryWorkspace","workspace","App & portail opérationnels");
+  summary("#summaryHelpCenter","help-center","Docs, forum & support opérationnels");
+  summary("#summaryBackend","backend","Backend opérationnel");
+}
+
+async function load(){
+  renderExtras();
+  const [{data:components,error},{data:uptime},{data:incidents}]=await Promise.all([
+    db.from("service_components").select("*").eq("enabled",true).order("sort_order"),
+    db.rpc("component_uptime",{p_days:30}),
+    db.from("incidents").select("*").neq("status","resolved").order("started_at",{ascending:false})
+  ]);
+  if(error)throw error;
+
+  const bySlug={};(components||[]).forEach(x=>bySlug[x.slug]=x);
+  const up={};(uptime||[]).forEach(x=>up[x.component_id]=x);
+
+  Object.entries(MAP).forEach(([key,slug])=>{
+    const row=document.querySelector('[data-service="'+key+'"]'),comp=bySlug[slug];
+    if(!row||!comp)return;
+    services[key]=comp;
+    const state=row.querySelector("[data-state]"),lat=row.querySelector("[data-latency]");
+    if(state){state.className="server-badge "+stateClass(comp.current_status);state.textContent=stateLabel(comp.current_status)}
+    const u=up[comp.id];
+    if(lat)lat.textContent=(comp.response_ms!=null?comp.response_ms+" ms":"—")+(u?.uptime_percent!=null?" · "+Number(u.uptime_percent).toFixed(2)+"%":"");
+  });
+  renderGroups();
+
+  const checked=(components||[]).map(x=>x.last_checked_at).filter(Boolean).sort().at(-1);
+  $("#serverCheckedAt").textContent=checked?"Dernier check · "+new Intl.DateTimeFormat("fr-FR",{dateStyle:"short",timeStyle:"medium"}).format(new Date(checked)):"Aucun check";
+  const allStates=Object.values(services).map(x=>x.current_status);
+  const bad=allStates.filter(x=>["major_outage","partial_outage"].includes(x)).length,warn=allStates.filter(x=>x==="degraded").length;
+  $("#serverOverallBadge").className="pill "+(!bad&&!warn?"live":"");
+  $("#serverOverallBadge").textContent=bad?bad+" incident"+(bad>1?"s":""):warn?warn+" service"+(warn>1?"s":"")+" dégradé"+(warn>1?"s":""):"Tous les services opérationnels";
+
+  if((incidents||[]).length){
+    const banner=document.createElement("div");banner.className="banner server-active-incident";
+    banner.innerHTML='<div><h3>'+incidents.length+' incident'+(incidents.length>1?"s":"")+' actif'+(incidents.length>1?"s":"")+'</h3><p>'+incidents.map(i=>i.title).join(" · ")+'</p></div><div class="banner-actions"><a class="btn" href="incidents.html">Voir les incidents</a></div>';
+    document.querySelector(".server-summary")?.before(banner);
+  }
+}
+
+$("#refreshServerStatus")?.addEventListener("click",async()=>{
+  const btn=$("#refreshServerStatus");btn.disabled=true;btn.textContent="Vérification…";
+  try{
+    await fetch(SUPABASE_URL+"/functions/v1/status-monitor",{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"});
+    await new Promise(r=>setTimeout(r,1200));
+    location.reload();
+  }catch{
+    btn.disabled=false;btn.textContent="Relancer les vérifications";
+  }
+});
+
+load().catch(err=>{
+  $("#serverOverallBadge").textContent="Statut indisponible";
+  console.error(err);
+});
