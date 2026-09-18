@@ -152,3 +152,19 @@
   }
   .topic-page .sticky-topic-actions .mini-action{min-height:36px}
 }
+
+
+/* =========================================================
+   v7 — SUPPORT DESK
+   ========================================================= */
+.support-suggestions{border:1px solid var(--line);border-radius:10px;background:var(--panel-2);padding:10px;margin:8px 0 12px}
+.support-suggestions>strong{display:block;font-size:9px;margin-bottom:6px}
+.support-suggestions>a{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);text-decoration:none;font-size:8.5px}.support-suggestions>a:last-of-type{border-bottom:0}.support-suggestions a span{color:var(--text)}.support-suggestions a em{font-style:normal;color:var(--green);font-size:7.5px}.support-suggestions small{display:block;color:var(--muted);font-size:7.5px;margin-top:7px}
+.support-ticket-layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:16px;align-items:start}
+.support-ticket-main{min-width:0}.support-ticket-side{display:grid;gap:10px;position:sticky;top:78px}
+.ticket-side-content{padding:8px 12px}.ticket-side-content>div{padding:9px 0;border-bottom:1px solid var(--line)}.ticket-side-content>div:last-child{border-bottom:0}.ticket-side-content span{display:block;font-size:7px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}.ticket-side-content strong{display:block;font-size:9px;margin-top:3px}.ticket-side-content small{display:block;font-size:7px;color:var(--muted);margin-top:2px}
+.ticket-side-actions{display:grid;gap:8px;padding:10px 12px}.ticket-side-actions label{font-size:7.5px;color:var(--muted);display:grid;gap:4px}
+.ticket-attachments{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.ticket-attachment{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--panel);text-decoration:none;max-width:260px}.ticket-attachment:hover{background:var(--panel-2)}.ticket-attachment span{min-width:0}.ticket-attachment strong{display:block;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ticket-attachment small{display:block;font-size:7px;color:var(--muted);margin-top:1px}
+.ticket-event-list{display:grid;padding:4px 12px 10px}.ticket-event{padding:8px 0;border-bottom:1px solid var(--line)}.ticket-event:last-child{border-bottom:0}.ticket-event strong{display:block;font-size:8px;text-transform:capitalize}.ticket-event span,.ticket-event small{display:block;font-size:7px;color:var(--muted);margin-top:2px}
+@media(max-width:960px){.support-ticket-layout{grid-template-columns:1fr}.support-ticket-side{position:static}}
