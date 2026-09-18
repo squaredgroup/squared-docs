@@ -27,7 +27,7 @@ const SEARCH=[
 {title:'Support privé',desc:'Créer et suivre une demande de support directement dans le Help Center.',href:'support.html',type:'Support',icon:'SUP',tags:'support aide contact ticket assistance privé'},
 {title:'Forum Squared',desc:'Questions, réponses, idées, annonces et échanges directement dans le Help Center.',href:'forum.html',type:'Communauté',icon:'COM',tags:'forum discussion question réponse idée communauté'},
 {title:'Statut',desc:'État et dépendances du Squared Help Center.',href:'status.html',type:'Ressource',icon:'STS',tags:'status statut incident disponibilité github pages'},
-{title:'États des serveurs',desc:'Vérifications techniques du frontend, HTTPS, Supabase, forum, support et Realtime.',href:'server-status.html',type:'Ressource',icon:'STS',tags:'serveur server status monitoring infrastructure github pages dns https supabase auth database realtime forum support'},
+{title:'États des serveurs',desc:'Vérifications techniques du frontend, HTTPS, Supabase, forum, support et Realtime.',href:'server-status.html',type:'Ressource',icon:'STS',tags:'serveur server status monitoring infrastructure squared group workspace site services projets products modules wix github pages dns https supabase auth database realtime forum support'},
 {title:'Nouveautés',desc:'Historique des versions et changements du Help Center.',href:'changelog.html',type:'Mises à jour',icon:'NEW',tags:'changelog updates versions nouveautés'},
 
 {title:'Wix Studio',desc:'Guide complet : responsive, CMS, SEO, Velo, publication et maintenance.',href:'wix-studio.html',type:'Wix',icon:'WX',tags:'wix studio guide complet'},
