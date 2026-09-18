@@ -6,7 +6,7 @@ const saved=getStore('sq-docs-theme'); root.dataset.theme=saved||'light';
 function syncThemeButton(){const b=$('#themeBtn');if(b){b.textContent=root.dataset.theme==='light'?'◐':'☀';b.setAttribute('aria-label',root.dataset.theme==='light'?'Activer le thème sombre':'Activer le thème clair')}const m=$('meta[name="theme-color"]');if(m)m.setAttribute('content',root.dataset.theme==='light'?'#F7F7F4':'#0D0D0E')}
 function toggleTheme(){root.dataset.theme=root.dataset.theme==='light'?'dark':'light';setStore('sq-docs-theme',root.dataset.theme);syncThemeButton()}
 syncThemeButton();$('#themeBtn')?.addEventListener('click',toggleTheme);
-$('#menuBtn')?.addEventListener('click',()=>$('#sidebar')?.classList.toggle('open'));$$('.nav-link').forEach(a=>a.addEventListener('click',()=>$('#sidebar')?.classList.remove('open')));
+$('#menuBtn')?.addEventListener('click',()=>$('#sidebar')?.classList.toggle('open'));$('.hc-nav-link').forEach(a=>a.addEventListener('click',()=>$('#sidebar')?.classList.remove('open')));
 const p=$('#progress');function progress(){if(!p)return;const d=document.documentElement,max=d.scrollHeight-d.clientHeight;p.style.width=(max>0?d.scrollTop/max*100:0)+'%'}addEventListener('scroll',progress,{passive:true});progress();
 const SEARCH=[
 {title:'Accueil du Help Center',desc:'Recherche, base de connaissances, communauté et support.',href:'index.html',type:'Accueil',icon:'⌂',tags:'help center aide support docs accueil'},
