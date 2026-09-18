@@ -9,7 +9,8 @@ syncThemeButton();$('#themeBtn')?.addEventListener('click',toggleTheme);
 $('#menuBtn')?.addEventListener('click',()=>$('#sidebar')?.classList.toggle('open'));$$('.nav-link').forEach(a=>a.addEventListener('click',()=>$('#sidebar')?.classList.remove('open')));
 const p=$('#progress');function progress(){if(!p)return;const d=document.documentElement,max=d.scrollHeight-d.clientHeight;p.style.width=(max>0?d.scrollTop/max*100:0)+'%'}addEventListener('scroll',progress,{passive:true});progress();
 const SEARCH=[
-{title:'Accueil Squared Docs',desc:'Vue d’ensemble, modules et chemins de lecture.',href:'index.html',type:'Accueil',icon:'⌂',tags:'home docs accueil'},
+{title:'Accueil du Help Center',desc:'Recherche, base de connaissances, communauté et support.',href:'index.html',type:'Accueil',icon:'⌂',tags:'help center aide support docs accueil'},
+{title:'Obtenir de l’aide',desc:'Choisir entre communauté, ticket public ou canal confidentiel.',href:'support.html',type:'Support',icon:'SUP',tags:'support aide contact ticket assistance'},
 {title:'Wix Studio',desc:'Responsive, CMS, SEO, Velo, publication, maintenance et checklists.',href:'wix-studio.html',type:'Guide',icon:'WX',tags:'wix studio cms velo seo responsive publication'},
 {title:'Squared Workspace',desc:'Principes produit, rôles, navigation et opérations du Workspace.',href:'workspace.html',type:'Produit',icon:'WS',tags:'workspace erp client collaborateur produit'},
 {title:'Design System',desc:'Fondations UI, composants, tokens, motion et accessibilité.',href:'design-system.html',type:'Design',icon:'DS',tags:'design ui ux composants tokens motion'},
@@ -17,7 +18,7 @@ const SEARCH=[
 {title:'Développement',desc:'Conventions, architecture, Git, revue, environnements et tests.',href:'development.html',type:'Dev',icon:'</>',tags:'code dev github git test architecture'},
 {title:'Sécurité',desc:'Accès, secrets, données, permissions, incidents et documentation publique.',href:'security.html',type:'Sécurité',icon:'SEC',tags:'security securite acces secrets permissions donnees'},
 {title:'Changelog',desc:'Historique versionné des évolutions de Squared Docs.',href:'changelog.html',type:'Mises à jour',icon:'↺',tags:'changelog updates versions nouveautés'},
-{title:'Questions & contributions',desc:'Poser une question, signaler une erreur ou proposer une amélioration.',href:'community.html',type:'Communauté',icon:'?',tags:'forum question aide contribution issue github'},
+{title:'Communauté Squared',desc:'Forum public : questions, réponses, idées, annonces et échanges.',href:'community.html',type:'Communauté',icon:'COM',tags:'forum discussion question réponse idée communauté github discussions'},
 {title:'Checklist avant publication',desc:'Contrôles finaux avant de publier une modification Wix Studio.',href:'wix-studio.html#chapitre-27',type:'Checklist',icon:'✓',tags:'checklist publication wix'},
 {title:'CMS Wix Studio',desc:'Collections, champs, datasets et pages dynamiques.',href:'wix-studio.html#chapitre-09',type:'Wix',icon:'CMS',tags:'cms collection dataset page dynamique'},
 {title:'Responsive Wix Studio',desc:'Breakpoints, overrides et procédure de contrôle responsive.',href:'wix-studio.html#chapitre-06',type:'Wix',icon:'RWD',tags:'responsive breakpoint mobile tablette'},
