@@ -336,3 +336,199 @@ html[data-theme="dark"] .btn.green{background:var(--text);color:var(--bg);border
 @media(prefers-reduced-motion:reduce){
   .help-hero,.article-head,.forum-hero,.card,.home-command,.category-card,.popular-article,.topic-row{animation:none!important}
 }
+
+
+/* =========================================================
+   v6.0 — TOPBAR / CARDS / SERVER STATUS POLISH
+   ========================================================= */
+.top-actions,
+#forumAccount{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+#forumAccount{height:36px}
+.top-actions > .btn,
+.top-actions > .icon-btn,
+#forumAccount > .btn,
+#forumAccount > .icon-btn,
+.account-chip{
+  height:36px;
+  min-height:36px;
+  box-sizing:border-box;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  line-height:1;
+  margin:0;
+  vertical-align:middle;
+}
+.top-actions > .icon-btn,
+#forumAccount > .icon-btn{
+  width:36px;
+  min-width:36px;
+  padding:0;
+  position:relative;
+}
+.account-chip{
+  padding:0 11px 0 6px;
+  gap:7px;
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.account-chip .avatar{
+  width:24px;height:24px;min-width:24px;margin:0;
+}
+.account-chip > span:not(.avatar){line-height:1}
+.top-actions > .btn,
+.top-actions > .icon-btn{
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.top-actions > .btn:hover,
+.top-actions > .icon-btn:hover,
+#forumAccount > .icon-btn:hover,
+.account-chip:hover{
+  background:var(--panel-2);
+  border-color:color-mix(in srgb,var(--green) 13%,var(--line));
+}
+.command-search{
+  min-width:220px;
+  justify-content:flex-start!important;
+  padding:0 11px!important;
+}
+.command-search .keyboard-hint{margin-left:auto}
+
+/* Semantic danger / logout */
+.icon-btn.danger{
+  color:#D94F72!important;
+  border-color:rgba(217,79,114,.24)!important;
+  background:rgba(217,79,114,.07)!important;
+}
+.icon-btn.danger:hover{
+  color:#C83F63!important;
+  border-color:rgba(217,79,114,.40)!important;
+  background:rgba(217,79,114,.13)!important;
+}
+html[data-theme="dark"] .icon-btn.danger{
+  color:#FF8FA9!important;
+  border-color:rgba(255,143,169,.24)!important;
+  background:rgba(255,143,169,.09)!important;
+}
+html[data-theme="dark"] .icon-btn.danger:hover{
+  color:#FFA3B8!important;
+  border-color:rgba(255,143,169,.42)!important;
+  background:rgba(255,143,169,.15)!important;
+}
+.notification-dot{
+  position:absolute;
+  top:-4px;right:-4px;
+  box-shadow:0 0 0 2px var(--bg);
+}
+
+/* Category cards — stronger but still restrained */
+.category-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:9px!important;
+  border-top:0!important;
+}
+.category-card{
+  min-height:154px!important;
+  border:1px solid var(--line)!important;
+  border-radius:13px!important;
+  padding:15px 16px!important;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--panel) 98%,transparent),var(--panel))!important;
+  box-shadow:none!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+.category-card:hover{
+  transform:translateY(-1px)!important;
+  border-color:color-mix(in srgb,var(--green) 20%,var(--line))!important;
+  background:var(--panel-2)!important;
+}
+.category-card .cat-top{margin-bottom:13px!important}
+.category-card .cat-ico{
+  width:31px!important;height:31px!important;
+  border:1px solid var(--line)!important;
+  border-radius:9px!important;
+  background:var(--panel-2)!important;
+}
+.category-card .cat-ico .sq-iconly{width:16px!important;height:16px!important}
+.category-card h3{font-size:13.5px!important;margin:0 0 5px!important}
+.category-card p{font-size:9px!important;line-height:1.6!important;margin:0!important}
+.category-card .cat-link{
+  margin-top:auto!important;
+  padding-top:13px!important;
+  font-size:8px!important;
+  color:var(--green)!important;
+}
+.cat-count{font-size:7.5px!important;color:var(--muted-2)!important}
+
+/* Quick cards: slightly more definition */
+.home-command{
+  border:1px solid var(--line)!important;
+  background:var(--panel)!important;
+}
+.home-command:hover{
+  background:var(--panel-2)!important;
+  border-color:color-mix(in srgb,var(--green) 16%,var(--line))!important;
+}
+.home-command .home-command-icon{
+  border:1px solid var(--line)!important;
+  background:var(--panel-2)!important;
+}
+
+/* Server status */
+.server-status-list{border-top:1px solid var(--line)}
+.server-row{
+  display:grid;
+  grid-template-columns:minmax(0,1.55fr) auto auto auto;
+  gap:14px;
+  align-items:center;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+.server-row strong{display:block;font-size:10.5px;margin-bottom:3px}
+.server-row p{margin:0;font-size:8.5px;color:var(--muted);line-height:1.55}
+.server-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:27px;padding:0 9px;border-radius:999px;
+  border:1px solid var(--line);
+  font-size:7.5px;font-weight:700;white-space:nowrap;
+}
+.server-badge.ok{color:#58A865;border-color:rgba(88,168,101,.24);background:rgba(88,168,101,.07)}
+.server-badge.warn{color:#C58A2D;border-color:rgba(197,138,45,.24);background:rgba(197,138,45,.07)}
+.server-badge.down{color:#D94F72;border-color:rgba(217,79,114,.24);background:rgba(217,79,114,.07)}
+.server-badge.checking{color:var(--muted);background:var(--panel-2)}
+.server-meta{font-size:7.5px;color:var(--muted);white-space:nowrap}
+.server-summary{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 28px;
+}
+.server-summary-card{
+  border:1px solid var(--line);border-radius:11px;background:var(--panel);padding:13px;
+}
+.server-summary-card .server-summary-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.server-summary-card strong{font-size:10px}
+.server-summary-card p{font-size:8px;color:var(--muted);margin:7px 0 0}
+.server-summary-icon{
+  width:28px;height:28px;border-radius:8px;background:var(--panel-2);
+  display:grid;place-items:center;color:var(--muted);
+}
+.server-summary-icon .sq-iconly{width:15px;height:15px}
+
+@media(max-width:1080px){
+  .category-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .server-summary{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+  .category-grid{grid-template-columns:1fr!important}
+  .top-actions{gap:4px}
+  #forumAccount{gap:4px}
+  .account-chip{padding-right:7px}
+  .account-chip > span:not(.avatar){display:none}
+  .server-row{grid-template-columns:1fr;gap:7px}
+  .server-badge,.server-meta{width:max-content}
+  .server-summary{grid-template-columns:1fr}
+}
