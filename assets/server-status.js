@@ -144,7 +144,7 @@ async function load(){
 $("#refreshServerStatus")?.addEventListener("click",async()=>{
   const btn=$("#refreshServerStatus");btn.disabled=true;btn.textContent="Vérification…";
   try{
-    await fetch(SUPABASE_URL+"/functions/v1/status-monitor",{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"});
+    await fetch(SUPABASE_URL+"/functions/v1/status-monitor-v2",{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"});
     await new Promise(r=>setTimeout(r,1200));
     location.reload();
   }catch{
