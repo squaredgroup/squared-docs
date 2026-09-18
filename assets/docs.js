@@ -3,7 +3,7 @@ const root=document.documentElement;
 function getStore(k){try{return localStorage.getItem(k)}catch{return null}}
 function setStore(k,v){try{localStorage.setItem(k,v)}catch{}}
 const saved=getStore('sq-docs-theme');root.dataset.theme=saved||'light';
-function syncThemeButton(){const b=$('#themeBtn');if(b){b.textContent=root.dataset.theme==='light'?'◐':'☀';b.setAttribute('aria-label',root.dataset.theme==='light'?'Activer le thème sombre':'Activer le thème clair')}const m=$('meta[name="theme-color"]');if(m)m.setAttribute('content',root.dataset.theme==='light'?'#F7F7F4':'#0D0D0E')}
+function syncThemeButton(){const b=$('#themeBtn');if(b){const k=root.dataset.theme==='light'?'moon':'sun';b.innerHTML=window.SQIconly?SQIconly.icon(k,'outline','md'):'';b.setAttribute('aria-label',root.dataset.theme==='light'?'Activer le thème sombre':'Activer le thème clair')}const m=$('meta[name="theme-color"]');if(m)m.setAttribute('content',root.dataset.theme==='light'?'#F7F7F4':'#0D0D0E')}
 function toggleTheme(){root.dataset.theme=root.dataset.theme==='light'?'dark':'light';setStore('sq-docs-theme',root.dataset.theme);syncThemeButton()}
 syncThemeButton();$('#themeBtn')?.addEventListener('click',toggleTheme);
 $('#menuBtn')?.addEventListener('click',()=>$('#sidebar')?.classList.toggle('open'));
@@ -72,7 +72,7 @@ const SEARCH=[
 
 const modal=$('#searchModal'),input=$('#searchInput'),results=$('#searchResults');let filter='Tout';
 function norm(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}
-function render(q=''){if(!results)return;const nq=norm(q.trim());let list=SEARCH.filter(x=>(filter==='Tout'||x.type===filter)&&(!nq||norm(x.title+' '+x.desc+' '+x.tags+' '+x.type).includes(nq)));results.innerHTML=list.length?list.slice(0,24).map(x=>{const href=hrefFor(x.href),external=/^https?:\/\//.test(x.href);return '<a class="search-result" href="'+href+'"'+(external?' target="_blank" rel="noreferrer"':'')+'><span class="result-ico">'+x.icon+'</span><span><strong>'+x.title+'</strong><p>'+x.desc+'</p></span><em>'+x.type+'</em></a>'}).join(''):'<div class="search-empty">Aucun résultat.</div>'}
+function render(q=''){if(!results)return;const nq=norm(q.trim());let list=SEARCH.filter(x=>(filter==='Tout'||x.type===filter)&&(!nq||norm(x.title+' '+x.desc+' '+x.tags+' '+x.type).includes(nq)));results.innerHTML=list.length?list.slice(0,24).map(x=>{const href=hrefFor(x.href),external=/^https?:\/\//.test(x.href);return '<a class="search-result" href="'+href+'"'+(external?' target="_blank" rel="noreferrer"':'')+'><span class="result-ico">'+(window.SQIconly?SQIconly.legacy(x.icon,'outline','md'):x.icon)+'</span><span><strong>'+x.title+'</strong><p>'+x.desc+'</p></span><em>'+x.type+'</em></a>'}).join(''):'<div class="search-empty">Aucun résultat.</div>'}
 function openSearch(){if(!modal)return;modal.classList.add('open');if(input){input.value='';setTimeout(()=>input.focus(),20)}render('')}
 function closeSearch(){modal?.classList.remove('open')}
 $$('[data-search-open],#searchTrigger').forEach(b=>b.addEventListener('click',openSearch));$('#searchClose')?.addEventListener('click',closeSearch);modal?.addEventListener('click',e=>{if(e.target===modal)closeSearch()});input?.addEventListener('input',()=>render(input.value));
@@ -104,7 +104,7 @@ if(location.hash.startsWith('#chapitre-')&&location.pathname.endsWith('/'))locat
       trigger.id='quickActionsBtn';
       trigger.type='button';
       trigger.setAttribute('aria-label','Actions rapides');
-      trigger.textContent='＋';
+      trigger.innerHTML=window.SQIconly?SQIconly.icon('plus','outline','md'):'+';
       const theme=document.getElementById('themeBtn');
       theme?actionsHost.insertBefore(trigger,theme):actionsHost.appendChild(trigger);
     }
@@ -112,10 +112,10 @@ if(location.hash.startsWith('#chapitre-')&&location.pathname.endsWith('/'))locat
     menu.className='quick-actions-menu';
     menu.id='quickActionsMenu';
     menu.innerHTML=
-      '<a class="quick-action-item" href="'+local('forum-new.html')+'"><span>Q&A</span><span><strong>Nouvelle discussion</strong><em>Poser une question à la communauté</em></span></a>'+
-      '<a class="quick-action-item" href="'+local('support.html')+'"><span>SUP</span><span><strong>Nouvelle demande</strong><em>Ouvrir un ticket support privé</em></span></a>'+
-      '<button class="quick-action-item" type="button" data-v5-copy-link><span>↗</span><span><strong>Copier le lien</strong><em>Partager cette page</em></span></button>'+
-      '<button class="quick-action-item" type="button" data-v5-focus><span>F</span><span><strong>Mode focus</strong><em>Masquer la navigation pour lire</em></span></button>';
+      '<a class="quick-action-item" href="'+local('forum-new.html')+'"><span>'+SQIconly.icon('forum','outline','md')+'</span><span><strong>Nouvelle discussion</strong><em>Poser une question à la communauté</em></span></a>'+
+      '<a class="quick-action-item" href="'+local('support.html')+'"><span>'+SQIconly.icon('support','outline','md')+'</span><span><strong>Nouvelle demande</strong><em>Ouvrir un ticket support privé</em></span></a>'+
+      '<button class="quick-action-item" type="button" data-v5-copy-link><span>'+SQIconly.icon('share','outline','md')+'</span><span><strong>Copier le lien</strong><em>Partager cette page</em></span></button>'+
+      '<button class="quick-action-item" type="button" data-v5-focus><span>'+SQIconly.icon('focus','regular','md')+'</span><span><strong>Mode focus</strong><em>Masquer la navigation pour lire</em></span></button>';
     actionsHost.appendChild(menu);
     trigger.addEventListener('click',e=>{e.stopPropagation();menu.classList.toggle('open')});
     document.addEventListener('click',e=>{if(!menu.contains(e.target)&&e.target!==trigger)menu.classList.remove('open')});
@@ -198,7 +198,7 @@ if(location.hash.startsWith('#chapitre-')&&location.pathname.endsWith('/'))locat
   const top=document.querySelector('.top-actions');if(!top)return;
   if(!document.getElementById('forumAccount')&&!document.querySelector('[data-v5-account]')){
     const parts=location.pathname.split('/').filter(Boolean),folder=parts.length>1?parts[parts.length-2]:'',nested=['wix','workspace','design-system','development','security'].includes(folder),p=nested?'../':'';
-    const a=document.createElement('a');a.className='icon-btn';a.href=p+'profile.html';a.dataset.v5Account='1';a.title='Mon compte';a.textContent='ME';
+    const a=document.createElement('a');a.className='icon-btn';a.href=p+'profile.html';a.dataset.v5Account='1';a.title='Mon compte';a.innerHTML=window.SQIconly?SQIconly.icon('account','outline','md'):'ME';
     const q=document.getElementById('quickActionsBtn'),theme=document.getElementById('themeBtn');top.insertBefore(a,q||theme||null);
   }
   window.v5AccountFallback=true;
@@ -212,3 +212,36 @@ if(location.hash.startsWith('#chapitre-')&&location.pathname.endsWith('/'))locat
     updates.forEach(u=>u.hidden=type!=='all'&&u.dataset.changeType!==type);
   }));
 })();
+function hydrateSquaredIconlyUI(){
+  if(!window.SQIconly)return;
+  SQIconly.replaceLegacy(document);
+
+  const menuBtn=document.getElementById('menuBtn');
+  if(menuBtn)menuBtn.innerHTML=SQIconly.icon('menu','outline','md');
+
+  const quickBtn=document.getElementById('quickActionsBtn');
+  if(quickBtn)quickBtn.innerHTML=SQIconly.icon('plus','outline','md');
+
+  document.querySelectorAll('[data-search-open]').forEach(el=>{
+    if(el.classList.contains('help-search'))return;
+    if(!el.querySelector('.sq-iconly')){
+      el.insertAdjacentHTML('afterbegin',SQIconly.icon('search','regular','sm'));
+    }
+  });
+
+  document.querySelectorAll('a.btn[href$="forum.html"],a.top-link[href$="forum.html"]').forEach(el=>{
+    if(!el.querySelector('.sq-iconly'))el.insertAdjacentHTML('afterbegin',SQIconly.icon('forum','outline','sm'));
+  });
+  document.querySelectorAll('a.btn[href$="support.html"],a.top-link[href$="support.html"]').forEach(el=>{
+    if(!el.querySelector('.sq-iconly'))el.insertAdjacentHTML('afterbegin',SQIconly.icon('support','outline','sm'));
+  });
+
+  document.querySelectorAll('.help-search .search-icon').forEach(el=>{
+    el.innerHTML=SQIconly.icon('search','regular','lg');
+  });
+
+  document.querySelectorAll('.focus-exit').forEach(el=>{
+    if(!el.querySelector('.sq-iconly'))el.insertAdjacentHTML('afterbegin',SQIconly.icon('collapse','regular','sm'));
+  });
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hydrateSquaredIconlyUI,{once:true});else hydrateSquaredIconlyUI();
