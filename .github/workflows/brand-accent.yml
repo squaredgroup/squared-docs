@@ -1,0 +1,47 @@
+name: Squared Brand Accent
+on:
+  push:
+    branches: [fix/brand-accent-7be84e-20260919]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: brand-accent-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  accent:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Restore the exact approved accent and refresh stylesheet references
+        run: python scripts/restore_squared_accent.py
+      - name: Install isolated test browsers
+        run: |
+          pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium webkit
+      - name: Exact brand color and mobile layout regression
+        run: python tests/brand_accent.py
+      - name: Existing presentation and text contrast regression
+        run: python tests/visual_refinement.py
+      - name: Commit validated stylesheet changes to the fix branch only
+        if: success() && github.ref == 'refs/heads/fix/brand-accent-7be84e-20260919'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -u
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: restore exact Squared accent #7BE84E in light and dark themes'
+            git push origin HEAD:fix/brand-accent-7be84e-20260919
+          fi
+      - name: Preserve color checks and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: squared-brand-accent-evidence
+          retention-days: 7
+          path: test-results/
