@@ -1,4 +1,4 @@
-import {db,base,profile,currentUser,session} from './search-client.js';
+import {db,base,profile,session} from './hc-core.js';
 import {rankDocuments,mergeResults,safeRoute} from './hc-state.js';
 let indexPromise;
 async function index(){if(!indexPromise)indexPromise=fetch(new URL('assets/knowledge-index.json',base)).then(r=>{if(!r.ok)throw new Error('Index indisponible');return r.json();}).then(x=>x.documents||[]).catch(()=>[]);return indexPromise;}
