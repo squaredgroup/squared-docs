@@ -31,29 +31,53 @@
     const host=$('#diagnosticMount');if(!host)return;
     const c=H.context(),initial=new URLSearchParams(location.search);let step=initial.get('diagnostic')==='1'?3:0;
     const statusBox=node('div','','sq-diagnostic-status');let request=0;
+    const progress=()=>{
+      const labels=['Votre besoin','Votre appareil','Vérifications'],wrap=node('div','','sq-diagnostic-progress');
+      labels.forEach((label,i)=>wrap.append(node('span',label,i<=Math.min(step,2)?'active':'')));
+      return wrap;
+    };
     function render(){
-      host.replaceChildren();const progress=node('p','Étape '+Math.min(step+1,3)+' sur 3','sq-step-caption');host.append(progress);
+      host.replaceChildren();host.append(progress());
       if(step<3){
         const entries=[H.PRODUCTS,H.ISSUES,H.DEVICES][step],field=['product','issue','device'][step],titles=['Quel produit est concerné ?','Quel problème rencontrez-vous ?','Sur quel appareil ?'];
         const f=node('form'),fieldset=node('fieldset'),legend=node('legend',titles[step]);legend.tabIndex=-1;fieldset.append(legend);
         for(const [value,text] of Object.entries(entries)){
           const label=node('label','','sq-choice'),input=node('input');input.type='radio';input.name='diagnostic-choice';input.value=value;input.required=true;input.checked=c[field]===value;label.append(input,node('span',text));fieldset.append(label);
         }
-        const actions=node('div','','form-actions');if(step){const back=node('button','Retour','btn');back.type='button';back.addEventListener('click',()=>{step--;render();});actions.append(back);}
+        const actions=node('div','','form-actions');
+        if(step){const back=node('button','Retour','btn');back.type='button';back.addEventListener('click',()=>{step--;render();});actions.append(back);}
         const next=node('button',step===2?'Voir les vérifications':'Continuer','btn green');next.type='submit';actions.append(next);f.append(fieldset,actions);host.append(f);
-        f.addEventListener('submit',e=>{e.preventDefault();c[field]=f.querySelector('input:checked').value;c.checks=[];step++;render();});
+        f.addEventListener('submit',e=>{e.preventDefault();const selected=f.querySelector('input:checked');if(!selected)return;c[field]=selected.value;c.checks=[];step++;render();});
         if(step>0)legend.focus({preventScroll:true});return;
       }
-      const p=H.plan(c),heading=node('h2','Vérifions ensemble');heading.tabIndex=-1;host.append(heading,node('p',H.PRODUCTS[c.product]+' · '+H.ISSUES[c.issue]+' · '+H.DEVICES[c.device]));
-      host.append(node('p','Cochez uniquement les vérifications réellement effectuées. Ce parcours ne modifie ni votre compte ni vos données.','sq-note'));
-      const steps=node('div','','sq-checklist');p.steps.forEach((text,i)=>{const row=node('label','','sq-choice'),input=node('input');input.type='checkbox';input.checked=c.checks.includes(String(i));input.addEventListener('change',()=>{c.checks=[...steps.querySelectorAll('input')].flatMap((x,n)=>x.checked?[String(n)]:[]);updateLink();});row.append(input,node('span',text));steps.append(row);});
-      host.append(steps,link('Ouvrir le guide détaillé',p.guide),statusBox);
-      const result=node('div','','sq-diagnostic-actions'),done=node('button','Mon problème est résolu','btn'),support=link('Préparer ma demande privée',H.contextLink('support.html',c),'btn green'),copy=node('button','Copier le récapitulatif','btn');
-      const updateLink=()=>{support.href=H.contextLink('support.html',c);};
-      const message=node('p','','sq-note');message.setAttribute('role','status');
-      done.type=copy.type='button';done.addEventListener('click',()=>{message.textContent='Vous pouvez reprendre votre travail. Aucun ticket n’a été créé.';});
-      copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(H.summary(c));message.textContent='Récapitulatif copié. Vérifiez-le avant de le partager.';}catch{message.textContent='La copie est indisponible. Le bouton « Préparer ma demande privée » reprend ce contexte.';}});
-      result.append(done,support,copy);const reset=node('button','Modifier mes réponses','btn');reset.type='button';reset.addEventListener('click',()=>{request++;step=0;render();});host.append(result,message,reset);heading.focus({preventScroll:true});
+      const p=H.plan(c),summary=node('div','','sq-context-summary');
+      summary.append(node('strong',H.PRODUCTS[c.product]),node('span',H.ISSUES[c.issue]+' · '+H.DEVICES[c.device]));host.append(summary);
+      const heading=node('h2','Vérifications');heading.tabIndex=-1;host.append(heading,node('p','Cochez uniquement les vérifications réellement effectuées.','sq-note'));
+      const checks=node('div','','sq-checklist');
+      const updateContext=()=>{};
+      p.steps.forEach((text,i)=>{
+        const row=node('label','','sq-choice'),input=node('input');input.type='checkbox';input.checked=c.checks.includes(String(i));
+        input.addEventListener('change',()=>{c.checks=[...checks.querySelectorAll('input')].flatMap((x,n)=>x.checked?[String(n)]:[]);});
+        row.append(input,node('span',text));checks.append(row);
+      });
+      host.append(checks,link('Ouvrir le guide détaillé',p.guide,'sq-guide-link'),statusBox);
+      const resolution=node('section','','sq-resolution'),question=node('h3','Le problème est-il résolu ?'),actions=node('div','','sq-resolution-actions');
+      const yes=node('button','Oui, c’est résolu','btn green'),no=node('button','Non, contacter le support','btn');yes.type=no.type='button';actions.append(yes,no);resolution.append(question,actions);host.append(resolution);
+      yes.addEventListener('click',()=>{
+        request++;
+        const success=node('section','','sq-resolution-success'),mark=node('span','✓','sq-success-mark');
+        success.append(mark,node('h2','Vous pouvez reprendre votre travail.'),node('p','Aucun ticket n’a été créé.'));
+        success.append(c.product==='workspace'?link('Retour à Workspace','https://workspace.squaredgroup.studio/','btn green'):link('Retour au Centre d’aide','index.html','btn green'));
+        host.replaceChildren(progress(),summary,success);const h=success.querySelector('h2');h.tabIndex=-1;h.focus({preventScroll:true});
+      });
+      no.addEventListener('click',()=>{
+        if(resolution.querySelector('.sq-support-next'))return;
+        const next=node('div','','sq-support-next'),support=link('Préparer ma demande privée',H.contextLink('support.html',c),'btn green'),copy=node('button','Copier le récapitulatif','btn'),message=node('p','','sq-note');
+        copy.type='button';message.setAttribute('role','status');
+        copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(H.summary(c));message.textContent='Récapitulatif copié. Vérifiez-le avant de le partager.';}catch{message.textContent='La copie est indisponible. La demande privée reprend déjà ce contexte.';}});
+        next.append(node('p','Votre contexte est prêt. Relisez-le avant tout envoi.','sq-note'),support,copy,message);resolution.append(next);support.focus({preventScroll:true});
+      });
+      const reset=node('button','Modifier mes réponses','btn');reset.type='button';reset.addEventListener('click',()=>{request++;step=0;render();});host.append(reset);heading.focus({preventScroll:true});
       const current=++request;statusBox.textContent='Consultation des incidents déclarés…';
       checkIncidents(c.product).then(data=>{if(current!==request)return;statusBox.replaceChildren();statusBox.append(node('strong','Incidents déclarés'));
         if(data===null)statusBox.append(node('p','L’état des incidents ne peut pas être confirmé actuellement. Cela ne prouve ni une panne ni un fonctionnement normal.'));
