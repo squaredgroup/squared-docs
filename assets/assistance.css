@@ -54,3 +54,32 @@
  body[data-wix-guide] :is(.doc-section h1,.doc-section h2,.doc-section h3){overflow-wrap:anywhere}
  body[data-wix-guide] .table-wrap{width:100%;max-width:100%;margin-left:0;margin-right:0;overflow-x:auto}
 }
+
+
+/* v7.1 — parcours and diagnostic composition */
+.sq-task-card{position:relative;border-radius:16px;padding:22px;transition:border-color .16s,box-shadow .16s,transform .16s}
+.sq-task-card:hover,.sq-task-card:focus-visible{border-color:var(--line-strong);background:var(--panel);box-shadow:0 8px 24px rgba(15,15,18,.055);transform:translateY(-1px)}
+.sq-task-card strong{font-size:18px}.sq-task-card p{font-size:14px}
+.sq-task-card small{display:flex;align-items:center;gap:6px}
+.sq-task-card small span{display:inline-block;transition:transform .16s}.sq-task-card:hover small span{transform:translateX(2px)}
+.sq-task-icon{width:38px;height:38px;flex-basis:38px;border-radius:10px;background:var(--panel-2);color:var(--muted)}
+.sq-diagnostic-progress{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 22px}
+.sq-diagnostic-progress span{padding-top:10px;border-top:2px solid var(--line);font-size:11px;color:var(--muted)}
+.sq-diagnostic-progress span.active{border-color:var(--sq-accent);color:var(--text);font-weight:600}
+.sq-context-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0 18px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.sq-context-summary strong{font-size:16px}.sq-context-summary span{font-size:13px;color:var(--muted)}
+.sq-checklist{border-top:1px solid var(--line);margin:18px 0}
+.sq-checklist .sq-choice{margin:0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;padding:14px 4px}
+.sq-checklist .sq-choice:has(input:checked){background:transparent;border-color:var(--line)}
+.sq-resolution{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.sq-resolution h3{font-size:18px;margin:0 0 12px}.sq-resolution-actions{display:flex;gap:10px;flex-wrap:wrap}
+.sq-resolution-success{padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+.sq-resolution-success .sq-success-mark{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--green-soft);color:var(--sq-accent-ink);margin-bottom:14px}
+.sq-resolution-success h2{font-size:22px!important;margin:0 0 8px!important}.sq-resolution-success p{font-size:14px;color:var(--muted)}
+.sq-support-next{padding:18px 0 0}
+@media(max-width:860px){
+ .sq-task-card{grid-template-columns:38px minmax(0,1fr)}
+ .sq-task-card .sq-task-icon{grid-row:1/4}
+ .sq-diagnostic-progress span{font-size:10px}
+ .sq-context-summary{display:block}.sq-context-summary span{display:block;margin-top:4px}
+}
