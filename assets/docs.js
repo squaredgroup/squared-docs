@@ -164,6 +164,7 @@ if(location.hash.startsWith('#chapitre-')&&location.pathname.endsWith('/'))locat
       '<a class="quick-action-item" href="'+local('forum-new.html')+'"><span>'+SQIconly.icon('forum','outline','md')+'</span><span><strong>Nouvelle discussion</strong><em>Poser une question à la communauté</em></span></a>'+
       '<a class="quick-action-item" href="'+local('support.html')+'"><span>'+SQIconly.icon('support','outline','md')+'</span><span><strong>Nouvelle demande</strong><em>Ouvrir un ticket support privé</em></span></a>'+
       '<button class="quick-action-item" type="button" data-v5-copy-link><span>'+SQIconly.icon('share','outline','md')+'</span><span><strong>Copier le lien</strong><em>Partager cette page</em></span></button>'+
+      '<button class="quick-action-item" type="button" data-v5-appearance><span>'+SQIconly.icon('theme','outline','md')+'</span><span><strong>Apparence</strong><em>Clair, sombre ou système</em></span></button>'+
       '<button class="quick-action-item" type="button" data-v5-focus><span>'+SQIconly.icon('focus','regular','md')+'</span><span><strong>Mode focus</strong><em>Masquer la navigation pour lire</em></span></button>';
     actionsHost.appendChild(menu);
     trigger.addEventListener('click',e=>{e.stopPropagation();menu.classList.toggle('open')});
@@ -172,6 +173,7 @@ if(location.hash.startsWith('#chapitre-')&&location.pathname.endsWith('/'))locat
       try{await navigator.clipboard.writeText(location.href);toast('Lien copié')}catch{toast('Copie impossible')}
       menu.classList.remove('open');
     });
+    menu.querySelector('[data-v5-appearance]')?.addEventListener('click',()=>{document.getElementById('themeBtn')?.click();menu.classList.remove('open')});
     menu.querySelector('[data-v5-focus]')?.addEventListener('click',()=>{document.body.classList.toggle('focus-mode');menu.classList.remove('open')});
   }
 
