@@ -1,0 +1,54 @@
+name: Mobile Layout Quality
+on:
+  push:
+    branches: [main, fix/mobile-layout-20260919]
+    paths:
+      - '**.html'
+      - 'assets/**'
+      - 'tests/mobile_layout.py'
+      - 'scripts/integrate_mobile_layout.py'
+      - '.github/workflows/mobile-layout.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: mobile-layout-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Integrate shared responsive assets
+        run: python scripts/integrate_mobile_layout.py
+      - name: JavaScript syntax
+        run: node --check assets/mobile-nav.js
+      - name: Install isolated browser tests
+        run: |
+          python -m pip install playwright==1.55.0
+          python -m playwright install --with-deps chromium webkit
+      - name: Mobile and desktop acceptance
+        run: python tests/mobile_layout.py
+      - name: Commit tested page integration on the fix branch only
+        if: github.ref == 'refs/heads/fix/mobile-layout-20260919'
+        run: |
+          git add -- '*.html'
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'fix: raccorde les feuilles mobiles et le menu à toutes les pages après validation'
+          git push origin HEAD:fix/mobile-layout-20260919
+      - name: Save responsive test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-layout-evidence
+          path: test-results/
+          retention-days: 7
