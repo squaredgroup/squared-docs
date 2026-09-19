@@ -1,102 +1,17 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "./supabase-config.js";
-
-const client=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-const $=(s,c=document)=>c.querySelector(s);
-const $$=(s,c=document)=>[...c.querySelectorAll(s)];
-const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-
-let allResults=[];
-let activeKind="all";
-let timer=null;
-
-function history(){
-  try{return JSON.parse(localStorage.getItem("sq-help-search-history")||"[]")}catch{return []}
-}
-function saveHistory(query){
-  if(!query||query.length<2)return;
-  const next=[query,...history().filter(x=>x!==query)].slice(0,8);
-  localStorage.setItem("sq-help-search-history",JSON.stringify(next));
-  renderHistory();
-}
-function renderHistory(){
-  const host=$("#searchHistory");
-  if(!host)return;
-  const items=history();
-  host.innerHTML=items.length?items.map(q=>'<button class="search-history-item" data-history="'+esc(q)+'">'+(window.SQIconly?SQIconly.icon("time","regular","sm"):"")+'<span>'+esc(q)+'</span></button>').join(""):'<div class="forum-empty">Aucune recherche récente.</div>';
-  $$("[data-history]",host).forEach(b=>b.addEventListener("click",()=>{$("#universalSearchInput").value=b.dataset.history;runSearch(b.dataset.history)}));
-}
-
-function iconFor(kind){
-  if(kind==="forum")return "forum";
-  if(kind==="ticket")return "support";
-  return "quick";
-}
-
-function render(){
-  const host=$("#universalSearchResults");
-  const list=activeKind==="all"?allResults:allResults.filter(x=>x.kind===activeKind);
-  $("#universalResultCount").textContent=list.length+" résultat"+(list.length>1?"s":"");
-
-  if(!list.length){
-    host.innerHTML='<div class="sq-empty-state"><span class="sq-empty-icon">'+(window.SQIconly?SQIconly.icon("search","regular","lg"):"")+'</span><strong>Aucun résultat</strong><p>Essayez une formulation plus courte, consultez la communauté ou ouvrez une demande privée.</p></div>';
-    return;
-  }
-
-  const groups={knowledge:[],forum:[],ticket:[]};
-  list.forEach(x=>(groups[x.kind]??=groups.knowledge).push(x));
-
-  host.innerHTML=Object.entries(groups).filter(([,rows])=>rows.length).map(([kind,rows])=>{
-    const label=kind==="knowledge"?"Documentation":kind==="forum"?"Communauté":"Mes demandes";
-    return '<section class="search-result-group"><div class="search-result-group-head"><strong>'+label+'</strong><span>'+rows.length+'</span></div>'+rows.map(x=>'<a class="universal-result" href="'+esc(x.href)+'" data-result-kind="'+kind+'" data-result-href="'+esc(x.href)+'"><span class="universal-result-icon">'+(window.SQIconly?SQIconly.icon(iconFor(kind),kind==="ticket"?"fill":"outline","md"):"")+'</span><span><strong>'+esc(x.title)+'</strong><p>'+esc(x.description||"")+'</p><em>'+esc(x.category||label)+'</em></span><span class="universal-result-arrow">'+(window.SQIconly?SQIconly.icon("arrowRight","regular","sm"):"")+'</span></a>').join("")+'</section>';
-  }).join("");
-
-  $$("[data-result-href]",host).forEach(a=>a.addEventListener("click",()=>{
-    window.SQSearchBackend?.event("search_click",{
-      query:$("#universalSearchInput").value,
-      target_href:a.dataset.resultHref,
-      metadata:{kind:a.dataset.resultKind,source:"search-page"}
-    }).catch(()=>{});
-  }));
-}
-
-async function runSearch(q){
-  const query=String(q||"").trim();
-  if(query.length<2){allResults=[];render();return}
-  const host=$("#universalSearchResults");
-  host.innerHTML='<div class="loading">Recherche dans Squared…</div>';
-
-  const {data,error}=await client.rpc("search_help_center",{p_query:query,p_limit:50});
-  if(error){
-    host.innerHTML='<div class="forum-empty"><strong>Recherche momentanément indisponible</strong>'+esc(error.message)+'</div>';
-    return;
-  }
-  allResults=data||[];
-  saveHistory(query);
-  render();
-
-  window.SQSearchBackend?.event("search",{
-    query,
-    metadata:{results:allResults.length,source:"search-page"}
-  }).catch(()=>{});
-}
-
-$("#universalSearchInput")?.addEventListener("input",e=>{
-  clearTimeout(timer);
-  timer=setTimeout(()=>runSearch(e.target.value),180);
-});
-$("#universalSearchInput")?.addEventListener("keydown",e=>{
-  if(e.key==="Enter"){clearTimeout(timer);runSearch(e.currentTarget.value)}
-});
-
-$$("[data-kind]").forEach(b=>b.addEventListener("click",()=>{
-  $$("[data-kind]").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");
-  activeKind=b.dataset.kind;
-  render();
-}));
-
-renderHistory();
-
-const q=new URLSearchParams(location.search).get("q");
-if(q){$("#universalSearchInput").value=q;runSearch(q)}
+import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import {SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY} from './supabase-config.js';
+const db=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+const $=(s,c=document)=>c.querySelector(s),all=(s,c=document)=>[...c.querySelectorAll(s)];
+const esc=(s='')=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const input=$('#universalSearchInput'),host=$('#universalSearchResults');
+const labels={knowledge:'Documentation',forum:'Communauté',ticket:'Mes demandes privées',incident:'Incidents',service:'Services',maintenance:'Maintenances'};
+const icons={knowledge:'quick',forum:'forum',ticket:'support',incident:'incidents',service:'status',maintenance:'calendar'};
+let results=[],active='all',sequence=0,timer,controller;
+function url(value){try{const u=new URL(value,location.href);if(u.origin===location.origin&&!u.username&&!u.password)return u.href;}catch{}return 'index.html';}
+function render(){const rows=active==='all'?results:results.filter(r=>r.kind===active);$('#universalResultCount').textContent=rows.length+' résultat'+(rows.length>1?'s':'');host.setAttribute('aria-busy','false');if(!rows.length){host.innerHTML='<div class="forum-empty"><strong>'+((input.value||'').trim().length<2?'Commencez votre recherche':'Aucun résultat')+'</strong><p>Recherchez une action, un produit ou une erreur. Au moins deux caractères sont nécessaires.</p><a class="btn" href="forum.html">Consulter le forum</a></div>';return;}host.innerHTML=Object.entries(labels).map(([k,label])=>{const group=rows.filter(r=>r.kind===k);if(!group.length)return '';return '<section class="search-result-group"><div class="search-result-group-head"><strong>'+label+'</strong><span>'+group.length+'</span></div>'+group.map(r=>'<a class="universal-result" href="'+esc(url(r.href))+'"><span class="universal-result-icon">'+(window.SQIconly?.icon(icons[k],'outline','sm')||'')+'</span><span><strong>'+esc(r.title)+'</strong><p>'+esc(r.description)+'</p><em>'+esc(r.category||label)+'</em></span></a>').join('')+'</section>';}).join('');}
+async function run(query){const request=++sequence;controller?.abort();controller=new AbortController();query=String(query||'').trim().slice(0,200);if(query.length<2){results=[];render();return;}host.innerHTML='<div class="loading" role="status">Recherche dans le centre d’aide…</div>';host.setAttribute('aria-busy','true');try{const {data,error}=await db.rpc('search_help_center',{p_query:query,p_limit:80}).abortSignal(controller.signal);if(request!==sequence)return;if(error)throw error;results=data||[];render();window.SQSearchBackend?.event('search',{query,metadata:{results:results.length,source:'search-page'}}).catch(()=>{});}catch(e){if(request!==sequence)return;host.setAttribute('aria-busy','false');host.innerHTML='<div class="forum-empty"><strong>La recherche ne répond pas</strong><p>Votre demande n’a pas abouti. Réessayez sans modifier votre compte.</p><button class="btn" id="retrySearch">Réessayer</button></div>';$('#retrySearch')?.addEventListener('click',()=>run(input.value));}}
+if(input&&host){input.maxLength=200;input.setAttribute('aria-label','Rechercher dans le centre d’aide');host.setAttribute('aria-live','polite');input.addEventListener('input',()=>{++sequence;controller?.abort();clearTimeout(timer);timer=setTimeout(()=>run(input.value),220);});input.addEventListener('keydown',e=>{if(e.key==='Enter'){clearTimeout(timer);run(input.value);}if(e.key==='ArrowDown'){e.preventDefault();host.querySelector('a')?.focus();}});host.addEventListener('keydown',e=>{if(!['ArrowDown','ArrowUp','Escape'].includes(e.key))return;e.preventDefault();if(e.key==='Escape'){input.focus();return;}const links=all('a',host);if(!links.length)return;const i=links.indexOf(document.activeElement);links[(i+(e.key==='ArrowDown'?1:-1)+links.length)%links.length]?.focus();});
+ try{localStorage.removeItem('sq-help-search-history');}catch{}const history=$('#searchHistory');if(history)history.innerHTML='<div class="forum-empty">Vos termes de recherche ne sont pas conservés dans ce navigateur.</div>';
+ const filters=all('[data-kind]');const parent=filters[0]?.parentElement;for(const [key,label] of Object.entries(labels)){if(!parent||filters.some(b=>b.dataset.kind===key))continue;const b=document.createElement('button');b.type='button';b.className=filters[0].className.replace(/\bactive\b/g,'');b.dataset.kind=key;b.textContent=label;parent.append(b);filters.push(b);}filters.forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.kind===active));b.addEventListener('click',()=>{active=b.dataset.kind;filters.forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});render();});});
+ db.auth.onAuthStateChange(event=>{if(['SIGNED_OUT','SIGNED_IN','USER_UPDATED'].includes(event)){++sequence;controller?.abort();results=[];render();}});
+ const q=new URLSearchParams(location.search).get('q');if(q){input.value=q;run(q);}else render();}
