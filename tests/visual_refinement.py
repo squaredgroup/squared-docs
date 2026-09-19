@@ -65,11 +65,11 @@ with sync_playwright() as p:
                     if width<=860:assert abs(metrics['main'])<1,(name,'gutter',metrics)
                     assert not errors,(engine,width,name,theme,errors)
                     if name=='index.html':
-                        colors=page.evaluate('''() => {const s=getComputedStyle(document.documentElement);return Object.fromEntries(['--text','--muted','--muted-2','--bg','--panel','--green','--green-soft'].map(k=>[k,s.getPropertyValue(k).trim()]))}''')
-                        for token in ['--text','--muted','--muted-2','--green']:
+                        colors=page.evaluate('''() => {const s=getComputedStyle(document.documentElement);return Object.fromEntries(['--text','--muted','--muted-2','--bg','--panel','--sq-accent-ink','--green-soft'].map(k=>[k,s.getPropertyValue(k).trim()]))}''')
+                        for token in ['--text','--muted','--muted-2','--sq-accent-ink']:
                             for bg in ['--bg','--panel']:
                                 ratio=contrast(colors[token],colors[bg]);assert ratio>=4.5,(theme,token,bg,ratio)
-                        assert contrast(colors['--green'],colors['--green-soft'])>=4.5
+                        assert contrast(colors['--sq-accent-ink'],colors['--green-soft'])>=4.5
                         assert page.locator('.category-card h3').first.evaluate('e=>parseFloat(getComputedStyle(e).fontSize)')>=16
                         assert page.locator('.help-hero-logo').evaluate('e=>e.complete && e.naturalWidth>0')
                     if width in [390,1440] and name in ['index.html','forum.html','support.html','login.html','wix/wix-responsive.html','server-status.html']:
