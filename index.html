@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="assets/docs.css">
 <link rel="stylesheet" href="assets/sidebar.css">
 <link rel="stylesheet" href="assets/forum.css">
+<link rel="stylesheet" href="assets/responsive.css?v=20260919.1" data-sq-responsive>
 </head><body data-forum-page="home">
 <div id="progress" class="progress"></div>
 <div class="app"><aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main">
@@ -30,13 +31,13 @@
 <section class="help-hero">
   <img class="help-hero-logo" src="assets/logo-squared.png" alt="Squared Group">
   <div class="home-logo-lockup"><span>Squared Group · Help Center</span></div>
-  <h1>Comment pouvons-nous<br>vous aider ?</h1>
+  <h1>Comment pouvons-nous<br> vous aider ?</h1>
   <p>Une seule interface pour trouver une réponse, apprendre un produit, poser une question ou obtenir une aide privée.</p>
-  <div class="help-search" data-search-open role="button" tabindex="0">
-    <span class="search-icon" data-icon-key="search"></span>
-    <button type="button">Rechercher dans le centre d’aide…</button>
-    <kbd>⌘K</kbd>
-  </div>
+  <button class="help-search" data-search-open type="button" aria-label="Rechercher dans le centre d’aide">
+    <span class="search-icon" data-icon-key="search" aria-hidden="true"></span>
+    <span class="help-search-label">Rechercher dans le centre d’aide…</span>
+    <kbd aria-hidden="true">⌘K</kbd>
+  </button>
   <div class="support-paths">
     <a class="support-path" href="#knowledge"><span class="big-ico" data-icon-key="start"></span><span><h3>Documentation</h3><p>Guides et procédures.</p></span></a>
     <a class="support-path" href="forum.html"><span class="big-ico" data-icon-key="forum"></span><span><h3>Communauté</h3><p>Questions et échanges.</p></span></a>
@@ -118,4 +119,5 @@
   </div>
 </div><div class="toast" id="toast">Copié</div>
 <script src="assets/sidebar.js"></script><script src="assets/docs.js"></script><script type="module" src="assets/forum.js"></script>
+<script defer src="assets/mobile-nav.js?v=20260919.1" data-sq-mobile-nav></script>
 </body></html>
