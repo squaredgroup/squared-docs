@@ -1,0 +1,73 @@
+name: Editorial Help Design
+
+on:
+  push:
+    branches: [design/editorial-help-20260919]
+  pull_request:
+    paths:
+      - "index.html"
+      - "diagnostic.html"
+      - "assets/refinement.css"
+      - "assets/assistance.css"
+      - "assets/assistance.js"
+      - "assets/docs.js"
+      - "assets/responsive.css"
+      - "scripts/integrate_editorial_help.py"
+      - ".github/workflows/editorial-help.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: editorial-help-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Integrate shared design references
+        run: python scripts/integrate_editorial_help.py
+      - name: JavaScript syntax
+        run: |
+          node --check assets/assistance.js
+          node --check assets/docs.js
+          node --check assets/refinement.js
+          node --check assets/mobile-nav.js
+      - name: Install isolated browsers
+        run: |
+          pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium webkit
+      - name: Mobile regression
+        run: python tests/mobile_layout.py
+      - name: Visual regression
+        run: python tests/visual_refinement.py
+      - name: Assistance regression
+        run: python tests/assistance_journeys.py
+      - name: Commit validated shared references
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/design/editorial-help-20260919'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "*.html"
+          if ! git diff --cached --quiet; then
+            git commit -m "build: raccorde le design éditorial validé à toutes les pages"
+            git push
+          fi
+      - name: Save evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: squared-editorial-help
+          path: test-results/
+          retention-days: 7
