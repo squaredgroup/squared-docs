@@ -10,6 +10,7 @@ on:
       - assets/assistance.css
       - scripts/integrate_assistance.py
       - scripts/help_guide_content.py
+      - scripts/finish_assistance.py
       - tests/assistance_journeys.py
   workflow_dispatch:
 
@@ -40,7 +41,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Integrate task-oriented assistance
-        run: python scripts/integrate_assistance.py
+        run: |
+          python scripts/integrate_assistance.py
+          python scripts/finish_assistance.py
       - name: Check JavaScript syntax
         run: |
           for f in assets/help-core.js assets/assistance.js assets/docs.js assets/forum.js assets/sidebar.js assets/search-app.js assets/search-backend.js; do
