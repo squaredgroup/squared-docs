@@ -1,0 +1,219 @@
+/* Squared Help Center — visual system, 2026-09-19.
+   Load after legacy layers, before responsive.css. Never redefine .main's gutter here.
+   Spacing: 4/8/12/16/24/32; Iconly and Space Grotesk remain the only UI families. */
+:root{
+  --bg:#f8f9f6;--bg-2:#fff;--panel:#fff;--panel-2:#eff2eb;--soft:#e5e9e1;
+  --text:#171c16;--muted:#56604f;--muted-2:#636d5d;--line:#dce2d6;
+  --green:#316c22;--green-2:#7be84e;--green-soft:#eaf5e4;
+  --orange:#875a12;--red:#b33656;--blue:#285da4;
+  --sq-accent:#7be84e;--sq-card-radius:18px;--sq-control-radius:11px;
+  --sq-shadow:0 3px 12px rgba(24,39,17,.035),0 18px 48px rgba(24,39,17,.025);
+  --sq-hover-shadow:0 8px 24px rgba(24,39,17,.07);
+  --ring:0 0 0 3px rgba(49,108,34,.2);
+}
+html[data-theme="dark"]{
+  --bg:#0d0d0e;--bg-2:#131315;--panel:#171719;--panel-2:#202023;--soft:#2a2a2e;
+  --text:#f2f4ed;--muted:#b7bcb1;--muted-2:#a2a99b;--line:#35373b;
+  --green:#a6ed89;--green-2:#7be84e;--green-soft:#253220;
+  --orange:#edc17b;--red:#ff9ab1;--blue:#9dc5ff;
+  --sq-shadow:0 6px 26px rgba(0,0,0,.16);--sq-hover-shadow:0 12px 32px rgba(0,0,0,.24);
+  --ring:0 0 0 3px rgba(123,232,78,.28);
+  color-scheme:dark;
+}
+html[data-theme="light"]{color-scheme:light}
+body{font-size:14px;line-height:1.65;letter-spacing:-.012em}
+body:before,body[data-forum-page="home"]:before{opacity:0!important}
+button,input,select,textarea{font-family:inherit}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+body :is(button,a,input,select,textarea):focus-visible{outline:2px solid var(--green);outline-offset:3px;box-shadow:var(--ring)}
+button:disabled{cursor:not-allowed;opacity:.6}
+.sq-skip-link{position:fixed;left:16px;top:-100px;z-index:1000;background:var(--text);color:var(--bg);padding:12px 18px;border-radius:10px}
+.sq-skip-link:focus{top:12px}
+body .shell,body .forum-shell{max-width:1240px;padding:32px 40px 72px}
+body .topbar{gap:16px;background:var(--bg-2);border-color:var(--line)}
+body .topbar .crumbs{font-size:12px;min-width:0}
+body .top-actions,body #forumAccount{gap:6px;align-items:center}
+body :is(.btn,.icon-btn){height:40px;min-height:40px;font-size:12px;line-height:1.25;border-radius:var(--sq-control-radius);border:1px solid var(--line);font-weight:600;padding:0 14px;gap:8px;transition:background .15s,border-color .15s,box-shadow .15s;box-shadow:none}
+body .icon-btn{width:40px;min-width:40px;padding:0}
+body :is(.btn,.icon-btn):hover{transform:none;background:var(--panel-2);border-color:var(--muted-2);box-shadow:none}
+body .btn.green,html[data-theme="dark"] body .btn.green{background:var(--sq-accent);color:#16300d;border-color:#7be84e;font-weight:700}
+body .btn.green:hover{background:#a2f47e;border-color:#a2f47e;color:#16300d}
+body :is(.btn,.icon-btn).danger{color:var(--red)!important;background:color-mix(in srgb,var(--red) 8%,var(--panel))!important;border-color:color-mix(in srgb,var(--red) 35%,var(--line))!important}
+body :is(.btn,.icon-btn).danger:hover{background:color-mix(in srgb,var(--red) 15%,var(--panel))!important}
+body .top-actions>.btn,body .top-actions>.icon-btn,body #forumAccount>.icon-btn,body .account-chip{height:38px;min-height:38px;font-size:12px;border-radius:10px}
+body .top-actions>.icon-btn,body #forumAccount>.icon-btn{width:38px;min-width:38px}
+body .command-search{min-width:190px;background:var(--bg)!important}
+body .keyboard-hint{font-size:10px;border-radius:5px}
+body .account-chip{max-width:190px;gap:7px}
+body .account-chip>span:not(.avatar){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body .notification-dot{background:var(--sq-accent);font-size:9px;color:#16300d}
+body .quick-actions-menu{width:280px;padding:8px;border-radius:16px;box-shadow:var(--sq-hover-shadow)}
+body .quick-action-item{min-height:54px;gap:10px;padding:10px}
+body .quick-action-item strong{font-size:13px}body .quick-action-item em{font-size:11px;line-height:1.45}
+/* Navigation: readable without widening the sidebar. */
+body .sidebar.hc-sidebar{background:var(--bg-2);padding:18px 10px;border-color:var(--line)}
+body .hc-brand{gap:10px;padding:0 8px 18px}
+body .hc-brand-copy strong{font-size:12px;letter-spacing:.04em}body .hc-brand-copy span{font-size:10px}
+body .hc-brand-logo{width:34px;height:34px;border-radius:10px}
+body .hc-search{height:38px;font-size:11px;margin:14px 0 6px;background:var(--bg);border-radius:10px}
+body .hc-collapse{font-size:10px;height:30px;color:var(--muted)}
+body .hc-nav-group{margin:8px 0 12px}body .hc-nav-title{font-size:10px!important;letter-spacing:.09em;color:var(--muted-2)}
+body .hc-nav-link{min-height:38px;font-size:12.5px!important;padding:9px 10px!important;border-radius:9px;gap:9px!important}
+body .hc-item.has-children>.hc-nav-link{padding-right:38px!important}
+body .hc-nav-link.active,body .hc-nav-link.active-parent{background:var(--green-soft);color:var(--text);box-shadow:inset 2px 0 var(--sq-accent)}
+body .hc-nav-ico .sq-iconly{width:18px!important;height:18px!important}
+body .hc-sub-link{display:flex;align-items:center;gap:8px;font-size:11.5px!important;min-height:34px;padding:7px 6px!important}
+body .hc-sub-toggle{width:32px;height:32px;top:3px;right:2px;display:grid;place-items:center}
+body .hc-item.has-children:not(.child-open)>.hc-sub-toggle .sq-iconly{transform:none}
+body .hc-sidebar-foot{font-size:10px;padding:8px;line-height:1.6}body .hc-sidebar-foot strong{font-size:10px}
+/* Home. The type scale is shared with reading and product pages. */
+body .main .help-hero{position:relative;isolation:isolate;padding:36px 0 40px;max-width:900px;margin:0 auto;text-align:center}
+body .help-hero:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(var(--line) .8px,transparent .8px);background-size:22px 22px;mask-image:linear-gradient(#000,transparent 78%);opacity:.6}
+body .help-hero:after{display:none}
+body .help-hero-logo{width:56px;height:56px;margin-bottom:16px;box-shadow:var(--sq-shadow);border-radius:16px}
+body .home-logo-lockup span{font-size:10px;letter-spacing:.12em;font-weight:600;color:var(--muted)}
+body .help-hero h1{font-size:clamp(44px,4.2vw,60px);line-height:1.06;letter-spacing:-.055em;max-width:780px;margin:16px auto;text-wrap:balance}
+body .help-hero>p{font-size:15px;line-height:1.7;max-width:56ch;margin:auto}
+body button.help-search{height:60px;max-width:680px;padding:0 18px;margin:24px auto 12px;border:1px solid var(--line);border-radius:16px;display:flex;align-items:center;gap:14px;box-shadow:var(--sq-shadow);color:var(--muted);background:var(--panel)}
+body button.help-search:hover{border-color:var(--green);box-shadow:var(--sq-hover-shadow);transform:none}
+body button.help-search .help-search-label{font-size:15px;flex:1}body button.help-search kbd{font-size:10px}
+body .support-paths{max-width:680px;gap:8px;margin:12px auto 0}
+body .support-path{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:12px;padding:8px;border:1px solid var(--line);background:var(--panel)}
+body .support-path h3{font-size:12px}body .support-path:hover{border-color:var(--green);box-shadow:none;transform:none}
+body .section{padding:32px 0;border-bottom-color:var(--line)}body .section-head{gap:20px;margin-bottom:20px}
+body .section-head h2{font-size:23px;line-height:1.3;letter-spacing:-.03em}body .section-head p{font-size:13px;margin-top:6px}
+body .section-head>a{font-size:12px}
+/* Four consistent surface families: category, action, list, status. */
+body .category-grid{gap:14px!important}
+body .main .category-card{padding:22px!important;min-height:196px!important;border:1px solid var(--line)!important;border-radius:var(--sq-card-radius)!important;background:var(--panel)!important;box-shadow:var(--sq-shadow)!important}
+body .main .category-card:hover{background:var(--panel)!important;border-color:var(--green)!important;box-shadow:var(--sq-hover-shadow)!important;transform:translateY(-2px)!important}
+body .main .category-card .cat-top{margin-bottom:18px!important;gap:8px}
+body .main .category-card .cat-ico{display:grid;place-items:center;flex:0 0 40px;width:40px!important;height:40px!important;background:var(--panel-2)!important;border-radius:12px!important;border-color:var(--line)!important;color:var(--text)}
+body .main .category-card .cat-ico .sq-iconly{width:21px!important;height:21px!important}
+body .main .cat-count{font-size:10px!important;color:var(--muted)!important;border:1px solid var(--line);padding:3px 7px;border-radius:7px;line-height:1.4}
+body .main .category-card h3{font-size:18px!important;line-height:1.3;margin:0 0 8px!important}
+body .main .category-card p{font-size:13px!important;line-height:1.65!important;color:var(--muted)}
+body .main .category-card .cat-link{font-size:12px!important;display:flex;align-items:center;gap:8px;padding-top:18px!important;color:var(--green)!important}
+body :is(.card,.role-card,.home-command,.home-discussions,.home-status-card,.community-panel,.support-panel){border:1px solid var(--line);background:var(--panel);border-radius:var(--sq-card-radius);box-shadow:var(--sq-shadow)}
+body .home-command-grid{gap:10px}body .home-command{padding:16px;min-height:136px}
+body .home-command strong{font-size:13px;color:var(--text)}body .home-command span span{font-size:12px;line-height:1.5}
+body .home-command .home-command-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;color:var(--green)}
+body .card h3,body .role-card h3{font-size:18px;line-height:1.3}body .card p,body .role-card p{font-size:13px;line-height:1.65}
+body .card-foot,body .role-label,body .role-links a{font-size:11px}
+body .popular-grid{border:1px solid var(--line);border-radius:16px;background:var(--panel);overflow:hidden;gap:0}
+body .main .popular-article{padding:18px!important;gap:12px;border-radius:0!important}
+body .popular-article strong,body .quick-row strong{font-size:14px;line-height:1.4;color:var(--text)}
+body .popular-article span,body .quick-row span{font-size:12px;line-height:1.55}body .popular-article em,body .quick-row em{font-size:11px}
+body .quick-list{border-radius:16px;box-shadow:none}
+body .quick-row{padding:16px;grid-template-columns:30px minmax(0,1fr) auto}
+body .home-discussions-head{padding:18px}body .home-discussions-head h3,body .home-status-head strong{font-size:15px}
+body .home-discussions-head a{font-size:12px}body .home-discussion-row{padding:16px}
+body .home-discussion-row strong{font-size:14px}body .home-discussion-row span{font-size:12px}
+body .home-status-card{padding:20px}body .home-status-row{font-size:12px;gap:10px}
+body .home-status-row a{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-decoration:none;color:var(--text)}
+body .home-status-row a small{font-size:11px;color:var(--muted)}
+body .banner{border-radius:20px;background:linear-gradient(115deg,var(--green-soft),var(--panel) 65%);border-color:var(--line);padding:28px;gap:24px;box-shadow:none}
+body .banner h3{font-size:24px;line-height:1.3}body .banner p{font-size:14px;line-height:1.65}
+body .footer{font-size:11px;padding-top:24px;line-height:1.6}
+/* Reading rhythm and documentation. */
+body .article-layout{gap:32px;grid-template-columns:minmax(0,760px) minmax(160px,200px)}
+body .article-head{padding:8px 0 28px;border:0;border-bottom:1px solid var(--line);background:none;box-shadow:none;border-radius:0}
+body :is(.article-head,.forum-hero) h1{font-size:clamp(34px,3.5vw,48px);line-height:1.1;letter-spacing:-.045em}
+body :is(.article-head,.forum-hero)>p{font-size:15px;line-height:1.7}
+body .eyebrow{font-size:10px;line-height:1.5;letter-spacing:.09em}
+body .pill,body .article-meta .pill{font-size:11px;padding:5px 9px;line-height:1.5}
+body .v6-article-stats{font-size:11px;gap:8px}body .doc-block{padding:26px 0}
+body .doc-block h2{font-size:24px;line-height:1.3;margin-bottom:14px}body .doc-block h3{font-size:18px;line-height:1.4}
+body :is(.doc-block p,.doc-block li,.managed-content){font-size:16px;line-height:1.8}
+body .doc-block a{color:var(--green);text-decoration-thickness:1px;text-underline-offset:3px}
+body .aside-toc{padding-left:18px}body .aside-toc strong{font-size:10px;letter-spacing:.08em}body .aside-toc a{font-size:12px;line-height:1.55;padding:7px 0}
+body .callout{border-radius:14px;padding:18px;background:var(--panel);grid-template-columns:3px minmax(0,1fr);gap:14px}
+body .callout strong{font-size:11px}body .callout p{font-size:14px;line-height:1.7}
+body .code{border-radius:14px}body .code-head{height:40px;font-size:11px}body .code button{font-size:11px;padding:6px}
+body .code pre{font-size:13px;padding:18px}
+body .article-tool-card{padding:18px;border-radius:14px}body .article-tool-card strong{font-size:14px}body .article-tool-card p{font-size:12px;line-height:1.6}
+body .article-feedback-v5{padding:20px;border-radius:14px}body .article-feedback-v5 strong{font-size:14px}body .article-feedback-v5 p{font-size:12px}
+body .faq-item{border-radius:14px}body .faq-item summary{font-size:15px;line-height:1.5;padding:18px 20px;gap:12px}
+body .faq-answer,body .faq-answer p{font-size:14px;line-height:1.75}
+/* Community, forms, accounts, admin and operational pages. */
+body .forum-hero{padding:12px 0 28px}body .hero-actions{gap:8px;margin-top:18px}
+body .forum-toolbar{padding:12px 0;gap:10px}
+body .forum-panel{border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+body .forum-panel-head{padding:16px 12px;gap:12px}body .forum-panel-head h2{font-size:14px}body .forum-panel-head span{font-size:11px}
+body .forum-cat{gap:8px;min-height:48px;padding:10px}body .forum-cat strong{font-size:13px}body .forum-cat span{font-size:11px;line-height:1.5}body .forum-cat em{font-size:11px}
+body .topic-row{padding:18px 12px;gap:12px}body .topic-row:hover{background:var(--panel-2)}
+body .topic-title strong{font-size:15px}body .topic-body-preview{font-size:13px;line-height:1.5}
+body .topic-meta{font-size:11px;line-height:1.6}body .topic-stat strong{font-size:13px}body .topic-stat span{font-size:9px;letter-spacing:0}
+body .badge{font-size:10px;height:auto;min-height:24px;line-height:1.4;padding:4px 8px;letter-spacing:.01em;font-weight:600;text-transform:none}
+body .forum-auth-card{padding:18px;border-radius:16px}body .forum-auth-card strong{font-size:14px}body .forum-auth-card p{font-size:13px;line-height:1.65}
+body .form-card,body .auth-card,body .reply-form{border-radius:18px;padding:24px;box-shadow:var(--sq-shadow)}
+body .form-group{margin-bottom:18px}body .form-group label{font-size:12px;margin-bottom:8px;line-height:1.5}
+body .forum-input,body .forum-select{height:44px;font-size:14px;border-radius:10px;min-width:0;background:var(--bg-2);border-color:var(--muted-2)}
+body .forum-textarea{min-height:160px;font-size:14px;line-height:1.7;border-color:var(--muted-2);padding:14px}
+body input::placeholder,body textarea::placeholder{color:var(--muted-2);opacity:1}
+body .form-help,body .char-count{font-size:11px;line-height:1.65}
+body .forum-alert{font-size:13px;line-height:1.6;padding:14px;border-radius:12px}
+body .auth-card>p{font-size:14px;line-height:1.6}body .auth-tab{min-height:40px;font-size:13px}
+body .forum-preview{padding:16px;font-size:14px;line-height:1.7}
+body .mini-action{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:auto;min-height:36px;font-size:11px;line-height:1.4;padding:8px 10px;border-radius:9px}
+body .topic-content,body .reply-body{font-size:15px;line-height:1.8}
+body .reply-user strong,body .topic-author-line strong{font-size:13px}body .reply-user span,body .topic-author-line span{font-size:11px}
+body .reply-card{padding:20px 12px}body .reaction{font-size:12px;min-height:32px}
+body .support-summary{padding:18px;border-radius:14px;background:var(--panel)}body .support-summary strong{font-size:26px;line-height:1.3}body .support-summary span{font-size:11px}
+body .ticket-row,body .notification-row{padding:16px 12px;gap:12px}body .ticket-row strong,body .notification-row strong{font-size:14px}body .ticket-row span,body .notification-row span{font-size:12px}
+body .profile-card{padding:24px;border-radius:18px}body .profile-card h2{font-size:20px}body .profile-card p{font-size:13px}
+body .profile-stat strong{font-size:18px}body .profile-stat span{font-size:10px}
+body .v6-profile-quick strong{font-size:13px}body .v6-profile-quick span{font-size:11px}
+body .sq-empty-state,body .forum-empty{padding:32px 20px;font-size:13px;line-height:1.7;border-radius:14px}
+body .forum-empty strong{font-size:16px;line-height:1.4;margin-bottom:8px}body .sq-empty-icon{color:var(--green);background:var(--green-soft)}
+body .loading{font-size:13px;padding:30px 16px}body .loading:before{content:"";display:inline-block;vertical-align:middle;width:12px;height:12px;border:2px solid var(--line);border-top-color:var(--green);border-radius:50%;margin-right:9px;animation:sq-spin .9s linear infinite}
+@keyframes sq-spin{to{transform:rotate(360deg)}}
+body .status-product-card,body .status-subscription-card{border-radius:16px;padding:20px}
+body .status-product-meta,body .server-meta{font-size:11px}body .server-row strong{font-size:14px}body .server-row p{font-size:12px;line-height:1.65}
+body .server-badge{font-size:11px;padding:5px 9px;line-height:1.4;min-height:28px}
+body .server-badge.ok{color:var(--green);background:var(--green-soft);border-color:var(--green)}
+body .server-badge.warn{color:var(--orange)}body .server-badge.down{color:var(--red)}
+body .server-group-head strong{font-size:16px}body .server-group-head small{font-size:12px}
+body .server-summary-card{padding:18px;border-radius:14px}body .server-summary-card strong{font-size:14px}body .server-summary-card p{font-size:12px}
+body .incident-row strong{font-size:15px}body .incident-row small,body .incident-row em{font-size:12px}
+body .admin-tab,body .forum-filter-tab,body .changelog-filter{font-size:12px;min-height:38px;padding:6px 12px}
+body .admin-metric strong{font-size:25px}body .admin-metric span{font-size:12px}body .admin-row{font-size:13px}
+body .update strong{font-size:15px}body .update p{font-size:13px;line-height:1.7}body .update time,body .version{font-size:11px}
+/* Search: a readable dialog, not a compressed desktop toolbar. */
+body .search-box{border-radius:20px;box-shadow:0 24px 90px rgba(0,0,0,.16)}
+body .search-head{min-height:64px}body .search-head input{font-size:16px}
+body .filter-chip{font-size:12px;min-height:34px}body .search-result{padding:14px;gap:12px;border-radius:10px}
+body .search-result strong{font-size:14px}body .search-result p{font-size:12px;line-height:1.6}body .search-result em{font-size:11px}
+body .search-empty{font-size:14px;padding:24px}body .toast{font-size:13px;padding:12px 16px}
+body .universal-result strong{font-size:16px}body .universal-result p{font-size:13px;line-height:1.65}body .universal-result small{font-size:11px}
+/* Preserve the previously tested mobile layout. Only visual refinements below. */
+@media(min-width:861px) and (max-width:1100px){
+  body .shell,body .forum-shell{padding:28px 24px 64px}
+  body .article-layout{grid-template-columns:minmax(0,1fr)}body .aside-toc{display:none}
+  body .command-search{min-width:150px}body .account-chip>span:not(.avatar){max-width:90px}
+  body .home-command-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:860px){
+  body .help-hero:before{opacity:.4}
+  body .main .category-card{padding:20px!important;min-height:180px!important}
+  body .main .category-card .cat-top{margin-bottom:14px!important}
+  body .main .banner{padding:22px}body .main .banner h3{font-size:22px}
+  body .main :is(.form-card,.auth-card,.profile-card){padding:20px}
+  body .main .forum-toolbar{position:static}
+  body .main .support-summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  body .main .support-summary{padding:12px}body .main .support-summary strong{font-size:24px}body .main .support-summary span{font-size:10px;letter-spacing:0}
+  body .main .article-feedback-v5{align-items:flex-start}
+  body .main .code pre{font-size:12px}
+  body .main .incident-row{grid-template-columns:10px minmax(0,1fr);gap:10px}
+  body .main .incident-row>.badge{grid-column:2;justify-self:start}
+  body .main .server-group-head{gap:10px;flex-wrap:wrap}
+}
+@media(max-width:600px){
+  body .main .home-command{display:grid;grid-template-columns:36px minmax(0,1fr);gap:14px;align-items:center;min-height:88px!important}
+  body .main .home-command strong{margin:0}body .main .home-command span{margin:0}
+  body .main .home-command span span{margin-top:4px}
+  body .main .popular-article{padding:16px!important}
+  body .main .home-status-head{gap:8px;flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){body .loading:before{animation:none}body .main .category-card:hover{transform:none!important}}
+@media(min-width:861px) and (max-width:1180px){body .top-actions>a.hide-mobile{display:none}}
