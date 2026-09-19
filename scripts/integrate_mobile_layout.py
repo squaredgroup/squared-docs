@@ -17,14 +17,17 @@ for page in sorted(ROOT.rglob('*.html')):
         text = text.replace('</head>', f'<link rel="stylesheet" href="{css}?v=20260919.1" data-sq-responsive>\n</head>', 1)
     if 'data-sq-mobile-nav' not in text:
         text = text.replace('</body>', f'<script defer src="{js}?v=20260919.1" data-sq-mobile-nav></script>\n</body>', 1)
-    if page.name == 'index.html' and page.parent == ROOT and '<div class="help-search"' in text:
-        replacement = '''<button class="help-search" data-search-open type="button" aria-label="Rechercher dans le centre d’aide">
+    if page.name == 'index.html' and page.parent == ROOT:
+        # A hidden <br> is not a whitespace character. Keep actual spacing on mobile.
+        text = text.replace('Comment pouvons-nous<br>vous aider ?', 'Comment pouvons-nous<br> vous aider ?')
+        if '<div class="help-search"' in text:
+            replacement = '''<button class="help-search" data-search-open type="button" aria-label="Rechercher dans le centre d’aide">
     <span class="search-icon" data-icon-key="search" aria-hidden="true"></span>
     <span class="help-search-label">Rechercher dans le centre d’aide…</span>
     <kbd aria-hidden="true">⌘K</kbd>
   </button>'''
-        text, count = re.subn(r'<div class="help-search"[^>]*>.*?<kbd>⌘K</kbd>\s*</div>', replacement, text, count=1, flags=re.S)
-        assert count == 1, 'The homepage search markup changed; inspect before editing.'
+            text, count = re.subn(r'<div class="help-search"[^>]*>.*?<kbd>⌘K</kbd>\s*</div>', replacement, text, count=1, flags=re.S)
+            assert count == 1, 'The homepage search markup changed; inspect before editing.'
     if original != text:
         page.write_text(text, encoding='utf-8')
         changed.append(str(page.relative_to(ROOT)))
