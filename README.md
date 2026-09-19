@@ -246,3 +246,8 @@ Le forum est initialisé avec des sujets officiels et permet maintenant de suivr
 
 ### Workspace Knowledge Base
 La documentation Workspace couvre désormais activation, installation, compte, navigation, membres, rôles, clients, collaborateurs, pôles, projets, missions, tâches, planning, messages, documents, contrats, invitations, notifications, raccourcis, recherche et dépannage.
+
+
+## Parcours d’assistance
+
+La livraison du 19 septembre ajoute les parcours par besoin, le diagnostic guidé, la recherche à sources explicites et six guides Workspace vérifiés. Voir [ASSISTANCE-JOURNEYS.md](ASSISTANCE-JOURNEYS.md) pour la portée, les sources des captures, les tests et les limites.

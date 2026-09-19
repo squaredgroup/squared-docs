@@ -3,10 +3,8 @@ const root=document.documentElement;
 const SQIconly=window.SQIconly;
 function getStore(k){try{return localStorage.getItem(k)}catch{return null}}
 function setStore(k,v){try{localStorage.setItem(k,v)}catch{}}
-const saved=getStore('sq-docs-theme');root.dataset.theme=saved||'light';
-function syncThemeButton(){const b=$('#themeBtn');if(b){const k=root.dataset.theme==='light'?'moon':'sun';b.innerHTML=window.SQIconly?SQIconly.icon(k,'outline','md'):'';b.setAttribute('aria-label',root.dataset.theme==='light'?'Activer le thème sombre':'Activer le thème clair')}const m=$('meta[name="theme-color"]');if(m)m.setAttribute('content',root.dataset.theme==='light'?'#F7F7F4':'#0D0D0E')}
-function toggleTheme(){root.dataset.theme=root.dataset.theme==='light'?'dark':'light';setStore('sq-docs-theme',root.dataset.theme);syncThemeButton()}
-syncThemeButton();$('#themeBtn')?.addEventListener('click',toggleTheme);
+window.SQHelp.applyTheme();
+window.SQHelp.setupAppearance($('#themeBtn'));
 $('#menuBtn')?.addEventListener('click',()=>$('#sidebar')?.classList.toggle('open'));
 $$('.hc-nav-link,.hc-sub-link').forEach(a=>a.addEventListener('click',()=>{if(innerWidth<=860)$('#sidebar')?.classList.remove('open')}));
 const progressEl=$('#progress');function progress(){if(!progressEl)return;const d=document.documentElement,max=d.scrollHeight-d.clientHeight;progressEl.style.width=(max>0?d.scrollTop/max*100:0)+'%'}addEventListener('scroll',progress,{passive:true});progress();
@@ -110,57 +108,25 @@ function remoteFilter(item){
   return true;
 }
 
-function renderSearchRows(list){
-  if(!results)return;
-  results.innerHTML=list.length?list.slice(0,24).map(x=>{
-    const href=hrefFor(x.href),external=/^https?:\/\//.test(x.href);
-    const icon=x.icon||(x.kind==='forum'?'COM':x.kind==='ticket'?'SUP':'QG');
-    return '<a class="search-result" data-search-kind="'+(x.kind||'knowledge')+'" data-search-href="'+x.href+'" href="'+href+'"'+(external?' target="_blank" rel="noreferrer"':'')+'><span class="result-ico">'+(window.SQIconly?SQIconly.legacy(icon,'outline','md'):icon)+'</span><span><strong>'+x.title+'</strong><p>'+(x.description||'')+'</p></span><em>'+(x.category||x.kind||'Résultat')+'</em></a>';
-  }).join(''):'<div class="search-empty">Aucun résultat. Essayez une autre formulation ou ouvrez le support.</div>';
-}
-
+let searchController=null,inputTimer=null;
+function renderSearchRows(list,partial=false){if(results)SQHelp.paint(results,list,input?.value||'',{modal:true,partial});}
 async function render(q=''){
-  if(!results)return;
-  const query=q.trim();
-  const requestId=++searchRequestId;
-
-  if(query.length<2){
-    renderSearchRows(localSearch(query));
-    return;
-  }
-
-  results.innerHTML='<div class="search-empty">Recherche dans la documentation et la communauté…</div>';
-
-  try{
-    if(!window.SQSearchBackend)throw new Error('BACKEND_NOT_READY');
-    const data=await window.SQSearchBackend.search(query,30);
-    if(requestId!==searchRequestId)return;
-    renderSearchRows((data||[]).filter(remoteFilter));
-
-    clearTimeout(searchLogTimer);
-    searchLogTimer=setTimeout(()=>{
-      if(query!==lastLoggedQuery){
-        lastLoggedQuery=query;
-        window.SQSearchBackend?.event('search',{query,metadata:{results:(data||[]).length,source:'global-modal'}}).catch(()=>{});
-      }
-    },550);
-  }catch{
-    if(requestId!==searchRequestId)return;
-    renderSearchRows(localSearch(query));
-  }
+  if(!results)return;const id=++searchRequestId;searchController?.abort();searchController=new AbortController();const control=searchController;
+  results.textContent='Recherche dans les guides et la communauté…';results.setAttribute('aria-busy','true');
+  const timeout=setTimeout(()=>control.abort(),7000);
+  try{const data=await SQHelp.lookup(q,{signal:control.signal,limit:50});if(id!==searchRequestId)return;renderSearchRows(data.rows.filter(remoteFilter),data.partial);}
+  catch{if(id!==searchRequestId)return;const data=await SQHelp.lookup(q,{remote:false});if(id!==searchRequestId)return;renderSearchRows(data.rows.filter(remoteFilter),true);}
+  finally{clearTimeout(timeout);}
 }
-
-function openSearch(){if(!modal)return;modal.classList.add('open');if(input){input.value='';setTimeout(()=>input.focus(),20)}render('')}
-function closeSearch(){modal?.classList.remove('open')}
-$$('[data-search-open],#searchTrigger').forEach(b=>b.addEventListener('click',openSearch));$('#searchClose')?.addEventListener('click',closeSearch);modal?.addEventListener('click',e=>{if(e.target===modal)closeSearch()});
-let inputTimer=null;
-input?.addEventListener('input',()=>{clearTimeout(inputTimer);inputTimer=setTimeout(()=>render(input.value),160)});
-results?.addEventListener('click',e=>{
-  const a=e.target.closest('.search-result');
-  if(a)window.SQSearchBackend?.event('search_click',{query:input?.value||'',target_href:a.dataset.searchHref||a.getAttribute('href'),metadata:{kind:a.dataset.searchKind||'unknown'}}).catch(()=>{});
-});
-$$('.filter-chip').forEach(b=>b.addEventListener('click',()=>{$$('.filter-chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render(input?.value||'')}));
-addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch()}else if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();openSearch()}else if(e.key==='Escape')closeSearch()});
+function openSearch(){if(!modal)return;modal.classList.add('open');if(input){input.value='';setTimeout(()=>input.focus(),20)}render('');}
+function closeSearch(){++searchRequestId;searchController?.abort();clearTimeout(inputTimer);results?.replaceChildren();modal?.classList.remove('open');}
+$$('[data-search-open],#searchTrigger').forEach(b=>b.addEventListener('click',openSearch));
+$('#searchClose')?.addEventListener('click',closeSearch);modal?.addEventListener('click',e=>{if(e.target===modal)closeSearch();});
+input?.addEventListener('input',()=>{++searchRequestId;searchController?.abort();clearTimeout(inputTimer);inputTimer=setTimeout(()=>render(input.value),160);});
+input?.addEventListener('keydown',e=>SQHelp.keyboard(input,results,e));results?.addEventListener('keydown',e=>SQHelp.keyboard(input,results,e));
+$$('.filter-chip').forEach(b=>b.addEventListener('click',()=>{$$('.filter-chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render(input?.value||'');}));
+addEventListener('keydown',e=>{const el=document.activeElement;if(el?.isContentEditable)return;if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}else if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(el?.tagName)){e.preventDefault();openSearch();}else if(e.key==='Escape')closeSearch();});
+SQHelp.backend().then(b=>b?.client.auth.onAuthStateChange(event=>{if(['SIGNED_OUT','SIGNED_IN','USER_UPDATED'].includes(event))closeSearch();}));
 $$('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const target=b.dataset.copy;let text=target.startsWith('#')?$(target)?.textContent:target;try{await navigator.clipboard.writeText(text||'');toast('Copié')}catch{toast('Copie impossible')}}));
 function toast(t){const el=$('#toast');if(!el)return;el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1400)}
 const blocks=$$('.doc-block[id]'),toc=$('#articleToc');if(toc&&blocks.length){toc.innerHTML='<strong>Sur cette page</strong>'+blocks.map(b=>'<a href="#'+b.id+'">'+b.querySelector('h2')?.textContent+'</a>').join('');const links=$$('a',toc);const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id))})},{rootMargin:'-20% 0px -70%'});blocks.forEach(b=>io.observe(b))}
@@ -358,7 +324,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       row.innerHTML=
         '<span>'+(window.SQIconly?SQIconly.icon('time','regular','xs'):'')+mins+' min de lecture</span>'+
         '<span>·</span><span>'+difficulty+'</span>'+
-        '<span>·</span><span>Mis à jour le 18 sept. 2026</span>';
+        '<span>·</span><span>Consultez la date de révision du guide</span>';
       const meta=head.querySelector('.article-meta');
       meta?meta.insertAdjacentElement('afterend',row):head.appendChild(row);
     }

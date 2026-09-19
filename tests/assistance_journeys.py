@@ -63,7 +63,11 @@ with sync_playwright() as p:
    page,ctx,errors=new(width=width)
    for path in ['index.html','parcours.html?profil=client','diagnostic.html','access-help.html','workspace/workspace-activation.html','workspace/workspace-login.html','workspace/workspace-documents.html','workspace/workspace-installation.html','support.html','wix-studio.html']:
     errors.clear();page.goto(origin+'/'+path,wait_until='networkidle');page.wait_for_function('Boolean(window.SQHelp)')
-    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+2'),(engine,width,path,'overflow')
+    if not page.evaluate('document.documentElement.scrollWidth<=innerWidth+2'):
+     page.screenshot(path=str(OUT/f'overflow-{engine}-{width}.png'))
+     bounds=page.evaluate('''[...document.body.querySelectorAll('*')].map(e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return {tag:e.tagName,id:e.id,cls:e.className?.baseVal||e.className,left:r.left,right:r.right,width:r.width,display:s.display,position:s.position};}).filter(x=>x.width>0&&x.display!=='none'&&(x.right>innerWidth+2||x.left< -2)).slice(0,80)''')
+     (OUT/'overflow-bounds.json').write_text(json.dumps({'engine':engine,'width':width,'page':path,'bounds':bounds},ensure_ascii=False,indent=2))
+     raise AssertionError((engine,width,path,'overflow',bounds[:6]))
     assert not errors,(engine,width,path,errors)
     if width<=860:assert page.locator('.app>.main').bounding_box()['x']==0
     if path=='support.html':
@@ -84,7 +88,8 @@ with sync_playwright() as p:
    assert query['issue']==[issue] and query['checks']==['1'] and query['device']==['ios']
    assert not page.evaluate('__writes.filter(x=>x.table==="support_tickets").length')
    page.get_by_role('button',name='Mon problème est résolu',exact=True).click();assert 'Aucun ticket' in page.locator('#diagnosticMount').inner_text()
-   if issue=='documents':page.screenshot(path=str(OUT/f'journey-diagnostic-{engine}.png'),full_page=True)
+   if issue=='documents':
+    page.evaluate('document.activeElement?.blur();window.scrollTo({top:0,behavior:"instant"})');page.wait_for_timeout(80);page.screenshot(path=str(OUT/f'journey-diagnostic-{engine}.png'),full_page=True)
    page.goto(target,wait_until='networkidle');assert page.locator('#supportGuest').is_visible()
    next_url=page.locator('#supportLogin').get_attribute('href');assert parse_qs(urlparse(next_url).query)['next'][0].startswith('support.html?')
    if issue=='documents':page.screenshot(path=str(OUT/f'journey-support-guest-{engine}.png'))

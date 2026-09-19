@@ -104,7 +104,7 @@
     if(!location.pathname.includes('/workspace/')||!H.GUIDE||!Object.values(H.GUIDE).some(x=>x.endsWith('/'+filename)))return;
     const issue=filename.includes('documents')?'documents':filename.includes('installation')?'installation':'access';
     const box=node('section','','sq-journey-panel');box.append(node('h2','La suite de votre parcours'),link('J’ai encore besoin d’aide',H.contextLink('diagnostic.html',{product:'workspace',issue,device:'web'}),'btn green'));
-    const community=node('div');community.append(node('p','Questions liées à ce guide','sq-note'));box.append(community);article.append(box);
+    const community=node('div');community.append(node('p','Questions liées à ce guide','sq-note'));box.append(community);const previous=article.querySelector('.article-tools');if(previous)previous.replaceWith(box);else article.append(box);
     const b=await H.backend();if(!b)return;
     try{const rows=(await b.search('Workspace '+(issue==='access'?'connexion':issue==='documents'?'document':'installation'),10)).filter(x=>x.kind==='forum').slice(0,3);
       if(rows.length)rows.forEach(r=>community.append(link(r.title,r.href,'sq-guide-link')));
@@ -127,7 +127,7 @@
   }
   async function editorialSource(){
     const p=new URLSearchParams(location.search),source=p.get('source');if(p.has('id')||!source||!/^[0-9a-f-]{36}$/i.test(source)||!$('#knowledgeEditorMount'))return;
-    const b=await H.backend();if(!b)return;const me=await b.currentProfile();if(!me||!['admin','moderator'].includes(me.role))return;
+    const b=await H.backend();if(!b)return;const me=await b.currentProfile();if(!me||me.is_banned||!['admin','moderator'].includes(me.role))return;
     const wait=()=>new Promise(resolve=>{if($('#edBody'))return resolve(true);const obs=new MutationObserver(()=>{if($('#edBody')){obs.disconnect();clearTimeout(timer);resolve(true);}}),timer=setTimeout(()=>{obs.disconnect();resolve(false);},5000);obs.observe($('#knowledgeEditorMount'),{childList:true,subtree:true});});
     if(!await wait())return;
     const {data:t,error}=await b.client.from('forum_topics').select('id,title,body,accepted_reply_id').eq('id',source).maybeSingle();if(error||!t)return;

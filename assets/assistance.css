@@ -41,3 +41,16 @@
  #diagnosticMount{padding:16px}.sq-choice{font-size:14px}.sq-diagnostic-actions .btn{width:100%;white-space:normal;line-height:1.4}#supportGuest{padding:20px}.sq-journey-panel h2{font-size:21px}
 }
 @media(prefers-reduced-motion:reduce){.sq-task-card{transition:none}}
+
+/* Legacy monolithic Wix guide: shrink content tracks rather than hiding document overflow. */
+@media(max-width:860px){
+ body[data-wix-guide] .topbar .top-link,body[data-wix-guide] .topbar #printBtn{display:none!important}
+ body[data-wix-guide] .topbar .crumb{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ body[data-wix-guide] :is(.content,.doc-section,.module-label,.module-label-inner,.module-meta,.section-header){min-width:0;max-width:100%}
+ body[data-wix-guide] :is(.module-meta,.section-end,.hero-actions,.docs-library-head){flex-wrap:wrap}
+ body[data-wix-guide] .callout{grid-template-columns:8px minmax(0,1fr)}
+ body[data-wix-guide] .step-list li{grid-template-columns:30px minmax(0,1fr);gap:10px}
+ body[data-wix-guide] :is(.step-list span,.callout>div,.source-link>span,.check-item>span){min-width:0;overflow-wrap:anywhere}
+ body[data-wix-guide] :is(.doc-section h1,.doc-section h2,.doc-section h3){overflow-wrap:anywhere}
+ body[data-wix-guide] .table-wrap{width:100%;max-width:100%;margin-left:0;margin-right:0;overflow-x:auto}
+}
