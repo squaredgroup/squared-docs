@@ -121,7 +121,9 @@ with sync_playwright() as p:
             page.locator('#searchInput').fill('responsive')
             assert page.locator('#searchInput').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)>=16')
             page.keyboard.press('Escape')
-            page.locator('#themeBtn').click()
+            assert not page.locator('#themeBtn').is_visible()
+            page.locator('#quickActionsBtn').click()
+            page.get_by_role('button',name='Apparence').click()
             page.get_by_label('Sombre',exact=True).check()
             page.keyboard.press('Escape')
             assert page.locator('html').get_attribute('data-theme')=='dark'

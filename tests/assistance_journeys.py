@@ -74,7 +74,11 @@ with sync_playwright() as p:
      assert page.locator('#supportGuest').is_visible();assert not page.locator('[data-auth-area]').first.is_visible();assert not page.locator('#ticketForm').is_visible();assert not page.locator('#ticketList').inner_text()
     checks.append(f'{engine} {width} {path}: contenu et marges')
    page.goto(origin+'/index.html',wait_until='networkidle')
-   page.locator('#themeBtn').click();page.get_by_label('Sombre',exact=True).check();assert page.locator('html').get_attribute('data-theme')=='dark'
+   if width<=860:
+    assert not page.locator('#themeBtn').is_visible()
+    page.locator('#quickActionsBtn').click();page.get_by_role('button',name='Apparence').click()
+   else:page.locator('#themeBtn').click()
+   page.get_by_label('Sombre',exact=True).check();assert page.locator('html').get_attribute('data-theme')=='dark'
    page.get_by_label('Système',exact=True).check();page.emulate_media(color_scheme='light');page.wait_for_timeout(60);assert page.locator('html').get_attribute('data-theme')=='light'
    page.get_by_label('Clair',exact=True).check();page.emulate_media(color_scheme='dark');assert page.locator('html').get_attribute('data-theme')=='light';page.keyboard.press('Escape')
    assert page.locator('#themeBtn').get_attribute('aria-expanded')=='false'
@@ -84,10 +88,12 @@ with sync_playwright() as p:
   for issue in ['access','documents','installation']:
    page,ctx,errors=new(width=390);page.goto(origin+'/diagnostic.html?product=workspace&issue='+issue,wait_until='networkidle')
    page.get_by_role('button',name='Continuer',exact=True).click();page.get_by_role('button',name='Continuer',exact=True).click();page.get_by_label('iPhone',exact=True).check();page.get_by_role('button',name='Voir les vérifications',exact=True).click()
-   page.locator('.sq-checklist input').nth(1).check();target=page.get_by_role('link',name='Préparer ma demande privée',exact=True).get_attribute('href');query=parse_qs(urlparse(target).query)
+   page.locator('.sq-checklist input').nth(1).check();page.get_by_role('button',name='Non, contacter le support',exact=True).click()
+   target=page.get_by_role('link',name='Préparer ma demande privée',exact=True).get_attribute('href');query=parse_qs(urlparse(target).query)
    assert query['issue']==[issue] and query['checks']==['1'] and query['device']==['ios']
    assert not page.evaluate('__writes.filter(x=>x.table==="support_tickets").length')
-   page.get_by_role('button',name='Mon problème est résolu',exact=True).click();assert 'Aucun ticket' in page.locator('#diagnosticMount').inner_text()
+   page.reload(wait_until='networkidle');page.get_by_role('button',name='Continuer',exact=True).click();page.get_by_role('button',name='Continuer',exact=True).click();page.get_by_label('iPhone',exact=True).check();page.get_by_role('button',name='Voir les vérifications',exact=True).click()
+   page.get_by_role('button',name='Oui, c’est résolu',exact=True).click();assert 'Aucun ticket' in page.locator('#diagnosticMount').inner_text()
    if issue=='documents':
     page.evaluate('document.activeElement?.blur();window.scrollTo({top:0,behavior:"instant"})');page.wait_for_timeout(80);page.screenshot(path=str(OUT/f'journey-diagnostic-{engine}.png'),full_page=True)
    page.goto(target,wait_until='networkidle');assert page.locator('#supportGuest').is_visible()
