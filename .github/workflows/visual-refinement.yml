@@ -1,0 +1,66 @@
+name: Visual Refinement Quality
+on:
+  push:
+    branches: [main, design/visual-refinement-20260919]
+    paths:
+      - 'assets/refinement.*'
+      - 'scripts/integrate_refinement.py'
+      - 'tests/visual_refinement.py'
+      - '.github/workflows/visual-refinement.yml'
+  pull_request:
+    paths:
+      - 'assets/refinement.*'
+      - 'tests/visual_refinement.py'
+      - 'scripts/integrate_refinement.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: visual-refinement-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  design:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Integrate design without changing mobile layout
+        run: |
+          python scripts/integrate_mobile_layout.py
+          python scripts/integrate_refinement.py
+          python scripts/integrate_refinement.py
+      - name: JavaScript syntax
+        run: node --check assets/refinement.js
+      - name: Install isolated browsers
+        run: |
+          python -m pip install playwright==1.55.0
+          python -m playwright install --with-deps chromium webkit
+      - name: Mobile regression suite
+        run: python tests/mobile_layout.py
+      - name: Visual light dark and tablet regression suite
+        run: python tests/visual_refinement.py
+      - name: Existing admin editor and account regression suite
+        run: python tests/account_acceptance.py
+      - name: Commit validated page links on the design branch only
+        if: github.event_name == 'push' && github.ref == 'refs/heads/design/visual-refinement-20260919'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- '*.html'
+          if ! git diff --cached --quiet; then
+            git commit -m 'build: intègre la finition visuelle validée sur toutes les pages'
+            git push
+          fi
+      - name: Save screenshots and reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: squared-visual-refinement
+          path: test-results/
+          retention-days: 7
