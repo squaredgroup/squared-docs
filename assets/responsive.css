@@ -1,0 +1,146 @@
+/* Mobile layout contract. Loaded after the historical design layers.
+   One breakpoint (860px) for the drawer and zero desktop gutter on mobile.
+   Desktop stays unchanged. Do not hide horizontal overflow to conceal defects. */
+button.help-search{font:inherit;color:var(--muted);cursor:pointer;text-align:left;width:100%}
+button.help-search .help-search-label{min-width:0;text-align:left;font-size:12px}
+.sq-mobile-backdrop,.sq-mobile-close,.sq-mobile-account-links{display:none}
+
+@media(max-width:860px){
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:80px}
+  body{width:100%;min-width:0}
+  body .app{display:block;width:100%;min-width:0}
+  body .app>.main,body.sidebar-mini .app>.main,body.focus-mode .app>.main{
+    margin-left:0!important;margin-right:0!important;width:100%;max-width:none;min-width:0;
+    min-height:100vh;min-height:100dvh;transform:none;
+  }
+  body .main>.shell,body .main>.forum-shell{width:100%;max-width:100%;min-width:0;margin:0 auto;padding:24px max(16px,env(safe-area-inset-right)) calc(48px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+  body .main :is(.article,.article-layout,.topic-page,.forum-grid,.profile-grid,.v6-support-layout,.v6-profile-dashboard,.editor-layout){width:100%;min-width:0;max-width:100%}
+  body .main :is(.article-layout,.forum-grid,.profile-grid,.v6-support-layout,.editor-layout){grid-template-columns:minmax(0,1fr);gap:24px}
+  body .main :is(.grid,.category-grid,.home-command-grid,.popular-grid,.home-live-grid,.community-preview,.server-summary,.status-service-grid)>*{min-width:0}
+  body .main :is(.section-head,.hero-actions,.form-actions,.footer,.footer-links,.article-meta){flex-wrap:wrap}
+  body .main .section-head{gap:14px;align-items:flex-start}
+  body .main .section{padding:28px 0}
+  body .main .section-head h2{font-size:21px;line-height:1.3}
+  body .main .section-head p{font-size:13px;line-height:1.55}
+  body .main .aside-toc{display:none}
+  body .main .v6-mobile-toc{display:block}
+
+  /* A hidden sidebar no longer reserves a column in the document. */
+  body .sidebar.hc-sidebar{
+    position:fixed;inset:0 auto 0 0;width:min(86vw,320px);max-width:calc(100vw - 32px);
+    height:100vh;height:100dvh;z-index:520;margin:0;
+    padding:16px 14px calc(24px + env(safe-area-inset-bottom));
+    background:var(--bg-2);overflow-y:auto;overscroll-behavior:contain;
+    transform:translateX(-105%);visibility:hidden;pointer-events:none;
+    transition:transform .22s ease,visibility .22s ease;
+  }
+  body .sidebar.hc-sidebar.open{transform:translateX(0);visibility:visible;pointer-events:auto}
+  body .sidebar.hc-sidebar .hc-brand{padding-right:44px;min-height:54px}
+  body .sidebar.hc-sidebar .hc-brand-copy strong{font-size:12px}
+  body .sidebar.hc-sidebar .hc-brand-copy span{font-size:10px}
+  body .sidebar.hc-sidebar .hc-search{min-height:44px;font-size:13px}
+  body .sidebar.hc-sidebar .hc-collapse{display:none}
+  body .sidebar.hc-sidebar .hc-nav-title{font-size:10px!important}
+  body .sidebar.hc-sidebar .hc-nav-group-trigger{min-height:40px}
+  body .sidebar.hc-sidebar .hc-nav-link{font-size:14px!important;min-height:44px;padding:10px 8px!important}
+  body .sidebar.hc-sidebar .hc-item.has-children>.hc-nav-link{padding-right:48px!important}
+  body .sidebar.hc-sidebar .hc-sub-link{font-size:13px!important;min-height:42px;display:flex;align-items:center;gap:8px}
+  body .sidebar.hc-sidebar .hc-sub-toggle{width:44px;height:44px;top:0;right:0;display:grid;place-items:center}
+  body .sidebar.hc-sidebar .hc-sidebar-foot{font-size:11px}
+  body .sidebar.hc-sidebar .sq-mobile-close{display:grid;place-items:center;position:absolute;top:18px;right:14px;width:40px;height:40px;min-height:40px;z-index:1;font-size:18px}
+  body .sq-mobile-backdrop{position:fixed;inset:0;z-index:510;background:rgba(0,0,0,.38);border:0;padding:0;margin:0;cursor:pointer}
+  body .sq-mobile-backdrop:not([hidden]){display:block}
+  body.sq-mobile-menu-open{overflow:hidden}
+  body .sq-mobile-account-links{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0;padding:14px 0;border-top:1px solid var(--line)}
+  body .sq-mobile-account-links .btn{min-height:44px;font-size:12px}
+
+  /* Always reserve a full hit area for each control, not for its label. */
+  body .main>.topbar{width:100%;max-width:100%;min-width:0;height:64px;min-height:64px;gap:8px;padding:8px max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left));justify-content:flex-start;opacity:1}
+  body .topbar #menuBtn{display:inline-flex;flex:0 0 44px;width:44px;min-width:44px;height:44px;min-height:44px}
+  body .topbar .crumbs{min-width:0;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:12px}
+  body .topbar .top-actions{margin-left:auto;min-width:0;flex-shrink:0;gap:6px;flex-wrap:nowrap}
+  body .topbar #forumAccount{height:44px;display:flex;align-items:center;gap:0;flex-shrink:0}
+  body .topbar .top-actions>.icon-btn,body .topbar #forumAccount>.account-chip,body .topbar #forumAccount>.btn{width:44px;min-width:44px;height:44px;min-height:44px;padding:0;display:inline-flex;align-items:center;justify-content:center;gap:0;flex-shrink:0}
+  body .topbar #forumAccount>.btn{font-size:0}
+  body .topbar #forumAccount>.btn>span:not(.avatar),body .topbar .account-chip>span:not(.avatar),body .topbar #forumAccount>.icon-btn{display:none}
+  body .topbar .account-chip .avatar{width:28px;height:28px;min-width:28px}
+  body .topbar .top-actions>.command-search{display:inline-flex!important;min-width:44px;width:44px;height:44px;min-height:44px;padding:0!important;justify-content:center!important;flex-shrink:0;font-size:0}
+  body .topbar .command-search>span:not(.sq-iconly),body .topbar .command-search>kbd,body .topbar .top-actions>a.hide-mobile{display:none!important}
+  body .topbar .sq-iconly{width:20px!important;height:20px!important;flex:0 0 20px}
+  body .topbar .quick-actions-menu{right:0;top:52px;width:min(280px,calc(100vw - 32px));max-height:calc(100dvh - 96px);overflow-y:auto}
+  body .topbar .quick-action-item{min-height:48px}
+  body .topbar .quick-action-item strong{font-size:13px}
+  body .topbar .quick-action-item em{font-size:11px}
+
+  /* Home: centered readable title, one search button, three clear links. */
+  body .main .help-hero{width:100%;max-width:680px;min-width:0;margin:0 auto;padding:28px 0 32px;text-align:center;overflow:visible}
+  body .main .help-hero:after{width:100%;max-width:480px;height:240px}
+  body .main .help-hero-logo{width:60px;height:60px;border-radius:17px;margin:0 auto 20px}
+  body .main .home-logo-lockup span{display:inline;font-size:10px}
+  body .main .help-hero h1{max-width:100%;width:100%;font-size:clamp(34px,8.6vw,48px);line-height:1.06;letter-spacing:-.045em;word-break:normal;overflow-wrap:normal;text-wrap:balance;margin:14px auto 18px}
+  body .main .help-hero h1 br{display:none}
+  body .main .help-hero>p{max-width:36ch;margin:0 auto;font-size:15px;line-height:1.65;overflow-wrap:break-word}
+  body .main .help-search{width:100%;max-width:100%;min-width:0;min-height:54px;height:54px;margin:24px 0 14px;padding:0 14px;display:flex;align-items:center;gap:12px;border-radius:14px;font:inherit;color:var(--muted);text-align:left;overflow:hidden}
+  body .main .help-search .search-icon{width:22px;min-width:22px;height:22px;display:grid;place-items:center}
+  body .main .help-search .help-search-label{flex:1;min-width:0;display:block;font-size:14px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  body .main .help-search kbd{display:none}
+  body .main .support-paths{display:grid;grid-template-columns:minmax(0,1fr);width:100%;max-width:none;margin:0;gap:8px}
+  body .main .support-path{min-height:52px;padding:10px 14px;display:flex;justify-content:flex-start;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;background:var(--panel);text-align:left}
+  body .main .support-path .big-ico{width:28px;height:28px;min-width:28px;margin:0}
+  body .main .support-path h3{font-size:14px;line-height:1.4;margin:0}
+  body .main .support-path p{display:none}
+
+  /* Content layouts: no fixed columns wider than their phone container. */
+  body .main :is(.home-live-grid,.community-preview,.article-tools,.banner){grid-template-columns:minmax(0,1fr)}
+  body .main .category-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  body .main .category-card h3{font-size:16px!important}
+  body .main .category-card p{font-size:13px!important}
+  body .main .category-card .cat-link{font-size:12px!important}
+  body .main .cat-count{font-size:11px!important}
+  body .main :is(.home-command,.role-card,.card){max-width:100%;min-width:0}
+  body .main .home-command strong{font-size:14px}
+  body .main .home-command span span{font-size:12px}
+  body .main :is(.popular-article,.quick-row){grid-template-columns:24px minmax(0,1fr);gap:10px}
+  body .main :is(.popular-article,.quick-row)>em{grid-column:2;justify-self:start;font-size:11px}
+  body .main :is(.popular-article,.quick-row) strong{font-size:14px}
+  body .main :is(.popular-article,.quick-row) span{font-size:12px}
+  body .main .banner-actions{justify-content:flex-start}
+  body .main :is(.form-card,.auth-wrap,.auth-card,.topic-page){width:100%;min-width:0;max-width:100%}
+  body .main :is(input,textarea,select){max-width:100%;min-width:0;font-size:16px!important}
+  body .main :is(.forum-toolbar-left,.forum-toolbar-right){min-width:0;flex-wrap:wrap}
+  body .main .forum-input{width:100%;min-width:0}
+  body .main :is(.btn,.mini-action,.filter-chip,.forum-filter-tab){min-height:44px}
+  body .main :is(.article-head,.forum-hero) h1{overflow-wrap:break-word;font-size:clamp(30px,8vw,42px);line-height:1.15}
+  body .main :is(.doc-block p,.doc-block li,.article-head p,.forum-hero p,.topic-content,.reply-body,.managed-content){font-size:15px;line-height:1.7}
+  body .main :is(.server-row,.ticket-row,.notification-row){min-width:0;overflow-wrap:anywhere}
+  body .main :is(pre,.code,.table-wrap){max-width:100%;overflow-x:auto}
+  body .main .footer{gap:14px;font-size:12px}
+  body .main .footer-links{gap:16px}
+  body .sq-react-dock{display:none!important}
+
+  /* Search and custom dialogs stay inside the visual viewport. */
+  body .search-modal{padding:12px;align-items:flex-start;overflow-y:auto}
+  body .search-box{width:100%;max-width:680px;min-width:0;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);margin:0 auto;overflow-y:auto}
+  body .search-head{min-width:0;padding:10px;gap:8px}
+  body .search-head input{min-width:0;width:100%;font-size:16px}
+  body .search-close{min-height:44px;min-width:44px}
+  body .search-filters{min-width:0;max-width:100%;overflow-x:auto;flex-wrap:nowrap}
+  body .search-result{grid-template-columns:28px minmax(0,1fr);min-width:0}
+  body .search-result>em{grid-column:2;font-size:11px}
+  body .search-result strong{font-size:14px}
+  body .search-result p{font-size:12px;overflow-wrap:anywhere}
+  body .forum-dialog-backdrop{padding:12px}
+  body .forum-dialog{width:100%;min-width:0;max-height:calc(100dvh - 24px)}
+}
+@media(max-width:600px){
+  body .topbar .crumbs{display:none}
+  body .main :is(.grid.cols-2,.grid.cols-3,.grid.cols-4,.home-command-grid,.popular-grid,.server-summary,.status-service-grid,.forum-side){grid-template-columns:minmax(0,1fr)!important}
+  body .main .category-grid{grid-template-columns:minmax(0,1fr)!important}
+  body .main .home-command{min-height:110px}
+  body .main .update{grid-template-columns:minmax(0,1fr) auto;gap:8px}
+  body .main .update time{grid-column:1/-1}
+  body .main .topic-row{grid-template-columns:34px minmax(0,1fr)}
+  body .main .topic-stats{grid-column:2;grid-template-columns:repeat(3,minmax(0,1fr))}
+  body .main .server-row{grid-template-columns:minmax(0,1fr)}
+}
+@media(prefers-reduced-motion:reduce){body .sidebar.hc-sidebar{transition:none}}
