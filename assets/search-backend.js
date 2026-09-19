@@ -1,40 +1,20 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "./supabase-config.js";
-
-const client=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-
-async function search(query,limit=30){
-  const q=String(query||"").trim();
-  if(q.length<2)return [];
-  const {data,error}=await client.rpc("search_help_center",{p_query:q,p_limit:limit});
-  if(error)throw error;
-  return data||[];
+import {db,base,profile,session} from './hc-core.js';
+import {rankDocuments,mergeResults,safeRoute} from './hc-state.js';
+let indexPromise;
+async function index(){if(!indexPromise)indexPromise=fetch(new URL('assets/knowledge-index.json',base)).then(r=>{if(!r.ok)throw new Error('Index indisponible');return r.json();}).then(x=>x.documents||[]).catch(()=>[]);return indexPromise;}
+export async function search(query,limit=30){
+ const q=String(query||'').trim().slice(0,200),cap=Math.max(1,Math.min(80,Number(limit)||30));if(q.length<2)return [];
+ const local=rankDocuments(q,await index(),cap);let remote=[],degraded=false;
+ try{const result=await db.rpc('search_help_center',{p_query:q,p_limit:cap});if(result.error)throw result.error;remote=result.data||[];}catch{degraded=true;}
+ const rows=mergeResults(local,remote,cap).filter(x=>safeRoute(x.href,base.href));Object.defineProperty(rows,'degraded',{value:degraded});return rows;
 }
-
-async function event(event_type,payload={}){
-  const {data:{session}}=await client.auth.getSession();
-  const row={
-    user_id:session?.user?.id||null,
-    event_type,
-    path:location.pathname,
-    query:payload.query||null,
-    target_href:payload.target_href||null,
-    metadata:payload.metadata||{}
-  };
-  const {error}=await client.from("help_events").insert(row);
-  if(error)throw error;
+export async function event(event_type,payload={}){
+ let consent=false;try{consent=localStorage.getItem('sq-help-usage-consent')==='yes';}catch{}
+ if(!consent||navigator.doNotTrack==='1')return;
+ const privateContext=/support|account|login|password|profile|admin|moderation/.test(location.pathname);
+ const query=privateContext?null:String(payload.query||'').slice(0,100);
+ const safeQuery=query&&/@|eyJ[A-Za-z0-9_-]{20}|sb_[a-z_]+_|\d{6}/i.test(query)?null:query;
+ const meta=payload.metadata||{};const {error}=await db.from('help_events').insert({user_id:null,event_type,path:location.pathname,query:safeQuery,target_href:String(payload.target_href||'').split('?')[0],metadata:{results:Number.isFinite(meta.results)?meta.results:undefined,source:meta.source,filter:meta.filter}});if(error)throw error;
 }
-
-async function currentSession(){
-  const {data:{session}}=await client.auth.getSession();
-  return session;
-}
-async function currentProfile(){
-  const session=await currentSession();
-  if(!session)return null;
-  const {data}=await client.from("profiles").select("id,role,display_name,username").eq("id",session.user.id).maybeSingle();
-  return data||null;
-}
-
-window.SQSearchBackend={search,event,currentSession,currentProfile,client};
-window.dispatchEvent(new CustomEvent("sq:backend-ready"));
+window.SQSearchBackend={search,event,currentSession:session,currentProfile:profile,client:db};
+window.dispatchEvent(new CustomEvent('sq:backend-ready'));
