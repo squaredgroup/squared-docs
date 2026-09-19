@@ -144,3 +144,24 @@ button.help-search .help-search-label{min-width:0;text-align:left;font-size:12px
   body .main .server-row{grid-template-columns:minmax(0,1fr)}
 }
 @media(prefers-reduced-motion:reduce){body .sidebar.hc-sidebar{transition:none}}
+
+
+/* v7.1 mobile command hierarchy: menu | search | account | more. */
+@media(max-width:860px){
+ body .topbar #themeBtn{display:none!important}
+ body .topbar .top-actions>.command-search,
+ body .topbar #quickActionsBtn,
+ body .topbar #forumAccount>.account-chip,
+ body .topbar #forumAccount>.btn{
+   border-color:transparent!important;background:transparent!important;box-shadow:none!important
+ }
+ body .topbar .top-actions>.command-search:hover,
+ body .topbar #quickActionsBtn:hover,
+ body .topbar #forumAccount>.account-chip:hover,
+ body .topbar #forumAccount>.btn:hover{background:var(--panel-2)!important}
+ body .main .help-hero h1{font-size:clamp(32px,9vw,36px);line-height:1.04}
+ body .main .support-paths{display:grid;grid-template-columns:minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+ body .main .support-path{min-height:54px;padding:10px 14px;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent}
+ body .main .support-path:last-child{border-bottom:0}
+ body .main .support-path:hover{background:var(--panel-2)}
+}
