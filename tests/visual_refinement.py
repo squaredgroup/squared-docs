@@ -26,6 +26,7 @@ server=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Quiet,directory=str
 threading.Thread(target=server.serve_forever,daemon=True).start()
 origin=f'http://127.0.0.1:{server.server_port}'
 def luminance(value):
+    if len(value)==4:value='#'+''.join(x*2 for x in value[1:])
     c=[int(value[i:i+2],16)/255 for i in (1,3,5)]
     c=[v/12.92 if v<=.04045 else ((v+.055)/1.055)**2.4 for v in c]
     return sum(v*w for v,w in zip(c,(.2126,.7152,.0722)))
