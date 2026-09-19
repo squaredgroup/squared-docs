@@ -4,7 +4,19 @@ import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "./supabase-config.js";
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 const SQIconly=window.SQIconly;
 const $=(s,c=document)=>c.querySelector(s), $$=(s,c=document)=>[...c.querySelectorAll(s)];
-let session=null, me=null;
+let session=null, me=null,authRevision=0,authBound=false;
+function supportVisibility(mode){
+  document.querySelectorAll('[data-auth-area]').forEach(e=>e.hidden=mode!=='member');
+  if($('#supportGuest'))$('#supportGuest').hidden=mode!=='guest';
+  if($('#supportChecking')){$('#supportChecking').hidden=mode!=='loading'&&mode!=='error';$('#supportChecking').textContent=mode==='error'?'La session ne peut pas être vérifiée. Rechargez la page ou utilisez l’aide de connexion.':'Vérification de votre session…';}
+  if($('#ticketForm'))$('#ticketForm').hidden=mode!=='member';
+}
+function clearPrivateView(){
+  ++authRevision;session=null;me=null;
+  ['ticketList','supportTicketMount','notificationsList','profileMount','profileActivity','helpResume'].forEach(id=>{const el=$('#'+id);if(el)el.replaceChildren();});
+  $('#ticketForm')?.reset();supportVisibility('guest');
+}
+
 
 const esc=(v="")=>String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 const nl=(v="")=>esc(v).replace(/\n/g,"<br>");
@@ -29,8 +41,12 @@ const loginUrl=()=> "login.html?next="+encodeURIComponent(currentUrl());
 const requireAuth=()=>{if(session)return true;location.href=loginUrl();return false};
 
 async function initAuth(){
-  const {data:{session:s}}=await supabase.auth.getSession();
-  session=s;
+  const auth=await supabase.auth.getSession();if(auth.error)throw auth.error;
+  const s=auth.data.session;session=s;
+  if(!authBound){authBound=true;supabase.auth.onAuthStateChange((event,next)=>{
+    if(event==='SIGNED_OUT'){clearPrivateView();renderAccount();}
+    else if(event==='SIGNED_IN'&&session&&next?.user.id!==session.user.id){clearPrivateView();location.reload();}
+  });}
   if(session){
     const {data}=await supabase.from("profiles").select("*").eq("id",session.user.id).maybeSingle();
     me=data||null;
@@ -54,7 +70,7 @@ async function renderAccount(){
     host.innerHTML='<a class="btn" href="'+loginUrl()+'">'+(window.SQIconly?SQIconly.icon('account','outline','sm'):'')+'<span>Se connecter</span></a>';
     return;
   }
-  const n=await unreadCount();
+  const accountUser=session.user.id;const n=await unreadCount();if(session?.user.id!==accountUser)return;
   host.innerHTML='<a class="account-chip" href="profile.html">'+avatar(me)+'<span>'+esc(me?.display_name||"Mon compte")+'</span></a><a class="icon-btn" href="notifications.html" title="Notifications">'+(window.SQIconly?SQIconly.icon('notifications',n?'fill':'outline','md'):'')+(n?'<span class="notification-dot">'+n+'</span>':'')+'</a>'+(staff(me)?'<a class="icon-btn" href="'+(me.role==="admin"?"admin.html":"moderation.html")+'" title="'+(me.role==="admin"?"Admin Help Center":"Modération")+'">'+(window.SQIconly?SQIconly.icon('security','fill','md'):'')+'</a>':'')+'<button class="icon-btn danger" id="forumLogout" title="Se déconnecter" aria-label="Se déconnecter">'+(window.SQIconly?SQIconly.icon('logout','outline','md'):'')+'</button>';
   $("#forumLogout")?.addEventListener("click",async()=>{await supabase.auth.signOut();location.href="index.html"});
 }
@@ -261,6 +277,7 @@ async function initTopic(){
     const rc=reactionCounts(reacts,"topic",id);
     host.innerHTML='<div class="topic-page"><div class="topic-head-card"><div class="topic-author-line">'+avatar(topic.author)+'<span><strong>'+esc(topic.author?.display_name||topic.author?.username||"Membre")+'</strong><span>'+esc(topic.category?.name||"Discussion")+' · '+dt(topic.created_at)+'</span></span></div><h1 class="topic-head-title">'+esc(topic.title)+'</h1><div class="topic-content">'+nl(topic.body)+'</div><div class="reaction-row">'+["👍","❤️","🎉"].map(x=>'<button class="reaction" data-react-kind="topic" data-react-id="'+id+'" data-emoji="'+x+'">'+x+' '+(rc[x]||0)+'</button>').join("")+'</div><div class="topic-actions sticky-topic-actions"><button class="mini-action" data-vote-kind="topic" data-vote-id="'+id+'" data-vote="1">'+(window.SQIconly?SQIconly.icon('arrowUp','outline','sm'):'')+'<span>'+topic.vote_score+'</span></button><button class="mini-action" data-follow="'+id+'">'+(window.SQIconly?SQIconly.icon('notifications',followed?'fill':'outline','sm'):'')+'<span>'+(followed?"Suivi":"Suivre")+'</span></button><button class="mini-action" data-bookmark="'+id+'">'+(window.SQIconly?SQIconly.icon('favorite',bmark?'fill':'outline','sm'):'')+'<span>'+(bmark?"Enregistré":"Enregistrer")+'</span></button>'+(owner?'<button class="mini-action" data-edit-topic="'+id+'">'+(window.SQIconly?SQIconly.icon('clipboard','outline','sm'):'')+'<span>Modifier</span></button><button class="mini-action" data-resolve="'+id+'">'+(window.SQIconly?SQIconly.icon('shield-check',topic.status==="resolved"?'fill':'outline','sm'):'')+'<span>'+(topic.status==="resolved"?"Rouvrir":"Marquer résolu")+'</span></button>':"")+(canStaff?'<button class="mini-action" data-pin="'+id+'">'+(window.SQIconly?SQIconly.icon('bookmark',topic.is_pinned?'fill':'outline','sm'):'')+'<span>'+(topic.is_pinned?"Désépingler":"Épingler")+'</span></button><button class="mini-action" data-lock="'+id+'">'+(window.SQIconly?SQIconly.icon('security',topic.status==="locked"?'fill':'outline','sm'):'')+'<span>'+(topic.status==="locked"?"Déverrouiller":"Verrouiller")+'</span></button>':"")+'<button class="mini-action danger" data-report-kind="topic" data-report-id="'+id+'">'+(window.SQIconly?SQIconly.icon('faq','outline','sm'):'')+'<span>Signaler</span></button></div></div><div class="forum-panel"><div class="forum-panel-head"><h2>Réponses</h2><span>'+replies.length+'</span></div><div class="reply-list" id="replyList"></div></div><div id="replyBox"></div></div>';
     const list=$("#replyList");list.innerHTML=replies.length?replies.map(r=>{const counts=reactionCounts(reacts,"reply",r.id);return '<article class="reply-card'+(r.is_solution?" solution":"")+'"><div class="reply-head"><div class="reply-user">'+avatar(r.author)+'<span><strong>'+esc(r.author?.display_name||r.author?.username||"Membre")+'</strong><span>'+dt(r.created_at)+(r.edited_at?" · modifié":"")+'</span></span></div>'+(r.is_solution?'<span class="badge green">Solution</span>':"")+'</div><div class="reply-body">'+nl(r.body)+'</div><div class="reaction-row">'+["👍","❤️","🎉"].map(x=>'<button class="reaction" data-react-kind="reply" data-react-id="'+r.id+'" data-emoji="'+x+'">'+x+' '+(counts[x]||0)+'</button>').join("")+'</div><div class="reply-actions"><button class="mini-action" data-vote-kind="reply" data-vote-id="'+r.id+'" data-vote="1">'+(window.SQIconly?SQIconly.icon('arrowUp','outline','sm'):'')+'<span>'+r.vote_score+'</span></button>'+((owner||canStaff)&&!r.is_solution?'<button class="mini-action" data-solution="'+r.id+'">'+(window.SQIconly?SQIconly.icon('shield-check','outline','sm'):'')+'<span>Accepter comme solution</span></button>':"")+'<button class="mini-action danger" data-report-kind="reply" data-report-id="'+r.id+'">'+(window.SQIconly?SQIconly.icon('faq','outline','sm'):'')+'<span>Signaler</span></button></div></article>'}).join(""):'<div class="forum-empty">Aucune réponse pour le moment.</div>';
+    if(canStaff){const a=document.createElement('a');a.className='mini-action';a.href='editorial.html?source='+encodeURIComponent(id);a.textContent='Préparer un article';host.querySelector('.topic-actions')?.append(a);}
     const box=$("#replyBox");
     if(topic.status==="locked"||topic.status==="archived")box.innerHTML='<div class="forum-alert show error">Cette discussion est fermée.</div>';
     else if(session)box.innerHTML='<form class="reply-form" id="replyForm"><label for="replyBody" style="font-size:9px;font-weight:700">Votre réponse</label><textarea class="forum-textarea" id="replyBody" required minlength="2" maxlength="15000" placeholder="Écrivez une réponse utile et précise…"></textarea><div class="form-actions"><button class="btn green" type="submit">'+(window.SQIconly?SQIconly.icon('arrowRight','regular','sm'):'')+'<span>Publier la réponse</span></button></div><div class="forum-alert" id="replyAlert"></div></form>';
@@ -293,7 +310,7 @@ async function initNewTopic(){
     form.addEventListener("submit",async e=>{e.preventDefault();clearAlert("newTopicAlert");const title=$("#newTopicTitle").value.trim(),body=$("#newTopicBody").value.trim(),category_id=$("#newTopicCategory").value;const {data,error}=await supabase.from("forum_topics").insert({author_id:session.user.id,category_id,title,body}).select("id").single();if(error)alertBox("newTopicAlert",error.message);else location.href="forum-topic.html?id="+data.id});
   }catch(e){alertBox("newTopicAlert",e.message)}
 }
-function safeNext(){const n=new URLSearchParams(location.search).get("next");return n&&/^[a-z0-9_\-./?=#%]+$/i.test(n)&&!n.startsWith("//")?n:"forum.html"}
+function safeNext(){const n=new URLSearchParams(location.search).get('next');return n?window.SQHelp.safe(n):window.SQHelp.local('forum.html');}
 async function initLogin(){
   const signIn=$("#signInForm"),signUp=$("#signUpForm");if(!signIn||!signUp)return;
   if(session){$("#authAlready").innerHTML='<div class="forum-alert show success">Vous êtes déjà connecté. <a href="'+safeNext()+'">Continuer →</a></div>'}
@@ -392,10 +409,13 @@ function supportAttachmentHtml(a){
 
 async function initSupport(){
   const list=$("#ticketList"),form=$("#ticketForm");if(!list||!form)return;
-  if(!session){$("#supportGuest").hidden=false;form.hidden=true;list.innerHTML='<div class="forum-empty"><strong>Connectez-vous pour suivre vos demandes</strong>Vos tickets restent privés entre vous et le support.</div>';return}
-  $("#supportGuest").hidden=true;form.hidden=false;
+  supportVisibility(session?'member':'guest');
+  const login=$('#supportLogin');if(login)login.href=loginUrl();
+  if(!session){list.replaceChildren();return;}
+  const expectedUser=session.user.id,expectedAuth=authRevision;
 
   const {data,error}=await supabase.from("support_tickets").select(`id,ticket_number,subject,product,category,priority,status,created_at,last_activity_at,first_response_at,sla_first_response_due_at,sla_resolution_due_at,requester_id,assigned_to,requester:profiles!support_tickets_requester_id_fkey(id,display_name,username,avatar_url)`).order("last_activity_at",{ascending:false});
+  if(authRevision!==expectedAuth||session?.user.id!==expectedUser)return;
   if(!error){
     const all=data||[],open=all.filter(t=>!["resolved","closed"].includes(t.status)).length,waiting=all.filter(t=>t.status==="waiting_user").length,resolved=all.filter(t=>["resolved","closed"].includes(t.status)).length;
     if($("#supportOpenCount"))$("#supportOpenCount").textContent=open;
@@ -409,43 +429,35 @@ async function initSupport(){
     return '<a class="ticket-row" href="support-ticket.html?id='+t.id+'"><span><strong>#SQ-'+String(t.ticket_number).padStart(5,"0")+' · '+esc(t.subject)+'</strong><span>'+esc(t.product)+' · '+esc(t.category)+' · '+ago(t.last_activity_at)+(staff(me)?" · "+esc(t.requester?.display_name||"Membre"):"")+'</span></span><span style="display:flex;gap:5px;align-items:center">'+(overdue?'<span class="badge red">SLA</span>':'')+'<span class="ticket-status">'+esc(t.status)+'</span></span></a>';
   }).join(""):'<div class="forum-empty"><strong>Aucune demande</strong>Créez un ticket si votre problème nécessite une réponse privée.</div>';
 
-  let suggestionTimer=null;
-  const suggest=()=>{
-    clearTimeout(suggestionTimer);
+  if(form.dataset.supportBound)return;form.dataset.supportBound='1';
+  let suggestionTimer=null,suggestionVersion=0;
+  const suggest=()=>{const version=++suggestionVersion;clearTimeout(suggestionTimer);
     suggestionTimer=setTimeout(async()=>{
-      const q=($("#ticketSubject")?.value+" "+$("#ticketDescription")?.value).trim();
-      const box=$("#supportSuggestions");
-      if(!box||q.length<8||!window.SQSearchBackend){if(box)box.hidden=true;return}
-      try{
-        const rows=(await window.SQSearchBackend.search(q,6)).filter(x=>x.kind==="knowledge").slice(0,3);
-        if(!rows.length){box.hidden=true;return}
-        box.hidden=false;
-        box.innerHTML='<strong>Ces articles peuvent résoudre votre problème</strong>'+rows.map(r=>'<a href="'+esc(r.href)+'" target="_blank"><span>'+esc(r.title)+'</span><em>Ouvrir →</em></a>').join("")+'<small>Si aucun article ne répond au besoin, poursuivez la création du ticket.</small>';
-        window.SQSearchBackend.event("support_deflection",{query:q,metadata:{suggestions:rows.length}}).catch(()=>{});
-      }catch{box.hidden=true}
-    },500);
+      const q=($('#ticketSubject')?.value||'').trim(),box=$('#supportSuggestions');if(!box||q.length<3){if(box)box.hidden=true;return;}
+      // Suggestions use only the local public index. No private body leaves the form.
+      const data=await SQHelp.lookup(q,{remote:false,limit:3});if(version!==suggestionVersion||!session)return;
+      box.replaceChildren();box.hidden=!data.rows.length;if(box.hidden)return;
+      const title=document.createElement('strong');title.textContent='Ces guides peuvent vous aider';box.append(title);
+      data.rows.forEach(r=>{const a=document.createElement('a');a.href=SQHelp.safe(r.href);a.target='_blank';a.rel='noreferrer';a.textContent=r.title;box.append(a);});
+    },250);
   };
-  $("#ticketSubject")?.addEventListener("input",suggest);
-  $("#ticketDescription")?.addEventListener("input",suggest);
-
-  form.addEventListener("submit",async e=>{
-    e.preventDefault();clearAlert("ticketAlert");
-    const payload={
-      requester_id:session.user.id,
-      subject:$("#ticketSubject").value.trim(),
-      description:$("#ticketDescription").value.trim(),
-      category:$("#ticketCategory").value,
-      product:$("#ticketProduct")?.value||"general"
-    };
-    const {data:ticket,error}=await supabase.from("support_tickets").insert(payload).select("id,ticket_number").single();
-    if(error){alertBox("ticketAlert",error.message);return}
+  $('#ticketSubject')?.addEventListener('input',suggest);
+  let busy=false,created=null;
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();if(busy)return;clearAlert('ticketAlert');
+    if(!session){supportVisibility('guest');return;}
+    const submit=form.querySelector('[type="submit"]');busy=true;submit.disabled=true;form.setAttribute('aria-busy','true');
     try{
-      await uploadSupportFiles(ticket.id,null,$("#ticketFiles")?.files);
-      location.href="support-ticket.html?id="+ticket.id;
-    }catch(err){
-      alertBox("ticketAlert","Ticket créé, mais pièce jointe non envoyée : "+(err?.message||err));
-      setTimeout(()=>location.href="support-ticket.html?id="+ticket.id,1400);
-    }
+      if(!created){const payload={requester_id:session.user.id,subject:$('#ticketSubject').value.trim(),description:$('#ticketDescription').value.trim(),category:$('#ticketCategory').value,product:$('#ticketProduct')?.value||'Help Center'};
+        const result=await supabase.from('support_tickets').insert(payload).select('id,ticket_number').single();if(result.error)throw result.error;created=result.data;
+      }
+      try{await uploadSupportFiles(created.id,null,$('#ticketFiles')?.files);location.href='support-ticket.html?id='+created.id;}
+      catch(error){alertBox('ticketAlert','Demande créée, mais pièce jointe non envoyée. Ouvrez la demande pour vérifier les fichiers reçus avant de réessayer.');
+        const a=document.createElement('a');a.className='btn';a.href='support-ticket.html?id='+created.id;a.textContent='Ouvrir ma demande';$('#ticketAlert').append(a);
+        submit.hidden=true;
+      }
+    }catch(error){alertBox('ticketAlert',error.message||'Envoi impossible. Vérifiez votre historique avant une nouvelle tentative.');}
+    finally{busy=false;submit.disabled=false;form.removeAttribute('aria-busy');}
   });
 }
 
@@ -578,4 +590,4 @@ async function init(){
   else if(page==="moderation")await initModeration();
   else if(page==="bookmarks")await initBookmarks();
 }
-init();
+init().catch(error=>{supportVisibility('error');const host=$('#supportChecking')||$('#forumTopics')||$('#topicMount');if(host){host.textContent='Le service ne peut pas être chargé actuellement. ';const a=document.createElement('a');a.href='access-help.html';a.textContent='Aide de connexion';host.append(a);}});

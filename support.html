@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="assets/sidebar.css">
 <link rel="stylesheet" href="assets/forum.css">
 <link rel="stylesheet" href="assets/refinement.css?v=20260919.1" data-sq-refinement-style>
+<link rel="stylesheet" href="assets/assistance.css?v=20260919.2" data-sq-assistance-style>
 <link rel="stylesheet" href="assets/responsive.css?v=20260919.1" data-sq-responsive>
 </head><body data-forum-page="support">
 <div id="progress" class="progress"></div><div class="app"><aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main">
@@ -33,22 +34,22 @@
   <h1>Support privé.</h1>
   <p>Pour les demandes qui ne doivent pas être publiques : compte, contexte client, facturation, incident ou problème nécessitant une intervention directe.</p>
   <div class="hero-actions"><a class="btn" href="asking-for-help.html">Préparer une bonne demande</a><a class="btn" href="support-privacy.html">Confidentialité</a></div>
-  <div id="supportGuest" class="forum-auth-card" hidden style="margin-top:16px"><strong>Connexion requise</strong><p>Connectez-vous pour créer et suivre vos demandes privées.</p><a class="btn green" href="login.html?next=support.html">Se connecter</a></div>
+  <div id="supportGuest" class="forum-auth-card" hidden><h2>Besoin d’une aide privée ?</h2><p>Connectez-vous pour créer une demande et retrouver vos échanges avec Squared.</p><div class="hero-actions"><a class="btn green" id="supportLogin" href="login.html?next=support.html">Se connecter</a><a class="btn" href="access-help.html">Je n’arrive pas à me connecter</a></div></div><p id="supportChecking" role="status">Vérification de votre session…</p>
 </section>
 
-<div class="support-summary-grid">
+<div class="support-summary-grid" data-auth-area hidden>
   <div class="support-summary"><strong id="supportOpenCount">—</strong><span>Actives</span></div>
   <div class="support-summary"><strong id="supportWaitingCount">—</strong><span>En attente de vous</span></div>
   <div class="support-summary"><strong id="supportResolvedCount">—</strong><span>Résolues</span></div>
 </div>
 
-<div class="v6-support-layout">
+<div class="v6-support-layout" data-auth-area hidden>
   <section class="v6-support-main">
     <div class="forum-panel-head"><h2>Mes demandes</h2><span>Historique privé</span></div>
     <div class="ticket-list" id="ticketList"><div class="loading">Chargement…</div></div>
   </section>
-  <aside class="v6-support-compose">
-    <form class="form-card" id="ticketForm">
+  <aside class="v6-support-compose" id="nouvelle-demande">
+    <form class="form-card" id="ticketForm" hidden>
       <div class="eyebrow" style="margin-bottom:8px">Nouvelle demande</div>
       <h2 style="font-size:14px;margin:0 0 5px">Ouvrir un ticket</h2>
       <p style="font-size:8.5px;color:var(--muted);margin:0 0 14px">Donnez le contexte, l’impact et le résultat attendu.</p>
@@ -84,6 +85,7 @@
     </div>
     <div class="search-results" id="searchResults"></div>
   </div>
-</div><div class="toast" id="toast">Copié</div><script src="assets/sidebar.js"></script><script src="assets/docs.js"></script><script type="module" src="assets/forum.js"></script><script defer src="assets/mobile-nav.js?v=20260919.1" data-sq-mobile-nav></script>
+</div><div class="toast" id="toast">Copié</div><script src="assets/sidebar.js"></script><script src="assets/help-core.js?v=20260919.2" data-sq-help-core></script><script src="assets/docs.js"></script><script type="module" src="assets/forum.js"></script><script defer src="assets/mobile-nav.js?v=20260919.1" data-sq-mobile-nav></script>
 <script defer src="assets/refinement.js?v=20260919.1" data-sq-refinement-script></script>
+<script defer src="assets/assistance.js?v=20260919.2" data-sq-assistance-script></script>
 </body></html>

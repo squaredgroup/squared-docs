@@ -1,0 +1,56 @@
+/* Task components share the existing palette. The mobile layout contract remains last. */
+:root{--sq-task-radius:14px;--sq-task-gap:16px;--sq-task-padding:20px}
+[data-auth-area][hidden],#supportGuest[hidden],#supportChecking[hidden],#helpResume[hidden],.sq-appearance[hidden]{display:none!important}
+.sq-task-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sq-task-gap);margin:20px 0}
+.sq-task-card{display:flex;flex-direction:column;gap:10px;min-width:0;border:1px solid var(--line);border-radius:var(--sq-task-radius);padding:var(--sq-task-padding);background:var(--panel);text-decoration:none;color:var(--text)}
+.sq-task-card:hover,.sq-task-card:focus-visible{border-color:var(--green);background:var(--panel-2)}
+.sq-task-card strong{font-size:17px;line-height:1.3}.sq-task-card p{font-size:14px;line-height:1.55;color:var(--muted);margin:0}.sq-task-card small{font-size:12px;color:var(--green);margin-top:auto}
+.sq-task-icon{display:inline-grid;place-items:center;color:var(--green);width:30px;height:30px;flex:0 0 30px}.sq-task-icon svg{width:20px;height:20px}
+.sq-journey-panel{padding:var(--sq-task-padding);border:1px solid var(--line);border-radius:var(--sq-task-radius);background:var(--panel);margin:18px 0;min-width:0}
+.sq-journey-panel h2{font-size:22px;line-height:1.3;margin:0 0 10px}.sq-journey-panel p{font-size:15px;line-height:1.65;color:var(--muted)}
+.sq-guide-steps{padding-left:24px;counter-reset:guide}.sq-guide-steps li{padding:8px 0;font-size:15px}.sq-guide-link{display:block;padding:12px 0;color:var(--green);text-decoration:none;line-height:1.4;font-size:15px;overflow-wrap:anywhere}.sq-guide-link:hover{text-decoration:underline}
+.sq-text-link{display:inline-block;margin:12px;color:var(--green);font-size:14px;text-underline-offset:4px}
+.sq-note{padding:12px 14px;border-left:3px solid var(--line);font-size:14px!important;line-height:1.6!important;color:var(--muted);background:var(--panel-2);border-radius:0 10px 10px 0}
+.sq-step-caption{font-size:12px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em}
+#diagnosticMount{max-width:760px;margin:24px auto;padding:var(--sq-task-padding);border:1px solid var(--line);border-radius:var(--sq-task-radius);background:var(--panel)}
+#diagnosticMount fieldset{border:0;padding:0;margin:0;min-width:0}#diagnosticMount legend,#diagnosticMount h2{font-size:24px;line-height:1.3;margin:0 0 18px;font-weight:600;max-width:100%}
+.sq-choice{display:flex;align-items:flex-start;gap:12px;padding:14px;margin:10px 0;border:1px solid var(--line);border-radius:10px;cursor:pointer;min-height:48px;background:var(--bg);font-size:15px;line-height:1.6}
+.sq-choice:has(input:checked){border-color:var(--green);background:var(--green-soft)}
+.sq-choice input{accent-color:var(--green);width:18px!important;height:18px!important;min-width:18px!important;margin:3px 0;flex:0 0 18px}
+.sq-diagnostic-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.sq-diagnostic-status{padding:16px;border:1px solid var(--line);border-radius:10px;margin:20px 0;background:var(--bg);font-size:14px;line-height:1.6}
+.sq-diagnostic-status strong{font-size:15px}.sq-diagnostic-status p{margin:8px 0;color:var(--muted)}
+#supportGuest{max-width:740px;margin:28px auto!important;padding:24px}
+#supportGuest h2{font-size:24px;margin:0 0 12px}#supportGuest p{font-size:15px;line-height:1.6;margin-bottom:16px}
+#supportGuest .hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+#supportChecking{font-size:14px;color:var(--muted);padding:20px 0}
+.sq-search-notice{padding:14px;margin:6px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2);color:var(--muted);font-size:13px;line-height:1.5}
+.search-result>span:nth-child(2),.universal-result>span:nth-child(2){min-width:0}
+.search-result em,.universal-result em{display:block;font-style:normal;font-size:11px;color:var(--green);line-height:1.5;margin-top:6px;white-space:normal}
+.universal-result{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;padding:18px 0;border-bottom:1px solid var(--line);text-decoration:none}.universal-result strong{font-size:16px}.universal-result p{font-size:14px;color:var(--muted);line-height:1.6;margin:7px 0}
+.sq-guide-capture{margin:22px 0}.sq-guide-capture img{width:100%;max-width:520px;display:block;margin:auto;border:1px solid var(--line);border-radius:14px}.sq-guide-capture figcaption{font-size:12px;color:var(--muted);line-height:1.6;margin:10px auto;max-width:520px}
+.sq-guide-outcomes{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.sq-guide-provenance{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;line-height:1.6}
+.sq-appearance{position:absolute;right:0;top:calc(100% + 8px);width:230px;z-index:240;background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:0 12px 36px rgba(0,0,0,.12);color:var(--text)}
+.sq-appearance>strong{display:block;font-size:14px;margin:0 0 8px}.sq-appearance label{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px;border-radius:8px;font-size:14px;cursor:pointer}.sq-appearance label:has(input:checked){background:var(--green-soft)}.sq-appearance input{accent-color:var(--green);width:16px!important;min-width:16px!important;height:16px!important}
+.sq-command-label{display:none}
+@media(min-width:1180px){body .topbar #themeBtn,body .topbar #quickActionsBtn{width:auto;min-width:44px;padding:0 12px;gap:8px;font-size:12px}body .topbar .sq-command-label{display:inline}}
+@media(max-width:860px){:root{--sq-task-padding:16px;--sq-task-gap:10px}.sq-task-grid{grid-template-columns:minmax(0,1fr);gap:10px}.sq-task-card{display:grid;grid-template-columns:28px minmax(0,1fr);gap:6px 12px;padding:14px}.sq-task-card .sq-task-icon{grid-row:1/4}.sq-task-card small,.sq-task-card p{grid-column:2}.sq-task-card strong{font-size:16px}.sq-task-card p{font-size:13px}.sq-task-card small{font-size:12px}
+ body .topbar .sq-command-label{display:none!important}body .topbar .sq-appearance{top:54px;max-width:calc(100vw - 24px)}
+ body .main .help-hero{padding-top:20px;padding-bottom:22px}body .main .help-hero-logo{width:52px;height:52px;margin-bottom:12px}body .main .help-hero>p{font-size:14px;max-width:38ch;line-height:1.55}
+ #diagnosticMount{padding:16px}.sq-choice{font-size:14px}.sq-diagnostic-actions .btn{width:100%;white-space:normal;line-height:1.4}#supportGuest{padding:20px}.sq-journey-panel h2{font-size:21px}
+}
+@media(prefers-reduced-motion:reduce){.sq-task-card{transition:none}}
+
+/* Legacy monolithic Wix guide: shrink content tracks rather than hiding document overflow. */
+@media(max-width:860px){
+ body[data-wix-guide] .topbar .top-link,body[data-wix-guide] .topbar #printBtn{display:none!important}
+ body[data-wix-guide] .topbar .crumb{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ body[data-wix-guide] :is(.content,.doc-section,.module-label,.module-label-inner,.module-meta,.section-header){min-width:0;max-width:100%}
+ body[data-wix-guide] :is(.module-meta,.section-end,.hero-actions,.docs-library-head){flex-wrap:wrap}
+ body[data-wix-guide] .callout{grid-template-columns:8px minmax(0,1fr)}
+ body[data-wix-guide] .step-list li{grid-template-columns:30px minmax(0,1fr);gap:10px}
+ body[data-wix-guide] :is(.step-list span,.callout>div,.source-link>span,.check-item>span){min-width:0;overflow-wrap:anywhere}
+ body[data-wix-guide] :is(.doc-section h1,.doc-section h2,.doc-section h3){overflow-wrap:anywhere}
+ body[data-wix-guide] .table-wrap{width:100%;max-width:100%;margin-left:0;margin-right:0;overflow-x:auto}
+}

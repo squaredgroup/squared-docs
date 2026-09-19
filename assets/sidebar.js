@@ -102,12 +102,12 @@ const groups=[
  {href:'forum.html',icon:'forum',label:'Forum'},
  {href:'changelog.html',icon:'changelog',label:'Nouveautés'}]},
 {id:'docs',title:'Documentation',open:true,items:[
+ {href:'parcours.html',icon:'start',label:'Votre parcours'},
+ {href:'diagnostic.html',icon:'troubleshooting',label:'Dépannage guidé'},
  {href:'getting-started.html',icon:'start',label:'Bien démarrer'},
  {href:'faq.html',icon:'faq',label:'FAQ'},
  {href:'quick-guides.html',icon:'quick',label:'Guides rapides'},
- {href:'asking-for-help.html',icon:'ask',label:'Demander de l’aide'},
- {href:'community-guidelines.html',icon:'guidelines',label:'Règles communauté'},
- {href:'support-privacy.html',icon:'privacy',label:'Confidentialité support'}]},
+ {href:'asking-for-help.html',icon:'ask',label:'Aide & règles',children:[{href:'asking-for-help.html',label:'Demander de l’aide'},{href:'community-guidelines.html',label:'Règles communauté'},{href:'support-privacy.html',label:'Confidentialité support'},{href:'access-help.html',label:'Récupérer mon accès'}]}]},
 {id:'products',title:'Produits',open:true,items:[
  {href:'wix-studio.html',icon:'wix',label:'Wix Studio',children:[
    {href:'wix/wix-overview.html',label:'Vue d’ensemble'},
@@ -119,6 +119,7 @@ const groups=[
    {href:'wix/wix-troubleshooting.html',label:'Dépannage'}]},
  {href:'workspace.html',icon:'workspace',label:'Squared Workspace',children:[
    {href:'workspace/workspace-overview.html',label:'Vue d’ensemble'},
+   {href:'workspace/workspace-login.html',label:'Connexion'},
    {href:'workspace/workspace-activation.html',label:'Activation & accès'},
    {href:'workspace/workspace-installation.html',label:'Installation'},
    {href:'workspace/workspace-account.html',label:'Compte & profil'},

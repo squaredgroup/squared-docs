@@ -122,6 +122,8 @@ with sync_playwright() as p:
             assert page.locator('#searchInput').evaluate('e=>parseFloat(getComputedStyle(e).fontSize)>=16')
             page.keyboard.press('Escape')
             page.locator('#themeBtn').click()
+            page.get_by_label('Sombre',exact=True).check()
+            page.keyboard.press('Escape')
             assert page.locator('html').get_attribute('data-theme')=='dark'
             if role=='member': page.screenshot(path=str(OUT/f'{engine}-home-dark-390.png'))
             # A remembered desktop mini-mode must never reserve space on mobile.
