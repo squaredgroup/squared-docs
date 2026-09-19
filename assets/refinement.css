@@ -234,7 +234,7 @@ html[data-theme="light"] body :is(button,a,input,select,textarea):focus-visible{
    ========================================================= */
 :root{
  --bg:#F6F6F7;--bg-2:#FFFFFF;--panel:#FFFFFF;--panel-2:#F2F2F4;--soft:#ECEDEF;
- --text:#151517;--muted:#666A73;--muted-2:#7A7E87;--line:#E3E4E8;--line-strong:#C9CBD1;
+ --text:#151517;--muted:#666A73;--muted-2:#6E7179;--line:#E3E4E8;--line-strong:#C9CBD1;
  --green:#7BE84E;--green-2:#7BE84E;--green-soft:#EFFCE9;--sq-accent:#7BE84E;--sq-accent-ink:#151517;
  --sq-card-radius:16px;--sq-control-radius:10px;--sq-badge-radius:8px;
  --sq-shadow:0 3px 12px rgba(15,15,18,.035),0 18px 48px rgba(15,15,18,.025);
