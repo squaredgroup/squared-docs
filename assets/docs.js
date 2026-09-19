@@ -173,7 +173,7 @@ if(location.hash.startsWith('#chapitre-')&&location.pathname.endsWith('/'))locat
       try{await navigator.clipboard.writeText(location.href);toast('Lien copié')}catch{toast('Copie impossible')}
       menu.classList.remove('open');
     });
-    menu.querySelector('[data-v5-appearance]')?.addEventListener('click',()=>{document.getElementById('themeBtn')?.click();menu.classList.remove('open')});
+    menu.querySelector('[data-v5-appearance]')?.addEventListener('click',()=>{menu.classList.remove('open');setTimeout(()=>document.getElementById('themeBtn')?.click(),0)});
     menu.querySelector('[data-v5-focus]')?.addEventListener('click',()=>{document.body.classList.toggle('focus-mode');menu.classList.remove('open')});
   }
 
