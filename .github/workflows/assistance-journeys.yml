@@ -1,0 +1,85 @@
+name: Assistance Journeys Quality
+
+on:
+  push:
+    branches: [feat/assistance-journeys-20260919]
+  pull_request:
+    paths:
+      - assets/help-core.js
+      - assets/assistance.js
+      - assets/assistance.css
+      - scripts/integrate_assistance.py
+      - scripts/help_guide_content.py
+      - tests/assistance_journeys.py
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: assistance-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  assistance:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: squaredgroup/squared-workspace-web
+          ref: c355aa6eaa3a3b4ad0d5da5bc47b50e1354fe852
+          path: .reference/workspace
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Integrate task-oriented assistance
+        run: python scripts/integrate_assistance.py
+      - name: Check JavaScript syntax
+        run: |
+          for f in assets/help-core.js assets/assistance.js assets/docs.js assets/forum.js assets/sidebar.js assets/search-app.js assets/search-backend.js; do
+            node --check "$f"
+          done
+      - name: Install isolated browsers
+        run: |
+          pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium webkit
+      - name: Capture real empty Workspace forms
+        env:
+          WORKSPACE_SOURCE: ${{ github.workspace }}/.reference/workspace
+        run: python scripts/capture_workspace_guides.py
+      - name: Assistance journey and privacy regression suite
+        run: python tests/assistance_journeys.py
+      - name: Existing mobile regression suite
+        run: python tests/mobile_layout.py
+      - name: Existing light dark and tablet suite
+        run: python tests/visual_refinement.py
+      - name: Existing administration editor and account suite
+        run: python tests/account_acceptance.py
+      - name: Commit validated generated files to the feature branch only
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/feat/assistance-journeys-20260919'
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -u
+          git add parcours.html diagnostic.html access-help.html workspace/workspace-login.html assets/knowledge-index.json assets/guides
+          if ! git diff --cached --quiet; then
+            git commit -m 'build: integrate validated assistance journeys and verified guide captures'
+            git push origin HEAD:feat/assistance-journeys-20260919
+          fi
+      - name: Preserve screenshots and reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: squared-assistance-evidence
+          retention-days: 7
+          path: |
+            test-results/
+            assets/guides/
