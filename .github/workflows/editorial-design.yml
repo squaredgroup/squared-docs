@@ -1,0 +1,62 @@
+name: Squared Editorial Design
+on:
+  push:
+    branches: ["design/editorial-system-20260920"]
+    paths:
+      - "assets/refinement.css"
+      - "assets/assistance.css"
+      - "assets/refinement.js"
+      - "assets/assistance.js"
+      - "index.html"
+      - "scripts/editorial_design.py"
+      - ".github/workflows/editorial-design.yml"
+permissions:
+  contents: write
+jobs:
+  validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "design/editorial-system-20260920" }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Refresh asset versions
+        run: python scripts/editorial_design.py
+      - name: Static design assertions
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          css=Path("assets/refinement.css").read_text()
+          idx=Path("index.html").read_text()
+          js=Path("assets/assistance.js").read_text()
+          assert "--bg:#F6F6F7" in css
+          assert "--green:#7BE84E" in css
+          assert "--text:#151517" in css
+          assert "Rechercher un guide ou une solution" in idx
+          assert "Accès rapides" not in idx
+          assert "Mon espace client" in idx and "Applications Squared" in idx
+          assert "Le problème est-il résolu ?" in js
+          for p in Path(".").rglob("*.html"):
+              if any(x in {".git","node_modules","test-results"} for x in p.parts): continue
+              s=p.read_text()
+              if "assets/refinement.css" in s or "../assets/refinement.css" in s:
+                  assert "20260920.1" in s, p
+          print("Editorial assertions OK")
+          PY
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium webkit
+      - name: Existing mobile regression
+        run: python tests/mobile_layout.py
+      - name: Existing visual regression
+        run: python tests/visual_refinement.py
+      - name: Commit cache-busted references
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html' '**/*.html'
+          git commit -m "build: refresh editorial design assets"
+          git push
