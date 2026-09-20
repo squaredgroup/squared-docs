@@ -211,11 +211,11 @@ const items=g=>g.items.map(i=>{
  (has?'<button class="hc-sub-toggle" type="button" aria-label="Afficher ou masquer les sous-pages">'+SQIconly.icon('chevron','regular','sm')+'</button><div class="hc-sub-links">'+children(i)+'</div>':'')+
  '</div>';
 }).join('');
-host.innerHTML='<a class="hc-brand" href="'+localHref('index.html')+'"><img class="hc-brand-logo" src="'+localHref('assets/logo-squared.png')+'" alt="Squared Group"><span class="hc-brand-copy"><strong>SQUARED HELP</strong><span>Support · Docs · Community</span></span></a>'+
+host.innerHTML='<a class="hc-brand" href="'+localHref('index.html')+'"><img class="hc-brand-logo" src="'+localHref('assets/logo-squared.png')+'" alt="Squared Group"><span class="hc-brand-copy"><strong>SQUARED HELP</strong><span>Support · Docs · Communauté</span></span></a>'+
 '<button class="hc-search" id="searchTrigger" data-search-open type="button"><span class="hc-search-icon">'+SQIconly.icon('search','regular','sm')+'</span><span>Rechercher de l’aide</span><kbd>⌘K</kbd></button>'+
 '<button class="hc-collapse" id="sidebarCollapse" type="button" aria-label="Réduire la navigation"><span>'+SQIconly.icon('collapse','regular','sm')+'</span><span>Réduire la navigation</span></button>'+
 '<nav class="hc-nav">'+groups.map(g=>{const open=groupOpen(g);return '<section class="hc-nav-group'+(open?' open':'')+'" data-group="'+g.id+'"><button class="hc-nav-group-trigger" type="button" aria-expanded="'+(open?'true':'false')+'"><span class="hc-nav-title">'+g.title+'</span><span class="hc-nav-chevron">▾</span></button><div class="hc-nav-group-body">'+items(g)+'</div></section>';}).join('')+'</nav>'+
-'<div class="hc-sidebar-foot"><strong>Squared Help Center · v7.0</strong>Navigation centralisée · sections repliables<br><a href="'+localHref('changelog.html')+'">Voir les nouveautés →</a></div>';
+'<div class="hc-sidebar-foot"><strong>Squared Help · v7.1</strong>Navigation centralisée · sections repliables<br><a href="'+localHref('changelog.html')+'">Voir les nouveautés →</a></div>';
 host.classList.add('hc-sidebar');
 {
   const openItems=[...host.querySelectorAll('.hc-item.has-children.child-open')];
