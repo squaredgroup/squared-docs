@@ -59,6 +59,10 @@
         }
       });
     }
+    document.body.classList.toggle('sq-page-doc', Boolean(document.querySelector('.article')));
+    document.body.classList.toggle('sq-page-forum', Boolean(document.querySelector('.topic-list,[data-forum-page="forum"]')));
+    document.body.classList.toggle('sq-page-support', Boolean(document.querySelector('#ticketList,#ticketForm,.ticket-thread')));
+    document.body.classList.toggle('sq-page-status', Boolean(document.querySelector('[data-status-page],.server-status-list')));
     document.querySelectorAll('.form-group').forEach((group, i) => {
       const label = group.querySelector('label');
       const input = group.querySelector('input,select,textarea');
@@ -66,7 +70,7 @@
       if (!input.id) input.id = 'sqField' + i;
       label.htmlFor = input.id;
     });
-    window.SQRefinement = {version:'20260919.1'};
+    window.SQRefinement = {version:'20260920.1'};
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
   else init();
