@@ -54,3 +54,25 @@
  body[data-wix-guide] :is(.doc-section h1,.doc-section h2,.doc-section h3){overflow-wrap:anywhere}
  body[data-wix-guide] .table-wrap{width:100%;max-width:100%;margin-left:0;margin-right:0;overflow-x:auto}
 }
+
+/* Squared Help v7.1 — journeys and diagnostic */
+:root{--sq-task-radius:16px}
+.sq-task-grid{gap:14px}
+.sq-task-card{position:relative;min-height:190px;padding:22px;border-radius:16px;transition:border-color .16s,box-shadow .16s,transform .16s;background:var(--panel)}
+.sq-task-card:hover,.sq-task-card:focus-visible{background:var(--panel);border-color:#C9CBD0;box-shadow:var(--sq-hover-shadow);transform:translateY(-1px)}
+.sq-task-icon{width:38px;height:38px;border-radius:10px;background:var(--panel-2);color:var(--muted)}
+.sq-task-icon svg{width:20px;height:20px}.sq-task-card:hover .sq-task-icon{color:var(--sq-accent)}
+.sq-task-card strong{font-size:18px}.sq-task-card p{max-width:34ch}.sq-task-card small{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--text)}
+.sq-task-card small span{transition:transform .16s}.sq-task-card:hover small span{transform:translateX(2px)}
+#diagnosticMount{border-radius:16px;box-shadow:none}
+.sq-checklist{border-top:1px solid var(--line)}
+.sq-checklist .sq-choice{margin:0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;padding:15px 4px}
+.sq-checklist .sq-choice:has(input:checked){background:transparent;border-color:var(--line)}
+.sq-checklist .sq-choice:has(input:checked) span{font-weight:600}
+.sq-diagnostic-decision{margin-top:24px;padding-top:22px;border-top:1px solid var(--line)}
+.sq-diagnostic-decision h3{font-size:20px;margin:0 0 14px}.sq-diagnostic-decision .sq-diagnostic-actions{margin-top:0}
+.sq-secondary-copy{margin-left:auto}
+.sq-diagnostic-decision.is-resolved{text-align:center;padding:30px 18px;border:1px solid var(--line);border-radius:16px;background:var(--panel-2)}
+.sq-success-mark{width:42px;height:42px;border-radius:50%;margin:0 auto 14px;background:var(--sq-accent);position:relative}
+.sq-success-mark:after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#16300d;font-weight:800;font-size:20px}
+@media(max-width:860px){.sq-task-card{min-height:0}.sq-secondary-copy{margin-left:0}.sq-diagnostic-decision .sq-diagnostic-actions{display:grid;grid-template-columns:1fr}.sq-diagnostic-decision .btn{width:100%}}

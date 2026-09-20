@@ -1,0 +1,51 @@
+name: Squared Editorial Design
+on:
+  push:
+    branches: ["design/editorial-system-20260920"]
+    paths:
+      - "assets/refinement.css"
+      - "assets/assistance.css"
+      - "assets/refinement.js"
+      - "assets/assistance.js"
+      - "index.html"
+      - "scripts/editorial_design.py"
+      - ".github/workflows/editorial-design.yml"
+permissions:
+  contents: write
+jobs:
+  validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "design/editorial-system-20260920" }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Refresh asset versions
+        run: python scripts/editorial_design.py
+      - name: Validate editorial contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          css=Path("assets/refinement.css").read_text()
+          idx=Path("index.html").read_text()
+          js=Path("assets/assistance.js").read_text()
+          assert "--bg:#F6F6F7" in css and "--green:#7BE84E" in css and "--text:#151517" in css
+          assert "Rechercher un guide ou une solution" in idx and "Accès rapides" not in idx
+          assert "Mon espace client" in idx and "Applications Squared" in idx and "Collaborer avec Squared" in idx
+          assert "Le problème est-il résolu ?" in js
+          assert "@media(max-width:860px)" in css
+          for p in Path(".").rglob("*.html"):
+              if any(x in {".git","node_modules","test-results"} for x in p.parts): continue
+              s=p.read_text()
+              if "refinement.css" in s: assert "20260920.1" in s, p
+          print("Editorial contract OK")
+          PY
+      - name: Commit validated asset references
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "build: refresh editorial design assets"
+          git push

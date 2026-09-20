@@ -226,3 +226,38 @@ body :is(.doc-block a,.article a:not(.btn),.role-label,.role-links a,.badge.gree
 body :is(.doc-block a,.sq-guide-link,.sq-text-link){text-decoration:underline;text-decoration-color:var(--sq-accent);text-underline-offset:4px}
 body .server-badge.ok{color:var(--sq-accent-ink);border-color:var(--sq-accent);background:var(--green-soft)}
 html[data-theme="light"] body :is(button,a,input,select,textarea):focus-visible{outline-color:var(--text);box-shadow:var(--ring)}
+
+/* Squared Help v7.1 — neutral editorial system */
+:root{--bg:#F6F6F7;--bg-2:#FFF;--panel:#FFF;--panel-2:#F2F2F4;--soft:#ECEDEF;--text:#151517;--muted:#666A73;--muted-2:#7B7F88;--line:#E3E4E8;--green:#7BE84E;--green-2:#7BE84E;--green-soft:#F0FCEB;--sq-accent:#7BE84E;--sq-card-radius:16px;--sq-control-radius:10px;--sq-shadow:0 1px 2px rgba(18,18,20,.025),0 10px 28px rgba(18,18,20,.035);--sq-hover-shadow:0 8px 28px rgba(18,18,20,.065)}
+html[data-theme="dark"]{--bg:#0D0D0E;--bg-2:#111113;--panel:#171719;--panel-2:#1D1D20;--soft:#252529;--text:#F4F4F5;--muted:#A7A8AE;--muted-2:#8C8E96;--line:#303035;--green:#7BE84E;--green-2:#7BE84E;--green-soft:#1B2A17;--sq-accent:#7BE84E}
+body .topbar{background:color-mix(in srgb,var(--bg-2) 94%,transparent);backdrop-filter:blur(18px)}
+body .top-actions>.btn,body .top-actions>.icon-btn,body #forumAccount>.icon-btn{background:transparent;border-color:transparent}
+body .top-actions>.btn:hover,body .top-actions>.icon-btn:hover,body #forumAccount>.icon-btn:hover{background:var(--panel-2);border-color:transparent}
+body .command-search{background:var(--panel)!important;border-color:var(--line)!important}
+body .sidebar.hc-sidebar{background:var(--bg-2)}
+body .hc-nav-link{font-size:13px!important}
+body .hc-nav-link.active,body .hc-nav-link.active-parent{background:var(--panel-2);box-shadow:inset 3px 0 var(--sq-accent);color:var(--text)}
+body .hc-nav-link:not(.active):not(.active-parent) .hc-nav-ico{color:var(--muted)}
+body .hc-collapse{position:absolute;top:19px;right:9px;width:32px;height:32px;margin:0;padding:0;border:0;border-radius:8px;background:transparent;z-index:2}
+body .hc-collapse:hover{background:var(--panel-2)} body .hc-collapse>span:last-child{display:none} body .hc-brand{padding-right:42px}
+body .help-hero h1{font-size:clamp(52px,4.2vw,58px)}
+body button.help-search{height:64px;max-width:720px;border-color:#D9DADE;box-shadow:0 1px 2px rgba(18,18,20,.03),0 12px 36px rgba(18,18,20,.05)}
+body button.help-search:hover{border-color:#BFC1C7;box-shadow:0 12px 36px rgba(18,18,20,.075)}
+body .support-paths{max-width:720px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+body .support-path{border:0;border-radius:0;background:transparent;min-height:50px;position:relative}
+body .support-path+.support-path{border-left:1px solid var(--line)}
+body .support-path:hover{background:var(--panel-2);border-color:transparent} body .support-path .big-ico{color:var(--muted)} body .support-path:hover .big-ico{color:var(--sq-accent)}
+body .section-head h2{font-size:clamp(24px,2vw,28px)}
+body .main .category-card{border-radius:16px!important;box-shadow:none!important}
+body .main .category-card:hover{border-color:#C9CBD0!important;box-shadow:var(--sq-hover-shadow)!important}
+body .main .category-card .cat-ico{background:var(--panel-2)!important;color:var(--muted)}
+body .main .category-card:hover .cat-ico{color:var(--sq-accent)}
+body .banner{background:var(--panel);border-left:3px solid var(--sq-accent)}
+body .pill,body .badge{border-radius:8px}
+body.sq-page-doc .doc-block{border-bottom:1px solid var(--line)}
+body.sq-page-forum .forum-panel{box-shadow:none} body.sq-page-forum .topic-stat{opacity:.72}
+body.sq-page-support .ticket-thread{max-width:860px}
+body.sq-page-status .server-row{grid-template-columns:minmax(240px,1fr) auto auto auto}
+body.sq-page-status .server-row>[data-state],body.sq-page-status .server-badge{justify-self:end}
+body .server-badge.checking{color:var(--muted);border-color:var(--line);background:var(--panel-2)}
+@media(max-width:860px){body .help-hero h1{font-size:clamp(32px,9vw,36px);line-height:1.02}body .support-paths{grid-template-columns:1fr}body .support-path+.support-path{border-left:0;border-top:1px solid var(--line)}body .support-path{justify-content:flex-start;padding:0 14px}body .top-actions>.icon-btn,body #forumAccount>.icon-btn,body .mobile-menu{width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important}body .hc-collapse{display:none}body.sq-page-status .server-row{grid-template-columns:minmax(0,1fr) auto}}
