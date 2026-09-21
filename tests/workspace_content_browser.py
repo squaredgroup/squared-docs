@@ -21,6 +21,13 @@ FIXTURES = {
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
+    def do_GET(self):
+        path = self.path.partition("?")[0]
+        if path in {"/faq", "/changelog"}:
+            query = f"?{self.path.partition('?')[2]}" if "?" in self.path else ""
+            self.path = f"{path}.html{query}"
+        super().do_GET()
+
     def log_message(self, *_args):
         pass
 
@@ -52,12 +59,12 @@ with server() as base, sync_playwright() as playwright:
     page.locator("#workspaceContentTitle").wait_for()
     assert page.locator(".sq-managed-card", has_text="Activer Workspace").count() == 1
 
-    page.goto(f"{base}/faq.html", wait_until="domcontentloaded")
+    page.goto(f"{base}/faq", wait_until="domcontentloaded")
     page.locator(".sq-managed-faq", has_text="Puis-je utiliser mon Mac ?").wait_for()
     assert page.locator("summary", has_text="Comment accéder au Help Center ?").count() == 1
     assert page.locator(".sq-managed-faq", has_text="Réponse pilotée depuis Workspace.").count() == 1
 
-    page.goto(f"{base}/changelog.html", wait_until="domcontentloaded")
+    page.goto(f"{base}/changelog", wait_until="domcontentloaded")
     page.locator(".sq-managed-update", has_text="Help Center synchronisé").wait_for()
 
     page.goto(f"{base}/article.html?slug=activer-workspace&source=workspace", wait_until="domcontentloaded")
