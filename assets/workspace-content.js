@@ -31,6 +31,12 @@
       ? new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short", year: "numeric" }).format(date)
       : "Publié depuis Workspace";
   };
+  const identity = value => String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("fr")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 
   async function loadCollection(collection) {
     const controller = new AbortController();
@@ -47,6 +53,8 @@
   }
 
   function articleLink(item) {
+    const managedURL = publicURL(item.url);
+    if (managedURL) return managedURL;
     const url = new URL("article.html", new URL("../", document.querySelector("script[data-sq-help-core]")?.src || location.href));
     url.searchParams.set("slug", item.slug || item.id);
     url.searchParams.set("source", "workspace");
@@ -104,8 +112,17 @@
     if (!location.pathname.endsWith("/faq.html") && !location.pathname.endsWith("faq.html")) return;
     const host = document.querySelector(".faq-stack");
     if (!host || !state.faqs.length) return;
+    const existing = new Map([...host.querySelectorAll("details")].map(details => [identity(details.querySelector("summary")?.textContent), details]));
     for (const item of state.faqs) {
       if (host.querySelector(`[data-workspace-slug="${CSS.escape(item.slug || item.id)}"]`)) continue;
+      const match = existing.get(identity(item.question || item.title));
+      if (match) {
+        match.dataset.workspaceSlug = item.slug || item.id;
+        match.classList.add("sq-managed-faq");
+        const answer = match.querySelector(".faq-answer p") || match.querySelector("p");
+        if (answer) answer.textContent = item.body || item.summary || answer.textContent;
+        continue;
+      }
       const details = element("details", { class: "faq-item sq-managed-faq", "data-workspace-slug": item.slug || item.id });
       details.append(element("summary", { text: item.question || item.title }), element("div", { class: "faq-answer" }, element("p", { text: item.body || item.summary || "Réponse disponible prochainement." })));
       host.append(details);
@@ -118,6 +135,21 @@
     if (!timeline || !state.releases.length) return;
     const fragment = document.createDocumentFragment();
     for (const item of [...state.releases].reverse()) {
+      const match = [...timeline.querySelectorAll(".update")].find(update =>
+        (item.version && identity(update.querySelector(".version")?.textContent) === identity(item.version)) ||
+        identity(update.querySelector("strong")?.textContent) === identity(item.title)
+      );
+      if (match) {
+        match.classList.add("sq-managed-update");
+        match.dataset.workspaceSlug = item.slug || item.id;
+        const title = match.querySelector("strong");
+        const summary = match.querySelector("p");
+        const version = match.querySelector(".version");
+        if (title) title.textContent = item.title;
+        if (summary) summary.textContent = item.body || item.summary || summary.textContent;
+        if (version && item.version) version.textContent = item.version;
+        continue;
+      }
       const update = element("div", { class: "update sq-managed-update", "data-change-type": "improved" });
       update.append(
         element("time", { text: formattedDate(item._updatedDate) }),

@@ -11,7 +11,10 @@ ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = {
     "articles": [{"id": "article-1", "data": {"title": "Activer Workspace", "slug": "activer-workspace", "summary": "Un guide publié depuis Workspace.", "body": "## Première étape\nOuvrez votre invitation.\n\n- Installez l’application\n- Activez votre accès", "category": "Démarrage", "featured": True, "status": "PUBLISHED"}}],
     "categories": [],
-    "faqs": [{"id": "faq-1", "data": {"title": "Puis-je utiliser mon Mac ?", "question": "Puis-je utiliser mon Mac ?", "slug": "utiliser-mac", "body": "Oui, votre espace est disponible sur Mac.", "status": "PUBLISHED"}}],
+    "faqs": [
+        {"id": "faq-existing", "data": {"title": "Comment accéder au Help Center ?", "question": "Comment accéder au Help Center ?", "slug": "acces-help-center", "body": "Réponse pilotée depuis Workspace.", "status": "PUBLISHED"}},
+        {"id": "faq-1", "data": {"title": "Puis-je utiliser mon Mac ?", "question": "Puis-je utiliser mon Mac ?", "slug": "utiliser-mac", "body": "Oui, votre espace est disponible sur Mac.", "status": "PUBLISHED"}},
+    ],
     "navigation": [],
     "releases": [{"id": "release-1", "data": {"title": "Help Center synchronisé", "slug": "help-center-synchronise", "summary": "Les contenus proviennent maintenant de Workspace.", "version": "7.2", "status": "PUBLISHED"}}],
 }
@@ -51,6 +54,8 @@ with server() as base, sync_playwright() as playwright:
 
     page.goto(f"{base}/faq.html", wait_until="domcontentloaded")
     page.locator(".sq-managed-faq", has_text="Puis-je utiliser mon Mac ?").wait_for()
+    assert page.locator("summary", has_text="Comment accéder au Help Center ?").count() == 1
+    assert page.locator(".sq-managed-faq", has_text="Réponse pilotée depuis Workspace.").count() == 1
 
     page.goto(f"{base}/changelog.html", wait_until="domcontentloaded")
     page.locator(".sq-managed-update", has_text="Help Center synchronisé").wait_for()
