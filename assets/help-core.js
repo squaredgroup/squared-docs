@@ -187,21 +187,3 @@
   }
   window.SQHelp={base,local,safe,esc,norm,PRODUCTS,ISSUES,DEVICES,GUIDE,context,contextLink,plan,summary,backend,catalog,lookup,paint,keyboard,applyTheme,setupAppearance};
 })();
-
-/* Public content authored in Squared Workspace. The loader is shared by every
-   Help Center page, while the renderer only enhances supported destinations. */
-(() => {
-  if (document.querySelector('[data-sq-workspace-content]')) return;
-  const core = document.querySelector('script[data-sq-help-core]');
-  if (!core?.src) return;
-  const style = document.createElement('link');
-  style.rel = 'stylesheet';
-  style.href = new URL('workspace-content.css?v=20260921.1', core.src).href;
-  style.dataset.sqWorkspaceContent = 'style';
-  document.head.append(style);
-  const script = document.createElement('script');
-  script.src = new URL('workspace-content.js?v=20260921.1', core.src).href;
-  script.defer = true;
-  script.dataset.sqWorkspaceContent = 'script';
-  document.head.append(script);
-})();

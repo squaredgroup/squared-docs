@@ -12,8 +12,11 @@ assert "textContent" in client
 assert "insertAdjacentHTML" not in client
 assert "innerHTML" not in client
 assert '["http:", "https:"]' in client
-assert "workspace-content.js?v=20260921.1" in core
-assert "workspace-content.css?v=20260921.1" in core
+assert "workspace-content.js" not in core
+for page_name in ("index.html", "article.html", "faq.html", "changelog.html"):
+    page = (ROOT / page_name).read_text()
+    assert "workspace-content.js?v=20260921.1" in page
+    assert "workspace-content.css?v=20260921.1" in page
 assert ".sq-managed-grid" in styles
 assert "prefers-reduced-motion" in styles
 print("Workspace content integration OK")
