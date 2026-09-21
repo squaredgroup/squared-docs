@@ -38,6 +38,75 @@
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
   const currentPage = () => (location.pathname.split("/").filter(Boolean).pop() || "index").replace(/\.html$/i, "");
+  const blocksOf = item => Array.isArray(item?.contentBlocks) ? item.contentBlocks.filter(block => block && typeof block === "object") : [];
+  const blockClass = block => [
+    "sq-content-block",
+    `is-${String(block.kind || "paragraph").toLowerCase().replaceAll("_", "-")}`,
+    `tone-${String(block.tone || "neutral").toLowerCase()}`,
+    `presentation-${String(block.presentation || "plain").toLowerCase()}`,
+    `align-${String(block.alignment || "leading").toLowerCase()}`,
+    `width-${String(block.width || "standard").toLowerCase()}`,
+    `size-${String(block.size || "medium").toLowerCase()}`
+  ].join(" ");
+
+  function appendInlineText(node, source) {
+    const value = String(source || "");
+    const pattern = /(\*\*[^*]+\*\*|_[^_]+_|\[[^\]]+\]\([^)]+\))/g;
+    let cursor = 0;
+    for (const match of value.matchAll(pattern)) {
+      if (match.index > cursor) node.append(document.createTextNode(value.slice(cursor, match.index)));
+      const token = match[0];
+      if (token.startsWith("**")) node.append(element("strong", { text: token.slice(2, -2) }));
+      else if (token.startsWith("_")) node.append(element("em", { text: token.slice(1, -1) }));
+      else {
+        const parts = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+        const href = publicURL(parts?.[2]);
+        node.append(href ? element("a", { href, text: parts[1], ...(href.startsWith(location.origin) ? {} : { target: "_blank", rel: "noopener noreferrer" }) }) : document.createTextNode(parts?.[1] || token));
+      }
+      cursor = match.index + token.length;
+    }
+    if (cursor < value.length) node.append(document.createTextNode(value.slice(cursor)));
+  }
+
+  function contentBlock(block) {
+    const kind = String(block.kind || "PARAGRAPH").toUpperCase();
+    const node = element("div", { class: blockClass(block) });
+    if (kind === "DIVIDER") return element("hr", { class: blockClass(block) });
+    if (kind === "SPACER") return node;
+    if (kind === "IMAGE") {
+      const source = publicURL(block.url);
+      const figure = element("figure", { class: blockClass(block) });
+      if (source) figure.append(element("img", { src: source, alt: block.alternativeText || "", loading: "lazy", decoding: "async" }));
+      if (block.caption) figure.append(element("figcaption", { text: block.caption }));
+      return figure;
+    }
+    if (kind === "BUTTON") {
+      const href = publicURL(block.url);
+      return href ? element("a", { class: `${blockClass(block)} sq-content-action`, href, ...(href.startsWith(location.origin) ? {} : { target: "_blank", rel: "noopener noreferrer" }) }, element("span", { text: block.text || "En savoir plus" })) : node;
+    }
+    if (["BULLETED_LIST", "NUMBERED_LIST"].includes(kind)) {
+      const list = element(kind === "NUMBERED_LIST" ? "ol" : "ul");
+      String(block.text || "").split("\n").map(value => value.trim()).filter(Boolean).forEach(value => {
+        const item = element("li"); appendInlineText(item, value); list.append(item);
+      });
+      node.append(list);
+      return node;
+    }
+    const tag = kind === "HEADING" ? "h2" : kind === "QUOTE" ? "blockquote" : "p";
+    const copy = element(tag);
+    appendInlineText(copy, block.text || "");
+    if (kind === "CALLOUT") node.append(element("span", { class: "sq-content-callout-mark", "aria-hidden": "true", text: "!" }));
+    node.append(copy);
+    return node;
+  }
+
+  function structuredContent(item, fallback = "") {
+    const fragment = document.createDocumentFragment();
+    const blocks = blocksOf(item);
+    if (blocks.length) blocks.forEach(block => fragment.append(contentBlock(block)));
+    else fragment.append(richText(fallback));
+    return fragment;
+  }
 
   async function loadCollection(collection) {
     const controller = new AbortController();
@@ -54,6 +123,12 @@
   }
 
   function articleLink(item) {
+    if (blocksOf(item).length) {
+      const url = new URL("article.html", new URL("../", document.querySelector("script[data-sq-help-core]")?.src || location.href));
+      url.searchParams.set("slug", item.slug || item.id);
+      url.searchParams.set("source", "workspace");
+      return url.href;
+    }
     const managedURL = publicURL(item.url);
     if (managedURL) return managedURL;
     const url = new URL("article.html", new URL("../", document.querySelector("script[data-sq-help-core]")?.src || location.href));
@@ -120,12 +195,14 @@
       if (match) {
         match.dataset.workspaceSlug = item.slug || item.id;
         match.classList.add("sq-managed-faq");
-        const answer = match.querySelector(".faq-answer p") || match.querySelector("p");
-        if (answer) answer.textContent = item.body || item.summary || answer.textContent;
+        const answer = match.querySelector(".faq-answer") || match;
+        if (answer) answer.replaceChildren(structuredContent(item, item.body || item.summary || answer.textContent));
         continue;
       }
       const details = element("details", { class: "faq-item sq-managed-faq", "data-workspace-slug": item.slug || item.id });
-      details.append(element("summary", { text: item.question || item.title }), element("div", { class: "faq-answer" }, element("p", { text: item.body || item.summary || "Réponse disponible prochainement." })));
+      const answer = element("div", { class: "faq-answer" });
+      answer.append(structuredContent(item, item.body || item.summary || "Réponse disponible prochainement."));
+      details.append(element("summary", { text: item.question || item.title }), answer);
       host.append(details);
     }
   }
@@ -202,7 +279,7 @@
       )
     );
     const content = element("div", { class: "sq-managed-article-body" });
-    content.append(richText(item.body || item.summary || ""));
+    content.append(structuredContent(item, item.body || item.summary || ""));
     host.append(header, content);
     document.title = `${item.seoTitle || item.title} — Squared Help Center`;
     const description = document.querySelector('meta[name="description"]') || document.head.appendChild(element("meta", { name: "description" }));

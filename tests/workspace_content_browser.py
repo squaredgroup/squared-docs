@@ -9,7 +9,12 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1]
 
 FIXTURES = {
-    "articles": [{"id": "article-1", "data": {"title": "Activer Workspace", "slug": "activer-workspace", "summary": "Un guide publié depuis Workspace.", "body": "## Première étape\nOuvrez votre invitation.\n\n- Installez l’application\n- Activez votre accès", "category": "Démarrage", "featured": True, "status": "PUBLISHED"}}],
+    "articles": [{"id": "article-1", "data": {"title": "Activer Workspace", "slug": "activer-workspace", "summary": "Un guide publié depuis Workspace.", "body": "Version texte de compatibilité.", "contentBlocks": [
+        {"id": "heading-1", "kind": "HEADING", "text": "Première étape", "url": "", "alternativeText": "", "caption": "", "tone": "ACCENT", "presentation": "HIGHLIGHT", "alignment": "LEADING", "width": "STANDARD", "size": "LARGE"},
+        {"id": "paragraph-1", "kind": "PARAGRAPH", "text": "Ouvrez **votre invitation** puis suivez le parcours affiché.", "url": "", "alternativeText": "", "caption": "", "tone": "NEUTRAL", "presentation": "PLAIN", "alignment": "LEADING", "width": "STANDARD", "size": "MEDIUM"},
+        {"id": "list-1", "kind": "BULLETED_LIST", "text": "Installez l’application\nActivez votre accès", "url": "", "alternativeText": "", "caption": "", "tone": "INFO", "presentation": "CARD", "alignment": "LEADING", "width": "COMPACT", "size": "MEDIUM"},
+        {"id": "button-1", "kind": "BUTTON", "text": "Ouvrir Workspace", "url": "https://workspace.app.squaredgroup.studio", "alternativeText": "", "caption": "", "tone": "ACCENT", "presentation": "PLAIN", "alignment": "LEADING", "width": "COMPACT", "size": "MEDIUM"}
+    ], "category": "Démarrage", "featured": True, "status": "PUBLISHED"}}],
     "categories": [],
     "faqs": [
         {"id": "faq-existing", "data": {"title": "Comment accéder au Help Center ?", "question": "Comment accéder au Help Center ?", "slug": "acces-help-center", "body": "Réponse pilotée depuis Workspace.", "status": "PUBLISHED"}},
@@ -69,7 +74,10 @@ with server() as base, sync_playwright() as playwright:
 
     page.goto(f"{base}/article.html?slug=activer-workspace&source=workspace", wait_until="domcontentloaded")
     page.locator("#managedArticle h1", has_text="Activer Workspace").wait_for()
-    assert page.locator("#managedArticle", has_text="Ouvrez votre invitation.").count() == 1
+    assert page.locator("#managedArticle", has_text="Ouvrez votre invitation").count() == 1
+    assert page.locator("#managedArticle .sq-content-block.is-heading.presentation-highlight", has_text="Première étape").count() == 1
+    assert page.locator("#managedArticle .sq-content-block.is-bulleted-list.presentation-card li").count() == 2
+    assert page.locator("#managedArticle a.sq-content-action", has_text="Ouvrir Workspace").get_attribute("href") == "https://workspace.app.squaredgroup.studio/"
     browser.close()
 
 print("Help Center browser content integration OK")
