@@ -11,7 +11,10 @@ ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = {
     "articles": [{"id": "article-1", "data": {"title": "Activer Workspace", "slug": "activer-workspace", "summary": "Un guide publié depuis Workspace.", "body": "Version texte de compatibilité.", "contentBlocks": [
         {"id": "heading-1", "kind": "HEADING", "text": "Première étape", "url": "", "alternativeText": "", "caption": "", "tone": "ACCENT", "presentation": "HIGHLIGHT", "alignment": "LEADING", "width": "STANDARD", "size": "LARGE"},
-        {"id": "paragraph-1", "kind": "PARAGRAPH", "text": "Ouvrez **votre invitation** puis suivez le parcours affiché.", "url": "", "alternativeText": "", "caption": "", "tone": "NEUTRAL", "presentation": "PLAIN", "alignment": "LEADING", "width": "STANDARD", "size": "MEDIUM"},
+        {"id": "paragraph-1", "kind": "PARAGRAPH", "text": "Ouvrez votre invitation puis suivez le parcours affiché.", "url": "", "alternativeText": "", "caption": "", "tone": "NEUTRAL", "presentation": "PLAIN", "alignment": "LEADING", "width": "STANDARD", "size": "MEDIUM", "marks": [
+            {"id": "mark-bold", "style": "BOLD", "location": 7, "length": 16, "url": ""},
+            {"id": "mark-underline", "style": "UNDERLINE", "location": 7, "length": 16, "url": ""}
+        ]},
         {"id": "list-1", "kind": "BULLETED_LIST", "text": "Installez l’application\nActivez votre accès", "url": "", "alternativeText": "", "caption": "", "tone": "INFO", "presentation": "CARD", "alignment": "LEADING", "width": "COMPACT", "size": "MEDIUM"},
         {"id": "button-1", "kind": "BUTTON", "text": "Ouvrir Workspace", "url": "https://workspace.app.squaredgroup.studio", "alternativeText": "", "caption": "", "tone": "ACCENT", "presentation": "PLAIN", "alignment": "LEADING", "width": "COMPACT", "size": "MEDIUM"}
     ], "category": "Démarrage", "featured": True, "status": "PUBLISHED"}}],
@@ -76,6 +79,7 @@ with server() as base, sync_playwright() as playwright:
     page.locator("#managedArticle h1", has_text="Activer Workspace").wait_for()
     assert page.locator("#managedArticle", has_text="Ouvrez votre invitation").count() == 1
     assert page.locator("#managedArticle .sq-content-block.is-heading.presentation-highlight", has_text="Première étape").count() == 1
+    assert page.locator("#managedArticle .sq-content-block.is-paragraph u strong", has_text="votre invitation").count() == 1
     assert page.locator("#managedArticle .sq-content-block.is-bulleted-list.presentation-card li").count() == 2
     assert page.locator("#managedArticle a.sq-content-action", has_text="Ouvrir Workspace").get_attribute("href") == "https://workspace.app.squaredgroup.studio/"
     browser.close()
