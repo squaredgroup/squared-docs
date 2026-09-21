@@ -37,6 +37,7 @@
     .toLocaleLowerCase("fr")
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
+  const currentPage = () => (location.pathname.split("/").filter(Boolean).pop() || "index").replace(/\.html$/i, "");
 
   async function loadCollection(collection) {
     const controller = new AbortController();
@@ -109,7 +110,7 @@
   }
 
   function renderFAQs() {
-    if (!location.pathname.endsWith("/faq.html") && !location.pathname.endsWith("faq.html")) return;
+    if (currentPage() !== "faq") return;
     const host = document.querySelector(".faq-stack");
     if (!host || !state.faqs.length) return;
     const existing = new Map([...host.querySelectorAll("details")].map(details => [identity(details.querySelector("summary")?.textContent), details]));
@@ -130,7 +131,7 @@
   }
 
   function renderReleases() {
-    if (!location.pathname.endsWith("/changelog.html") && !location.pathname.endsWith("changelog.html")) return;
+    if (currentPage() !== "changelog") return;
     const timeline = document.querySelector(".timeline");
     if (!timeline || !state.releases.length) return;
     const fragment = document.createDocumentFragment();
