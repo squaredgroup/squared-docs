@@ -114,3 +114,18 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
   else init();
 })();
+
+/* The versioned layer also reaches pages that still reference the older loader. */
+(() => {
+  const src = document.currentScript.src;
+  if (!document.querySelector('[data-sq-mobile-experience-style]')) {
+    const css = document.createElement('link');css.rel='stylesheet';
+    css.href=new URL('mobile-experience.css?v=20260922.1',src).href;
+    css.dataset.sqMobileExperienceStyle='1';document.head.append(css);
+  }
+  if (!document.querySelector('[data-sq-mobile-experience-script]')) {
+    const js = document.createElement('script');js.defer=true;
+    js.src=new URL('mobile-experience.js?v=20260922.1',src).href;
+    js.dataset.sqMobileExperienceScript='1';document.head.append(js);
+  }
+})();
