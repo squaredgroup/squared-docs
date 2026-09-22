@@ -199,6 +199,16 @@
     // No private URLs, token-bearing queries or support content in native sharing.
     const publicURL = () => {
       const url=new URL(location.href);url.search='';
+      // Only a published managed article receives this canonical from the editor.
+      // Preserve its public identifier, never arbitrary query parameters.
+      if (path === 'article.html') {
+        try {
+          const href=document.querySelector('link[rel="canonical"]')?.href;
+          const canonical=href?new URL(href):null;
+          const id=canonical?.searchParams.get('id');
+          if(canonical?.origin===url.origin&&canonical.pathname===url.pathname&&/^[A-Za-z0-9_-]{1,128}$/.test(id||''))url.searchParams.set('id',id);
+        } catch {}
+      }
       try {if(!url.hash||!document.getElementById(decodeURIComponent(url.hash.slice(1))))url.hash='';} catch {url.hash='';}
       return url.href;
     };
@@ -217,7 +227,7 @@
     };
 
     let article=null,progressLabel=null,outlineButton=null,readingReady=false;
-    const privatePage=/(?:^|\/)(?:login|register|signup|forgot-password|reset-password|auth-callback|support|ticket|forum(?:-[a-z-]+)?|profile|account-settings|admin|editor|notifications|favorites)\.html$/.test(path);
+    const privatePage=/(?:^|\/)(?:login|register|signup|forgot-password|reset-password|auth-callback|support|support-ticket|ticket|forum(?:-[a-z-]+)?|profile|account-settings|admin|editor|editorial|moderation|bookmarks|my-activity|my-tickets|notification-settings|notifications|favorites)\.html$/.test(path);
     const sections = () => article ? [...article.querySelectorAll('h2')].filter(h=>!h.closest('.article-tools,.article-feedback-v5,.sq-mobile-reading,.article-tool-card')).map((heading,index)=>{
       const target=heading.closest('.doc-block[id]')||heading;
       if(!target.id){let id=`sq-section-${index+1}`;while(document.getElementById(id))id+='-a';target.id=id;}
