@@ -6,6 +6,8 @@
 .sq-mobile-announcement{position:fixed;z-index:1600;left:50%;bottom:24px;transform:translateX(-50%);max-width:calc(100vw - 32px);padding:12px 16px;border:1px solid var(--line,#ddd);border-radius:14px;background:var(--panel,#fff);color:var(--text,#151515);font:500 14px/1.5 'Space Grotesk',sans-serif;box-shadow:0 8px 30px #0002;opacity:0;pointer-events:none}
 .sq-mobile-announcement.show{opacity:1}
 .sq-mobile-network{padding:14px 16px;margin:0 0 20px;border:1px solid var(--line,#ddd);border-left:3px solid #b26b00;border-radius:12px;background:var(--panel,#fff);color:var(--text,#151515);font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+/* Passive notifications must never swallow taps, even at opacity:0. */
+html.sq-mobile-v2 body .toast{pointer-events:none}
 .sq-mobile-v2 [hidden]{display:none!important}
 .sq-mobile-v2 .sq-mobile-control{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 12px;border:1px solid var(--line,#ddd);border-radius:12px;background:var(--panel,#fff);color:var(--text,#151515);font:500 13px/1.3 'Space Grotesk',sans-serif;cursor:pointer;touch-action:manipulation}
 .sq-mobile-v2 :is(.sq-mobile-control,.sq-mobile-dock-item,.sq-mobile-top,.sq-search-clear,.sq-mobile-outline a):focus-visible{outline:2px solid var(--text,#151515);outline-offset:3px;box-shadow:0 0 0 5px #7be84e55}
@@ -47,6 +49,7 @@
   html.sq-mobile-v2.sq-keyboard-open .sq-mobile-dock,html.sq-mobile-v2.sq-search-active .sq-mobile-dock{visibility:hidden;pointer-events:none}
   html.sq-mobile-v2.sq-mobile-auth .sq-mobile-dock{display:none}
   html.sq-mobile-v2.sq-mobile-auth body .main>.shell,html.sq-mobile-v2.sq-mobile-auth body .main>.forum-shell{padding-bottom:calc(32px + env(safe-area-inset-bottom,0px))!important}
+  html.sq-mobile-v2 body .toast{bottom:calc(var(--sq-dock-height) + 12px);max-width:calc(100vw - 32px);box-sizing:border-box;overflow-wrap:anywhere}
   html.sq-mobile-v2 .sq-mobile-announcement{bottom:calc(var(--sq-dock-height) + 12px);z-index:1600;width:max-content;text-align:center}
   html.sq-mobile-v2 .sq-mobile-top{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(var(--sq-dock-height) + 14px);z-index:290;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:48px;min-height:44px;padding:10px 12px;border:1px solid var(--line,#ddd);border-radius:14px;background:var(--panel,#fff);color:var(--text,#151515);font:500 12px/1.3 'Space Grotesk',sans-serif;box-shadow:0 6px 20px #0001;cursor:pointer;touch-action:manipulation}
   html.sq-mobile-v2 .sq-mobile-top .sq-iconly{width:18px;height:18px}
