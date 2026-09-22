@@ -64,7 +64,7 @@ try:
                 context.close()
             for width,height in [(320,640),(390,844),(768,1024),(844,390)]:
                 context=browser.new_context(viewport={'width':width,'height':height},is_mobile=True,has_touch=True)
-                page=context.new_page();attach_routes(page,'member');errors=[]
+                page=context.new_page();page.set_default_timeout(10000);attach_routes(page,'member');errors=[]
                 page.on('pageerror',lambda e:errors.append(str(e)))
                 label=f'{engine} {width}x{height}'
                 try:
@@ -72,7 +72,11 @@ try:
                     geometry(page,label)
                     for item in page.locator('#sqMobileDock > *').all():
                         r=item.bounding_box();assert r['width']>=44 and r['height']>=44,(label,'touch target',r)
+                    # A passive toast, hidden or shown, must not steal taps from the dock.
+                    assert page.locator('#toast').evaluate("e=>getComputedStyle(e).pointerEvents==='none'"),(label,'toast captures taps')
+                    page.locator('#toast').evaluate("e=>e.classList.add('show')")
                     page.locator('#sqDockMenu').click();page.locator('#sqMobileClose').wait_for(state='visible')
+                    page.locator('#toast').evaluate("e=>e.classList.remove('show')")
                     assert page.locator('.main').evaluate('e=>e.inert'),label
                     page.keyboard.press('Escape');page.wait_for_timeout(50)
                     assert not page.locator('.main').evaluate('e=>e.inert'),label
