@@ -9,6 +9,15 @@ on:
       - 'tests/mobile_experience.py'
       - 'scripts/integrate_mobile_layout.py'
       - '.github/workflows/mobile-layout.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**.html'
+      - 'assets/**'
+      - 'tests/mobile_layout.py'
+      - 'tests/mobile_experience.py'
+      - 'scripts/integrate_mobile_layout.py'
+      - '.github/workflows/mobile-layout.yml'
   workflow_dispatch:
 permissions:
   contents: write
