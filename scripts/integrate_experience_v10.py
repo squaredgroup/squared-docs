@@ -20,7 +20,7 @@ for page in sorted(ROOT.rglob('*.html')):
     else:
         text = text.replace('</head>', style + '\n</head>', 1)
     text = re.sub(r'(<script\s+src="[^"]*assets/docs\.js)(?:\?v=[^"]*)?("[^>]*></script>)',
-                  lambda match: f'{match.group(1)}?v=20260924.3{match.group(2)}', text)
+                  lambda match: f'{match.group(1)}?v=20260924.4{match.group(2)}', text)
     if text != original:
         page.write_text(text, encoding='utf-8')
         changed.append(str(page.relative_to(ROOT)))

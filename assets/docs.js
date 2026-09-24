@@ -118,7 +118,8 @@ function renderSearchRows(list,partial=false){
 }
 async function render(q=''){
   if(!results)return;const id=++searchRequestId;searchController?.abort();searchController=new AbortController();const control=searchController;
-  results.textContent='Recherche dans les guides et la communauté…';results.setAttribute('aria-busy','true');
+  if(!results.hasChildNodes())results.textContent='Recherche dans les guides et la communauté…';
+  results.setAttribute('aria-busy','true');
   const timeout=setTimeout(()=>control.abort(),7000);
   try{const data=await SQHelp.lookup(q,{signal:control.signal,limit:50});if(id!==searchRequestId)return;renderSearchRows(data.rows.filter(remoteFilter),data.partial);}
   catch{if(id!==searchRequestId)return;const data=await SQHelp.lookup(q,{remote:false});if(id!==searchRequestId)return;renderSearchRows(data.rows.filter(remoteFilter),true);}

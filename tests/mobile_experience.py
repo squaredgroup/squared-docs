@@ -87,6 +87,11 @@ try:
                     for _ in range(9):
                         page.keyboard.press('Tab')
                         assert page.locator('#searchModal').evaluate('e=>e.contains(document.activeElement)'),(label,'focus escaped search')
+                    page.locator('#searchResults a').first.wait_for()
+                    page.locator('#searchResults a').first.focus()
+                    page.evaluate("e=>{e.value='workspace';e.dispatchEvent(new Event('input',{bubbles:true}));}",page.locator('#searchInput').element_handle())
+                    page.wait_for_timeout(220)
+                    assert page.locator('#searchModal').evaluate('e=>e.contains(document.activeElement)'),(label,'focus lost while search results refreshed')
                     page.keyboard.press('Escape');page.wait_for_timeout(50)
                     assert page.locator('#sqDockSearch').evaluate('e=>e===document.activeElement'),(label,'search focus not restored')
                     assert not page.locator('.app').evaluate('e=>e.inert'),label
