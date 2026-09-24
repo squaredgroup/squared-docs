@@ -94,20 +94,19 @@ ensureModernStack();
 const getNavState=k=>{try{return localStorage.getItem(k)}catch{return null}};
 const setNavState=(k,v)=>{try{localStorage.setItem(k,v)}catch{}};
 if(!document.querySelector('link[rel="icon"]')){const icon=document.createElement('link');icon.rel='icon';icon.type='image/png';icon.href=localHref('assets/logo-squared.png');document.head.appendChild(icon);}
-const groups=[
-{id:'help',title:'Centre d’aide',open:true,items:[
+const quickLinks=[
  {href:'index.html',icon:'home',label:'Accueil'},
- {href:'search.html',icon:'search',label:'Recherche'},
- {href:'support.html',icon:'support',label:'Support'},
- {href:'forum.html',icon:'forum',label:'Forum'},
- {href:'changelog.html',icon:'changelog',label:'Nouveautés'}]},
+ {href:'guides.html',icon:'book',label:'Guides pratiques'},
+ {href:'forum.html',icon:'forum',label:'Forum'}
+];
+const groups=[
 {id:'docs',title:'Documentation',open:true,items:[
+ {href:'search.html',icon:'search',label:'Recherche'},
  {href:'parcours.html',icon:'start',label:'Votre parcours'},
  {href:'diagnostic.html',icon:'troubleshooting',label:'Dépannage guidé'},
  {href:'getting-started.html',icon:'start',label:'Bien démarrer'},
  {href:'faq.html',icon:'faq',label:'FAQ'},
  {href:'quick-guides.html',icon:'quick',label:'Guides rapides'},
- {href:'guides.html',icon:'book',label:'Guides pratiques'},
  {href:'asking-for-help.html',icon:'ask',label:'Aide & règles',children:[{href:'asking-for-help.html',label:'Demander de l’aide'},{href:'community-guidelines.html',label:'Règles communauté'},{href:'support-privacy.html',label:'Confidentialité support'},{href:'access-help.html',label:'Récupérer mon accès'}]}]},
 {id:'products',title:'Produits',open:false,items:[
  {href:'wix-studio.html',icon:'wix',label:'Wix Studio',children:[
@@ -164,6 +163,7 @@ const groups=[
    {href:'security/security-public-docs.html',label:'Documentation publique'},
    {href:'security/security-incidents.html',label:'Incidents'}]}]},
 {id:'resources',title:'Ressources',open:false,items:[
+ {href:'changelog.html',icon:'changelog',label:'Nouveautés'},
  {href:'status.html',icon:'status',label:'Status Center',children:[
    {href:'server-status.html',label:'États des serveurs'},
    {href:'incidents.html',label:'Incidents'},
@@ -180,9 +180,9 @@ const groups=[
 ];
 const activeFor=(href)=>currentKey===href.toLowerCase()||(href==='guides.html'&&currentKey.startsWith('guide-'));
 const groupHasActive=g=>g.items.some(i=>activeFor(i.href)||(i.children||[]).some(c=>activeFor(c.href)));
-const groupOpen=g=>{if(groupHasActive(g))return true;const s=getNavState('sq-help-group-v11:'+g.id);return s===null?g.open:s==='1';};
+const groupOpen=g=>{if(groupHasActive(g))return true;const s=getNavState('sq-help-group-v12:'+g.id);return s===null?g.open:s==='1';};
 const activeChildParent=groups.flatMap(g=>g.items).find(i=>(i.children||[]).some(c=>activeFor(c.href)))?.href||null;
-const storedOpenChild=getNavState('sq-help-open-child-v11');
+const storedOpenChild=getNavState('sq-help-open-child-v12');
 const childOpen=i=>{
   if(activeChildParent)return i.href===activeChildParent;
   return storedOpenChild===i.href;
@@ -215,7 +215,7 @@ const items=g=>g.items.map(i=>{
 host.innerHTML='<div class="hc-sidebar-head"><a class="hc-brand" href="'+localHref('index.html')+'"><img class="hc-brand-logo" src="'+localHref('assets/logo-squared.png')+'" alt="Squared Group"><span class="hc-brand-copy"><strong>SQUARED HELP</strong><span>Votre centre d’aide</span></span></a>'+
 '<button class="hc-search" id="searchTrigger" data-search-open type="button"><span class="hc-search-icon">'+SQIconly.icon('search','regular','sm')+'</span><span>Rechercher de l’aide</span><kbd>⌘K</kbd></button>'+
 '<button class="hc-collapse" id="sidebarCollapse" type="button" aria-label="Réduire la navigation"><span>'+SQIconly.icon('collapse','regular','sm')+'</span><span>Réduire la navigation</span></button></div>'+
-'<nav class="hc-nav">'+groups.map(g=>{const open=groupOpen(g);return '<section class="hc-nav-group'+(open?' open':'')+'" data-group="'+g.id+'"><button class="hc-nav-group-trigger" type="button" aria-expanded="'+(open?'true':'false')+'"><span class="hc-nav-title">'+g.title+'</span><span class="hc-nav-chevron">▾</span></button><div class="hc-nav-group-body">'+items(g)+'</div></section>';}).join('')+'</nav>'+
+'<nav class="hc-nav" aria-label="Navigation du centre d’aide"><div class="hc-nav-primary">'+items({items:quickLinks})+'</div>'+groups.map(g=>{const open=groupOpen(g);return '<section class="hc-nav-group'+(open?' open':'')+'" data-group="'+g.id+'"><button class="hc-nav-group-trigger" type="button" aria-expanded="'+(open?'true':'false')+'"><span class="hc-nav-title">'+g.title+'</span><span class="hc-nav-chevron">▾</span></button><div class="hc-nav-group-body">'+items(g)+'</div></section>';}).join('')+'</nav>'+
 '<a class="hc-sidebar-foot" href="'+localHref('support.html')+'"><span class="hc-sidebar-foot-icon">'+SQIconly.icon('support','regular','md')+'</span><span class="hc-sidebar-foot-copy"><strong>Besoin d’aide ?</strong><small>Contacter le support</small></span><span class="hc-sidebar-foot-arrow" aria-hidden="true">↗</span></a>';
 host.classList.add('hc-sidebar');
 {
@@ -223,7 +223,7 @@ host.classList.add('hc-sidebar');
   if(openItems.length>1){
     const keep=openItems.find(x=>x.querySelector('.hc-sub-link.active'))||openItems[0];
     openItems.forEach(x=>{if(x!==keep)x.classList.remove('child-open')});
-    setNavState('sq-help-open-child-v11',keep?.dataset.itemHref||'');
+    setNavState('sq-help-open-child-v12',keep?.dataset.itemHref||'');
   }
 }
 if(innerWidth>860&&getNavState('sq-help-sidebar-mini')==='1')document.body.classList.add('sidebar-mini');
@@ -231,7 +231,7 @@ const collapseButton=document.getElementById('sidebarCollapse');
 const syncCollapseLabel=()=>collapseButton?.setAttribute('aria-label',document.body.classList.contains('sidebar-mini')?'Développer la navigation':'Réduire la navigation');
 syncCollapseLabel();
 collapseButton?.addEventListener('click',()=>{document.body.classList.toggle('sidebar-mini');setNavState('sq-help-sidebar-mini',document.body.classList.contains('sidebar-mini')?'1':'0');syncCollapseLabel();});
-host.querySelectorAll('.hc-nav-group-trigger').forEach(btn=>btn.addEventListener('click',()=>{const g=btn.closest('.hc-nav-group');g.classList.toggle('open');const open=g.classList.contains('open');btn.setAttribute('aria-expanded',open?'true':'false');setNavState('sq-help-group-v11:'+g.dataset.group,open?'1':'0');}));
+host.querySelectorAll('.hc-nav-group-trigger').forEach(btn=>btn.addEventListener('click',()=>{const g=btn.closest('.hc-nav-group');g.classList.toggle('open');const open=g.classList.contains('open');btn.setAttribute('aria-expanded',open?'true':'false');setNavState('sq-help-group-v12:'+g.dataset.group,open?'1':'0');}));
 host.querySelectorAll('.hc-sub-toggle').forEach(btn=>btn.addEventListener('click',e=>{
   e.preventDefault();
   e.stopPropagation();
@@ -245,10 +245,10 @@ host.querySelectorAll('.hc-sub-toggle').forEach(btn=>btn.addEventListener('click
 
   if(wasOpen){
     item.classList.remove('child-open');
-    setNavState('sq-help-open-child-v11','');
+    setNavState('sq-help-open-child-v12','');
   }else{
     item.classList.add('child-open');
-    setNavState('sq-help-open-child-v11',item.dataset.itemHref||'');
+    setNavState('sq-help-open-child-v12',item.dataset.itemHref||'');
   }
 }));
 host.querySelectorAll('.hc-nav-link,.hc-sub-link').forEach(a=>a.addEventListener('click',()=>{if(innerWidth<=860)host.classList.remove('open');}));
