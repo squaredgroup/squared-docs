@@ -605,6 +605,9 @@ body .faq-answer a {
     padding-top: 20px;
   }
   body.sq-home-v9 .main .help-hero {
+    width: 100%;
+    max-width: 680px;
+    margin-inline: auto;
     padding: 38px 21px 25px;
     border-radius: 23px;
   }
