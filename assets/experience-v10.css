@@ -110,7 +110,7 @@ body.sq-guides-index .main>.shell{max-width:1180px}
   body.sq-home-v10 .main .help-hero{display:block;width:100%;max-width:680px;padding:27px 24px;margin:0 auto;text-align:left}
   body.sq-home-v10 .help-hero h1{margin:22px 0 10px;max-width:none;font-size:clamp(39px,7vw,57px);line-height:1.04;text-align:left}
   body.sq-home-v10 .help-hero h1 br{display:none}
-  body.sq-home-v10 button.help-search{width:calc(100% + 48px);margin:21px 0 0 -24px;height:56px}
+  body.sq-home-v10 button.help-search{width:calc(100% + 48px);max-width:none;margin:21px 0 0 -24px;height:56px}
   .sq-hero-aside{min-height:0;margin-top:24px;padding:21px}
   .sq-hero-aside h2{max-width:none;margin:20px 0 9px;font-size:29px}
   .sq-hero-aside p{margin-bottom:15px}
@@ -127,6 +127,7 @@ body.sq-guides-index .main>.shell{max-width:1180px}
   body.sq-home-v10 button.help-search{width:calc(100% + 34px);margin-left:-17px;grid-template-columns:28px minmax(0,1fr);padding:8px 12px}
   body.sq-home-v10 .sq-search-suggestions{font-size:10px}
   .sq-hero-aside{margin-top:21px}
+  body.sq-home-v10 .sq-hero-aside{display:none}
   .sq-hero-aside h2{font-size:26px}
   body.sq-home-v10 .sq-quick-grid,.sq-guide-card-grid,.sq-guide-links>div{grid-template-columns:1fr!important}
   body.sq-home-v10 .sq-quick-grid>a{min-height:98px}
