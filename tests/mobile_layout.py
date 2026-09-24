@@ -108,6 +108,7 @@ with sync_playwright() as p:
             assert page.locator('#sidebar').get_attribute('aria-modal')=='true'
             page.locator('#sqMobileLogout').wait_for(state='visible')
             page.locator('#sidebar .hc-sub-toggle').first.click()
+            page.locator('#sidebar [data-group="products"] .hc-nav-group-trigger').click()
             page.locator('#sidebar .hc-sub-toggle').nth(1).click()
             assert page.locator('.hc-item.child-open').count()<=1
             page.keyboard.press('Escape')

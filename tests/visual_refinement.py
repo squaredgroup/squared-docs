@@ -81,6 +81,7 @@ with sync_playwright() as p:
             if width<861:page.locator('#menuBtn').click()
             a=page.locator('.hc-sub-toggle').first
             a.click();assert a.get_attribute('aria-expanded')=='true'
+            page.locator('#sidebar [data-group="products"] .hc-nav-group-trigger').click()
             b=page.locator('.hc-sub-toggle').nth(1)
             b.click();assert b.get_attribute('aria-expanded')=='true'
             assert a.get_attribute('aria-expanded')=='false'
