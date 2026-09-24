@@ -1,0 +1,51 @@
+name: Editorial Content Quality
+on:
+  push:
+    branches: [content/help-center-v8-20260924]
+    paths:
+      - "**.html"
+      - "assets/editorial-intelligence.*"
+      - "scripts/integrate_editorial_intelligence.py"
+      - ".github/workflows/editorial-content.yml"
+permissions:
+  contents: write
+jobs:
+  validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "content/help-center-v8-20260924" }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Integrate editorial layer
+        run: python scripts/integrate_editorial_intelligence.py
+      - name: Validate JavaScript
+        run: node --check assets/editorial-intelligence.js
+      - name: Validate content contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          pages=list(Path('.').rglob('*.html'))
+          public=[p for p in pages if 'assets/sidebar.css' in p.read_text()]
+          assert len(public)>=80
+          for p in public:
+              s=p.read_text()
+              assert 'data-sq-editorial-intelligence-style' in s,p
+              assert 'data-sq-editorial-intelligence-script' in s,p
+          for name in ['workspace-projects','workspace-missions','workspace-tasks','workspace-messages','workspace-planning','workspace-contracts','workspace-notifications','workspace-clients','workspace-collaborators','workspace-invitations','workspace-account']:
+              s=(Path('workspace')/(name+'.html')).read_text()
+              assert '24.09.2026' in s,name
+              assert s.count('<section class="doc-block"')>=4,name
+          assert 'Commencez par ce que vous voulez obtenir' in Path('getting-started.html').read_text()
+          assert 'Le compte Help Center est-il le même' in Path('faq.html').read_text()
+          print('Editorial content contract OK',len(public))
+          PY
+      - name: Commit integrated pages
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html'
+          git commit -m "build(content): integrate editorial intelligence across Help Center"
+          git push
