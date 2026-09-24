@@ -4,6 +4,7 @@ import threading
 import functools
 from pathlib import Path
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+from urllib.parse import urlsplit
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -57,7 +58,13 @@ with sync_playwright() as p:
             # Tests cover production admin/editor/search modules; unrelated realtime and React islands are isolated.
             if '/assets/forum.js' in url or '/assets/react-ui.js' in url:
                 return r.fulfill(content_type='application/javascript',body='export {};')
-            if url.startswith(origin): return r.continue_()
+            if url.startswith(origin):
+                path=urlsplit(url).path
+                if not Path(path).suffix:
+                    target=ROOT / (path.strip('/')+'.html' if path.strip('/') else 'index.html')
+                    if target.is_file():
+                        return r.fulfill(content_type='text/html',body=target.read_bytes())
+                return r.continue_()
             if '.supabase.co' in url:
                 return r.fulfill(content_type='application/json',body='[]',headers={'Access-Control-Allow-Origin':'*'})
             return r.abort()
@@ -123,6 +130,23 @@ with sync_playwright() as p:
     assert page.evaluate('document.activeElement.matches(".universal-result")')
     assert not errors,errors
     checks.append('Recherche : ordre des réponses et accès clavier')
+    context.close()
+
+    page,context,errors=page_for()
+    for route,active in [('/', 'Accueil'),('/guides', 'Guides pratiques'),('/forum', 'Forum'),('/wix/wix-overview', 'Vue d’ensemble')]:
+        page.goto(origin+route,wait_until='domcontentloaded')
+        current=page.locator('.hc-nav [aria-current="page"]')
+        assert current.count()==1,(route,current.all_text_contents())
+        assert current.inner_text().strip()==active,(route,current.inner_text())
+        assert page.locator('.hc-nav-link[aria-label="Accueil"].active').count()==(1 if route=='/' else 0),route
+        assert current.evaluate('(el)=>getComputedStyle(el).backgroundColor')=='rgb(236, 237, 239)',route
+    page.locator('.hc-nav-link[aria-label="Guides pratiques"]').hover()
+    page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav-link[aria-label=\\"Guides pratiques\\"]")).backgroundColor === "rgb(242, 242, 244)"')
+    page.evaluate('document.documentElement.dataset.theme="dark"')
+    page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav [aria-current=\\"page\\"]")).backgroundColor === "rgb(37, 37, 41)"')
+    page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav-link[aria-label=\\"Guides pratiques\\"]")).backgroundColor === "rgb(29, 29, 32)"')
+    assert not errors,errors
+    checks.append('Sidebar : page active et fonds gris sur les routes publiques')
     context.close()
     browser.close()
 
