@@ -143,7 +143,7 @@ with sync_playwright() as p:
     page.locator('.hc-nav-link[aria-label="Guides pratiques"]').hover()
     page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav-link[aria-label=\\"Guides pratiques\\"]")).backgroundColor === "rgb(242, 242, 244)"')
     page.evaluate('document.documentElement.dataset.theme="dark"')
-    assert current.evaluate('(el)=>getComputedStyle(el).backgroundColor')=='rgb(37, 37, 41)'
+    page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav [aria-current=\\"page\\"]")).backgroundColor === "rgb(37, 37, 41)"')
     page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav-link[aria-label=\\"Guides pratiques\\"]")).backgroundColor === "rgb(29, 29, 32)"')
     assert not errors,errors
     checks.append('Sidebar : page active et fonds gris sur les routes publiques')
