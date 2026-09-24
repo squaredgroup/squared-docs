@@ -110,7 +110,12 @@ function remoteFilter(item){
 }
 
 let searchController=null,inputTimer=null;
-function renderSearchRows(list,partial=false){if(results)SQHelp.paint(results,list,input?.value||'',{modal:true,partial});}
+function renderSearchRows(list,partial=false){
+  if(!results)return;
+  const focusedResult=results.contains(document.activeElement);
+  SQHelp.paint(results,list,input?.value||'',{modal:true,partial});
+  if(focusedResult&&modal?.classList.contains('open')&&!modal.contains(document.activeElement))input?.focus({preventScroll:true});
+}
 async function render(q=''){
   if(!results)return;const id=++searchRequestId;searchController?.abort();searchController=new AbortController();const control=searchController;
   results.textContent='Recherche dans les guides et la communauté…';results.setAttribute('aria-busy','true');

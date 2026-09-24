@@ -162,6 +162,9 @@
         pressed();new MutationObserver(pressed).observe(filters,{subtree:true,attributes:true,attributeFilter:['class']});
       }
     }
+    document.addEventListener('focusin',event=>{
+      if(searchActive&&searchModal&&!searchModal.contains(event.target))searchInput?.focus({preventScroll:true});
+    },true);
 
     // A reusable native dialog for the article outline and share fallback.
     let sheet = null, sheetReturn = null;
