@@ -17,10 +17,11 @@
 <link rel="stylesheet" href="assets/assistance.css?v=20260920.1" data-sq-assistance-style>
 <link rel="stylesheet" href="assets/responsive.css?v=20260919.1" data-sq-responsive>
 <link rel="stylesheet" href="assets/workspace-content.css?v=20260921.1" data-sq-workspace-content="style">
-<link rel="stylesheet" href="assets/mobile-experience.css?v=20260922.1" data-sq-mobile-experience-style>
-<link rel="stylesheet" href="assets/editorial-intelligence.css?v=20260924.1" data-sq-editorial-intelligence-style>
+<link rel="stylesheet" href="assets/mobile-experience.css?v=20260924.2" data-sq-mobile-experience-style>
+<link rel="stylesheet" href="assets/editorial-intelligence.css?v=20260924.2" data-sq-editorial-intelligence-style>
 <link rel="stylesheet" href="assets/experience-v9.css?v=20260924.1" data-sq-experience-v9>
-</head><body data-forum-page="home" class="sq-home-v9">
+<link rel="stylesheet" href="assets/experience-v10.css?v=20260924.2" data-sq-experience-v10>
+</head><body data-forum-page="home" class="sq-home-v9 sq-home-v10">
 <div id="progress" class="progress"></div>
 <div class="app"><aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main">
 <header class="topbar">
@@ -35,33 +36,39 @@
 </header>
 <div class="shell">
 <section class="help-hero">
-  <span class="sq-hero-kicker"><span class="sq-kicker-dot" aria-hidden="true"></span> La connaissance Squared, au même endroit</span>
-  <img class="help-hero-logo" src="assets/logo-squared.png" alt="Squared Group">
-  <div class="home-logo-lockup"><span>Squared Help · Centre d’aide</span></div>
-  <h1>Une réponse claire.<br><span>Un pas de plus.</span></h1>
-  <p>Guides, solutions et assistance pour avancer sereinement dans l’écosystème Squared.</p>
-  <button class="help-search" data-search-open type="button" aria-label="Rechercher dans le centre d’aide">
-    <span class="search-icon" data-icon-key="search" aria-hidden="true"></span>
-    <span class="help-search-label">Rechercher un guide ou une solution…</span>
-    <kbd aria-hidden="true">⌘K</kbd>
-  </button>
-  <div class="sq-search-suggestions" aria-label="Recherches fréquentes"><span>Explorer :</span><a href="workspace/workspace-activation.html">Activer mon accès</a><a href="workspace/workspace-documents.html">Trouver un document</a><a href="diagnostic.html">Résoudre un problème</a></div>
-  <div class="support-paths">
-    <a class="support-path" href="#knowledge"><span class="big-ico" data-icon-key="start"></span><span><h3>Explorer les guides</h3><p>Une réponse à votre rythme.</p></span><span class="sq-path-arrow" aria-hidden="true">↗</span></a>
-    <a class="support-path" href="forum.html"><span class="big-ico" data-icon-key="forum"></span><span><h3>Échanger</h3><p>Une question pour la communauté.</p></span><span class="sq-path-arrow" aria-hidden="true">↗</span></a>
-    <a class="support-path" href="support.html"><span class="big-ico" data-icon-key="support"></span><span><h3>Contacter le support</h3><p>Un accompagnement privé.</p></span><span class="sq-path-arrow" aria-hidden="true">↗</span></a>
+  <div class="sq-hero-main">
+    <img class="help-hero-logo" src="assets/logo-squared.png" alt="Squared Group">
+    <span class="sq-hero-kicker"><span class="sq-kicker-dot" aria-hidden="true"></span> Squared Help · Centre d’aide</span>
+    <h1>Votre prochaine étape<br> <span>commence ici.</span></h1>
+    <p>Des guides concrets pour résoudre un problème, retrouver votre chemin et avancer dans les produits Squared.</p>
+    <button class="help-search" data-search-open type="button" aria-label="Rechercher dans le centre d’aide">
+      <span class="search-icon" data-icon-key="search" aria-hidden="true"></span>
+      <span class="help-search-label">Rechercher une réponse…</span>
+      <kbd aria-hidden="true">⌘K</kbd>
+    </button>
+    <div class="sq-search-suggestions" aria-label="Recherches fréquentes"><span>Souvent recherché :</span><a href="guide-acces-workspace.html">Connexion</a><a href="guide-document-introuvable.html">Document introuvable</a><a href="guide-wix-mobile.html">Site mobile</a></div>
+  </div>
+  <div class="sq-hero-aside">
+    <span class="sq-hero-aside-eyebrow">À la une · Guide pratique</span>
+    <span class="sq-hero-aside-mark" aria-hidden="true">01 / 08</span>
+    <h2>Je ne retrouve pas un document ou un livrable.</h2>
+    <p>Quatre vérifications pour retrouver le bon fichier sans créer de doublon.</p>
+    <a href="guide-document-introuvable.html">Suivre le guide <span aria-hidden="true">↗</span></a>
+    <div class="sq-hero-aside-links"><a href="guide-acces-workspace.html">Accès Workspace ↗</a><a href="guide-wix-cms.html">Contenu CMS ↗</a></div>
   </div>
 </section>
 
 <section class="section sq-quick-section" aria-labelledby="quickTitle">
-  <div class="section-head"><div><span class="sq-section-index">01 / Réponses rapides</span><h2 id="quickTitle">Commencez par votre besoin</h2><p>Les parcours les plus utiles sont accessibles directement.</p></div><a href="quick-guides.html">Tous les guides rapides ↗</a></div>
+  <div class="section-head"><div><span class="sq-section-index">01 / Guides pratiques</span><h2 id="quickTitle">Par quoi voulez-vous commencer ?</h2><p>Choisissez une situation. Chaque guide donne des étapes et un résultat à vérifier.</p></div><a href="guides.html">Voir les 8 guides ↗</a></div>
   <div class="sq-quick-grid">
-    <a href="access-help.html"><span data-icon-key="access" class="sq-quick-icon"></span><span><strong>Je n’arrive pas à me connecter</strong><small>Retrouver le bon accès</small></span><span aria-hidden="true">↗</span></a>
-    <a href="workspace/workspace-activation.html"><span data-icon-key="workspace" class="sq-quick-icon"></span><span><strong>Activer Workspace</strong><small>Invitation et première connexion</small></span><span aria-hidden="true">↗</span></a>
-    <a href="workspace/workspace-documents.html"><span data-icon-key="documents" class="sq-quick-icon"></span><span><strong>Retrouver un livrable</strong><small>Projet, rubrique et accès</small></span><span aria-hidden="true">↗</span></a>
-    <a href="diagnostic.html"><span data-icon-key="troubleshooting" class="sq-quick-icon"></span><span><strong>Diagnostiquer un blocage</strong><small>Identifier la prochaine action</small></span><span aria-hidden="true">↗</span></a>
+    <a href="guide-acces-workspace.html"><span data-icon-key="access" class="sq-quick-icon"></span><span><strong>Je n’arrive pas à accéder à Workspace</strong><small>Compte, invitation ou serveur</small></span><span aria-hidden="true">↗</span></a>
+    <a href="guide-document-introuvable.html"><span data-icon-key="documents" class="sq-quick-icon"></span><span><strong>Je ne retrouve pas un document</strong><small>Rubrique, projet et droits</small></span><span aria-hidden="true">↗</span></a>
+    <a href="guide-wix-mobile.html"><span data-icon-key="responsive" class="sq-quick-icon"></span><span><strong>Une page Wix se décale sur mobile</strong><small>Conteneur et breakpoints</small></span><span aria-hidden="true">↗</span></a>
+    <a href="guide-wix-cms.html"><span data-icon-key="cms" class="sq-quick-icon"></span><span><strong>Un contenu CMS ne s’affiche pas</strong><small>Collection, dataset et page</small></span><span aria-hidden="true">↗</span></a>
   </div>
 </section>
+
+<nav class="sq-home-routes" aria-label="Autres façons d’obtenir de l’aide"><a href="guides.html"><span data-icon-key="quick"></span><span><strong>Explorer les guides</strong><small>Tous les parcours pas à pas</small></span><span aria-hidden="true">↗</span></a><a href="forum.html"><span data-icon-key="forum"></span><span><strong>Demander à la communauté</strong><small>Une question générale</small></span><span aria-hidden="true">↗</span></a><a href="support.html"><span data-icon-key="support"></span><span><strong>Contacter le support</strong><small>Un sujet privé ou un accès</small></span><span aria-hidden="true">↗</span></a></nav>
 
 <section class="section" aria-labelledby="taskTitle"><div class="section-head"><div><span class="sq-section-index">02 / Parcours</span><h2 id="taskTitle">Choisissez votre espace</h2><p>Un point de départ adapté à votre situation.</p></div><a class="btn" href="parcours.html">Voir tous les parcours</a></div><div class="sq-task-grid">
 <a class="sq-task-card" href="parcours.html?profil=client"><span class="sq-task-icon" data-icon-key="account"></span><strong>Mon espace client</strong><p>Retrouvez vos accès, vos documents et vos livrables.</p><small>Accéder aux guides <span aria-hidden="true">→</span></small></a>
@@ -134,11 +141,11 @@
     <div class="search-results" id="searchResults"></div>
   </div>
 </div><div class="toast" id="toast">Copié</div>
-<script src="assets/sidebar.js"></script><script src="assets/help-core.js?v=20260919.2" data-sq-help-core></script><script src="assets/docs.js"></script><script type="module" src="assets/forum.js"></script>
+<script src="assets/sidebar.js"></script><script src="assets/help-core.js?v=20260919.2" data-sq-help-core></script><script src="assets/docs.js?v=20260924.3"></script><script type="module" src="assets/forum.js"></script>
 <script defer src="assets/workspace-content.js?v=20260921.1" data-sq-workspace-content="script"></script>
-<script defer src="assets/mobile-nav.js?v=20260922.1" data-sq-mobile-nav></script>
+<script defer src="assets/mobile-nav.js?v=20260924.2" data-sq-mobile-nav></script>
 <script defer src="assets/refinement.js?v=20260920.1" data-sq-refinement-script></script>
 <script defer src="assets/assistance.js?v=20260920.1" data-sq-assistance-script></script>
-<script defer src="assets/mobile-experience.js?v=20260922.1" data-sq-mobile-experience-script></script>
-<script defer src="assets/editorial-intelligence.js?v=20260924.1" data-sq-editorial-intelligence-script></script>
+<script defer src="assets/mobile-experience.js?v=20260924.2" data-sq-mobile-experience-script></script>
+<script defer src="assets/editorial-intelligence.js?v=20260924.2" data-sq-editorial-intelligence-script></script>
 </body></html>

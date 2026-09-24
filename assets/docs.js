@@ -19,6 +19,7 @@ const SEARCH=[
 {title:'Bien démarrer',desc:'Comprendre comment utiliser la documentation, la communauté et le support.',href:'getting-started.html',type:'Guide',icon:'GO',tags:'debut commencer aide recherche canal'},
 {title:'FAQ',desc:'Réponses courtes aux questions fréquentes.',href:'faq.html',type:'Guide',icon:'FAQ',tags:'questions reponses aide forum support'},
 {title:'Guides rapides',desc:'Procédures courtes pour les actions les plus fréquentes.',href:'quick-guides.html',type:'Guide',icon:'QG',tags:'quick guide procedure publication incident responsive'},
+{title:'Guides pratiques',desc:'Parcours pas à pas pour résoudre les situations fréquentes dans Workspace et Wix Studio.',href:'guides.html',type:'Guide',icon:'QG',tags:'guides pratiques pas à pas aide workspace wix'},
 {title:'Demander de l’aide efficacement',desc:'Structurer une question ou un ticket pour obtenir une réponse utile.',href:'asking-for-help.html',type:'Guide',icon:'ASK',tags:'aide question support contexte objectif erreur'},
 {title:'Règles de communauté',desc:'Cadre de participation au forum Squared.',href:'community-guidelines.html',type:'Communauté',icon:'RULE',tags:'community règles forum moderation conduite'},
 {title:'Confidentialité du support',desc:'Ce qui reste privé et ce qui ne doit jamais être publié.',href:'support-privacy.html',type:'Sécurité',icon:'PRV',tags:'support privacy confidentialité secret donnée client'},
@@ -109,7 +110,12 @@ function remoteFilter(item){
 }
 
 let searchController=null,inputTimer=null;
-function renderSearchRows(list,partial=false){if(results)SQHelp.paint(results,list,input?.value||'',{modal:true,partial});}
+function renderSearchRows(list,partial=false){
+  if(!results)return;
+  const focusedResult=results.contains(document.activeElement);
+  SQHelp.paint(results,list,input?.value||'',{modal:true,partial});
+  if(focusedResult&&modal?.classList.contains('open')&&!modal.contains(document.activeElement))input?.focus({preventScroll:true});
+}
 async function render(q=''){
   if(!results)return;const id=++searchRequestId;searchController?.abort();searchController=new AbortController();const control=searchController;
   results.textContent='Recherche dans les guides et la communauté…';results.setAttribute('aria-busy','true');

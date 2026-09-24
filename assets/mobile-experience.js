@@ -162,6 +162,9 @@
         pressed();new MutationObserver(pressed).observe(filters,{subtree:true,attributes:true,attributeFilter:['class']});
       }
     }
+    document.addEventListener('focusin',event=>{
+      if(searchActive&&searchModal&&!searchModal.contains(event.target))searchInput?.focus({preventScroll:true});
+    },true);
 
     // A reusable native dialog for the article outline and share fallback.
     let sheet = null, sheetReturn = null;
@@ -192,6 +195,11 @@
       if(event.key!=='Tab')return;
       const controls=focusables(scope),first=controls[0],last=controls[controls.length-1];
       if(!first)return;
+      if(scope===searchModal){
+        const index=controls.indexOf(document.activeElement);
+        const next=event.shiftKey?(index<=0?last:controls[index-1]):(index<0||index===controls.length-1?first:controls[index+1]);
+        event.preventDefault();next.focus({preventScroll:true});return;
+      }
       if(event.shiftKey&&(document.activeElement===first||!scope.contains(document.activeElement))){event.preventDefault();last.focus();}
       else if(!event.shiftKey&&(document.activeElement===last||!scope.contains(document.activeElement))){event.preventDefault();first.focus();}
     },true);
@@ -308,7 +316,7 @@
     });
     addEventListener('pageshow',()=>{syncSearch();syncDrawer();scheduleViewport();scheduleReading();});
     hydrate();syncDrawer();syncSearch();updateViewport();scheduleReading();
-    window.SQMobileExperience={version:'20260922.1',refresh:hydrate};
+    window.SQMobileExperience={version:'20260924.2',refresh:hydrate};
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();

@@ -107,6 +107,7 @@ const groups=[
  {href:'getting-started.html',icon:'start',label:'Bien démarrer'},
  {href:'faq.html',icon:'faq',label:'FAQ'},
  {href:'quick-guides.html',icon:'quick',label:'Guides rapides'},
+ {href:'guides.html',icon:'book',label:'Guides pratiques'},
  {href:'asking-for-help.html',icon:'ask',label:'Aide & règles',children:[{href:'asking-for-help.html',label:'Demander de l’aide'},{href:'community-guidelines.html',label:'Règles communauté'},{href:'support-privacy.html',label:'Confidentialité support'},{href:'access-help.html',label:'Récupérer mon accès'}]}]},
 {id:'products',title:'Produits',open:true,items:[
  {href:'wix-studio.html',icon:'wix',label:'Wix Studio',children:[
@@ -177,7 +178,7 @@ const groups=[
  {href:'https://github.com/squaredgroup/squared-docs',icon:'source',label:'Code source',external:true},
  {href:'https://www.squaredgroup.studio/',icon:'group',label:'Squared Group',external:true}]}
 ];
-const activeFor=(href)=>currentKey===href.toLowerCase();
+const activeFor=(href)=>currentKey===href.toLowerCase()||(href==='guides.html'&&currentKey.startsWith('guide-'));
 const groupHasActive=g=>g.items.some(i=>activeFor(i.href)||(i.children||[]).some(c=>activeFor(c.href)));
 const groupOpen=g=>{if(groupHasActive(g))return true;const s=getNavState('sq-help-group:'+g.id);return s===null?g.open:s==='1';};
 const activeChildParent=groups.flatMap(g=>g.items).find(i=>(i.children||[]).some(c=>activeFor(c.href)))?.href||null;

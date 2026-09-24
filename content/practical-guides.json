@@ -1,0 +1,146 @@
+[
+  {
+    "slug": "guide-acces-workspace",
+    "category": "Workspace",
+    "topic": "Accès",
+    "title": "Je n’arrive pas à accéder à Workspace",
+    "description": "Distinguer une invitation, une connexion existante et un problème de serveur avant de retenter.",
+    "time": "4 min",
+    "signal": "Vous voyez un refus de connexion, une invitation expirée ou une page qui ne charge pas.",
+    "steps": [
+      ["Choisir le bon compte", "Le compte du Help Center et celui de Workspace sont distincts. Ouvrez le portail Workspace depuis votre invitation ou l’adresse officielle reçue, puis vérifiez l’adresse utilisée."],
+      ["Identifier votre situation", "Pour un premier accès, partez de l’invitation et de son code. Pour un compte déjà activé, utilisez la connexion ou la récupération de mot de passe. Ne créez pas un second compte pour retrouver un espace existant."],
+      ["Lire le message exact", "Si la page de connexion web s’affiche mais que l’opération échoue, utilisez « Vérifier la connexion au serveur » sur cette page. Une erreur réseau ne prouve pas que vos identifiants sont faux."],
+      ["Vérifier l’état du service", "Consultez les incidents déclarés. Gardez l’heure, le navigateur et le texte exact de l’erreur ; ne transmettez jamais le code d’invitation ni un code de récupération."]
+    ],
+    "success": "Vous savez si le blocage concerne l’invitation, la session ou la communication avec le serveur et vous avez la bonne prochaine action.",
+    "escalate": "Si l’adresse du compte et la procédure correspondent, envoyez une demande privée avec le message d’erreur et l’heure approximative. Masquez les liens et codes sensibles.",
+    "links": [["Activation et accès Workspace", "workspace/workspace-activation.html"], ["Connexion Workspace", "workspace/workspace-login.html"], ["Dépannage guidé", "diagnostic.html?product=workspace&issue=access"]]
+  },
+  {
+    "slug": "guide-document-introuvable",
+    "category": "Workspace",
+    "topic": "Documents",
+    "title": "Je ne retrouve pas un document ou un livrable",
+    "description": "Vérifier le contexte, la rubrique, la recherche et le partage sans créer de doublon.",
+    "time": "4 min",
+    "signal": "Un fichier attendu n’apparaît pas dans votre espace Workspace.",
+    "steps": [
+      ["Confirmer le contexte", "Vérifiez le compte connecté et le client ou projet concerné. Un même intitulé peut exister dans plusieurs contextes ; notez celui attendu."],
+      ["Ouvrir la bonne rubrique", "Regardez séparément Documents et Livrables. Ces rubriques ne désignent pas toujours le même type de contenu. Vérifiez aussi le projet auquel le fichier devrait être rattaché."],
+      ["Retirer les filtres", "Effacez la recherche locale, puis cherchez par titre ou élément de contexte. Notez le statut ou la version attendue si vous les connaissez."],
+      ["Faire vérifier le partage", "Si le fichier reste absent, demandez au responsable du projet de vérifier sa présence et vos droits de lecture. N’importez pas une copie et ne remplacez pas une version tant que sa source n’est pas confirmée."]
+    ],
+    "success": "Vous avez soit retrouvé le bon élément, soit isolé le contexte et la permission à faire vérifier.",
+    "escalate": "Transmettez en privé le nom du projet, la rubrique consultée, le titre attendu et ce que vous voyez. Évitez d’envoyer le contenu du fichier s’il n’est pas nécessaire.",
+    "links": [["Documents & livrables", "workspace/workspace-documents.html"], ["Rôles & accès", "workspace/workspace-roles.html"], ["Dépannage guidé", "diagnostic.html?product=workspace&issue=documents"]]
+  },
+  {
+    "slug": "guide-projet-invisible",
+    "category": "Workspace",
+    "topic": "Projets",
+    "title": "Un projet ou une tâche n’apparaît pas",
+    "description": "Retrouver le bon espace, comprendre la visibilité et préparer une demande d’accès précise.",
+    "time": "3 min",
+    "signal": "Un collègue voit un projet ou une tâche que vous ne voyez pas.",
+    "steps": [
+      ["Vérifier l’identité", "Confirmez le compte et l’organisation utilisés. Les surfaces visibles dépendent du rôle et du contexte ; comparer deux comptes ne suffit pas à conclure à une erreur."],
+      ["Chercher dans le bon périmètre", "Consultez le client, le projet et, si applicable, la mission ou la liste de tâches concernés. Essayez le titre exact puis un mot du titre."],
+      ["Demander une vérification ciblée", "Indiquez au responsable quel projet manque et ce que vous devez y faire. Il peut contrôler l’affectation et les droits sans élargir tous vos accès."],
+      ["Éviter le doublon", "Ne recréez pas le projet ou la tâche pour contourner l’absence d’affichage. Une copie disperserait les échanges et les documents."]
+    ],
+    "success": "Le responsable peut confirmer l’existence de l’élément et la permission nécessaire, ou vous orienter vers le bon périmètre.",
+    "escalate": "Si l’affectation est confirmée mais que l’élément reste absent, signalez le compte, l’organisation, le projet et la rubrique consultée au support privé.",
+    "links": [["Projets Workspace", "workspace/workspace-projects.html"], ["Tâches Workspace", "workspace/workspace-tasks.html"], ["Rôles & accès", "workspace/workspace-roles.html"]]
+  },
+  {
+    "slug": "guide-installation-workspace",
+    "category": "Workspace",
+    "topic": "Installation",
+    "title": "Installer ou mettre à jour Workspace",
+    "description": "Choisir entre portail web et application native, puis vérifier les étapes après l’installation.",
+    "time": "4 min",
+    "signal": "Vous avez reçu une invitation ou une version de test et ne savez pas par où commencer.",
+    "steps": [
+      ["Choisir le support", "Le portail web s’ouvre dans un navigateur sans installation native. Si votre invitation vise l’application iPhone, iPad ou Mac, utilisez le parcours indiqué pour cet appareil."],
+      ["Vérifier la version proposée", "Pour une bêta, ouvrez l’invitation TestFlight sur l’appareil destinataire et installez uniquement la version qui y est disponible. Une version expirée doit être remplacée par une invitation ou une build valide."],
+      ["Séparer installation et accès", "L’ouverture de l’application ne confirme pas l’activation de votre espace. Utilisez ensuite votre invitation ou votre compte Workspace existant."],
+      ["Documenter un échec", "Notez l’appareil, sa version système, la version de l’application si affichée et le message exact. N’envoyez pas votre code d’invitation."]
+    ],
+    "success": "Vous savez quelle version utiliser et si le blocage se situe à l’installation ou à la connexion.",
+    "escalate": "Si la version attendue n’est pas proposée ou si l’ouverture échoue, envoyez ces informations au support privé et indiquez si le portail web fonctionne.",
+    "links": [["Installation Workspace", "workspace/workspace-installation.html"], ["Activation Workspace", "workspace/workspace-activation.html"], ["Dépannage Workspace", "workspace/workspace-troubleshooting.html"]]
+  },
+  {
+    "slug": "guide-wix-mobile",
+    "category": "Wix Studio",
+    "topic": "Responsive",
+    "title": "Une page Wix se décale sur mobile",
+    "description": "Diagnostiquer le conteneur, les breakpoints et les overrides avant de toucher au design.",
+    "time": "5 min",
+    "signal": "Un élément déborde, se superpose ou change de place sur une largeur donnée.",
+    "steps": [
+      ["Reproduire la largeur", "Notez la page et la largeur où le problème apparaît. Regardez aussi une largeur intermédiaire, pas seulement les aperçus téléphone et ordinateur."],
+      ["Remonter au parent", "Sélectionnez l’élément puis inspectez son conteneur, sa stack ou sa grille. Un problème de largeur du parent peut déplacer plusieurs éléments à la fois."],
+      ["Contrôler la cascade", "Vérifiez les valeurs du breakpoint courant et les overrides hérités. Identifiez la propriété responsable avant de modifier tailles, marges ou positionnement."],
+      ["Corriger et comparer", "Appliquez le changement minimal. Contrôlez ordinateur, tablette, mobile et les largeurs intermédiaires en Preview. N’utilisez pas une section dupliquée comme correctif par défaut."]
+    ],
+    "success": "L’élément reste lisible et aligné sur les largeurs concernées sans régression visible ailleurs.",
+    "escalate": "Si le correctif touche la structure de page ou des composants partagés, faites valider la modification avant publication et joignez les largeurs reproduisant le défaut.",
+    "links": [["Responsive Wix Studio", "wix/wix-responsive.html"], ["Publication Wix", "wix/wix-publishing.html"], ["Dépannage Wix", "wix/wix-troubleshooting.html"]]
+  },
+  {
+    "slug": "guide-wix-cms",
+    "category": "Wix Studio",
+    "topic": "CMS",
+    "title": "Un contenu CMS ne s’affiche pas",
+    "description": "Suivre la chaîne collection, item, dataset et page dynamique avant de modifier des données.",
+    "time": "5 min",
+    "signal": "Un élément existe dans le CMS mais manque sur une page du site.",
+    "steps": [
+      ["Trouver la source", "Confirmez la bonne collection et le bon item. Vérifiez que les champs nécessaires sont remplis et que les références pointent vers les éléments attendus."],
+      ["Lire la connexion", "Sur la page concernée, identifiez le dataset et ses filtres. Un filtre ou une connexion peut masquer un item sans que les données aient disparu."],
+      ["Contrôler la page dynamique", "Si une page dynamique est utilisée, comparez le slug, l’item associé et les champs connectés. Un modèle correct avec un item différent peut produire un résultat trompeur."],
+      ["Comparer Preview et live", "Vérifiez le rendu dans Preview puis sur le site publié. Ne renommez pas un field key et ne modifiez pas la structure de la collection comme première tentative."]
+    ],
+    "success": "Vous avez identifié à quel niveau l’item cesse d’être visible : données, référence, dataset ou publication.",
+    "escalate": "Si un dataset, un champ technique ou une page dynamique doit changer, demandez une validation structurelle avec la collection, l’item et l’URL concernés.",
+    "links": [["CMS & données Wix", "wix/wix-cms.html"], ["Publication Wix", "wix/wix-publishing.html"], ["Velo & code Wix", "wix/wix-velo.html"]]
+  },
+  {
+    "slug": "guide-avant-publication",
+    "category": "Wix Studio",
+    "topic": "Publication",
+    "title": "Vérifier une page avant publication",
+    "description": "Une checklist courte pour contrôler le contenu, les interactions et le rendu live.",
+    "time": "5 min",
+    "signal": "Une modification Wix est prête et doit passer en ligne.",
+    "steps": [
+      ["Délimiter le changement", "Notez la page, le composant et la raison de la modification. Confirmez si elle touche uniquement du contenu ou aussi la structure, un dataset ou du code."],
+      ["Relire le contenu", "Vérifiez titres, liens, images, textes alternatifs et informations sensibles. Testez les formulaires ou interactions modifiés avec des données adaptées."],
+      ["Inspecter chaque format", "Contrôlez ordinateur, tablette, mobile et au moins une largeur intermédiaire dans Preview. Regardez les débordements et les éléments masqués."],
+      ["Valider puis publier", "Obtenez la validation nécessaire si le changement est sensible ou structurel. Publiez, ouvrez la page live et répétez les contrôles essentiels : URL, contenu, lien et interaction."]
+    ],
+    "success": "La version publique montre le changement prévu et les parcours proches fonctionnent toujours.",
+    "escalate": "Si Preview et live diffèrent, conservez les deux URLs ou captures et signalez précisément la différence avant une nouvelle modification.",
+    "links": [["Guide de publication Wix", "wix/wix-publishing.html"], ["Responsive Wix", "wix/wix-responsive.html"], ["Process & Ops", "process.html"]]
+  },
+  {
+    "slug": "guide-demande-support",
+    "category": "Help Center",
+    "topic": "Assistance",
+    "title": "Préparer une demande de support utile",
+    "description": "Donner le contexte nécessaire et choisir le bon canal sans publier de données privées.",
+    "time": "3 min",
+    "signal": "Un guide n’a pas résolu votre problème ou votre cas nécessite une vérification privée.",
+    "steps": [
+      ["Choisir le canal", "Le forum convient à une question générale réutilisable. Le support privé convient à un accès, un compte, un client, un projet ou un contenu confidentiel."],
+      ["Décrire l’objectif", "Nommez le produit, la page ou la rubrique et ce que vous essayiez de faire. Distinguez ce que vous attendiez de ce qui s’est réellement passé."],
+      ["Ajouter une preuve minimale", "Joignez l’heure approximative, l’appareil ou le navigateur, le message d’erreur exact et les vérifications déjà faites. Une courte capture peut aider si elle montre le défaut."],
+      ["Relire avant envoi", "Masquez mots de passe, codes, liens d’invitation, données clients et informations non nécessaires. Gardez le numéro de demande pour suivre la réponse au même endroit."]
+    ],
+    "success": "Votre demande permet de reproduire ou de localiser le problème sans exposer d’informations sensibles.",
+    "escalate": "Si vous ne pouvez pas vous connecter au Help Center, suivez d’abord le guide de récupération de cet accès.",
+    "links": [["Demander de l’aide", "asking-for-help.html"], ["Confidentialité du support", "support-privacy.html"], ["Accès au Help Center", "access-help.html"]]
+  }
+]
