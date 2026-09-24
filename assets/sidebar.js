@@ -109,7 +109,7 @@ const groups=[
  {href:'quick-guides.html',icon:'quick',label:'Guides rapides'},
  {href:'guides.html',icon:'book',label:'Guides pratiques'},
  {href:'asking-for-help.html',icon:'ask',label:'Aide & règles',children:[{href:'asking-for-help.html',label:'Demander de l’aide'},{href:'community-guidelines.html',label:'Règles communauté'},{href:'support-privacy.html',label:'Confidentialité support'},{href:'access-help.html',label:'Récupérer mon accès'}]}]},
-{id:'products',title:'Produits',open:true,items:[
+{id:'products',title:'Produits',open:false,items:[
  {href:'wix-studio.html',icon:'wix',label:'Wix Studio',children:[
    {href:'wix/wix-overview.html',label:'Vue d’ensemble'},
    {href:'wix/wix-responsive.html',label:'Responsive'},
@@ -180,9 +180,9 @@ const groups=[
 ];
 const activeFor=(href)=>currentKey===href.toLowerCase()||(href==='guides.html'&&currentKey.startsWith('guide-'));
 const groupHasActive=g=>g.items.some(i=>activeFor(i.href)||(i.children||[]).some(c=>activeFor(c.href)));
-const groupOpen=g=>{if(groupHasActive(g))return true;const s=getNavState('sq-help-group:'+g.id);return s===null?g.open:s==='1';};
+const groupOpen=g=>{if(groupHasActive(g))return true;const s=getNavState('sq-help-group-v11:'+g.id);return s===null?g.open:s==='1';};
 const activeChildParent=groups.flatMap(g=>g.items).find(i=>(i.children||[]).some(c=>activeFor(c.href)))?.href||null;
-const storedOpenChild=getNavState('sq-help-open-child');
+const storedOpenChild=getNavState('sq-help-open-child-v11');
 const childOpen=i=>{
   if(activeChildParent)return i.href===activeChildParent;
   return storedOpenChild===i.href;
@@ -208,27 +208,30 @@ const items=g=>g.items.map(i=>{
  const openChild=has&&childOpen(i);
  const href=i.external?i.href:localHref(i.href);
  return '<div class="hc-item'+(has?' has-children':'')+((childActive||openChild)?' child-open':'')+(i.staff?' hc-staff-item':'')+'" data-item-href="'+esc(i.href)+'">'+
- '<a class="hc-nav-link'+(active?' active':'')+(childActive?' active-parent':'')+'" href="'+esc(href)+'"'+(i.external?' target="_blank" rel="noreferrer"':'')+(active?' aria-current="page"':'')+'><span class="hc-nav-ico">'+SQIconly.icon(i.icon,(active||childActive)?'fill':'outline','md')+'</span><span>'+esc(i.label)+'</span>'+(i.external?'<span class="hc-nav-external">'+SQIconly.icon('external','regular','sm')+'</span>':'')+'</a>'+
+ '<a class="hc-nav-link'+(active?' active':'')+(childActive?' active-parent':'')+(i.href==='guides.html'?' hc-nav-link-featured':'')+'" href="'+esc(href)+'" aria-label="'+esc(i.label)+'" title="'+esc(i.label)+'"'+(i.external?' target="_blank" rel="noreferrer"':'')+(active?' aria-current="page"':'')+'><span class="hc-nav-ico">'+SQIconly.icon(i.icon,(active||childActive)?'fill':'outline','md')+'</span><span>'+esc(i.label)+'</span>'+(i.external?'<span class="hc-nav-external">'+SQIconly.icon('external','regular','sm')+'</span>':'')+'</a>'+
  (has?'<button class="hc-sub-toggle" type="button" aria-label="Afficher ou masquer les sous-pages">'+SQIconly.icon('chevron','regular','sm')+'</button><div class="hc-sub-links">'+children(i)+'</div>':'')+
  '</div>';
 }).join('');
-host.innerHTML='<a class="hc-brand" href="'+localHref('index.html')+'"><img class="hc-brand-logo" src="'+localHref('assets/logo-squared.png')+'" alt="Squared Group"><span class="hc-brand-copy"><strong>SQUARED HELP</strong><span>Support · Docs · Communauté</span></span></a>'+
+host.innerHTML='<div class="hc-sidebar-head"><a class="hc-brand" href="'+localHref('index.html')+'"><img class="hc-brand-logo" src="'+localHref('assets/logo-squared.png')+'" alt="Squared Group"><span class="hc-brand-copy"><strong>SQUARED HELP</strong><span>Votre centre d’aide</span></span></a>'+
 '<button class="hc-search" id="searchTrigger" data-search-open type="button"><span class="hc-search-icon">'+SQIconly.icon('search','regular','sm')+'</span><span>Rechercher de l’aide</span><kbd>⌘K</kbd></button>'+
-'<button class="hc-collapse" id="sidebarCollapse" type="button" aria-label="Réduire la navigation"><span>'+SQIconly.icon('collapse','regular','sm')+'</span><span>Réduire la navigation</span></button>'+
+'<button class="hc-collapse" id="sidebarCollapse" type="button" aria-label="Réduire la navigation"><span>'+SQIconly.icon('collapse','regular','sm')+'</span><span>Réduire la navigation</span></button></div>'+
 '<nav class="hc-nav">'+groups.map(g=>{const open=groupOpen(g);return '<section class="hc-nav-group'+(open?' open':'')+'" data-group="'+g.id+'"><button class="hc-nav-group-trigger" type="button" aria-expanded="'+(open?'true':'false')+'"><span class="hc-nav-title">'+g.title+'</span><span class="hc-nav-chevron">▾</span></button><div class="hc-nav-group-body">'+items(g)+'</div></section>';}).join('')+'</nav>'+
-'<div class="hc-sidebar-foot"><strong>Squared Help · v7.1</strong>Navigation centralisée · sections repliables<br><a href="'+localHref('changelog.html')+'">Voir les nouveautés →</a></div>';
+'<a class="hc-sidebar-foot" href="'+localHref('support.html')+'"><span class="hc-sidebar-foot-icon">'+SQIconly.icon('support','regular','md')+'</span><span class="hc-sidebar-foot-copy"><strong>Besoin d’aide ?</strong><small>Contacter le support</small></span><span class="hc-sidebar-foot-arrow" aria-hidden="true">↗</span></a>';
 host.classList.add('hc-sidebar');
 {
   const openItems=[...host.querySelectorAll('.hc-item.has-children.child-open')];
   if(openItems.length>1){
     const keep=openItems.find(x=>x.querySelector('.hc-sub-link.active'))||openItems[0];
     openItems.forEach(x=>{if(x!==keep)x.classList.remove('child-open')});
-    setNavState('sq-help-open-child',keep?.dataset.itemHref||'');
+    setNavState('sq-help-open-child-v11',keep?.dataset.itemHref||'');
   }
 }
 if(innerWidth>860&&getNavState('sq-help-sidebar-mini')==='1')document.body.classList.add('sidebar-mini');
-document.getElementById('sidebarCollapse')?.addEventListener('click',()=>{document.body.classList.toggle('sidebar-mini');setNavState('sq-help-sidebar-mini',document.body.classList.contains('sidebar-mini')?'1':'0');});
-host.querySelectorAll('.hc-nav-group-trigger').forEach(btn=>btn.addEventListener('click',()=>{const g=btn.closest('.hc-nav-group');g.classList.toggle('open');const open=g.classList.contains('open');btn.setAttribute('aria-expanded',open?'true':'false');setNavState('sq-help-group:'+g.dataset.group,open?'1':'0');}));
+const collapseButton=document.getElementById('sidebarCollapse');
+const syncCollapseLabel=()=>collapseButton?.setAttribute('aria-label',document.body.classList.contains('sidebar-mini')?'Développer la navigation':'Réduire la navigation');
+syncCollapseLabel();
+collapseButton?.addEventListener('click',()=>{document.body.classList.toggle('sidebar-mini');setNavState('sq-help-sidebar-mini',document.body.classList.contains('sidebar-mini')?'1':'0');syncCollapseLabel();});
+host.querySelectorAll('.hc-nav-group-trigger').forEach(btn=>btn.addEventListener('click',()=>{const g=btn.closest('.hc-nav-group');g.classList.toggle('open');const open=g.classList.contains('open');btn.setAttribute('aria-expanded',open?'true':'false');setNavState('sq-help-group-v11:'+g.dataset.group,open?'1':'0');}));
 host.querySelectorAll('.hc-sub-toggle').forEach(btn=>btn.addEventListener('click',e=>{
   e.preventDefault();
   e.stopPropagation();
@@ -242,10 +245,10 @@ host.querySelectorAll('.hc-sub-toggle').forEach(btn=>btn.addEventListener('click
 
   if(wasOpen){
     item.classList.remove('child-open');
-    setNavState('sq-help-open-child','');
+    setNavState('sq-help-open-child-v11','');
   }else{
     item.classList.add('child-open');
-    setNavState('sq-help-open-child',item.dataset.itemHref||'');
+    setNavState('sq-help-open-child-v11',item.dataset.itemHref||'');
   }
 }));
 host.querySelectorAll('.hc-nav-link,.hc-sub-link').forEach(a=>a.addEventListener('click',()=>{if(innerWidth<=860)host.classList.remove('open');}));
