@@ -4,7 +4,7 @@ import os
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '20260922.1'
+VERSION = '20260924.2'
 changed = []
 for page in sorted(ROOT.rglob('*.html')):
     if any(part in {'.git','node_modules','test-results','.venv'} for part in page.relative_to(ROOT).parts):
