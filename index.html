@@ -18,7 +18,9 @@
 <link rel="stylesheet" href="assets/responsive.css?v=20260919.1" data-sq-responsive>
 <link rel="stylesheet" href="assets/workspace-content.css?v=20260921.1" data-sq-workspace-content="style">
 <link rel="stylesheet" href="assets/mobile-experience.css?v=20260922.1" data-sq-mobile-experience-style>
-</head><body data-forum-page="home">
+<link rel="stylesheet" href="assets/editorial-intelligence.css?v=20260924.1" data-sq-editorial-intelligence-style>
+<link rel="stylesheet" href="assets/experience-v9.css?v=20260924.1" data-sq-experience-v9>
+</head><body data-forum-page="home" class="sq-home-v9">
 <div id="progress" class="progress"></div>
 <div class="app"><aside class="sidebar hc-sidebar" id="sidebar"></aside><main class="main">
 <header class="topbar">
@@ -33,29 +35,41 @@
 </header>
 <div class="shell">
 <section class="help-hero">
+  <span class="sq-hero-kicker"><span class="sq-kicker-dot" aria-hidden="true"></span> La connaissance Squared, au même endroit</span>
   <img class="help-hero-logo" src="assets/logo-squared.png" alt="Squared Group">
   <div class="home-logo-lockup"><span>Squared Help · Centre d’aide</span></div>
-  <h1>Comment pouvons-nous<br> vous aider ?</h1>
-  <p>Des guides clairs, une communauté et une aide privée pour avancer avec Squared.</p>
+  <h1>Une réponse claire.<br><span>Un pas de plus.</span></h1>
+  <p>Guides, solutions et assistance pour avancer sereinement dans l’écosystème Squared.</p>
   <button class="help-search" data-search-open type="button" aria-label="Rechercher dans le centre d’aide">
     <span class="search-icon" data-icon-key="search" aria-hidden="true"></span>
     <span class="help-search-label">Rechercher un guide ou une solution…</span>
     <kbd aria-hidden="true">⌘K</kbd>
   </button>
+  <div class="sq-search-suggestions" aria-label="Recherches fréquentes"><span>Explorer :</span><a href="workspace/workspace-activation.html">Activer mon accès</a><a href="workspace/workspace-documents.html">Trouver un document</a><a href="diagnostic.html">Résoudre un problème</a></div>
   <div class="support-paths">
-    <a class="support-path" href="#knowledge"><span class="big-ico" data-icon-key="start"></span><span><h3>Trouver un guide</h3><p>Guides et procédures.</p></span></a>
-    <a class="support-path" href="forum.html"><span class="big-ico" data-icon-key="forum"></span><span><h3>Poser une question</h3><p>Questions et échanges.</p></span></a>
-    <a class="support-path" href="support.html"><span class="big-ico" data-icon-key="support"></span><span><h3>Suivre ma demande</h3><p>Demandes confidentielles.</p></span></a>
+    <a class="support-path" href="#knowledge"><span class="big-ico" data-icon-key="start"></span><span><h3>Explorer les guides</h3><p>Une réponse à votre rythme.</p></span><span class="sq-path-arrow" aria-hidden="true">↗</span></a>
+    <a class="support-path" href="forum.html"><span class="big-ico" data-icon-key="forum"></span><span><h3>Échanger</h3><p>Une question pour la communauté.</p></span><span class="sq-path-arrow" aria-hidden="true">↗</span></a>
+    <a class="support-path" href="support.html"><span class="big-ico" data-icon-key="support"></span><span><h3>Contacter le support</h3><p>Un accompagnement privé.</p></span><span class="sq-path-arrow" aria-hidden="true">↗</span></a>
   </div>
 </section>
 
-<section class="section" aria-labelledby="taskTitle"><div class="section-head"><div><h2 id="taskTitle">Que souhaitez-vous faire ?</h2><p>Les bons guides, selon ce que vous souhaitez accomplir.</p></div><a class="btn" href="diagnostic.html">Me guider</a></div><div class="sq-task-grid">
+<section class="section sq-quick-section" aria-labelledby="quickTitle">
+  <div class="section-head"><div><span class="sq-section-index">01 / Réponses rapides</span><h2 id="quickTitle">Commencez par votre besoin</h2><p>Les parcours les plus utiles sont accessibles directement.</p></div><a href="quick-guides.html">Tous les guides rapides ↗</a></div>
+  <div class="sq-quick-grid">
+    <a href="access-help.html"><span data-icon-key="access" class="sq-quick-icon"></span><span><strong>Je n’arrive pas à me connecter</strong><small>Retrouver le bon accès</small></span><span aria-hidden="true">↗</span></a>
+    <a href="workspace/workspace-activation.html"><span data-icon-key="workspace" class="sq-quick-icon"></span><span><strong>Activer Workspace</strong><small>Invitation et première connexion</small></span><span aria-hidden="true">↗</span></a>
+    <a href="workspace/workspace-documents.html"><span data-icon-key="documents" class="sq-quick-icon"></span><span><strong>Retrouver un livrable</strong><small>Projet, rubrique et accès</small></span><span aria-hidden="true">↗</span></a>
+    <a href="diagnostic.html"><span data-icon-key="troubleshooting" class="sq-quick-icon"></span><span><strong>Diagnostiquer un blocage</strong><small>Identifier la prochaine action</small></span><span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="taskTitle"><div class="section-head"><div><span class="sq-section-index">02 / Parcours</span><h2 id="taskTitle">Choisissez votre espace</h2><p>Un point de départ adapté à votre situation.</p></div><a class="btn" href="parcours.html">Voir tous les parcours</a></div><div class="sq-task-grid">
 <a class="sq-task-card" href="parcours.html?profil=client"><span class="sq-task-icon" data-icon-key="account"></span><strong>Mon espace client</strong><p>Retrouvez vos accès, vos documents et vos livrables.</p><small>Accéder aux guides <span aria-hidden="true">→</span></small></a>
 <a class="sq-task-card" href="parcours.html?profil=applications"><span class="sq-task-icon" data-icon-key="workspace"></span><strong>Applications Squared</strong><p>Installez votre application et résolvez les problèmes courants.</p><small>Choisir un produit <span aria-hidden="true">→</span></small></a>
 <a class="sq-task-card" href="parcours.html?profil=equipe"><span class="sq-task-icon" data-icon-key="projects"></span><strong>Collaborer avec Squared</strong><p>Retrouvez les méthodes et les outils de vos missions.</p><small>Voir mon parcours <span aria-hidden="true">→</span></small></a>
 </div></section><section id="helpResume" class="sq-journey-panel" hidden aria-live="polite"></section><section id="readingResume" class="sq-journey-panel" hidden></section>
 <section class="section" id="knowledge">
-  <div class="section-head"><div><h2>Trouvez votre point de départ</h2><p>Explorez les guides par produit et par besoin.</p></div><button class="btn" data-search-open>Tout rechercher</button></div>
+  <div class="section-head"><div><span class="sq-section-index">03 / Bibliothèque</span><h2>Explorez la documentation</h2><p>Des contenus organisés par produit et par spécialité.</p></div><button class="btn" data-search-open>Tout rechercher</button></div>
   <div class="category-grid">
     <a class="category-card" href="wix-studio.html"><div class="cat-top"><span class="cat-ico" data-icon-key="wix"></span><span class="cat-count">Guide complet</span></div><h3>Wix Studio</h3><p>Responsive, CMS, SEO, Velo, publication et maintenance.</p><span class="cat-link">Parcourir →</span></a>
     <a class="category-card" href="workspace.html"><div class="cat-top"><span class="cat-ico" data-icon-key="workspace"></span><span class="cat-count">Documentation</span></div><h3>Squared Workspace</h3><p>Rôles, navigation, projets, documents et utilisation.</p><span class="cat-link">Parcourir →</span></a>
@@ -69,17 +83,19 @@
 
 
 <section class="section">
-  <div class="section-head"><div><h2>Articles essentiels</h2><p>Les réponses à connaître en priorité.</p></div></div>
+  <div class="section-head"><div><span class="sq-section-index">04 / À lire</span><h2>Articles essentiels</h2><p>Les procédures qui évitent les erreurs les plus fréquentes.</p></div></div>
   <div class="popular-grid">
-    <a class="popular-article" href="wix/wix-publishing.html"><span class="pnum">01</span><span><strong>Publier sans casser le site</strong><span>Checklist de validation et contrôle live.</span></span><em>Wix →</em></a>
-    <a class="popular-article" href="wix/wix-responsive.html"><span class="pnum">02</span><span><strong>Comprendre le responsive</strong><span>Breakpoints, cascade et overrides.</span></span><em>Wix →</em></a>
-    <a class="popular-article" href="asking-for-help.html"><span class="pnum">03</span><span><strong>Demander de l’aide efficacement</strong><span>Contexte, preuve et résultat attendu.</span></span><em>Aide →</em></a>
-    <a class="popular-article" href="security/security-public-docs.html"><span class="pnum">04</span><span><strong>Ce qui peut être public</strong><span>Règles de publication et données sensibles.</span></span><em>SEC →</em></a>
+    <a class="popular-article" href="workspace/workspace-login.html"><span class="pnum">01</span><span><strong>Se connecter à Workspace</strong><span>Identifier le bon accès et reprendre sa session.</span></span><em>Workspace ↗</em></a>
+    <a class="popular-article" href="workspace/workspace-documents.html"><span class="pnum">02</span><span><strong>Retrouver un document</strong><span>Vérifier le projet, les filtres et les autorisations.</span></span><em>Workspace ↗</em></a>
+    <a class="popular-article" href="wix/wix-publishing.html"><span class="pnum">03</span><span><strong>Publier en confiance</strong><span>Checklist de validation et contrôle après publication.</span></span><em>Wix ↗</em></a>
+    <a class="popular-article" href="wix/wix-responsive.html"><span class="pnum">04</span><span><strong>Comprendre le responsive</strong><span>Breakpoints, cascade et ajustements.</span></span><em>Wix ↗</em></a>
+    <a class="popular-article" href="asking-for-help.html"><span class="pnum">05</span><span><strong>Bien formuler une demande</strong><span>Contexte, preuve et résultat attendu.</span></span><em>Aide ↗</em></a>
+    <a class="popular-article" href="security/security-public-docs.html"><span class="pnum">06</span><span><strong>Partager sans exposer de données</strong><span>Les règles de publication et de confidentialité.</span></span><em>Sécurité ↗</em></a>
   </div>
 </section>
 
 <section class="section">
-  <div class="section-head"><div><h2>En ce moment</h2><p>Activité de la communauté et état du Help Center.</p></div><a href="forum.html">Voir le forum →</a></div>
+  <div class="section-head"><div><span class="sq-section-index">05 / Écosystème</span><h2>Rester informé</h2><p>Discussions récentes et accès aux informations de service.</p></div><a href="forum.html">Voir le forum ↗</a></div>
   <div class="home-live-grid">
     <div class="home-discussions">
       <div class="home-discussions-head"><h3>Discussions récentes</h3><a href="forum.html">Tout voir →</a></div>
@@ -99,7 +115,7 @@
 </section>
 
 <section class="section">
-  <div class="banner"><div><h3>Vous ne trouvez toujours pas la réponse ?</h3><p>Passez de la documentation au forum, puis au support privé lorsque le contexte nécessite une intervention humaine.</p></div><div class="banner-actions"><a class="btn" href="forum.html">Forum</a><a class="btn green" href="support.html">Support privé</a></div></div>
+  <div class="banner"><div><h3>Vous ne trouvez toujours pas la réponse ?</h3><p>Décrivez votre objectif ou votre problème. Utilisez le forum pour une question réutilisable et le support privé pour un compte, un accès ou un contexte confidentiel.</p></div><div class="banner-actions"><a class="btn" href="forum.html">Forum</a><a class="btn green" href="support.html">Support privé</a></div></div>
 </section>
 
 <footer class="footer"><span>© 2026 Squared Help · Centre d’aide</span><span class="footer-links"><a href="changelog.html">Nouveautés</a><a href="forum.html">Communauté</a><a href="support.html">Support</a></span></footer>
@@ -124,4 +140,5 @@
 <script defer src="assets/refinement.js?v=20260920.1" data-sq-refinement-script></script>
 <script defer src="assets/assistance.js?v=20260920.1" data-sq-assistance-script></script>
 <script defer src="assets/mobile-experience.js?v=20260922.1" data-sq-mobile-experience-script></script>
+<script defer src="assets/editorial-intelligence.js?v=20260924.1" data-sq-editorial-intelligence-script></script>
 </body></html>
