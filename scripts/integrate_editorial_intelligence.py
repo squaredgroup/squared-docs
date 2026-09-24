@@ -16,5 +16,5 @@ for page in sorted(ROOT.rglob('*.html')):
     else:text=re.sub(r'<link\b[^>]*data-sq-editorial-intelligence-style[^>]*>',style,text,count=1)
     if 'data-sq-editorial-intelligence-script' not in text:text=text.replace('</body>',script+'\n</body>',1)
     else:text=re.sub(r'<script\b[^>]*data-sq-editorial-intelligence-script[^>]*>\s*</script>',script,text,count=1)
-    if text!=original:page.write_text(text,encoding='utf-8');changed.append(str(page.relative_to(ROOT)))
+    if page == ROOT/'index.html':\n        text=text.replace('assets/help-core.js?v=20260919.2','assets/help-core.js?v=20260924.1')\n    if text!=original:page.write_text(text,encoding='utf-8');changed.append(str(page.relative_to(ROOT)))
 print(f'Editorial intelligence integrated into {len(changed)} pages.')
