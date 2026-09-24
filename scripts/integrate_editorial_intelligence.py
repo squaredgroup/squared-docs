@@ -2,7 +2,7 @@
 from pathlib import Path
 import os,re
 ROOT=Path(__file__).resolve().parents[1]
-VERSION='20260924.1'
+VERSION='20260924.2'
 changed=[]
 for page in sorted(ROOT.rglob('*.html')):
     if any(x in {'.git','node_modules','test-results'} for x in page.relative_to(ROOT).parts):

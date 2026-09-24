@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://docs.squaredgroup.studio/</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/</loc><lastmod>2026-09-24</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/getting-started.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/faq.html</loc><lastmod>2026-09-18</lastmod></url>
-  <url><loc>https://docs.squaredgroup.studio/quick-guides.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://docs.squaredgroup.studio/quick-guides.html</loc><lastmod>2026-09-24</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/asking-for-help.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/community-guidelines.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/support-privacy.html</loc><lastmod>2026-09-18</lastmod></url>
@@ -65,4 +65,4 @@
   <url><loc>https://docs.squaredgroup.studio/security/security-secrets.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/security/security-public-docs.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://docs.squaredgroup.studio/security/security-incidents.html</loc><lastmod>2026-09-18</lastmod></url>
-<url><loc>https://docs.squaredgroup.studio/parcours.html</loc></url><url><loc>https://docs.squaredgroup.studio/diagnostic.html</loc></url><url><loc>https://docs.squaredgroup.studio/access-help.html</loc></url><url><loc>https://docs.squaredgroup.studio/workspace/workspace-login.html</loc></url></urlset>
+<url><loc>https://docs.squaredgroup.studio/parcours.html</loc></url><url><loc>https://docs.squaredgroup.studio/diagnostic.html</loc></url><url><loc>https://docs.squaredgroup.studio/access-help.html</loc></url><url><loc>https://docs.squaredgroup.studio/workspace/workspace-login.html</loc></url><url><loc>https://docs.squaredgroup.studio/guides.html</loc><lastmod>2026-09-24</lastmod></url><url><loc>https://docs.squaredgroup.studio/guide-acces-workspace.html</loc><lastmod>2026-09-24</lastmod></url><url><loc>https://docs.squaredgroup.studio/guide-document-introuvable.html</loc><lastmod>2026-09-24</lastmod></url><url><loc>https://docs.squaredgroup.studio/guide-projet-invisible.html</loc><lastmod>2026-09-24</lastmod></url><url><loc>https://docs.squaredgroup.studio/guide-installation-workspace.html</loc><lastmod>2026-09-24</lastmod></url><url><loc>https://docs.squaredgroup.studio/guide-wix-mobile.html</loc><lastmod>2026-09-24</lastmod></url><url><loc>https://docs.squaredgroup.studio/guide-wix-cms.html</loc><lastmod>2026-09-24</lastmod></url><url><loc>https://docs.squaredgroup.studio/guide-avant-publication.html</loc><lastmod>2026-09-24</lastmod></url><url><loc>https://docs.squaredgroup.studio/guide-demande-support.html</loc><lastmod>2026-09-24</lastmod></url></urlset>
