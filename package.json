@@ -1,6 +1,6 @@
 {
   "name": "squared-help-center",
-  "version": "7.0.0",
+  "version": "9.0.0",
   "private": true,
   "description": "Squared Help Center — production-ready static-first support platform with React islands, Tailwind CSS and Supabase.",
   "scripts": {

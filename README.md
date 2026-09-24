@@ -2,6 +2,10 @@
 
 Documentation centrale de Squared Group.
 
+## Expérience v9.0
+
+L'accueil guide d'abord vers une recherche, une réponse rapide ou un parcours par besoin. La FAQ, le guide de démarrage et les guides Workspace ont été approfondis. `assets/experience-v9.css` apporte la finition visuelle aux pages publiques ; `scripts/integrate_experience_v9.py` maintient cette feuille en dernière position sur ces pages. Les animations décoratives respectent `prefers-reduced-motion`.
+
 ## Structure
 
 ### Centre d’aide
