@@ -612,6 +612,11 @@ body .faq-answer a {
     font-size: clamp(42px, 8vw, 64px);
     line-height: 1.01;
   }
+  body.sq-home-v9 button.help-search {
+    width: calc(100% + 42px);
+    max-width: none;
+    margin-left: -21px;
+  }
   body.sq-home-v9 .support-paths {
     grid-template-columns: 1fr;
     gap: 8px;
@@ -648,6 +653,8 @@ body .faq-answer a {
     font-size: 14px;
   }
   body.sq-home-v9 button.help-search {
+    width: calc(100% + 32px);
+    margin-left: -16px;
     height: 58px;
     grid-template-columns: 30px minmax(0, 1fr);
     padding: 8px 12px;
