@@ -24,7 +24,7 @@ body.sq-home-v10 .help-hero-logo{
 body.sq-home-v10 .sq-hero-kicker{min-height:29px;vertical-align:middle;padding:4px 11px;font-size:10px}
 body.sq-home-v10 .help-hero h1{
   max-width:690px;margin:29px 0 15px;text-align:left;
-  font-size:clamp(43px,4.5vw,70px);line-height:1;letter-spacing:-.068em
+  font-size:clamp(43px,4vw,62px);line-height:1.02;letter-spacing:-.068em
 }
 body.sq-home-v10 .help-hero>p,body.sq-home-v10 .sq-hero-main>p{
   max-width:520px;margin:0;text-align:left;color:#d0decf;font-size:15px;line-height:1.55
