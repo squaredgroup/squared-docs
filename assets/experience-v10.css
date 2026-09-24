@@ -261,11 +261,11 @@ body .hc-nav-link{
   position:relative;min-height:40px;padding:8px 8px!important;gap:10px!important;
   border:0;border-radius:0!important;background:transparent!important;
   box-shadow:none!important;color:var(--muted);font-size:12px!important;
-  font-weight:500;transform:none!important;transition:color .16s ease;
+  font-weight:500;transform:none!important;transition:color .16s ease,background-color .16s ease;
 }
-body .hc-nav-link:hover{color:var(--text);background:transparent!important}
+body .hc-nav-link:hover{color:var(--text);background:var(--panel-2)!important}
 body .hc-nav-link.active,body .hc-nav-link.active-parent{
-  background:transparent!important;box-shadow:none!important;color:var(--text);font-weight:700;
+  background:var(--soft)!important;box-shadow:none!important;color:var(--text);font-weight:700;
 }
 body .hc-nav-link.active::before,body .hc-nav-link.active-parent::before{
   content:"";position:absolute;left:-12px;top:9px;bottom:9px;width:2px;
@@ -276,7 +276,8 @@ body .hc-nav-link-featured{font-weight:600}
 body .hc-nav-link-featured .hc-nav-ico{height:auto;border-radius:0;background:transparent;color:inherit}
 body .hc-sub-toggle{top:5px;border-radius:0}
 body .hc-sub-link{border-radius:0!important;background:transparent!important}
-body .hc-sub-link.active{background:transparent!important;color:var(--text);font-weight:700}
+body .hc-sub-link:hover{background:var(--panel-2)!important}
+body .hc-sub-link.active{background:var(--soft)!important;color:var(--text);font-weight:700}
 body .hc-sub-link.active:before{
   content:"";position:absolute;left:-12px;top:8px;width:2px;height:18px;
   margin:0;border-radius:0;background:var(--green);
