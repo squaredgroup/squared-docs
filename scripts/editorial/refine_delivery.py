@@ -8,6 +8,12 @@ def replace(path, old, new):
     p.write_text(text.replace(old,new,1))
 
 def main():
+    replace('scripts/editorial/build.py',
+        'Choisissez votre situation. Les parcours sont accessibles même sans JavaScript et n’accordent aucun droit supplémentaire.',
+        'Choisissez votre situation pour retrouver les guides utiles, dans le bon ordre, et avancer à votre rythme.')
+    replace('assets/docs.js',
+        "        '<span>·</span><span>'+difficulty+'</span>'+\n        '<span>·</span><span>Consultez la date de révision du guide</span>';",
+        "        (article.dataset.editorialCurated==='true'?'':'<span>·</span><span>'+difficulty+'</span><span>·</span><span>Consultez la date de révision du guide</span>');")
     replace('assets/editorial-intelligence.js',
         "if(!H||!a)return;const path=",
         "if(!H||!a)return;if(a.dataset.editorialCurated==='true'){window.SQEditorialIntelligence={version:'20260926.1',curated:true};return;}const path=")
