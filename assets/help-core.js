@@ -146,7 +146,7 @@
   function paint(host,rows,query='',{modal=false,partial=false}={}){
     host.replaceChildren();host.setAttribute('aria-busy','false');
     if(partial){const note=document.createElement('p');note.className='sq-search-notice';note.setAttribute('role','status');note.textContent='Recherche limitée aux guides disponibles. Les discussions et demandes sont momentanément indisponibles.';host.append(note);}
-    if(!rows.length){const box=document.createElement('div');box.className='search-empty';box.textContent=query.length<2?'Recherchez une action, un produit ou un message d’erreur.':'Aucun résultat pour cette recherche.';const a=document.createElement('a');a.href=local('diagnostic.html');a.className='btn';a.textContent='Me guider';box.append(document.createElement('br'),a);host.append(box);return;}
+    if(!rows.length){const box=document.createElement('div');box.className='search-empty';box.textContent=query.length<2?'Recherchez une action, un produit ou un message d’erreur.':'Aucun résultat pour cette recherche. Essayez le nom du produit, une rubrique ou le message d’erreur rencontré.';const a=document.createElement('a');a.href=local('diagnostic.html');a.className='btn';a.textContent='Me guider';box.append(document.createElement('br'),a);host.append(box);return;}
     for(const row of rows){
       const a=document.createElement('a');a.className=modal?'search-result':'universal-result';a.href=safe(row.href);a.dataset.searchKind=row.kind||'knowledge';
       const glyph=document.createElement('span');glyph.className=modal?'result-ico':'universal-result-icon';glyph.innerHTML=window.SQIconly?.icon(icons[row.kind]||'quick','outline','md')||'';

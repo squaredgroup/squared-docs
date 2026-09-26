@@ -1,0 +1,412 @@
+{
+  "access-help.html": [
+    "produit",
+    "email",
+    "sans-email",
+    "incident"
+  ],
+  "article.html": [],
+  "asking-for-help.html": [
+    "before",
+    "structure",
+    "evidence",
+    "channel"
+  ],
+  "community-guidelines.html": [
+    "principles",
+    "content",
+    "moderation",
+    "knowledge"
+  ],
+  "design-system/ds-accessibility.html": [
+    "keyboard",
+    "contrast",
+    "touch",
+    "media"
+  ],
+  "design-system/ds-colors.html": [
+    "accent",
+    "neutral",
+    "semantic",
+    "contrast"
+  ],
+  "design-system/ds-components.html": [
+    "buttons",
+    "cards",
+    "inputs",
+    "states"
+  ],
+  "design-system/ds-foundations.html": [
+    "principles",
+    "spacing",
+    "radius",
+    "elevation"
+  ],
+  "design-system/ds-motion.html": [
+    "purpose",
+    "duration",
+    "avoid",
+    "reduced"
+  ],
+  "design-system/ds-typography.html": [
+    "font",
+    "hierarchy",
+    "measure",
+    "case"
+  ],
+  "design-system.html": [
+    "principles",
+    "type",
+    "color",
+    "themes",
+    "grid",
+    "iconography",
+    "components",
+    "motion",
+    "accessibility"
+  ],
+  "development/dev-architecture.html": [
+    "boundaries",
+    "source",
+    "dependencies",
+    "evolution"
+  ],
+  "development/dev-git.html": [
+    "commits",
+    "branches",
+    "history"
+  ],
+  "development/dev-overview.html": [
+    "principles",
+    "flow",
+    "quality"
+  ],
+  "development/dev-release.html": [
+    "prepare",
+    "deploy",
+    "verify",
+    "changelog"
+  ],
+  "development/dev-testing.html": [
+    "levels",
+    "manual",
+    "regression",
+    "evidence"
+  ],
+  "development.html": [
+    "principles",
+    "git",
+    "review",
+    "environments",
+    "quality",
+    "help-stack",
+    "release"
+  ],
+  "faq.html": [],
+  "getting-started.html": [
+    "objectif",
+    "parcours",
+    "recherche",
+    "confidentiel",
+    "depart"
+  ],
+  "guide-acces-workspace.html": [
+    "etapes",
+    "resultat",
+    "si-besoin",
+    "aller-plus-loin"
+  ],
+  "guide-avant-publication.html": [
+    "etapes",
+    "resultat",
+    "si-besoin",
+    "aller-plus-loin"
+  ],
+  "guide-demande-support.html": [
+    "etapes",
+    "resultat",
+    "si-besoin",
+    "aller-plus-loin"
+  ],
+  "guide-document-introuvable.html": [
+    "etapes",
+    "resultat",
+    "si-besoin",
+    "aller-plus-loin"
+  ],
+  "guide-installation-workspace.html": [
+    "etapes",
+    "resultat",
+    "si-besoin",
+    "aller-plus-loin"
+  ],
+  "guide-projet-invisible.html": [
+    "etapes",
+    "resultat",
+    "si-besoin",
+    "aller-plus-loin"
+  ],
+  "guide-wix-cms.html": [
+    "etapes",
+    "resultat",
+    "si-besoin",
+    "aller-plus-loin"
+  ],
+  "guide-wix-mobile.html": [
+    "etapes",
+    "resultat",
+    "si-besoin",
+    "aller-plus-loin"
+  ],
+  "process.html": [
+    "lifecycle",
+    "risk",
+    "definition",
+    "production",
+    "review",
+    "approval",
+    "delivery",
+    "incident",
+    "archive"
+  ],
+  "quick-guides.html": [
+    "par-situation",
+    "publish",
+    "responsive",
+    "broken-link",
+    "incident",
+    "public-doc"
+  ],
+  "security/security-access.html": [
+    "least",
+    "identity",
+    "review",
+    "revoke"
+  ],
+  "security/security-incidents.html": [
+    "contain",
+    "preserve",
+    "assess",
+    "fix",
+    "learn",
+    "public"
+  ],
+  "security/security-overview.html": [
+    "principles",
+    "risk",
+    "report"
+  ],
+  "security/security-public-docs.html": [
+    "public",
+    "never",
+    "examples",
+    "review"
+  ],
+  "security/security-secrets.html": [
+    "definition",
+    "storage",
+    "exposed",
+    "rotation"
+  ],
+  "security.html": [
+    "access",
+    "secrets",
+    "data",
+    "public",
+    "incident",
+    "supabase",
+    "backup"
+  ],
+  "support-privacy.html": [
+    "private",
+    "public",
+    "secrets",
+    "data"
+  ],
+  "wix/wix-cms.html": [
+    "collections",
+    "fields",
+    "datasets",
+    "dynamic",
+    "check"
+  ],
+  "wix/wix-overview.html": [
+    "interface",
+    "structure",
+    "rules",
+    "levels"
+  ],
+  "wix/wix-publishing.html": [
+    "preview",
+    "checklist",
+    "publish",
+    "live"
+  ],
+  "wix/wix-responsive.html": [
+    "breakpoints",
+    "global",
+    "workflow",
+    "avoid"
+  ],
+  "wix/wix-seo.html": [
+    "basics",
+    "urls",
+    "indexing",
+    "review"
+  ],
+  "wix/wix-troubleshooting.html": [
+    "principle",
+    "symptoms",
+    "report",
+    "restore"
+  ],
+  "wix/wix-velo.html": [
+    "purpose",
+    "risks",
+    "workflow",
+    "rule"
+  ],
+  "workspace/workspace-account.html": [
+    "identite",
+    "profil",
+    "preferences",
+    "securite"
+  ],
+  "workspace/workspace-activation.html": [
+    "avant",
+    "etapes",
+    "resultat",
+    "problemes",
+    "suite"
+  ],
+  "workspace/workspace-clients.html": [
+    "objectif",
+    "visible",
+    "interne",
+    "probleme"
+  ],
+  "workspace/workspace-collaborators.html": [
+    "principe",
+    "arrivee",
+    "evolution",
+    "depart"
+  ],
+  "workspace/workspace-contracts.html": [
+    "avant",
+    "versions",
+    "acces",
+    "modification"
+  ],
+  "workspace/workspace-departments.html": [
+    "purpose",
+    "rules",
+    "ownership",
+    "risk"
+  ],
+  "workspace/workspace-documents.html": [
+    "contexte",
+    "verifications",
+    "attention",
+    "resultat"
+  ],
+  "workspace/workspace-installation.html": [
+    "choix",
+    "beta",
+    "mise-a-jour",
+    "raccourci",
+    "problemes"
+  ],
+  "workspace/workspace-invitations.html": [
+    "avant",
+    "etat",
+    "securite",
+    "activation"
+  ],
+  "workspace/workspace-login.html": [
+    "choisir",
+    "connexion",
+    "recuperer",
+    "erreurs",
+    "suite"
+  ],
+  "workspace/workspace-members.html": [
+    "model",
+    "lifecycle",
+    "visibility",
+    "review"
+  ],
+  "workspace/workspace-messages.html": [
+    "quand",
+    "contexte",
+    "audience",
+    "decision"
+  ],
+  "workspace/workspace-missions.html": [
+    "role",
+    "structure",
+    "suivi",
+    "cloture"
+  ],
+  "workspace/workspace-navigation.html": [
+    "principles",
+    "dashboard",
+    "deep",
+    "mobile"
+  ],
+  "workspace/workspace-notifications.html": [
+    "types",
+    "ouvrir",
+    "preferences",
+    "trop"
+  ],
+  "workspace/workspace-overview.html": [
+    "purpose",
+    "modules",
+    "experience",
+    "states"
+  ],
+  "workspace/workspace-planning.html": [
+    "role",
+    "lecture",
+    "dates",
+    "changer"
+  ],
+  "workspace/workspace-projects.html": [
+    "avant",
+    "modele",
+    "lecture",
+    "visibilite",
+    "suite"
+  ],
+  "workspace/workspace-roles.html": [
+    "principe",
+    "rubrique",
+    "demande",
+    "resultat"
+  ],
+  "workspace/workspace-search.html": [
+    "search",
+    "command",
+    "permissions",
+    "quality"
+  ],
+  "workspace/workspace-shortcuts.html": [
+    "principles",
+    "families",
+    "conflicts",
+    "page"
+  ],
+  "workspace/workspace-tasks.html": [
+    "bonne-tache",
+    "champs",
+    "statuts",
+    "bloque",
+    "fin"
+  ],
+  "workspace/workspace-troubleshooting.html": [
+    "avant",
+    "reseau",
+    "donnees",
+    "preuve"
+  ]
+}

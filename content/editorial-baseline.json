@@ -1,0 +1,596 @@
+[
+  {
+    "path": "404.html",
+    "title": "Page introuvable — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "access-help.html",
+    "title": "Je n’arrive pas à me connecter — Squared Help Center",
+    "kind": "article",
+    "words": 248
+  },
+  {
+    "path": "account-settings.html",
+    "title": "Compte & interface — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "admin.html",
+    "title": "Admin — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "article.html",
+    "title": "Article — Squared Help Center",
+    "kind": "article",
+    "words": 3
+  },
+  {
+    "path": "asking-for-help.html",
+    "title": "Demander de l’aide efficacement — Squared Help Center",
+    "kind": "article",
+    "words": 158
+  },
+  {
+    "path": "bookmarks.html",
+    "title": "Favoris — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "changelog.html",
+    "title": "Changelog — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "community-guidelines.html",
+    "title": "Règles de communauté — Squared Help Center",
+    "kind": "article",
+    "words": 134
+  },
+  {
+    "path": "community.html",
+    "title": "Forum — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "design-system/ds-accessibility.html",
+    "title": "Design System — Accessibilité — Squared Help Center",
+    "kind": "article",
+    "words": 98
+  },
+  {
+    "path": "design-system/ds-colors.html",
+    "title": "Design System — Couleurs — Squared Help Center",
+    "kind": "article",
+    "words": 103
+  },
+  {
+    "path": "design-system/ds-components.html",
+    "title": "Design System — Composants — Squared Help Center",
+    "kind": "article",
+    "words": 100
+  },
+  {
+    "path": "design-system/ds-foundations.html",
+    "title": "Design System — Fondations — Squared Help Center",
+    "kind": "article",
+    "words": 105
+  },
+  {
+    "path": "design-system/ds-motion.html",
+    "title": "Design System — Motion — Squared Help Center",
+    "kind": "article",
+    "words": 93
+  },
+  {
+    "path": "design-system/ds-typography.html",
+    "title": "Design System — Typographie — Squared Help Center",
+    "kind": "article",
+    "words": 105
+  },
+  {
+    "path": "design-system.html",
+    "title": "Design System — Squared Help Center",
+    "kind": "article",
+    "words": 392
+  },
+  {
+    "path": "development/dev-architecture.html",
+    "title": "Développement — Architecture — Squared Help Center",
+    "kind": "article",
+    "words": 100
+  },
+  {
+    "path": "development/dev-git.html",
+    "title": "Développement — Git & branches — Squared Help Center",
+    "kind": "article",
+    "words": 85
+  },
+  {
+    "path": "development/dev-overview.html",
+    "title": "Développement — Vue d’ensemble — Squared Help Center",
+    "kind": "article",
+    "words": 87
+  },
+  {
+    "path": "development/dev-release.html",
+    "title": "Développement — Release — Squared Help Center",
+    "kind": "article",
+    "words": 89
+  },
+  {
+    "path": "development/dev-testing.html",
+    "title": "Développement — Tests & QA — Squared Help Center",
+    "kind": "article",
+    "words": 101
+  },
+  {
+    "path": "development.html",
+    "title": "Développement — Squared Help Center",
+    "kind": "article",
+    "words": 324
+  },
+  {
+    "path": "diagnostic.html",
+    "title": "Dépannage guidé — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "editorial.html",
+    "title": "Édition des guides — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "faq.html",
+    "title": "FAQ — Squared Help Center",
+    "kind": "article",
+    "words": 293
+  },
+  {
+    "path": "forgot-password.html",
+    "title": "Mot de passe oublié — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "forum-new.html",
+    "title": "Nouvelle discussion — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "forum-topic.html",
+    "title": "Discussion — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "forum.html",
+    "title": "Forum — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "getting-started.html",
+    "title": "Bien démarrer — Squared Help Center",
+    "kind": "article",
+    "words": 270
+  },
+  {
+    "path": "guide-acces-workspace.html",
+    "title": "Je n’arrive pas à accéder à Workspace — Squared Help Center",
+    "kind": "article",
+    "words": 266
+  },
+  {
+    "path": "guide-avant-publication.html",
+    "title": "Vérifier une page avant publication — Squared Help Center",
+    "kind": "article",
+    "words": 212
+  },
+  {
+    "path": "guide-demande-support.html",
+    "title": "Préparer une demande de support utile — Squared Help Center",
+    "kind": "article",
+    "words": 229
+  },
+  {
+    "path": "guide-document-introuvable.html",
+    "title": "Je ne retrouve pas un document ou un livrable — Squared Help Center",
+    "kind": "article",
+    "words": 243
+  },
+  {
+    "path": "guide-installation-workspace.html",
+    "title": "Installer ou mettre à jour Workspace — Squared Help Center",
+    "kind": "article",
+    "words": 230
+  },
+  {
+    "path": "guide-projet-invisible.html",
+    "title": "Un projet ou une tâche n’apparaît pas — Squared Help Center",
+    "kind": "article",
+    "words": 228
+  },
+  {
+    "path": "guide-wix-cms.html",
+    "title": "Un contenu CMS ne s’affiche pas — Squared Help Center",
+    "kind": "article",
+    "words": 238
+  },
+  {
+    "path": "guide-wix-mobile.html",
+    "title": "Une page Wix se décale sur mobile — Squared Help Center",
+    "kind": "article",
+    "words": 218
+  },
+  {
+    "path": "guides.html",
+    "title": "Guides pratiques — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "incident.html",
+    "title": "Détail incident — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "incidents.html",
+    "title": "Incidents — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "index.html",
+    "title": "Centre d’aide — Squared Group",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "login.html",
+    "title": "Connexion — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "moderation.html",
+    "title": "Modération — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "my-activity.html",
+    "title": "Mon activité — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "my-tickets.html",
+    "title": "Mes tickets — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "notification-settings.html",
+    "title": "Notifications — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "notifications.html",
+    "title": "Notifications — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "parcours.html",
+    "title": "Votre point de départ — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "process.html",
+    "title": "Process & Ops — Squared Help Center",
+    "kind": "article",
+    "words": 467
+  },
+  {
+    "path": "profile.html",
+    "title": "Mon compte — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "quick-guides.html",
+    "title": "Guides rapides — Squared Help Center",
+    "kind": "article",
+    "words": 299
+  },
+  {
+    "path": "reset-password.html",
+    "title": "Nouveau mot de passe — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "scheduled-maintenance.html",
+    "title": "Maintenance planifiée — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "search.html",
+    "title": "Recherche — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "security/security-access.html",
+    "title": "Sécurité — Accès & permissions — Squared Help Center",
+    "kind": "article",
+    "words": 104
+  },
+  {
+    "path": "security/security-incidents.html",
+    "title": "Sécurité — Incidents — Squared Help Center",
+    "kind": "article",
+    "words": 130
+  },
+  {
+    "path": "security/security-overview.html",
+    "title": "Sécurité — Vue d’ensemble — Squared Help Center",
+    "kind": "article",
+    "words": 71
+  },
+  {
+    "path": "security/security-public-docs.html",
+    "title": "Sécurité — Documentation publique — Squared Help Center",
+    "kind": "article",
+    "words": 114
+  },
+  {
+    "path": "security/security-secrets.html",
+    "title": "Sécurité — Secrets — Squared Help Center",
+    "kind": "article",
+    "words": 108
+  },
+  {
+    "path": "security.html",
+    "title": "Sécurité — Squared Help Center",
+    "kind": "article",
+    "words": 367
+  },
+  {
+    "path": "server-status.html",
+    "title": "États des serveurs — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "status.html",
+    "title": "Statut — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "support-privacy.html",
+    "title": "Confidentialité du support — Squared Help Center",
+    "kind": "article",
+    "words": 159
+  },
+  {
+    "path": "support-ticket.html",
+    "title": "Demande support — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "support.html",
+    "title": "Support — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "wix/wix-cms.html",
+    "title": "Wix Studio — CMS & données — Squared Help Center",
+    "kind": "article",
+    "words": 151
+  },
+  {
+    "path": "wix/wix-overview.html",
+    "title": "Wix Studio — Vue d’ensemble — Squared Help Center",
+    "kind": "article",
+    "words": 122
+  },
+  {
+    "path": "wix/wix-publishing.html",
+    "title": "Wix Studio — Publication — Squared Help Center",
+    "kind": "article",
+    "words": 103
+  },
+  {
+    "path": "wix/wix-responsive.html",
+    "title": "Wix Studio — Responsive — Squared Help Center",
+    "kind": "article",
+    "words": 127
+  },
+  {
+    "path": "wix/wix-seo.html",
+    "title": "Wix Studio — SEO — Squared Help Center",
+    "kind": "article",
+    "words": 116
+  },
+  {
+    "path": "wix/wix-troubleshooting.html",
+    "title": "Wix Studio — Dépannage — Squared Help Center",
+    "kind": "article",
+    "words": 136
+  },
+  {
+    "path": "wix/wix-velo.html",
+    "title": "Wix Studio — Velo & code — Squared Help Center",
+    "kind": "article",
+    "words": 146
+  },
+  {
+    "path": "wix-studio.html",
+    "title": "Wix Studio — Squared Help Center · Squared Group",
+    "kind": "interface",
+    "words": 0
+  },
+  {
+    "path": "workspace/workspace-account.html",
+    "title": "Workspace — Compte & profil — Squared Help Center",
+    "kind": "article",
+    "words": 163
+  },
+  {
+    "path": "workspace/workspace-activation.html",
+    "title": "Activer mon espace Workspace — Squared Help Center",
+    "kind": "article",
+    "words": 430
+  },
+  {
+    "path": "workspace/workspace-clients.html",
+    "title": "Workspace — Clients — Squared Help Center",
+    "kind": "article",
+    "words": 166
+  },
+  {
+    "path": "workspace/workspace-collaborators.html",
+    "title": "Workspace — Collaborateurs — Squared Help Center",
+    "kind": "article",
+    "words": 155
+  },
+  {
+    "path": "workspace/workspace-contracts.html",
+    "title": "Workspace — Contrats — Squared Help Center",
+    "kind": "article",
+    "words": 177
+  },
+  {
+    "path": "workspace/workspace-departments.html",
+    "title": "Workspace — Pôles & structure — Squared Help Center",
+    "kind": "article",
+    "words": 145
+  },
+  {
+    "path": "workspace/workspace-documents.html",
+    "title": "Je ne vois pas un document ou un livrable — Squared Help Center",
+    "kind": "article",
+    "words": 430
+  },
+  {
+    "path": "workspace/workspace-installation.html",
+    "title": "Installer ou ouvrir Workspace — Squared Help Center",
+    "kind": "article",
+    "words": 386
+  },
+  {
+    "path": "workspace/workspace-invitations.html",
+    "title": "Workspace — Invitations — Squared Help Center",
+    "kind": "article",
+    "words": 172
+  },
+  {
+    "path": "workspace/workspace-login.html",
+    "title": "Me connecter à Workspace — Squared Help Center",
+    "kind": "article",
+    "words": 456
+  },
+  {
+    "path": "workspace/workspace-members.html",
+    "title": "Workspace — Membres & organisations — Squared Help Center",
+    "kind": "article",
+    "words": 118
+  },
+  {
+    "path": "workspace/workspace-messages.html",
+    "title": "Workspace — Messages — Squared Help Center",
+    "kind": "article",
+    "words": 169
+  },
+  {
+    "path": "workspace/workspace-missions.html",
+    "title": "Workspace — Missions — Squared Help Center",
+    "kind": "article",
+    "words": 171
+  },
+  {
+    "path": "workspace/workspace-navigation.html",
+    "title": "Workspace — Navigation — Squared Help Center",
+    "kind": "article",
+    "words": 116
+  },
+  {
+    "path": "workspace/workspace-notifications.html",
+    "title": "Workspace — Notifications — Squared Help Center",
+    "kind": "article",
+    "words": 173
+  },
+  {
+    "path": "workspace/workspace-overview.html",
+    "title": "Workspace — Vue d’ensemble — Squared Help Center",
+    "kind": "article",
+    "words": 123
+  },
+  {
+    "path": "workspace/workspace-planning.html",
+    "title": "Workspace — Planning — Squared Help Center",
+    "kind": "article",
+    "words": 165
+  },
+  {
+    "path": "workspace/workspace-projects.html",
+    "title": "Workspace — Projets & tâches — Squared Help Center",
+    "kind": "article",
+    "words": 229
+  },
+  {
+    "path": "workspace/workspace-roles.html",
+    "title": "Comprendre mes rôles et mes accès — Squared Help Center",
+    "kind": "article",
+    "words": 290
+  },
+  {
+    "path": "workspace/workspace-search.html",
+    "title": "Workspace — Recherche & command palette — Squared Help Center",
+    "kind": "article",
+    "words": 135
+  },
+  {
+    "path": "workspace/workspace-shortcuts.html",
+    "title": "Workspace — Raccourcis clavier — Squared Help Center",
+    "kind": "article",
+    "words": 137
+  },
+  {
+    "path": "workspace/workspace-tasks.html",
+    "title": "Workspace — Tâches — Squared Help Center",
+    "kind": "article",
+    "words": 216
+  },
+  {
+    "path": "workspace/workspace-troubleshooting.html",
+    "title": "Résoudre un problème Workspace — Squared Help Center",
+    "kind": "article",
+    "words": 312
+  },
+  {
+    "path": "workspace.html",
+    "title": "Squared Workspace — Squared Help Center",
+    "kind": "interface",
+    "words": 0
+  }
+]

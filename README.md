@@ -1,5 +1,18 @@
 # Squared Help Center
 
+## Édition membres — septembre 2026
+
+Le corpus éditorial comprend 26 nouveaux articles et 44 articles réécrits, quatre parcours de lecture et 16 réponses FAQ statiques. Les guides existants conservés, les trois articles Supabase et le flux public Workspace gardent leurs sources et leurs adresses.
+
+- [Charte éditoriale](content/editorial-charter.md)
+- [Modèles de rédaction](content/editorial-templates.md)
+- [Registre des contenus](content/editorial-register.csv)
+- [Décisions à confirmer](content/editorial-decisions.md)
+- [Portée et limites de la livraison](content/editorial-delivery.md)
+
+Les textes éditables sont dans `content/editorial/`. Après modification, installer `scripts/editorial/requirements.txt`, puis exécuter `python scripts/editorial/build.py` et `python tests/editorial_contract.py`. Le workflow **Member Editorial Quality** contrôle les pages, les liens, la recherche, la lecture sans JavaScript et le rendu navigateur. Sur `main`, il vérifie aussi le HTML public déployé. Les paiements, comptes réels, applications natives et engagements commerciaux ne sont pas validés par ces tests.
+
+
 Documentation centrale de Squared Group.
 
 ## Expérience v9.0

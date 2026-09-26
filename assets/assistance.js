@@ -16,7 +16,7 @@
     equipe:{title:'Travailler avec Squared',desc:'Retrouvez les méthodes et les outils utiles à vos missions.',steps:[['Comprendre mon rôle','workspace/workspace-roles.html'],['Organiser mon travail','workspace/workspace-projects.html'],['Modifier un site Wix','wix-studio.html']],product:'workspace'}
   };
   function renderPath(){
-    const host=$('#journeyMount');if(!host)return;
+    const host=$('#journeyMount');if(!host)return;if(host.dataset.editorialStatic==='true'){const selected=new URLSearchParams(location.search).get('profil')||new URLSearchParams(location.search).get('type');const sections=[...host.querySelectorAll('[data-journey]')];if(sections.some(s=>s.dataset.journey===selected)){sections.forEach(s=>s.hidden=s.dataset.journey!==selected);}return;}
     const selected=new URLSearchParams(location.search).get('profil');
     const picks=Object.hasOwn(profiles,selected)?[[selected,profiles[selected]]]:Object.entries(profiles);
     host.replaceChildren();

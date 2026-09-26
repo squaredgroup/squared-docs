@@ -88,6 +88,11 @@ def main():
     additions = ''.join(f'<url><loc>https://docs.squaredgroup.studio/{path}</loc><lastmod>2026-09-24</lastmod></url>' for path in ['guides.html'] + [g['slug'] + '.html' for g in GUIDES] if 'https://docs.squaredgroup.studio/' + path not in sitemap)
     sitemap_path.write_text(sitemap.replace('</urlset>', additions + '</urlset>'))
     print(f'Built {len(GUIDES)} practical guides, the hub, search index and sitemap.')
+    # Apply the canonical member corpus after the legacy eight-guide generator.
+    editorial = ROOT / 'scripts/editorial/build.py'
+    if editorial.exists():
+        import runpy
+        runpy.run_path(str(editorial), run_name='__main__')
 
 
 if __name__ == '__main__':
