@@ -1,0 +1,21 @@
+/* Sidebar polish v4 — width, gutters, active state, support CTA. */
+@media(min-width:861px){
+ :root{--sidebar:232px}
+ .sidebar.hc-sidebar{width:232px!important;padding-left:6px!important;padding-right:6px!important}
+ .main{margin-left:232px!important}
+ .hc-search{margin-left:0!important;margin-right:0!important;padding-left:5px!important;padding-right:5px!important}
+ .hc-nav-link{width:100%!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important;padding-left:3px!important;padding-right:3px!important}
+ .hc-nav-group-trigger{padding-left:3px!important;padding-right:3px!important}.hc-sub-link{padding-left:4px!important;padding-right:4px!important}
+ .hc-nav-link.active,.hc-nav-link.active-parent{background:#F0F1EF!important;border-color:transparent!important;color:#171A17!important;box-shadow:none!important}
+ .hc-nav-link.active .hc-nav-ico,.hc-nav-link.active-parent .hc-nav-ico{color:#343A34!important;background:transparent!important}
+ .hc-sidebar-foot{min-height:62px!important;margin-top:10px!important;padding:10px!important;border-radius:10px!important;background:#FFF!important;border:1px solid #DEE3DC!important}
+ .hc-sidebar-foot-icon{width:34px!important;height:34px!important;border-radius:9px!important}.hc-sidebar-foot-icon .sq-iconly{width:18px!important;height:18px!important}
+ .hc-sidebar-foot-icon:after{width:9px!important;height:9px!important;right:-2px!important;bottom:-2px!important;background:#22B266!important}
+ .hc-sidebar-foot-copy{gap:2px!important}.hc-sidebar-foot strong{font-size:10.2px!important;line-height:1.15!important;font-weight:650!important}.hc-sidebar-foot small{font-size:8.5px!important;line-height:1.2!important}.hc-sidebar-foot-arrow{font-size:12px!important}
+}
+@media(max-width:860px){
+ .hc-nav-link{padding-left:4px!important;padding-right:4px!important}
+ .hc-nav-link.active,.hc-nav-link.active-parent{background:#F0F1EF!important;border-color:transparent!important;box-shadow:none!important}
+ .hc-sidebar-foot{min-height:60px!important;padding:10px!important}.hc-sidebar-foot-icon{width:34px!important;height:34px!important}
+ .hc-sidebar-foot strong{font-size:10.5px!important}.hc-sidebar-foot small{font-size:8.6px!important}
+}
