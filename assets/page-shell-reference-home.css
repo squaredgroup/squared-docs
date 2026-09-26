@@ -1,5 +1,5 @@
-/* Page-by-page shell normalization.
-   Home .shell is the reference: 16px outer gutter + light gray content canvas. */
+/* One page canvas, not a canvas wrapped around another canvas.
+   The direct .shell / .forum-shell owns the gray surface and 16px spacing. */
 :root{--sq-page-pad:16px;--sq-page-canvas:#F7F8F6;--sq-page-line:#E2E5E0}
 .main{background:#FFF!important}
 .main>.shell,
@@ -21,10 +21,40 @@
 }
 .main>.shell>.section:last-child,
 .main>.forum-shell>:last-child{margin-bottom:0!important}
+
+/* Home and Guides already had a full-width presentation card. Once their
+   page shell is the canvas, that header is content, not a second container.
+   Keep the actual guide cards, featured article, search and account tools. */
+html body.sq-home-v10 .app>.main>.shell>.help-hero,
+html body.sq-guides-index .app>.main>.shell>.sq-guides-hero{
+ width:100%!important;
+ max-width:none!important;
+ margin:0!important;
+ padding:0!important;
+ background:transparent!important;
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+}
+html body.sq-home-v10 .app>.main>.shell>.help-hero::before,
+html body.sq-home-v10 .app>.main>.shell>.help-hero::after,
+html body.sq-guides-index .app>.main>.shell>.sq-guides-hero::before,
+html body.sq-guides-index .app>.main>.shell>.sq-guides-hero::after{
+ display:none!important;
+}
+
 html[data-theme="dark"]{--sq-page-canvas:#151815;--sq-page-line:#292E29}
 @media(max-width:860px){
  :root{--sq-page-pad:16px}
  .main>.shell,.main>.forum-shell{
    width:calc(100% - 32px)!important;margin:16px!important;padding:16px!important;border-radius:12px!important
+ }
+ /* The previous mobile search used a negative margin to cross hero padding.
+    The hero no longer has padding; keep the search inside the single canvas. */
+ html body.sq-home-v10 .app>.main>.shell>.help-hero .help-search{
+   width:100%!important;
+   max-width:100%!important;
+   margin-left:0!important;
+   margin-right:0!important;
  }
 }
