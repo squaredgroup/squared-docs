@@ -1,0 +1,48 @@
+/* Squared Help — official accent heroes
+   Exact brand green #7BE84E, with dark ink for accessible contrast. */
+:root{--sq-hero-green:#7BE84E;--sq-hero-ink:#10180D}
+body.sq-guides-index .sq-guides-hero,
+body :is(.sq-hero-accent,.hero-accent){
+  background:
+    radial-gradient(circle at 83% 9%,rgba(255,255,255,.22),transparent 36%),
+    radial-gradient(circle at 8% 100%,rgba(16,24,13,.07),transparent 34%),
+    #7BE84E!important;
+  color:var(--sq-hero-ink)!important;
+  border-color:rgba(16,24,13,.10)!important;
+  box-shadow:0 18px 48px rgba(69,139,40,.12)!important;
+}
+body.sq-guides-index .sq-guides-hero:after{
+  border-color:rgba(16,24,13,.16)!important;
+  box-shadow:0 0 0 58px rgba(16,24,13,.035),0 0 0 116px rgba(16,24,13,.022)!important;
+}
+body.sq-guides-index .sq-guides-hero :is(h1,.sq-section-index),
+body :is(.sq-hero-accent,.hero-accent) :is(h1,h2,h3,strong){color:var(--sq-hero-ink)!important}
+body.sq-guides-index .sq-guides-hero p,
+body :is(.sq-hero-accent,.hero-accent) p{color:rgba(16,24,13,.70)!important}
+body.sq-guides-index .sq-guides-tabs a{
+  color:var(--sq-hero-ink)!important;
+  border-color:rgba(16,24,13,.24)!important;
+  background:rgba(255,255,255,.10)!important;
+}
+body.sq-guides-index .sq-guides-tabs a:hover{background:rgba(255,255,255,.24)!important;border-color:rgba(16,24,13,.38)!important}
+
+/* Home keeps its composition but uses the exact same official green. */
+body.sq-home-v9.sq-home-v10 .main .help-hero{
+  background:
+    radial-gradient(circle at 84% 10%,rgba(255,255,255,.20),transparent 36%),
+    radial-gradient(circle at 4% 100%,rgba(16,24,13,.07),transparent 32%),
+    #7BE84E!important;
+  color:var(--sq-hero-ink)!important;border-color:rgba(16,24,13,.10)!important;
+  box-shadow:0 18px 48px rgba(69,139,40,.12)!important;
+}
+body.sq-home-v9.sq-home-v10 .main .help-hero:before{
+  opacity:.10!important;
+  background-image:linear-gradient(rgba(16,24,13,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(16,24,13,.16) 1px,transparent 1px)!important;
+}
+body.sq-home-v9.sq-home-v10 .main .help-hero:after{border-color:rgba(16,24,13,.15)!important}
+body.sq-home-v9.sq-home-v10 .help-hero :is(h1,h1 span){color:var(--sq-hero-ink)!important}
+body.sq-home-v9.sq-home-v10 .sq-hero-main>p{color:rgba(16,24,13,.70)!important}
+body.sq-home-v9.sq-home-v10 .sq-hero-kicker{color:var(--sq-hero-ink)!important;background:rgba(255,255,255,.11)!important;border-color:rgba(16,24,13,.22)!important}
+body.sq-home-v9.sq-home-v10 .sq-kicker-dot{background:var(--sq-hero-ink)!important;box-shadow:0 0 0 4px rgba(16,24,13,.10)!important}
+body.sq-home-v9.sq-home-v10 .sq-search-suggestions,body.sq-home-v9.sq-home-v10 .sq-search-suggestions>span{color:rgba(16,24,13,.62)!important}
+body.sq-home-v9.sq-home-v10 .sq-search-suggestions a{color:var(--sq-hero-ink)!important;border-color:rgba(16,24,13,.18)!important}
