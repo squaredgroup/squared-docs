@@ -191,7 +191,7 @@
 
 /* Build freshness — keeps iOS/PWA-like browser sessions from silently staying on an old UI. */
 (() => {
-  const BUILD = '2026.09.26.4';
+  const BUILD = '2026.09.26.5';
   const KEY = 'sq-help-build';
   const PARAM = '__sq_refresh';
   const current = sessionStorage.getItem(KEY);
@@ -240,7 +240,7 @@
   // Shared intelligence layer: loaded from the same public asset root on every Help Center page.
   if (!document.querySelector('script[data-sq-help-intelligence]')) {
     const intelligence=document.createElement('script');
-    intelligence.src=local('assets/help-intelligence.js?v=20260926.1');
+    intelligence.src=new URL('help-intelligence.js?v=20260926.2', base).href;
     intelligence.defer=true; intelligence.dataset.sqHelpIntelligence='1';
     document.head.append(intelligence);
   }
