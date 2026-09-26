@@ -91,6 +91,13 @@ const ensureModernStack=()=>{
   }
 };
 ensureModernStack();
+if(!document.querySelector('link[data-sq-sidebar-canonical]')){
+  const canonicalSidebar=document.createElement('link');
+  canonicalSidebar.rel='stylesheet';
+  canonicalSidebar.href=localHref('assets/sidebar-canonical-20260927.css');
+  canonicalSidebar.dataset.sqSidebarCanonical='1';
+  document.head.appendChild(canonicalSidebar);
+}
 const getNavState=k=>{try{return localStorage.getItem(k)}catch{return null}};
 const setNavState=(k,v)=>{try{localStorage.setItem(k,v)}catch{}};
 if(!document.querySelector('link[rel="icon"]')){const icon=document.createElement('link');icon.rel='icon';icon.type='image/png';icon.href=localHref('assets/logo-squared.png');document.head.appendChild(icon);}
