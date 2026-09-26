@@ -1,0 +1,246 @@
+{
+  "version": "2026.09.26",
+  "nodes": [
+    {
+      "id": "ws-access",
+      "product": "Workspace",
+      "intent": "access",
+      "title": "Accéder à Workspace",
+      "href": "workspace/workspace-login.html",
+      "keywords": [
+        "connexion",
+        "login",
+        "mot de passe",
+        "invitation",
+        "accès"
+      ],
+      "next": [
+        "ws-roles",
+        "support"
+      ]
+    },
+    {
+      "id": "ws-roles",
+      "product": "Workspace",
+      "intent": "permissions",
+      "title": "Comprendre mes accès",
+      "href": "workspace/workspace-roles.html",
+      "keywords": [
+        "permission",
+        "rôle",
+        "rubrique absente",
+        "droits"
+      ],
+      "next": [
+        "ws-projects",
+        "support"
+      ]
+    },
+    {
+      "id": "ws-projects",
+      "product": "Workspace",
+      "intent": "work",
+      "title": "Suivre un projet",
+      "href": "workspace/workspace-projects.html",
+      "keywords": [
+        "projet",
+        "mission",
+        "tâche",
+        "avancement"
+      ],
+      "next": [
+        "ws-docs",
+        "ws-tasks"
+      ]
+    },
+    {
+      "id": "ws-tasks",
+      "product": "Workspace",
+      "intent": "work",
+      "title": "Créer et suivre une tâche",
+      "href": "workspace/workspace-tasks.html",
+      "keywords": [
+        "tâche",
+        "bloqué",
+        "validation",
+        "statut"
+      ],
+      "next": [
+        "collab-block",
+        "collab-submit"
+      ]
+    },
+    {
+      "id": "ws-docs",
+      "product": "Workspace",
+      "intent": "documents",
+      "title": "Retrouver un document ou un livrable",
+      "href": "workspace/workspace-documents.html",
+      "keywords": [
+        "document",
+        "fichier",
+        "livrable",
+        "introuvable"
+      ],
+      "next": [
+        "diagnostic",
+        "support"
+      ]
+    },
+    {
+      "id": "diagnostic",
+      "product": "Help Center",
+      "intent": "troubleshoot",
+      "title": "Dépannage guidé",
+      "href": "diagnostic.html",
+      "keywords": [
+        "bug",
+        "erreur",
+        "problème",
+        "marche pas",
+        "panne"
+      ],
+      "next": [
+        "status",
+        "support"
+      ]
+    },
+    {
+      "id": "status",
+      "product": "Help Center",
+      "intent": "status",
+      "title": "État des services",
+      "href": "status.html",
+      "keywords": [
+        "serveur",
+        "incident",
+        "panne",
+        "status",
+        "indisponible"
+      ],
+      "next": [
+        "diagnostic"
+      ]
+    },
+    {
+      "id": "support",
+      "product": "Help Center",
+      "intent": "support",
+      "title": "Support privé",
+      "href": "support.html",
+      "keywords": [
+        "aide",
+        "support",
+        "ticket",
+        "privé",
+        "confidentiel"
+      ],
+      "next": [
+        "support-follow"
+      ]
+    },
+    {
+      "id": "support-follow",
+      "product": "Help Center",
+      "intent": "support",
+      "title": "Suivre une demande privée",
+      "href": "support-follow-up.html",
+      "keywords": [
+        "ticket",
+        "suivi",
+        "réponse",
+        "demande"
+      ],
+      "next": []
+    },
+    {
+      "id": "collab-block",
+      "product": "Workspace",
+      "intent": "collaboration",
+      "title": "Signaler un blocage",
+      "href": "collaborator-blocker.html",
+      "keywords": [
+        "blocage",
+        "retard",
+        "dépendance"
+      ],
+      "next": [
+        "collab-submit"
+      ]
+    },
+    {
+      "id": "collab-submit",
+      "product": "Workspace",
+      "intent": "collaboration",
+      "title": "Remettre pour validation",
+      "href": "collaborator-submit.html",
+      "keywords": [
+        "remise",
+        "validation",
+        "livraison"
+      ],
+      "next": []
+    },
+    {
+      "id": "wix-mobile",
+      "product": "Wix Studio",
+      "intent": "responsive",
+      "title": "Corriger une page mobile",
+      "href": "guide-wix-mobile.html",
+      "keywords": [
+        "wix",
+        "mobile",
+        "responsive",
+        "décalé",
+        "breakpoint"
+      ],
+      "next": [
+        "wix-publish"
+      ]
+    },
+    {
+      "id": "wix-publish",
+      "product": "Wix Studio",
+      "intent": "publish",
+      "title": "Vérifier avant publication",
+      "href": "guide-avant-publication.html",
+      "keywords": [
+        "wix",
+        "publier",
+        "publication",
+        "checklist"
+      ],
+      "next": []
+    }
+  ],
+  "synonyms": {
+    "fichier": [
+      "document",
+      "livrable"
+    ],
+    "login": [
+      "connexion",
+      "accès"
+    ],
+    "marche pas": [
+      "problème",
+      "erreur",
+      "panne"
+    ],
+    "tel": [
+      "iphone",
+      "mobile"
+    ],
+    "portable": [
+      "iphone",
+      "mobile"
+    ],
+    "bug": [
+      "erreur",
+      "problème"
+    ],
+    "mdp": [
+      "mot de passe"
+    ]
+  }
+}
