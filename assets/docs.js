@@ -330,8 +330,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       row.className='v6-article-stats';
       row.innerHTML=
         '<span>'+(window.SQIconly?SQIconly.icon('time','regular','xs'):'')+mins+' min de lecture</span>'+
-        '<span>·</span><span>'+difficulty+'</span>'+
-        '<span>·</span><span>Consultez la date de révision du guide</span>';
+        (article.dataset.editorialCurated==='true'?'':'<span>·</span><span>'+difficulty+'</span><span>·</span><span>Consultez la date de révision du guide</span>');
       const meta=head.querySelector('.article-meta');
       meta?meta.insertAdjacentElement('afterend',row):head.appendChild(row);
     }
