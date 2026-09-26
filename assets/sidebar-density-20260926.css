@@ -1,0 +1,30 @@
+/* Sidebar density polish — requested after Product UI review. */
+@media(min-width:861px){
+ .sidebar.hc-sidebar{padding:10px 9px 10px!important}
+ .hc-sidebar-head{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important}
+ .hc-brand{min-height:38px!important;padding:0 4px 6px!important;margin:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+ .hc-brand-logo{width:28px!important;height:28px!important;border-radius:7px!important}
+ .hc-brand-copy strong{font-size:9px!important;color:#6F766F!important;letter-spacing:.055em!important;font-weight:650!important}
+ .hc-brand-copy span{display:none!important}
+ .hc-search{height:34px!important;margin:5px 0 9px!important;padding:0 7px!important;gap:6px!important;border-radius:7px!important;font-size:9px!important}
+ .hc-search-icon{width:16px!important;height:16px!important}.hc-search-icon .sq-iconly{width:14px!important;height:14px!important}
+ .hc-search kbd{padding:1px 3px!important;font-size:7px!important}
+ .hc-nav-link{min-height:30px!important;padding:3px 5px!important;gap:6px!important;border-radius:7px!important;font-size:9.1px!important}
+ .hc-nav-ico{width:20px!important;min-width:20px!important;height:20px!important}.hc-nav-ico .sq-iconly{width:13.5px!important;height:13.5px!important}
+ .hc-nav-group{margin-bottom:6px!important}.hc-nav-group+.hc-nav-group{margin-top:7px!important}
+ .hc-nav-group-trigger{min-height:19px!important;padding:1px 5px 2px!important}
+ .hc-nav-title{font-size:6.8px!important;color:#A6ABA6!important}
+ .hc-item.has-children>.hc-nav-link{padding-right:25px!important}
+ .hc-sub-toggle{width:23px!important;height:23px!important;right:3px!important;top:3px!important}
+ .hc-sub-links{margin-left:16px!important;padding-left:11px!important}
+ .hc-sub-link{min-height:24px!important;padding:4px 6px!important;font-size:8.2px!important}
+ .hc-sidebar-foot{padding:6px 7px!important;margin-top:6px!important;border-radius:7px!important}
+ .hc-sidebar-foot-icon{width:21px!important;height:21px!important}.hc-sidebar-foot strong{font-size:8.2px!important}.hc-sidebar-foot span{font-size:7.2px!important}
+}
+@media(max-width:860px){
+ .hc-sidebar-head{background:transparent!important;border:0!important;box-shadow:none!important}
+ .hc-brand-copy strong{color:#707770!important;letter-spacing:.055em!important}
+ .hc-brand-copy span{display:none!important}
+ .hc-search{padding-left:8px!important;padding-right:8px!important}
+ .hc-nav-link{padding-left:7px!important;padding-right:7px!important}
+}
