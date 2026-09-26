@@ -1,0 +1,14 @@
+/* Content shell spacing — equal horizontal and vertical breathing room. */
+@media(min-width:861px){
+ .main-inner{
+   max-width:none!important;
+   padding:28px!important;
+   box-sizing:border-box!important;
+ }
+}
+@media(max-width:860px){
+ .main-inner{
+   padding:18px!important;
+   box-sizing:border-box!important;
+ }
+}
