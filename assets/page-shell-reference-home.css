@@ -1,0 +1,30 @@
+/* Page-by-page shell normalization.
+   Home .shell is the reference: 16px outer gutter + light gray content canvas. */
+:root{--sq-page-pad:16px;--sq-page-canvas:#F7F8F6;--sq-page-line:#E2E5E0}
+.main{background:#FFF!important}
+.main>.shell,
+.main>.forum-shell{
+ width:calc(100% - (var(--sq-page-pad) * 2))!important;
+ max-width:none!important;
+ margin:var(--sq-page-pad)!important;
+ padding:var(--sq-page-pad)!important;
+ box-sizing:border-box!important;
+ background:var(--sq-page-canvas)!important;
+ border:1px solid var(--sq-page-line)!important;
+ border-radius:14px!important;
+}
+.main>.shell>.help-hero:first-child,
+.main>.shell>.sq-guides-hero:first-child,
+.main>.forum-shell>.forum-hero:first-child,
+.main>.shell>.article-head:first-child{
+ margin-top:0!important;
+}
+.main>.shell>.section:last-child,
+.main>.forum-shell>:last-child{margin-bottom:0!important}
+html[data-theme="dark"]{--sq-page-canvas:#151815;--sq-page-line:#292E29}
+@media(max-width:860px){
+ :root{--sq-page-pad:16px}
+ .main>.shell,.main>.forum-shell{
+   width:calc(100% - 32px)!important;margin:16px!important;padding:16px!important;border-radius:12px!important
+ }
+}
