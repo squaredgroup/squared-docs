@@ -30,7 +30,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Import reviewed delivery
-        run: python scripts/editorial/import_delivery.py
+        run: |
+          python scripts/editorial/import_delivery.py
+          python scripts/editorial/refine_delivery.py
       - uses: ./.github/actions/editorial-check
         with:
           collect_sources: 'true'
@@ -60,8 +62,8 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add content/ scripts/editorial/ tests/editorial_* assets/editorial-members.css scripts/build_practical_guides.py scripts/help_guide_content.py
-          git add -- '*.html' assets/sidebar.js assets/assistance.js assets/editorial-intelligence.js assets/help-core.js assets/knowledge-index.json sitemap.xml
+          git add README.md content/ scripts/editorial/ tests/editorial_* assets/editorial-members.css scripts/build_practical_guides.py scripts/help_guide_content.py
+          git add -- '*.html' assets/docs.js assets/sidebar.js assets/assistance.js assets/editorial-intelligence.js assets/help-core.js assets/knowledge-index.json sitemap.xml
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'build(content): publish tested member editorial sources and generated pages'
           git push origin HEAD:content/member-editorial-20260926
