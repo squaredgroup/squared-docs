@@ -191,7 +191,8 @@
 
 /* Build freshness — keeps iOS/PWA-like browser sessions from silently staying on an old UI. */
 (() => {
-  const BUILD = '2026.09.26.5';
+  const assetBase = new URL('./', document.currentScript.src);
+  const BUILD = '2026.09.26.6';
   const KEY = 'sq-help-build';
   const PARAM = '__sq_refresh';
   const current = sessionStorage.getItem(KEY);
@@ -219,7 +220,7 @@
   // When a deployed build marker changes, offer a one-tap refresh instead of leaving stale UI.
   const check = async () => {
     try {
-      const url = new URL('assets/build.json', base);
+      const url = new URL('build.json', assetBase);
       url.searchParams.set('_', Date.now());
       const response = await fetch(url, {cache:'no-store', headers:{'cache-control':'no-cache'}});
       if (!response.ok) return;
@@ -237,10 +238,14 @@
   addEventListener('focus', check);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) check(); });
 
+  // Refresh the global design layer with the current build key so deployed CSS is never pinned to an old query string.
+  const design=document.querySelector('link[data-sq-experience-v10]');
+  if(design){const designUrl=new URL('experience-v10.css',assetBase);designUrl.searchParams.set('v',BUILD);if(design.href!==designUrl.href)design.href=designUrl.href;}
+
   // Shared intelligence layer: loaded from the same public asset root on every Help Center page.
   if (!document.querySelector('script[data-sq-help-intelligence]')) {
     const intelligence=document.createElement('script');
-    intelligence.src=new URL('help-intelligence.js?v=20260926.2', base).href;
+    intelligence.src=new URL('help-intelligence.js?v=20260926.3', assetBase).href;
     intelligence.defer=true; intelligence.dataset.sqHelpIntelligence='1';
     document.head.append(intelligence);
   }
