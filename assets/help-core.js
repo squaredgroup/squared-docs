@@ -187,3 +187,53 @@
   }
   window.SQHelp={base,local,safe,esc,norm,PRODUCTS,ISSUES,DEVICES,GUIDE,context,contextLink,plan,summary,backend,catalog,lookup,paint,keyboard,applyTheme,setupAppearance};
 })();
+
+
+/* Build freshness — keeps iOS/PWA-like browser sessions from silently staying on an old UI. */
+(() => {
+  const BUILD = '2026.09.26.3';
+  const KEY = 'sq-help-build';
+  const PARAM = '__sq_refresh';
+  const current = sessionStorage.getItem(KEY);
+  sessionStorage.setItem(KEY, BUILD);
+
+  const hardRefresh = () => {
+    const u = new URL(location.href);
+    u.searchParams.set(PARAM, BUILD + '-' + Date.now());
+    location.replace(u.href);
+  };
+
+  // A previous build in this tab means the user returned to an already-open stale page.
+  if (current && current !== BUILD && !new URL(location.href).searchParams.has(PARAM)) {
+    hardRefresh();
+    return;
+  }
+
+  window.SQHelpRefresh = {build: BUILD, hardRefresh};
+
+  // iOS can restore a page from its back/forward cache without re-requesting assets.
+  addEventListener('pageshow', event => {
+    if (event.persisted && sessionStorage.getItem(KEY) !== BUILD) hardRefresh();
+  });
+
+  // When a deployed build marker changes, offer a one-tap refresh instead of leaving stale UI.
+  const check = async () => {
+    try {
+      const url = new URL('assets/build.json', base);
+      url.searchParams.set('_', Date.now());
+      const response = await fetch(url, {cache:'no-store', headers:{'cache-control':'no-cache'}});
+      if (!response.ok) return;
+      const remote = await response.json();
+      if (!remote?.build || remote.build === BUILD || document.querySelector('.sq-update-banner')) return;
+      const bar = document.createElement('div');
+      bar.className = 'sq-update-banner';
+      bar.setAttribute('role','status');
+      bar.innerHTML = '<div><strong>Nouvelle version disponible</strong><span>Le Help Center a été mis à jour.</span></div><button type="button">Actualiser</button>';
+      bar.querySelector('button').addEventListener('click', hardRefresh);
+      document.body.append(bar);
+    } catch {}
+  };
+  setTimeout(check, 1200);
+  addEventListener('focus', check);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) check(); });
+})();
