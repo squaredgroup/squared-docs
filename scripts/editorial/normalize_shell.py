@@ -5,8 +5,8 @@ from pathlib import Path
 import json,re
 ROOT=Path(__file__).resolve().parents[2]
 SKIP={'.git','.reference','node_modules','test-results'}
-ASSISTANCE=re.compile(r'<link\b[^>]*\bdata-sq-assistance-style(?:[\s=>])[^>]*>',re.I)
-RESPONSIVE=re.compile(r'<link\b[^>]*\bdata-sq-responsive(?:[\s=>])[^>]*>',re.I)
+ASSISTANCE=re.compile(r'<link\b[^>]*\bdata-sq-assistance-style(?=[\s=>])[^>]*>',re.I)
+RESPONSIVE=re.compile(r'<link\b[^>]*\bdata-sq-responsive(?=[\s=>])[^>]*>',re.I)
 
 def normalize(text):
     a=list(ASSISTANCE.finditer(text));r=list(RESPONSIVE.finditer(text))
@@ -18,6 +18,10 @@ def normalize(text):
     return text[:pos]+tag+'\n'+text[pos:]
 
 def main():
+    example='<head><link href="r.css" data-sq-responsive><link href="a.css" data-sq-assistance-style><link href="x.css"></head>'
+    result=normalize(example)
+    assert result.count('<link')==3 and result.index('a.css')<result.index('r.css')<result.index('x.css')
+    assert normalize(result)==result
     checked=[];changed=[]
     for p in sorted(ROOT.rglob('*.html')):
         if SKIP.intersection(p.relative_to(ROOT).parts):continue
