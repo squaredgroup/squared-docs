@@ -1,47 +1,21 @@
-/* Sidebar polish v4 — alignment, active neutral, stronger support CTA. */
+/* Sidebar polish v4 — width, gutters, active state, support CTA. */
 @media(min-width:861px){
-  /* Same horizontal gutter as search: no extra left/right inset on navigation items. */
-  .hc-nav-primary,.hc-nav-group-body{padding-left:0!important;padding-right:0!important}
-  .hc-nav-link{margin-left:0!important;margin-right:0!important;padding-left:2px!important;padding-right:2px!important}
-  .hc-nav-group-trigger{padding-left:2px!important;padding-right:2px!important}
-  .hc-nav-ico{margin-left:0!important}
-  .hc-item.has-children>.hc-nav-link{padding-left:2px!important;padding-right:23px!important}
-  .hc-sub-links{margin-left:14px!important;padding-left:10px!important}
-  .hc-sub-link{padding-left:4px!important;padding-right:4px!important}
-
-  /* Active state is neutral gray, accent remains for true actions/status only. */
-  .hc-nav-link.active,.hc-nav-link.active-parent{
-    background:#ECEEEC!important;
-    border-color:transparent!important;
-    color:#1F231F!important;
-    box-shadow:none!important;
-  }
-  .hc-nav-link.active .hc-nav-ico,.hc-nav-link.active-parent .hc-nav-ico{
-    color:#404640!important;background:transparent!important;
-  }
-
-  /* Larger support card, stronger hierarchy, keep online dot #22B266. */
-  .hc-sidebar-foot{
-    min-height:62px!important;padding:10px 11px!important;margin-top:10px!important;
-    border-radius:10px!important;gap:9px!important;
-  }
-  .hc-sidebar-foot-icon{width:34px!important;height:34px!important;border-radius:9px!important}
-  .hc-sidebar-foot-icon .sq-iconly{width:17px!important;height:17px!important}
-  .hc-sidebar-foot-icon:after{
-    width:9px!important;height:9px!important;right:-2px!important;bottom:-2px!important;
-    background:#22B266!important;border:2px solid #FFF!important;
-  }
-  .hc-sidebar-foot-copy{gap:2px!important}
-  .hc-sidebar-foot strong{font-size:10.5px!important;line-height:1.15!important;font-weight:650!important;color:#202520!important}
-  .hc-sidebar-foot small{font-size:8.8px!important;line-height:1.2!important;color:#7F877F!important}
-  .hc-sidebar-foot-arrow{font-size:12px!important}
+ :root{--sidebar:232px}
+ .sidebar.hc-sidebar{width:232px!important;padding-left:6px!important;padding-right:6px!important}
+ .main{margin-left:232px!important}
+ .hc-search{margin-left:0!important;margin-right:0!important;padding-left:5px!important;padding-right:5px!important}
+ .hc-nav-link{width:100%!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important;padding-left:3px!important;padding-right:3px!important}
+ .hc-nav-group-trigger{padding-left:3px!important;padding-right:3px!important}.hc-sub-link{padding-left:4px!important;padding-right:4px!important}
+ .hc-nav-link.active,.hc-nav-link.active-parent{background:#F0F1EF!important;border-color:transparent!important;color:#171A17!important;box-shadow:none!important}
+ .hc-nav-link.active .hc-nav-ico,.hc-nav-link.active-parent .hc-nav-ico{color:#343A34!important;background:transparent!important}
+ .hc-sidebar-foot{min-height:62px!important;margin-top:10px!important;padding:10px!important;border-radius:10px!important;background:#FFF!important;border:1px solid #DEE3DC!important}
+ .hc-sidebar-foot-icon{width:34px!important;height:34px!important;border-radius:9px!important}.hc-sidebar-foot-icon .sq-iconly{width:18px!important;height:18px!important}
+ .hc-sidebar-foot-icon:after{width:9px!important;height:9px!important;right:-2px!important;bottom:-2px!important;background:#22B266!important}
+ .hc-sidebar-foot-copy{gap:2px!important}.hc-sidebar-foot strong{font-size:10.2px!important;line-height:1.15!important;font-weight:650!important}.hc-sidebar-foot small{font-size:8.5px!important;line-height:1.2!important}.hc-sidebar-foot-arrow{font-size:12px!important}
 }
 @media(max-width:860px){
-  .hc-nav-link{padding-left:4px!important;padding-right:4px!important}
-  .hc-item.has-children>.hc-nav-link{padding-right:27px!important}
-  .hc-nav-link.active,.hc-nav-link.active-parent{background:#ECEEEC!important;border-color:transparent!important;color:#1F231F!important;box-shadow:none!important}
-  .hc-sidebar-foot{min-height:62px!important;padding:10px 11px!important}
-  .hc-sidebar-foot-icon{width:34px!important;height:34px!important}
-  .hc-sidebar-foot strong{font-size:10.5px!important}.hc-sidebar-foot small{font-size:8.8px!important}
-  .hc-sidebar-foot-icon:after{width:9px!important;height:9px!important;background:#22B266!important}
+ .hc-nav-link{padding-left:4px!important;padding-right:4px!important}
+ .hc-nav-link.active,.hc-nav-link.active-parent{background:#F0F1EF!important;border-color:transparent!important;box-shadow:none!important}
+ .hc-sidebar-foot{min-height:60px!important;padding:10px!important}.hc-sidebar-foot-icon{width:34px!important;height:34px!important}
+ .hc-sidebar-foot strong{font-size:10.5px!important}.hc-sidebar-foot small{font-size:8.6px!important}
 }
