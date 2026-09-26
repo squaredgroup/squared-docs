@@ -181,7 +181,7 @@ const groups=[
 ];
 const activeFor=(href)=>currentKey===href.toLowerCase()||(href==='guides.html'&&currentKey.startsWith('guide-'));
 const groupHasActive=g=>g.items.some(i=>activeFor(i.href)||(i.children||[]).some(c=>activeFor(c.href)));
-const groupOpen=g=>{if(groupHasActive(g))return true;const s=getNavState('sq-help-group-v12:'+g.id);return s===null?g.open:s==='1';};
+const groupOpen=g=>true;
 const activeChildParent=groups.flatMap(g=>g.items).find(i=>(i.children||[]).some(c=>activeFor(c.href)))?.href||null;
 const storedOpenChild=getNavState('sq-help-open-child-v12');
 const childOpen=i=>{
@@ -232,7 +232,7 @@ const collapseButton=document.getElementById('sidebarCollapse');
 const syncCollapseLabel=()=>collapseButton?.setAttribute('aria-label',document.body.classList.contains('sidebar-mini')?'Développer la navigation':'Réduire la navigation');
 syncCollapseLabel();
 collapseButton?.addEventListener('click',()=>{document.body.classList.toggle('sidebar-mini');setNavState('sq-help-sidebar-mini',document.body.classList.contains('sidebar-mini')?'1':'0');syncCollapseLabel();});
-host.querySelectorAll('.hc-nav-group-trigger').forEach(btn=>btn.addEventListener('click',()=>{const g=btn.closest('.hc-nav-group');g.classList.toggle('open');const open=g.classList.contains('open');btn.setAttribute('aria-expanded',open?'true':'false');setNavState('sq-help-group-v12:'+g.dataset.group,open?'1':'0');}));
+host.querySelectorAll('.hc-nav-group-trigger').forEach(btn=>{btn.setAttribute('aria-expanded','true');btn.setAttribute('aria-disabled','true');});
 host.querySelectorAll('.hc-sub-toggle').forEach(btn=>btn.addEventListener('click',e=>{
   e.preventDefault();
   e.stopPropagation();

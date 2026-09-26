@@ -1,0 +1,33 @@
+/* Sidebar polish v3 — compact gutters, stronger brand, larger support presence. */
+@media(min-width:861px){
+ .sidebar.hc-sidebar{padding-left:7px!important;padding-right:7px!important}
+ .hc-brand{padding-left:3px!important;padding-right:3px!important}
+ .hc-brand-copy strong{font-size:11px!important;font-weight:700!important;letter-spacing:.035em!important;color:#171A17!important}
+ .hc-search{margin-left:0!important;margin-right:0!important;padding-left:5px!important;padding-right:5px!important}
+ .hc-search kbd{margin-left:auto!important}
+ .hc-nav-link{margin-left:0!important;margin-right:0!important;padding-left:4px!important;padding-right:4px!important}
+ .hc-nav-group-trigger{padding-left:4px!important;padding-right:4px!important;cursor:default!important}
+ .hc-nav-group-trigger .hc-nav-chevron{opacity:.38!important}
+ .hc-nav-group:not(.open) .hc-nav-group-body{display:block!important}
+ .hc-sub-link{padding-left:5px!important;padding-right:5px!important}
+ .hc-sidebar-foot{
+   min-height:48px!important;margin:9px 0 0!important;padding:8px 9px!important;
+   border-radius:9px!important;background:#FFF!important;border:1px solid #E0E4DE!important;
+ }
+ .hc-sidebar-foot-icon{position:relative;width:30px!important;height:30px!important;border-radius:8px!important;background:#F1F4EF!important}
+ .hc-sidebar-foot-icon:after{
+   content:"";position:absolute;right:-2px;bottom:-2px;width:8px;height:8px;border-radius:50%;
+   background:#22B266;border:2px solid #FFF;box-sizing:border-box;
+ }
+ .hc-sidebar-foot strong{font-size:9.4px!important;color:#252A25!important}.hc-sidebar-foot small{font-size:8px!important;color:#8A918A!important}
+}
+@media(max-width:860px){
+ .sidebar.hc-sidebar{padding-left:8px!important;padding-right:8px!important}
+ .hc-brand-copy strong{font-size:11px!important;font-weight:700!important;color:#171A17!important}
+ .hc-search{padding-left:6px!important;padding-right:6px!important}
+ .hc-nav-link{padding-left:5px!important;padding-right:5px!important}
+ .hc-nav-group:not(.open) .hc-nav-group-body{display:block!important}
+ .hc-sidebar-foot{min-height:50px!important;padding:8px 9px!important}
+ .hc-sidebar-foot-icon{position:relative;width:30px!important;height:30px!important}
+ .hc-sidebar-foot-icon:after{content:"";position:absolute;right:-2px;bottom:-2px;width:8px;height:8px;border-radius:50%;background:#22B266;border:2px solid #FFF;box-sizing:border-box}
+}
