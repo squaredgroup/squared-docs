@@ -11,7 +11,9 @@ on:
       - scripts/integrate_assistance.py
       - scripts/help_guide_content.py
       - scripts/finish_assistance.py
+      - scripts/editorial/**
       - tests/assistance_journeys.py
+      - .github/workflows/assistance-journeys.yml
   workflow_dispatch:
 
 permissions:
@@ -40,10 +42,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install editorial generation dependencies
+        run: |
+          if test -f scripts/editorial/requirements.txt; then
+            python -m pip install -r scripts/editorial/requirements.txt
+          fi
       - name: Integrate task-oriented assistance
         run: |
           python scripts/integrate_assistance.py
           python scripts/finish_assistance.py
+          if test -f scripts/editorial/build.py; then
+            python scripts/editorial/build.py
+          fi
       - name: Check JavaScript syntax
         run: |
           for f in assets/help-core.js assets/assistance.js assets/docs.js assets/forum.js assets/sidebar.js assets/search-app.js assets/search-backend.js; do
@@ -57,6 +67,16 @@ jobs:
         env:
           WORKSPACE_SOURCE: ${{ github.workspace }}/.reference/workspace
         run: python scripts/capture_workspace_guides.py
+      - name: Preserve editorial and responsive contracts after legacy generation
+        run: |
+          if test -f scripts/editorial/normalize_shell.py; then
+            python scripts/editorial/normalize_shell.py
+          fi
+          if test -f scripts/editorial/build.py; then
+            python scripts/editorial/build.py
+            python tests/editorial_contract.py
+            python scripts/editorial/normalize_shell.py
+          fi
       - name: Assistance journey and privacy regression suite
         run: python tests/assistance_journeys.py
       - name: Existing mobile regression suite

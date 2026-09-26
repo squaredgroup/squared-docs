@@ -1,0 +1,22 @@
+/* Editorial layout only: existing Squared tokens and components remain authoritative. */
+.sq-editorial-article{min-width:0}
+.sq-editorial-article .article-meta{flex-wrap:wrap}
+.sq-editorial-audience{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.sq-editorial-audience>span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.sq-editorial-audience>strong{font-size:13px;font-weight:500}
+.sq-editorial-scope{font-size:12px!important;color:var(--muted);line-height:1.65;margin:16px 0 24px!important}
+.sq-editorial-article .doc-block{position:relative}
+.sq-editorial-article .doc-block p,.sq-editorial-article .doc-block li{overflow-wrap:anywhere}
+.sq-editorial-article .doc-block li+li{margin-top:.6em}
+.sq-editorial-next{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px;padding-top:24px;border-top:1px solid var(--line)}
+.sq-editorial-next .btn{white-space:normal;text-align:center;height:auto;min-height:42px;padding:10px 14px;line-height:1.4}
+.sq-legacy-anchor{display:block;position:relative;scroll-margin-top:100px;height:0;overflow:hidden;pointer-events:none}
+#journeyMount[data-editorial-static]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+#journeyMount[data-editorial-static] .sq-journey-panel{margin:0;min-width:0}
+#journeyMount[data-editorial-static] .sq-journey-panel[hidden]{display:none!important}
+#journeyMount[data-editorial-static] .sq-guide-link{line-height:1.5;overflow-wrap:anywhere}
+.sq-guides-tabs{flex-wrap:wrap}
+.sq-guide-card-top{gap:12px;flex-wrap:wrap}
+.sq-guide-card-top small{font-size:11px;white-space:normal}
+@media(max-width:860px){#journeyMount[data-editorial-static]{grid-template-columns:1fr}.sq-editorial-next{display:grid;grid-template-columns:1fr}.sq-editorial-audience{align-items:flex-start;flex-direction:column;gap:6px}}
+@media print{.sq-editorial-next,.sq-article-feedback-v8{display:none!important}.sq-editorial-article .doc-block{break-inside:auto}.sq-editorial-article h2{break-after:avoid}}

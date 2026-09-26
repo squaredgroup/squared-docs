@@ -1,0 +1,62 @@
+{
+  "review_date": "2026-09-26",
+  "help_baseline_commit": "beae592781243ed6862a8824f38e0935553e861d",
+  "workspace_source_commit": "28b4fc42dbb12daa046f26949b3dd01b8a0a747a",
+  "workspace_source_files": [
+    "js/focus-records.js",
+    "js/focus-navigation.js",
+    "js/focus-search.js",
+    "js/focus-home.js",
+    "js/modules/messages.js",
+    "js/modules/notifications.js",
+    "js/modules/team.js",
+    "js/modules/profile.js",
+    "js/app.js"
+  ],
+  "build_public_script": "https://build.squaredgroup.studio/platform.js",
+  "build_script_sha256": "04e119f533342e71f40031573994dc315d11f224b031a7ee1872ee6449fde995",
+  "scope": "Relecture des sources publiques et des procédures. Les tests de rendu et de navigation sont rapportés séparément. Aucune commande, invitation, connexion privée ou modification des données métier réelles pour écrire les articles.",
+  "not_established": [
+    "Paiement réel Build",
+    "Synchronisation entre deux appareils réels",
+    "Distribution native ouverte",
+    "Réception réelle de tous les e-mails",
+    "Audit de sécurité complet",
+    "Conformité exhaustive WCAG"
+  ],
+  "managed_articles": [
+    {
+      "title": "Trouver une réponse dans le centre d’aide",
+      "href": "article.html?id=2378c6b1-ce6e-4d3d-9606-ada04eb6cf8c",
+      "source": "Supabase",
+      "decision": "Conserver la source administrable, référencer sans dupliquer",
+      "revision_observed": 2
+    },
+    {
+      "title": "Préparer et suivre une demande privée",
+      "href": "article.html?id=beee7bb0-8b0b-439e-8f48-760b3595dd9b",
+      "source": "Supabase",
+      "decision": "Conserver comme parcours de référence, référencer sans dupliquer",
+      "revision_observed": 2
+    },
+    {
+      "title": "Comprendre les états des services Squared",
+      "href": "article.html?id=41788ad3-318a-43e3-a86b-413fdf497c6d",
+      "source": "Supabase",
+      "decision": "Conserver la source administrable, référencer sans dupliquer",
+      "revision_observed": 2
+    }
+  ],
+  "external_sources": [
+    {
+      "url": "https://www.w3.org/WAI/tips/writing/",
+      "used_for": "Titres, liens et instructions accessibles",
+      "checked": "2026-09-26"
+    },
+    {
+      "url": "https://support.wix.com/en/article/cms-about-datasets",
+      "used_for": "Rôle des datasets, distinction contenu et connexion",
+      "checked": "2026-09-26"
+    }
+  ]
+}

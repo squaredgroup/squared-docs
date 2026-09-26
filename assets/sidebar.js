@@ -105,6 +105,8 @@ const groups=[
  {href:'parcours.html',icon:'start',label:'Votre parcours'},
  {href:'diagnostic.html',icon:'troubleshooting',label:'Dépannage guidé'},
  {href:'getting-started.html',icon:'start',label:'Bien démarrer'},
+ {href:'ecosysteme.html',icon:'group',label:'Les espaces Squared'},
+ {href:'glossaire.html',icon:'book',label:'Glossaire'},
  {href:'faq.html',icon:'faq',label:'FAQ'},
  {href:'quick-guides.html',icon:'quick',label:'Guides rapides'},
  {href:'asking-for-help.html',icon:'ask',label:'Aide & règles',children:[{href:'asking-for-help.html',label:'Demander de l’aide'},{href:'community-guidelines.html',label:'Règles communauté'},{href:'support-privacy.html',label:'Confidentialité support'},{href:'access-help.html',label:'Récupérer mon accès'}]}]},
@@ -141,6 +143,7 @@ const groups=[
    {href:'workspace/workspace-shortcuts.html',label:'Raccourcis'},
    {href:'workspace/workspace-search.html',label:'Recherche'},
    {href:'workspace/workspace-troubleshooting.html',label:'Dépannage'}]},
+ {href:'build.html',icon:'book',label:'Squared Build',children:[{href:'guide-build-choisir.html',label:'Choisir une formation'},{href:'guide-build-acces.html',label:'Accès & bibliothèque'},{href:'guide-build-lecture.html',label:'Lecture & progression'},{href:'guide-build-carnet.html',label:'Carnet & sauvegardes'},{href:'guide-build-depannage.html',label:'Dépannage'}]},
  {href:'design-system.html',icon:'design',label:'Design System',children:[
    {href:'design-system/ds-foundations.html',label:'Fondations'},
    {href:'design-system/ds-typography.html',label:'Typographie'},

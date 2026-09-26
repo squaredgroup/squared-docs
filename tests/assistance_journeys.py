@@ -1,4 +1,6 @@
-"""Real frontend, isolated backend. The new assistance must never submit a ticket implicitly."""
+"""Real frontend, isolated backend. No implicit ticket submission or production writes.
+Editorial assertions verify actions and links, not obsolete display copy.
+"""
 import json,functools,threading,re,os
 from pathlib import Path
 from urllib.parse import urlparse,parse_qs
@@ -81,6 +83,24 @@ with sync_playwright() as p:
    if width in [390,1440]:page.screenshot(path=str(OUT/f'journey-home-{engine}-{width}.png'))
    checks.append(f'{engine} {width}: apparence explicite et préférence système')
    ctx.close()
+  page,ctx,errors=new(width=390)
+  page.goto(origin+'/getting-started.html',wait_until='networkidle')
+  feedback=page.locator('.article-feedback-v5');feedback.wait_for(state='visible')
+  assert feedback.count()==1
+  assert feedback.locator('[data-helpful="true"]').count()==1
+  assert feedback.locator('[data-helpful="false"]').count()==1
+  assert feedback.locator('strong').inner_text().strip()
+  assert page.locator('.sq-article-feedback-v8,.sq-article-context,.article-tools').count()==0
+  related=page.locator('.editorial-next-links');assert related.count()==1
+  assert related.locator('a[href]').count()>0 and 'Chargement' not in related.inner_text()
+  checks.append(engine+' rédaction: un seul retour fonctionnel et des liens éditoriaux renseignés')
+  page.goto(origin+'/parcours.html?profil=equipe',wait_until='networkidle')
+  journey=page.locator('#journeyMount [data-journey="equipe"]')
+  assert journey.is_visible() and page.locator('#journeyMount [data-journey]:visible').count()==1
+  for target in ['guide-collaborateur-mission.html','guide-collaborateur-validation.html','guide-collaborateur-fin-mission.html']:
+   assert journey.locator('a[href="'+target+'"]').count()==1
+  assert not errors,errors
+  checks.append(engine+' parcours équipe: mission, validation et transmission accessibles');ctx.close()
   for issue in ['access','documents','installation']:
    page,ctx,errors=new(width=390);page.goto(origin+'/diagnostic.html?product=workspace&issue='+issue,wait_until='networkidle')
    page.get_by_role('button',name='Continuer',exact=True).click();page.get_by_role('button',name='Continuer',exact=True).click();page.get_by_label('iPhone',exact=True).check();page.get_by_role('button',name='Voir les vérifications',exact=True).click()

@@ -227,7 +227,7 @@ if(location.hash.startsWith('#chapitre-')&&location.pathname.endsWith('/'))locat
     };
     const tools=document.createElement('div');tools.className='article-tools';
     tools.innerHTML='<div class="article-tool-card"><strong>Continuer</strong><p>Guides complémentaires liés à cette page.</p><div class="article-tool-actions">'+related.map(x=>'<a class="btn" href="'+resolveRel(x[1])+'">'+x[0]+'</a>').join('')+'</div></div><div class="article-tool-card"><strong>Besoin de plus d’aide ?</strong><p>Passez de la documentation à la communauté ou au support.</p><div class="article-tool-actions"><a class="btn" href="'+local('forum.html')+'">Forum</a><a class="btn" href="'+local('support.html')+'">Support privé</a></div></div>';
-    article.appendChild(tools);
+    if(article.dataset.editorialCurated!=='true')article.appendChild(tools);
 
     const feedback=document.createElement('div');feedback.className='article-feedback-v5';
     feedback.innerHTML='<div><strong>Cet article vous a-t-il aidé ?</strong><p>Votre retour améliore directement le Help Center.</p></div><div class="article-feedback-actions"><button class="btn" data-helpful="true">Oui</button><button class="btn" data-helpful="false">Non</button></div>';
@@ -330,8 +330,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       row.className='v6-article-stats';
       row.innerHTML=
         '<span>'+(window.SQIconly?SQIconly.icon('time','regular','xs'):'')+mins+' min de lecture</span>'+
-        '<span>·</span><span>'+difficulty+'</span>'+
-        '<span>·</span><span>Consultez la date de révision du guide</span>';
+        (article.dataset.editorialCurated==='true'?'':'<span>·</span><span>'+difficulty+'</span><span>·</span><span>Consultez la date de révision du guide</span>');
       const meta=head.querySelector('.article-meta');
       meta?meta.insertAdjacentElement('afterend',row):head.appendChild(row);
     }
