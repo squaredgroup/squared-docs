@@ -304,3 +304,146 @@ body .hc-sidebar-foot-arrow{color:var(--muted)}
   body .sidebar.hc-sidebar .sq-mobile-close{top:calc(18px + env(safe-area-inset-top,0px))}
   body .sidebar.hc-sidebar .sq-mobile-account-links{flex:0 0 auto;margin:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}
 }
+
+
+/* =========================================================
+   v11 — COMPONENT DESIGN SYSTEM
+   Refined tactile surfaces, hierarchy and interaction states.
+   ========================================================= */
+:root{
+  --sq-r-sm:10px;--sq-r-md:14px;--sq-r-lg:18px;--sq-r-xl:24px;
+  --sq-shadow-1:0 1px 2px rgba(10,10,12,.04),0 8px 28px rgba(10,10,12,.045);
+  --sq-shadow-2:0 2px 4px rgba(10,10,12,.05),0 18px 50px rgba(10,10,12,.09);
+  --sq-focus:0 0 0 3px color-mix(in srgb,var(--green) 24%,transparent);
+  --sq-surface-raised:color-mix(in srgb,var(--panel) 96%,var(--bg));
+}
+html[data-theme="dark"]{
+  --sq-shadow-1:0 1px 1px rgba(0,0,0,.18),0 14px 34px rgba(0,0,0,.18);
+  --sq-shadow-2:0 2px 3px rgba(0,0,0,.22),0 22px 60px rgba(0,0,0,.3);
+  --sq-surface-raised:color-mix(in srgb,var(--panel) 92%,#fff 2%);
+}
+
+/* Buttons */
+body :is(.btn,.primary,.secondary){
+  min-height:40px;border-radius:var(--sq-r-sm);padding:0 14px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:650;letter-spacing:-.01em;text-decoration:none;
+  transition:transform .16s ease,box-shadow .16s ease,background-color .16s ease,border-color .16s ease,color .16s ease;
+}
+body .btn{background:var(--sq-surface-raised);border:1px solid var(--line);box-shadow:0 1px 1px rgba(0,0,0,.025)}
+body .btn:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--text) 18%,var(--line));box-shadow:var(--sq-shadow-1)}
+body .btn.green,body .primary{background:var(--green);border-color:var(--green);color:#0b1607;box-shadow:0 7px 22px color-mix(in srgb,var(--green) 20%,transparent)}
+body .btn.green:hover,body .primary:hover{box-shadow:0 10px 30px color-mix(in srgb,var(--green) 28%,transparent)}
+body :is(.btn,.primary,.secondary,.icon-btn):active{transform:translateY(0) scale(.98)}
+body :is(.btn,.primary,.secondary,.icon-btn,input,select,textarea,button):focus-visible{outline:0;box-shadow:var(--sq-focus)!important;border-color:color-mix(in srgb,var(--green) 58%,var(--line))!important}
+
+/* Icon buttons */
+body .icon-btn{
+  width:40px;height:40px;border-radius:var(--sq-r-sm);border:1px solid var(--line);
+  background:var(--sq-surface-raised);display:inline-grid;place-items:center;
+  transition:transform .16s ease,background-color .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+body .icon-btn:hover{background:var(--panel-2);border-color:color-mix(in srgb,var(--text) 16%,var(--line));box-shadow:var(--sq-shadow-1)}
+
+/* Pills, chips, badges */
+body :is(.pill,.filter-chip,.meta-pill,.level-pill){
+  border-radius:999px;border:1px solid var(--line);background:color-mix(in srgb,var(--panel) 92%,transparent);
+  font-weight:600;letter-spacing:.01em;
+}
+body .pill.live{border-color:color-mix(in srgb,var(--green) 28%,var(--line));background:var(--green-soft);color:var(--sq-accent-ink,var(--green))}
+body .filter-chip{min-height:34px;padding:0 12px;transition:.15s ease}
+body .filter-chip:hover{background:var(--panel-2)}
+body .filter-chip.active{background:var(--text);border-color:var(--text);color:var(--bg)}
+
+/* Cards and panels */
+body :is(.sq-guide-card,.home-discussions,.home-status-card,.forum-panel,.forum-auth-card,.article-tool-card,.status-product-card,.admin-card,.level-card){
+  border:1px solid var(--line);border-radius:var(--sq-r-lg);background:var(--sq-surface-raised);
+  box-shadow:var(--sq-shadow-1);
+}
+body :is(.sq-guide-card,.status-product-card){
+  position:relative;overflow:hidden;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,background-color .2s ease;
+}
+body :is(.sq-guide-card,.status-product-card)::before{
+  content:"";position:absolute;inset:0 0 auto;height:1px;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--green) 55%,transparent),transparent);
+  opacity:0;transition:opacity .2s ease;
+}
+body :is(.sq-guide-card,.status-product-card):hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--green) 25%,var(--line));box-shadow:var(--sq-shadow-2)}
+body :is(.sq-guide-card,.status-product-card):hover::before{opacity:1}
+
+/* Article blocks */
+body .article-head{padding-bottom:30px;border-bottom:1px solid var(--line)}
+body .article-head h1{letter-spacing:-.045em;text-wrap:balance}
+body .article-head>p{max-width:68ch}
+body .doc-block{
+  padding:30px 0;border-bottom:1px solid color-mix(in srgb,var(--line) 82%,transparent);
+}
+body .doc-block h2{letter-spacing:-.025em;text-wrap:balance}
+body .doc-block :is(p,li){max-width:76ch}
+body .doc-block :is(ul,ol){padding-left:1.35rem}
+body .doc-block li+li{margin-top:.5em}
+body .callout{
+  border:1px solid var(--line);border-radius:var(--sq-r-md);background:var(--sq-surface-raised);
+  box-shadow:var(--sq-shadow-1);padding:16px 17px;
+}
+
+/* Inputs */
+body :is(input[type="text"],input[type="email"],input[type="password"],input[type="search"],textarea,select,.forum-input,.forum-select){
+  border:1px solid var(--line);border-radius:var(--sq-r-sm);background:var(--panel);color:var(--text);
+  transition:border-color .16s ease,box-shadow .16s ease,background-color .16s ease;
+}
+body :is(input,textarea,select):hover{border-color:color-mix(in srgb,var(--text) 17%,var(--line))}
+body :is(input,textarea)::placeholder{color:var(--muted-2)}
+
+/* Search command surface */
+body .search-box{
+  border:1px solid color-mix(in srgb,var(--text) 12%,var(--line));border-radius:var(--sq-r-xl);
+  background:color-mix(in srgb,var(--bg-2) 96%,transparent);box-shadow:0 30px 100px rgba(0,0,0,.22);
+  backdrop-filter:blur(24px);overflow:hidden;
+}
+body .search-head{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--panel) 70%,transparent)}
+body .search-result{border-radius:var(--sq-r-sm);margin:2px 6px;transition:background-color .14s ease,transform .14s ease}
+body .search-result:hover{background:var(--panel-2);transform:translateX(2px)}
+
+/* Forum */
+body .forum-toolbar{border:1px solid var(--line);border-radius:var(--sq-r-md);background:var(--sq-surface-raised);box-shadow:var(--sq-shadow-1);padding:10px}
+body .topic-row,body .forum-topic{border-radius:var(--sq-r-md);transition:background-color .16s ease,transform .16s ease}
+body .topic-row:hover,body .forum-topic:hover{background:var(--panel-2);transform:translateX(2px)}
+
+/* Banners */
+body .banner{
+  border:1px solid color-mix(in srgb,var(--green) 20%,var(--line));border-radius:var(--sq-r-xl);
+  background:linear-gradient(135deg,color-mix(in srgb,var(--green) 8%,var(--panel)),var(--panel) 55%);
+  box-shadow:var(--sq-shadow-1);padding:24px;
+}
+
+/* Sidebar refinement */
+body .hc-nav-link{border-radius:10px!important}
+body .hc-nav-link:hover{transform:translateX(2px)!important}
+body .hc-nav-link.active,body .hc-nav-link.active-parent{
+  background:linear-gradient(90deg,color-mix(in srgb,var(--green) 9%,var(--hc-nav-active)),var(--hc-nav-active) 72%)!important;
+}
+body .hc-sidebar-foot{transition:background-color .16s ease}
+body .hc-sidebar-foot-icon{border-radius:9px}
+
+/* Feedback / article tools */
+body .article-tools{gap:12px}
+body .article-tool-card{padding:18px}
+body .article-feedback-v5{
+  border:1px solid var(--line);border-radius:var(--sq-r-lg);background:var(--sq-surface-raised);
+  box-shadow:var(--sq-shadow-1);padding:18px;
+}
+
+/* Mobile: preserve touch targets, reduce ornamental movement */
+@media(max-width:860px){
+  body :is(.btn,.primary,.secondary){min-height:44px}
+  body .icon-btn{width:44px;height:44px}
+  body :is(.sq-guide-card,.home-discussions,.home-status-card,.forum-panel,.forum-auth-card,.article-tool-card){border-radius:var(--sq-r-md)}
+  body .doc-block{padding:24px 0}
+  body .banner{border-radius:var(--sq-r-lg);padding:20px}
+  body .search-box{border-radius:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  body :is(.btn,.primary,.secondary,.icon-btn,.sq-guide-card,.status-product-card,.search-result,.topic-row,.forum-topic,.hc-nav-link){transition:none!important;transform:none!important}
+}
