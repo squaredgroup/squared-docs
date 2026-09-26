@@ -11,6 +11,7 @@ on:
       - scripts/integrate_assistance.py
       - scripts/help_guide_content.py
       - scripts/finish_assistance.py
+      - scripts/editorial/**
       - tests/assistance_journeys.py
       - .github/workflows/assistance-journeys.yml
   workflow_dispatch:
@@ -52,7 +53,6 @@ jobs:
           python scripts/finish_assistance.py
           if test -f scripts/editorial/build.py; then
             python scripts/editorial/build.py
-            python tests/editorial_contract.py
           fi
       - name: Check JavaScript syntax
         run: |
@@ -67,6 +67,16 @@ jobs:
         env:
           WORKSPACE_SOURCE: ${{ github.workspace }}/.reference/workspace
         run: python scripts/capture_workspace_guides.py
+      - name: Preserve editorial and responsive contracts after legacy generation
+        run: |
+          if test -f scripts/editorial/normalize_shell.py; then
+            python scripts/editorial/normalize_shell.py
+          fi
+          if test -f scripts/editorial/build.py; then
+            python scripts/editorial/build.py
+            python tests/editorial_contract.py
+            python scripts/editorial/normalize_shell.py
+          fi
       - name: Assistance journey and privacy regression suite
         run: python tests/assistance_journeys.py
       - name: Existing mobile regression suite
