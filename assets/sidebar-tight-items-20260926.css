@@ -1,0 +1,13 @@
+/* Sidebar — tighter item hit surfaces, requested visual density. */
+@media(min-width:861px){
+ .hc-nav-link{min-height:27px!important;padding:2px 4px!important;gap:5px!important;border-radius:6px!important}
+ .hc-nav-ico{width:19px!important;min-width:19px!important;height:19px!important}
+ .hc-nav-ico .sq-iconly{width:13px!important;height:13px!important}
+ .hc-item{margin:0!important}
+ .hc-nav-primary{display:grid!important;gap:1px!important}
+ .hc-nav-group{margin-bottom:4px!important}
+ .hc-nav-group-trigger{min-height:17px!important;padding:1px 4px!important}
+ .hc-item.has-children>.hc-nav-link{padding-right:23px!important}
+ .hc-sub-toggle{width:21px!important;height:21px!important;top:3px!important;right:2px!important}
+ .hc-sub-link{min-height:22px!important;padding:3px 5px!important}
+}
