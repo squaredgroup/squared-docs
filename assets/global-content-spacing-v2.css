@@ -1,0 +1,23 @@
+/* Global content spacing v2 — one spacing contract for every Help Center page. */
+:root{--sq-page-pad:18px}
+.main-inner,
+.article-shell,
+.forum-shell,
+.auth-shell,
+.admin-shell,
+.profile-shell,
+.settings-shell,
+.status-shell,
+.search-shell,
+.support-shell,
+.page-shell{
+ box-sizing:border-box!important;
+ padding-left:var(--sq-page-pad)!important;
+ padding-right:var(--sq-page-pad)!important;
+}
+.main-inner{max-width:none!important;padding-top:var(--sq-page-pad)!important;padding-bottom:var(--sq-page-pad)!important}
+@media(max-width:860px){
+ :root{--sq-page-pad:14px}
+ .main-inner{padding:var(--sq-page-pad)!important}
+}
+@media(max-width:520px){:root{--sq-page-pad:12px}}
