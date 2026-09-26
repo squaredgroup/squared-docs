@@ -754,3 +754,57 @@ body .sq-empty-icon{
   .sq-smart-actions-grid{grid-template-columns:1fr}
   .sq-knowledge-path{padding:17px;border-radius:15px}
 }
+
+
+/* =========================================================
+   v13.1 — ALL EXISTING HEROES / OFFICIAL SQUARED GREEN
+   Explicitly overrides legacy v9/v10 khaki surfaces.
+   ========================================================= */
+body.sq-home-v9.sq-home-v10 .main .help-hero{
+  background:
+    radial-gradient(circle at 84% 12%,rgba(255,255,255,.22) 0,rgba(255,255,255,.07) 27%,transparent 48%),
+    radial-gradient(circle at 8% 100%,rgba(11,19,8,.09),transparent 38%),
+    #7BE84E!important;
+  color:#0B1308!important;
+  border-color:rgba(11,19,8,.12)!important;
+  box-shadow:0 24px 70px rgba(65,139,36,.16)!important;
+}
+body.sq-home-v9.sq-home-v10 .main .help-hero:before{
+  opacity:.12!important;
+  background-image:linear-gradient(rgba(11,19,8,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(11,19,8,.18) 1px,transparent 1px)!important;
+}
+body.sq-home-v9.sq-home-v10 .main .help-hero:after{
+  display:block!important;border-color:rgba(11,19,8,.15)!important;
+  box-shadow:0 0 0 64px rgba(11,19,8,.035),0 0 0 130px rgba(11,19,8,.022)!important;
+}
+body.sq-home-v9.sq-home-v10 .help-hero :is(h1,h1 span){color:#0B1308!important}
+body.sq-home-v9.sq-home-v10 .sq-hero-main>p{color:rgba(11,19,8,.72)!important}
+body.sq-home-v9.sq-home-v10 .sq-hero-kicker{
+  border-color:rgba(11,19,8,.22)!important;background:rgba(255,255,255,.12)!important;color:#0B1308!important;
+}
+body.sq-home-v9.sq-home-v10 .sq-kicker-dot{background:#0B1308!important;box-shadow:0 0 0 4px rgba(11,19,8,.10)!important}
+body.sq-home-v9.sq-home-v10 .sq-search-suggestions,
+body.sq-home-v9.sq-home-v10 .sq-search-suggestions>span{color:rgba(11,19,8,.65)!important}
+body.sq-home-v9.sq-home-v10 .sq-search-suggestions a{color:#0B1308!important;border-color:rgba(11,19,8,.18)!important}
+body.sq-home-v9.sq-home-v10 button.help-search{border-color:rgba(11,19,8,.15)!important;box-shadow:0 12px 30px rgba(39,87,21,.12)!important}
+
+/* Featured card inside the home hero: neutral white rather than a second muddy green. */
+body.sq-home-v9.sq-home-v10 .sq-hero-aside{
+  background:rgba(255,255,255,.90)!important;color:#0B1308!important;
+  border-color:rgba(11,19,8,.12)!important;box-shadow:0 16px 40px rgba(39,87,21,.10)!important;
+}
+body.sq-home-v9.sq-home-v10 .sq-hero-aside :is(h2,.sq-hero-aside-eyebrow,.sq-hero-aside-mark){color:#0B1308!important}
+body.sq-home-v9.sq-home-v10 .sq-hero-aside p{color:rgba(11,19,8,.66)!important}
+body.sq-home-v9.sq-home-v10 .sq-hero-aside>a{background:#0B1308!important;color:#F5FFF1!important}
+body.sq-home-v9.sq-home-v10 .sq-hero-aside-links{border-color:rgba(11,19,8,.12)!important}
+body.sq-home-v9.sq-home-v10 .sq-hero-aside-links a{color:#284A1B!important}
+
+/* Guide library hero — force exact same brand family over legacy declaration. */
+body.sq-guides-index .sq-guides-hero{
+  background:
+    radial-gradient(circle at 76% 14%,rgba(255,255,255,.20),transparent 42%),
+    #7BE84E!important;color:#0B1308!important;border-color:rgba(11,19,8,.10)!important;
+}
+body.sq-guides-index .sq-guides-hero :is(h1,.sq-section-index){color:#0B1308!important}
+body.sq-guides-index .sq-guides-hero p{color:rgba(11,19,8,.70)!important}
+body.sq-guides-index .sq-guides-tabs a{color:#0B1308!important;border-color:rgba(11,19,8,.25)!important;background:rgba(255,255,255,.10)!important}
