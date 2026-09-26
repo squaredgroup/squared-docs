@@ -1,0 +1,37 @@
+name: Page Canvas Layout
+on:
+  push:
+    branches: [main]
+    paths: ['assets/**.css', '**.html', 'tests/page_canvas_layout.py', '.github/workflows/page-canvas-layout.yml']
+  pull_request:
+    branches: [main]
+    paths: ['assets/**.css', '**.html', 'tests/page_canvas_layout.py', '.github/workflows/page-canvas-layout.yml']
+permissions:
+  contents: read
+concurrency:
+  group: page-canvas-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  layout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install isolated layout test tools
+        run: |
+          python -m pip install playwright==1.55.0
+          python -m playwright install --with-deps chromium
+      - name: Check 16px gutters and single canvas on every affected page
+        run: python tests/page_canvas_layout.py
+      - name: Save layout evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: page-canvas-layout
+          path: |
+            test-results/page-canvas-layout.json
+            test-results/canvas-*.png
+          retention-days: 7
