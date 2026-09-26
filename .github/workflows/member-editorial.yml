@@ -1,48 +1,101 @@
 name: Member Editorial Quality
 on:
   push:
-    branches: [content/member-editorial-20260926]
+    branches: [main, content/member-editorial-20260926]
     paths:
       - 'content/**'
-      - 'scripts/editorial/**'
-      - 'tests/editorial_*'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'assets/**'
+      - '**/*.html'
+      - '.github/actions/editorial-check/**'
       - '.github/workflows/member-editorial.yml'
+  pull_request:
+    branches: [main]
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: member-editorial-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  editorial:
-    if: github.actor != 'github-actions[bot]'
+  generate:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/content/member-editorial-20260926' && github.actor != 'github-actions[bot]'
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Read public source evidence
-        run: python scripts/editorial/source_evidence.py
-      - name: Build editorial content
+      - name: Import reviewed delivery
+        run: python scripts/editorial/import_delivery.py
+      - uses: ./.github/actions/editorial-check
+        with:
+          collect_sources: 'true'
+      - name: Package readable sources and generated public pages
+        if: always()
         run: |
-          if test -f scripts/editorial/build.py; then python scripts/editorial/build.py; fi
-      - name: Validate editorial content
-        run: |
-          if test -f tests/editorial_contract.py; then python tests/editorial_contract.py; fi
-      - name: Upload audit evidence
+          mkdir -p /tmp/editorial-artifacts
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile,ZIP_DEFLATED
+          with ZipFile('/tmp/editorial-artifacts/editorial-source.zip','w',ZIP_DEFLATED) as z:
+              for p in Path('.').rglob('*'):
+                  if not p.is_file() or any(x in p.parts for x in ['.git','node_modules','test-results','editorial-transport']): continue
+                  if p.suffix in {'.html','.js','.css','.py','.json','.md','.csv','.yml','.toml','.xml','.txt','.png'}:
+                      z.write(p,str(p))
+          PY
+      - name: Save editorial evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: member-editorial-audit
-          path: /tmp/editorial-artifacts/
+          path: |
+            test-results/
+            /tmp/editorial-artifacts/
           retention-days: 7
-      - name: Commit generated public pages on editorial branch only
-        if: github.ref == 'refs/heads/content/member-editorial-20260926'
+      - name: Commit tested generated documentation to isolated branch
         run: |
-          if ! test -f scripts/editorial/build.py; then exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- '*.html' assets/ content/ sitemap.xml
+          git add content/ scripts/editorial/ tests/editorial_* assets/editorial-members.css scripts/build_practical_guides.py scripts/help_guide_content.py
+          git add -- '*.html' assets/sidebar.js assets/assistance.js assets/editorial-intelligence.js assets/help-core.js assets/knowledge-index.json sitemap.xml
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'build(content): generate member documentation and verified navigation'
+          git commit -m 'build(content): publish tested member editorial sources and generated pages'
           git push origin HEAD:content/member-editorial-20260926
+  validate:
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/editorial-check
+      - name: Save validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: member-editorial-validation
+          path: test-results/
+          retention-days: 7
+  verify-public:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r scripts/editorial/requirements.txt
+      - name: Verify deployed public HTML without accounts or writes
+        run: python scripts/editorial/verify_public.py
+      - name: Save publication evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: member-editorial-publication
+          path: test-results/editorial-public.json
+          retention-days: 7

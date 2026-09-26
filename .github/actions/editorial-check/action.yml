@@ -1,0 +1,37 @@
+name: Editorial contracts and browser checks
+description: Validate public member documentation without writing product data.
+inputs:
+  collect_sources:
+    description: Collect pinned public product evidence.
+    default: 'false'
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install documentation tools
+      shell: bash
+      run: python -m pip install -r scripts/editorial/requirements.txt playwright==1.55.0
+    - name: Collect pinned public source evidence
+      if: inputs.collect_sources == 'true'
+      shell: bash
+      run: python scripts/editorial/source_evidence.py
+    - name: Generate and validate documentation
+      shell: bash
+      run: |
+        python scripts/editorial/build.py
+        python tests/editorial_contract.py
+        find assets -name '*.js' -print0 | xargs -0 -n 1 node --check
+        python tests/workspace_content.py
+    - name: Install isolated browser
+      shell: bash
+      run: python -m playwright install --with-deps chromium
+    - name: Browser and existing CMS integration tests
+      shell: bash
+      run: |
+        python tests/editorial_browser.py
+        python tests/workspace_content_browser.py
