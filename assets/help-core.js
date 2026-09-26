@@ -191,7 +191,7 @@
 
 /* Build freshness — keeps iOS/PWA-like browser sessions from silently staying on an old UI. */
 (() => {
-  const BUILD = '2026.09.26.3';
+  const BUILD = '2026.09.26.4';
   const KEY = 'sq-help-build';
   const PARAM = '__sq_refresh';
   const current = sessionStorage.getItem(KEY);
