@@ -114,3 +114,111 @@
 .hc-nav-group{margin-bottom:10px}
 
 .hc-staff-item{display:none!important}.hc-staff-item.visible{display:block!important}
+
+
+/* =========================================================
+   SIDEBAR v7 — Squared Help navigation system
+   ========================================================= */
+:root{--sidebar:272px}
+.sidebar.hc-sidebar{
+  width:var(--sidebar)!important;padding:16px 12px 14px!important;
+  background:color-mix(in srgb,var(--bg) 97%,transparent)!important;
+  border-right:1px solid color-mix(in srgb,var(--text) 8%,var(--line))!important;
+  box-shadow:8px 0 32px rgba(0,0,0,.025);backdrop-filter:blur(22px)!important;
+}
+.hc-brand{
+  min-height:56px;padding:4px 6px 13px!important;gap:11px!important;border-bottom:0!important;
+}
+.hc-brand-logo{
+  width:40px!important;height:40px!important;border-radius:12px!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.13);border:1px solid color-mix(in srgb,var(--text) 10%,transparent);
+}
+.hc-brand-copy strong{font-size:11px!important;letter-spacing:.11em!important;font-weight:700!important}
+.hc-brand-copy span{font-size:9.5px!important;margin-top:4px!important;color:var(--muted)!important}
+.hc-search{
+  height:44px!important;margin:7px 2px 13px!important;padding:0 11px!important;
+  border-radius:12px!important;background:var(--panel)!important;border:1px solid var(--line)!important;
+  box-shadow:0 2px 8px rgba(0,0,0,.025);font-size:10.5px!important;
+}
+.hc-search:hover{border-color:color-mix(in srgb,#7BE84E 45%,var(--line))!important;background:var(--panel)!important}
+.hc-search-icon{width:20px;height:20px;color:var(--muted)!important}.hc-search-icon .sq-iconly{width:17px!important;height:17px!important}
+.hc-search kbd{padding:3px 6px!important;border-radius:6px!important;background:var(--bg)!important}
+.hc-collapse{height:26px!important;margin:0 2px 7px!important;color:var(--muted-2)!important}
+
+.hc-nav{padding-top:0!important}
+.hc-nav-group{
+  margin:0 0 7px!important;padding:5px 0 7px;border-bottom:1px solid color-mix(in srgb,var(--line) 78%,transparent);border-radius:0!important;
+}
+.hc-nav-group:last-child{border-bottom:0}
+.hc-nav-group-trigger{min-height:28px;padding:4px 8px 5px!important;border-radius:7px!important}
+.hc-nav-title{font-size:8px!important;letter-spacing:.16em!important;font-weight:750!important;color:var(--muted-2)!important}
+.hc-nav-chevron{display:grid;place-items:center;width:20px;height:20px;border-radius:6px}
+.hc-nav-group-trigger:hover .hc-nav-chevron{background:var(--panel-2)}
+
+.hc-item{margin:2px 0!important}
+.hc-nav-link{
+  position:relative;min-height:43px!important;padding:8px 9px!important;gap:10px!important;
+  border-radius:11px!important;font-size:11px!important;font-weight:520!important;color:var(--muted)!important;
+  border:1px solid transparent;transition:background-color .16s ease,border-color .16s ease,color .16s ease,transform .16s ease!important;
+}
+.hc-nav-link:hover{
+  transform:none!important;background:var(--panel)!important;border-color:var(--line)!important;color:var(--text)!important;
+}
+.hc-nav-ico{
+  width:28px!important;min-width:28px!important;height:28px;display:grid!important;place-items:center!important;
+  border-radius:8px!important;color:var(--muted)!important;background:transparent;
+}
+.hc-nav-ico .sq-iconly{width:17px!important;height:17px!important}
+.hc-nav-link.active,.hc-nav-link.active-parent{
+  background:color-mix(in srgb,#7BE84E 10%,var(--panel))!important;
+  border-color:color-mix(in srgb,#7BE84E 20%,var(--line))!important;
+  color:var(--text)!important;font-weight:650!important;
+}
+.hc-nav-link.active:before,.hc-nav-link.active-parent:before{
+  content:"";position:absolute;left:-4px;top:11px;width:3px;height:21px;border-radius:999px;background:#7BE84E;
+  box-shadow:0 0 0 3px color-mix(in srgb,#7BE84E 10%,transparent);
+}
+.hc-nav-link.active .hc-nav-ico,.hc-nav-link.active-parent .hc-nav-ico{
+  background:#7BE84E!important;color:#0B1308!important;
+}
+.hc-item.has-children>.hc-nav-link{padding-right:34px!important}
+.hc-sub-toggle{right:6px!important;top:8px!important;width:27px!important;height:27px!important;border-radius:8px!important}
+.hc-sub-links{
+  margin:4px 0 5px 22px!important;padding:2px 0 2px 18px!important;
+  border-left:1px solid color-mix(in srgb,#7BE84E 28%,var(--line))!important;
+}
+.hc-sub-link{
+  min-height:32px;padding:7px 9px!important;border-radius:8px!important;font-size:9.7px!important;color:var(--muted)!important;
+}
+.hc-sub-link:hover{background:var(--panel)!important;color:var(--text)!important}
+.hc-sub-link.active{background:color-mix(in srgb,#7BE84E 8%,transparent)!important;color:var(--text)!important}
+.hc-sub-link.active:before{width:5px!important;height:5px!important;margin-left:-21px!important;margin-top:5px!important;background:#7BE84E!important}
+
+.hc-sidebar-foot{
+  position:sticky;bottom:0;margin:10px 0 0!important;padding:11px 12px!important;
+  border:1px solid var(--line)!important;border-radius:12px!important;
+  background:color-mix(in srgb,var(--panel) 94%,transparent)!important;
+  box-shadow:0 8px 26px rgba(0,0,0,.05);backdrop-filter:blur(18px);
+  font-size:9px!important;
+}
+.hc-sidebar-foot strong{font-size:10px!important;margin-bottom:3px!important}
+.hc-sidebar-foot:before{
+  content:"";display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:#7BE84E;
+  box-shadow:0 0 0 3px color-mix(in srgb,#7BE84E 14%,transparent);vertical-align:1px;
+}
+
+@media(min-width:861px){
+  body.sidebar-mini{--sidebar:78px}
+  body.sidebar-mini .sidebar.hc-sidebar{width:78px!important;padding:13px 10px!important}
+  body.sidebar-mini .main{margin-left:78px!important}
+  body.sidebar-mini .hc-brand-logo{width:40px!important;height:40px!important}
+  body.sidebar-mini .hc-search{width:44px!important;height:44px!important}
+  body.sidebar-mini .hc-nav-link{width:44px;min-height:44px!important;margin:2px auto!important;padding:7px!important}
+  body.sidebar-mini .hc-nav-ico{width:28px!important;min-width:28px!important}
+  body.sidebar-mini .hc-nav-link.active:before,body.sidebar-mini .hc-nav-link.active-parent:before{left:-8px;top:11px}
+}
+@media(max-width:860px){
+  .sidebar.hc-sidebar{width:min(88vw,320px)!important;padding:14px 12px calc(18px + env(safe-area-inset-bottom,0px))!important}
+  .hc-brand{min-height:54px}.hc-nav-link{min-height:46px!important;font-size:11.5px!important}
+  .hc-nav-ico{width:30px!important;min-width:30px!important;height:30px}.hc-search{height:46px!important}
+}
