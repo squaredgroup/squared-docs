@@ -1,0 +1,60 @@
+/* True global gutters — one horizontal coordinate system everywhere. */
+:root{--sq-page-pad:16px!important}
+@media(min-width:861px){
+ .main,
+ .main-inner,
+ .page-shell,
+ .article-shell,
+ .forum-shell,
+ .admin-shell,
+ .profile-shell,
+ .settings-shell,
+ .status-shell,
+ .search-shell,
+ .support-shell{box-sizing:border-box!important}
+
+ .main-inner{
+   width:100%!important;max-width:none!important;
+   margin-left:0!important;margin-right:0!important;
+   padding:var(--sq-page-pad)!important;
+ }
+
+ /* Internal page wrappers must not create a second outer gutter. */
+ .main-inner>:first-child,
+ .page-shell,
+ .article-shell,
+ .forum-shell,
+ .admin-shell,
+ .profile-shell,
+ .settings-shell,
+ .status-shell,
+ .search-shell,
+ .support-shell{
+   max-width:none!important;
+   margin-left:0!important;margin-right:0!important;
+ }
+
+ .page-shell,
+ .article-shell,
+ .forum-shell,
+ .admin-shell,
+ .profile-shell,
+ .settings-shell,
+ .status-shell,
+ .search-shell,
+ .support-shell{
+   width:100%!important;
+   padding-left:0!important;padding-right:0!important;
+ }
+
+ /* Top chrome uses the exact same horizontal gutter as page content. */
+ .topbar-inner{padding-left:var(--sq-page-pad)!important;padding-right:var(--sq-page-pad)!important;box-sizing:border-box!important}
+}
+@media(max-width:860px){
+ :root{--sq-page-pad:12px!important}
+ .main-inner{width:100%!important;max-width:none!important;margin:0!important;padding:var(--sq-page-pad)!important;box-sizing:border-box!important}
+ .page-shell,.article-shell,.forum-shell,.admin-shell,.profile-shell,.settings-shell,.status-shell,.search-shell,.support-shell{
+   width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important;box-sizing:border-box!important
+ }
+ .topbar-inner{padding-left:var(--sq-page-pad)!important;padding-right:var(--sq-page-pad)!important}
+}
