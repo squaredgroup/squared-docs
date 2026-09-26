@@ -549,3 +549,165 @@ body :is(.sq-hero-accent,.hero-accent) p{color:rgba(11,19,8,.72)!important}
   .sq-update-banner{bottom:calc(var(--sq-dock-height,72px) + env(safe-area-inset-bottom,0px) + 12px);width:calc(100vw - 20px);border-radius:14px}
   .sq-update-banner button{min-height:44px}
 }
+
+
+/* =========================================================
+   v12 — PRODUCT UI POLISH
+   Dense, tactile and content-first component language.
+   ========================================================= */
+:root{
+  --sq-hairline:color-mix(in srgb,var(--text) 9%,transparent);
+  --sq-hover:color-mix(in srgb,var(--text) 4%,var(--panel));
+  --sq-accent-soft:color-mix(in srgb,#7BE84E 10%,var(--panel));
+  --sq-accent-line:color-mix(in srgb,#7BE84E 32%,var(--line));
+}
+
+/* Section headers: stronger editorial rhythm */
+body .section-head{align-items:end;gap:18px;margin-bottom:18px}
+body .section-head h2{letter-spacing:-.04em;text-wrap:balance}
+body .section-head>div>p{max-width:58ch;line-height:1.55}
+body .sq-section-index{font-size:10px;font-weight:750;letter-spacing:.15em;text-transform:uppercase}
+
+/* Bento-like card hierarchy without decorative clutter */
+body :is(.sq-guide-card,.status-product-card,.article-tool-card,.forum-auth-card,.home-status-card,.home-discussions){
+  isolation:isolate;
+}
+body .sq-guide-card{
+  min-height:230px;justify-content:flex-start;
+  background:
+    linear-gradient(180deg,color-mix(in srgb,var(--panel) 98%,#fff 1%),var(--panel));
+}
+body .sq-guide-card::after{
+  content:"";position:absolute;z-index:-1;width:150px;height:150px;right:-80px;bottom:-92px;
+  border-radius:50%;background:#7BE84E;opacity:0;filter:blur(2px);transition:opacity .2s ease;
+}
+body .sq-guide-card:hover::after{opacity:.055}
+body .sq-guide-card-top{min-height:28px}
+body .sq-guide-card-top small{
+  padding:5px 8px;border:1px solid var(--line);border-radius:999px;background:var(--panel-2);
+  font-variant-numeric:tabular-nums;
+}
+body .sq-guide-card>strong{margin-top:30px;max-width:27ch}
+body .sq-guide-card-link{border-top:1px solid var(--line);margin-top:auto}
+
+/* Popular rows become compact product-list cells */
+body .popular-article{
+  display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:12px;
+  border:1px solid transparent;
+}
+body .popular-article:hover{border-color:var(--line);box-shadow:0 7px 24px rgba(0,0,0,.035)}
+body .popular-article>span:nth-child(2)>strong{font-size:12px;letter-spacing:-.015em}
+body .popular-article>span:nth-child(2)>span{margin-top:3px;color:var(--muted);line-height:1.45}
+body .popular-article>em{font-size:9px;color:var(--muted-2);font-style:normal}
+
+/* Command palette: grouped, compact search-result cells */
+body .search-modal{background:rgba(10,10,12,.28);backdrop-filter:blur(8px)}
+html[data-theme="dark"] body .search-modal{background:rgba(0,0,0,.5)}
+body .search-box{max-width:680px}
+body .search-head{padding:10px 12px}
+body .search-head input{min-height:48px;border:0!important;background:transparent!important;box-shadow:none!important;font-size:15px}
+body .search-close{border:1px solid var(--line);border-radius:7px;background:var(--panel-2)}
+body .search-filters{padding:10px 12px;border-bottom:1px solid var(--line)}
+body .search-results{padding:7px}
+body .search-result{padding:12px 13px;border:1px solid transparent}
+body .search-result:hover{border-color:var(--line)}
+body .search-result strong{letter-spacing:-.01em}
+
+/* Forms: label/input composition */
+body :is(.form-field,.field,.forum-field) label{display:block;margin-bottom:7px;font-size:10px;font-weight:700;letter-spacing:.02em}
+body :is(input[type="text"],input[type="email"],input[type="password"],input[type="search"],textarea,select,.forum-input,.forum-select){
+  min-height:44px;padding-left:12px;padding-right:12px;
+}
+body textarea{padding-top:11px;padding-bottom:11px;line-height:1.55}
+
+/* Article reading surfaces */
+body .article{--sq-reading-width:760px}
+body .article-head{position:relative}
+body .article-head::after{
+  content:"";position:absolute;left:0;bottom:-1px;width:68px;height:2px;border-radius:2px;background:#7BE84E;
+}
+body .article-meta{gap:6px}
+body .v6-article-stats{display:flex;align-items:center;gap:7px;color:var(--muted-2)}
+body .doc-block>h2{display:flex;align-items:flex-start;gap:10px}
+body .doc-block>h2::before{
+  content:"";flex:0 0 4px;width:4px;height:4px;margin-top:.62em;border-radius:50%;background:#7BE84E;
+}
+body .doc-block :is(code,kbd){font-variant-ligatures:none}
+body .sq-guide-links a{
+  border-radius:12px;background:var(--panel);transition:transform .16s ease,border-color .16s ease,background-color .16s ease;
+}
+body .sq-guide-links a:hover{transform:translateY(-2px);background:var(--sq-accent-soft);border-color:var(--sq-accent-line)}
+
+/* Steps: timeline feeling, still simple */
+body .sq-step-list{position:relative}
+body .sq-step{position:relative;grid-template-columns:42px minmax(0,1fr)}
+body .sq-step-number{box-shadow:inset 0 0 0 1px color-mix(in srgb,#7BE84E 16%,transparent)}
+body .sq-step h3{letter-spacing:-.025em}
+
+/* FAQ */
+body details.faq-item{transition:border-color .16s ease,box-shadow .16s ease}
+body details.faq-item[open]{border-color:var(--sq-accent-line);box-shadow:0 10px 30px rgba(0,0,0,.05)}
+body details.faq-item summary{position:relative;padding-right:48px}
+body details.faq-item summary::after{
+  content:"+";position:absolute;right:18px;top:50%;translate:0 -50%;font-size:20px;font-weight:400;color:var(--muted);
+}
+body details.faq-item[open] summary::after{content:"−";color:var(--sq-accent-ink,var(--green))}
+
+/* Forum topic rows */
+body .forum-panel-head{min-height:48px;display:flex;align-items:center;justify-content:space-between}
+body .topic-list{display:grid;gap:6px}
+body :is(.topic-row,.forum-topic){
+  border:1px solid transparent;padding:12px;
+}
+body :is(.topic-row,.forum-topic):hover{border-color:var(--line);box-shadow:0 6px 22px rgba(0,0,0,.035)}
+
+/* Status cards: concise data-cell feel */
+body .status-product-card{min-height:116px}
+body .status-product-meta{padding-top:10px;border-top:1px solid var(--line)}
+body .incident-row{border-radius:10px;padding:13px 10px;margin:0 -10px}
+body .incident-row:hover{background:var(--panel-2)}
+
+/* Sidebar closer to a native productivity app */
+body .hc-nav-group-trigger{margin-bottom:2px}
+body .hc-nav-link{min-height:41px}
+body .hc-nav-link .hc-nav-ico{
+  border-radius:7px;transition:background-color .15s ease,color .15s ease;
+}
+body .hc-nav-link:hover .hc-nav-ico{color:var(--text)}
+body .hc-nav-link.active .hc-nav-ico,body .hc-nav-link.active-parent .hc-nav-ico{
+  color:#315e1f;background:rgba(123,232,78,.16);
+}
+html[data-theme="dark"] body .hc-nav-link.active .hc-nav-ico,
+html[data-theme="dark"] body .hc-nav-link.active-parent .hc-nav-ico{color:#9df47a}
+
+/* Topbar controls */
+body .topbar{backdrop-filter:blur(18px);background:color-mix(in srgb,var(--bg) 88%,transparent)}
+body .top-actions{gap:7px}
+body .command-search{min-width:132px;justify-content:space-between}
+
+/* Empty states */
+body :is(.sq-empty-state,.forum-empty,.empty-state){
+  min-height:190px;display:grid;place-items:center;text-align:center;padding:28px;
+  border:1px dashed color-mix(in srgb,var(--text) 14%,var(--line));border-radius:16px;
+  background:color-mix(in srgb,var(--panel) 70%,transparent);
+}
+body .sq-empty-icon{
+  width:44px;height:44px;display:grid;place-items:center;border-radius:12px;
+  border:1px solid var(--line);background:var(--panel);color:var(--muted);
+}
+
+/* Mobile density and thumb ergonomics */
+@media(max-width:860px){
+  body .section-head{align-items:flex-start;margin-bottom:14px}
+  body .sq-guide-card{min-height:205px;padding:18px}
+  body .sq-guide-card>strong{margin-top:24px;font-size:19px}
+  body .popular-article{grid-template-columns:32px minmax(0,1fr);padding:12px}
+  body .popular-article>em{display:none}
+  body .article-head{padding-bottom:24px}
+  body .doc-block>h2::before{margin-top:.55em}
+  body .search-modal{backdrop-filter:blur(5px)}
+  body .search-box{border-radius:18px}
+  body .search-results{padding:5px}
+  body .search-result{padding:13px 11px}
+  body .forum-toolbar{position:relative}
+}
