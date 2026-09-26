@@ -1,0 +1,7 @@
+/* Home only — exact requested content gutter. */
+@media(min-width:861px){
+ body.sq-home-v9.sq-home-v10 .shell{padding:14px!important}
+}
+@media(max-width:860px){
+ body.sq-home-v9.sq-home-v10 .shell{padding:14px!important}
+}
