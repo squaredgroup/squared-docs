@@ -1,0 +1,22 @@
+/* Global page shell — exact 16px gutter everywhere. */
+:root{--sq-page-gutter:16px!important}
+.shell,
+.main-inner,
+.page-shell,
+.article-shell,
+.forum-shell,
+.admin-shell,
+.profile-shell,
+.settings-shell,
+.status-shell,
+.search-shell,
+.support-shell,
+.auth-shell{
+ box-sizing:border-box!important;
+ padding:var(--sq-page-gutter)!important;
+}
+.shell{max-width:none!important;margin-left:0!important;margin-right:0!important}
+@media(max-width:860px){
+ :root{--sq-page-gutter:16px!important}
+ .shell,.main-inner,.page-shell,.article-shell,.forum-shell,.admin-shell,.profile-shell,.settings-shell,.status-shell,.search-shell,.support-shell,.auth-shell{padding:16px!important}
+}
