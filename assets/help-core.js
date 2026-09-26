@@ -236,4 +236,12 @@
   setTimeout(check, 1200);
   addEventListener('focus', check);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) check(); });
+
+  // Shared intelligence layer: loaded from the same public asset root on every Help Center page.
+  if (!document.querySelector('script[data-sq-help-intelligence]')) {
+    const intelligence=document.createElement('script');
+    intelligence.src=local('assets/help-intelligence.js?v=20260926.1');
+    intelligence.defer=true; intelligence.dataset.sqHelpIntelligence='1';
+    document.head.append(intelligence);
+  }
 })();
