@@ -1,0 +1,76 @@
+name: Member Editorial Quality
+on:
+  push:
+    branches: [content/member-editorial-20260926]
+    paths:
+      - 'content/**'
+      - 'scripts/editorial/**'
+      - 'tests/editorial_*'
+      - '.github/workflows/member-editorial.yml'
+permissions:
+  contents: write
+concurrency:
+  group: member-editorial-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  editorial:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read-only baseline and public endpoints
+        run: |
+          mkdir -p /tmp/editorial-artifacts
+          python - <<'PY'
+          from pathlib import Path
+          import json,re,urllib.request,zipfile
+          rows=[]
+          for p in sorted(Path('.').rglob('*.html')):
+              if '.git' in p.parts: continue
+              s=p.read_text(encoding='utf-8')
+              title=re.search(r'<title>(.*?)</title>',s,re.S)
+              headings=re.findall(r'<h[12][^>]*>(.*?)</h[12]>',s,re.S)
+              clean=lambda x:re.sub('<[^>]+>','',x).strip()
+              rows.append({'path':str(p),'title':clean(title[1]) if title else '', 'headings':[clean(h) for h in headings]})
+          Path('/tmp/editorial-artifacts/baseline.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2))
+          print('BASELINE HTML PAGES:',len(rows))
+          for url in ['https://docs.squaredgroup.studio/','https://build.squaredgroup.studio/','https://workspace.app.squaredgroup.studio/']:
+              try:
+                  req=urllib.request.Request(url,headers={'User-Agent':'SquaredEditorialCheck/1.0'})
+                  with urllib.request.urlopen(req,timeout=20) as r:
+                      s=r.read(2000000).decode('utf-8','replace')
+                      print('PUBLIC ENDPOINT',url,r.status,r.geturl(),re.findall(r'<title>(.*?)</title>',s,re.S)[:1])
+                      name='build-live.html' if 'build.' in url else ('workspace-live.html' if 'workspace.' in url else 'help-live.html')
+                      Path('/tmp/editorial-artifacts/'+name).write_text(s)
+              except Exception as e: print('PUBLIC ENDPOINT UNCONFIRMED',url,type(e).__name__,str(e)[:180])
+          with zipfile.ZipFile('/tmp/editorial-artifacts/source-snapshot.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for p in Path('.').rglob('*'):
+                  if p.is_file() and '.git' not in p.parts and p.suffix in {'.html','.js','.css','.py','.json','.md','.yml','.toml','.xml','.txt','.png'}:
+                      z.write(p,str(p))
+          PY
+      - name: Build editorial content
+        run: |
+          if test -f scripts/editorial/build.py; then python scripts/editorial/build.py; fi
+      - name: Validate editorial content
+        run: |
+          if test -f tests/editorial_contract.py; then python tests/editorial_contract.py; fi
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: member-editorial-audit
+          path: /tmp/editorial-artifacts/
+          retention-days: 7
+      - name: Commit generated public pages on editorial branch only
+        if: github.ref == 'refs/heads/content/member-editorial-20260926'
+        run: |
+          if ! test -f scripts/editorial/build.py; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- '*.html' 'assets/*.json' 'assets/*.js' 'content/*.json' 'content/*.csv' 'content/*.md'
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'build(content): generate member documentation and verified navigation'
+          git push origin HEAD:content/member-editorial-20260926
