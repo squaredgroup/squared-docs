@@ -103,10 +103,11 @@ const groups=[
 {id:'docs',title:'Documentation',open:true,items:[
  {href:'search.html',icon:'search',label:'Recherche'},
  {href:'parcours.html',icon:'start',label:'Votre parcours'},
+ {href:'ecosystem.html',icon:'group',label:'Quel espace utiliser ?'},
  {href:'diagnostic.html',icon:'troubleshooting',label:'Dépannage guidé'},
  {href:'getting-started.html',icon:'start',label:'Bien démarrer'},
  {href:'faq.html',icon:'faq',label:'FAQ'},
- {href:'quick-guides.html',icon:'quick',label:'Guides rapides'},
+ {href:'quick-guides.html',icon:'quick',label:'Guides rapides',children:[{href:'client-project-start.html',label:'Démarrer un projet client'},{href:'client-feedback.html',label:'Faire un retour client'},{href:'collaborator-mission-start.html',label:'Comprendre une mission'},{href:'collaborator-blocker.html',label:'Signaler un blocage'},{href:'collaborator-submit.html',label:'Remettre pour validation'},{href:'support-follow-up.html',label:'Suivre une demande privée'}]},
  {href:'asking-for-help.html',icon:'ask',label:'Aide & règles',children:[{href:'asking-for-help.html',label:'Demander de l’aide'},{href:'community-guidelines.html',label:'Règles communauté'},{href:'support-privacy.html',label:'Confidentialité support'},{href:'access-help.html',label:'Récupérer mon accès'}]}]},
 {id:'products',title:'Produits',open:false,items:[
  {href:'wix-studio.html',icon:'wix',label:'Wix Studio',children:[
