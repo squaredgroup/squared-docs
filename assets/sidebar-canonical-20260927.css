@@ -326,3 +326,25 @@ html[data-theme="dark"] .hc-nav-link.active-parent{
  .hc-item.has-children>.hc-nav-link{padding:8px 32px 8px 12px!important}
  .hc-sidebar-foot{width:100%!important;margin:0!important;padding:12px!important}
 }
+
+/* Sidebar buttons — exact 8px padding on every side. */
+@media(min-width:861px){
+ .hc-nav-link,
+ .hc-nav-link.active,
+ .hc-nav-link.active-parent{
+   padding:8px!important;
+ }
+ .hc-item.has-children>.hc-nav-link{
+   padding:8px 32px 8px 8px!important;
+ }
+}
+@media(max-width:860px){
+ .hc-nav-link,
+ .hc-nav-link.active,
+ .hc-nav-link.active-parent{
+   padding:8px!important;
+ }
+ .hc-item.has-children>.hc-nav-link{
+   padding:8px 32px 8px 8px!important;
+ }
+}
