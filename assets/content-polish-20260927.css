@@ -19,3 +19,10 @@
 @keyframes sqLoaderMove{0%{transform:translateX(-110%)}100%{transform:translateX(290%)}}
 html[data-theme="dark"] .sq-loader{background:#101210}.sq-loader-copy{color:#252A25}html[data-theme="dark"] .sq-loader-copy{color:#F1F3F0}
 @media(prefers-reduced-motion:reduce){.sq-loader-mark,.sq-loader-bar{animation:none}.sq-loader{transition:none}}
+
+
+/* Content breathing room v2 — increase inner canvas padding. */
+:root{--sq-content-pad:24px}
+.main>.shell,.main>.forum-shell{padding:24px!important}
+@media(max-width:860px){:root{--sq-content-pad:18px}.main>.shell,.main>.forum-shell{padding:18px!important}}
+@media(max-width:520px){:root{--sq-content-pad:16px}.main>.shell,.main>.forum-shell{padding:16px!important}}
