@@ -184,11 +184,7 @@ const activeFor=(href)=>currentKey===href.toLowerCase()||(href==='guides.html'&&
 const groupHasActive=g=>g.items.some(i=>activeFor(i.href)||(i.children||[]).some(c=>activeFor(c.href)));
 const groupOpen=g=>true;
 const activeChildParent=groups.flatMap(g=>g.items).find(i=>(i.children||[]).some(c=>activeFor(c.href)))?.href||null;
-const storedOpenChild=getNavState('sq-help-open-child-v12');
-const childOpen=i=>{
-  if(activeChildParent)return i.href===activeChildParent;
-  return storedOpenChild===i.href;
-};
+const childOpen=i=>Boolean(activeChildParent&&i.href===activeChildParent);
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const childKey=c=>{
   const h=c.href;
@@ -225,14 +221,14 @@ host.classList.add('hc-sidebar');
   if(openItems.length>1){
     const keep=openItems.find(x=>x.querySelector('.hc-sub-link.active'))||openItems[0];
     openItems.forEach(x=>{if(x!==keep)x.classList.remove('child-open')});
-    setNavState('sq-help-open-child-v12',keep?.dataset.itemHref||'');
+    
   }
 }
-if(innerWidth>860&&getNavState('sq-help-sidebar-mini')==='1')document.body.classList.add('sidebar-mini');
+if(innerWidth>860)document.body.classList.remove('sidebar-mini');
 const collapseButton=document.getElementById('sidebarCollapse');
 const syncCollapseLabel=()=>collapseButton?.setAttribute('aria-label',document.body.classList.contains('sidebar-mini')?'Développer la navigation':'Réduire la navigation');
 syncCollapseLabel();
-collapseButton?.addEventListener('click',()=>{document.body.classList.toggle('sidebar-mini');setNavState('sq-help-sidebar-mini',document.body.classList.contains('sidebar-mini')?'1':'0');syncCollapseLabel();});
+collapseButton?.addEventListener('click',()=>{document.body.classList.toggle('sidebar-mini');syncCollapseLabel();});
 host.querySelectorAll('.hc-nav-group-trigger').forEach(btn=>{btn.setAttribute('aria-expanded','true');btn.setAttribute('aria-disabled','true');});
 host.querySelectorAll('.hc-sub-toggle').forEach(btn=>btn.addEventListener('click',e=>{
   e.preventDefault();
@@ -247,10 +243,10 @@ host.querySelectorAll('.hc-sub-toggle').forEach(btn=>btn.addEventListener('click
 
   if(wasOpen){
     item.classList.remove('child-open');
-    setNavState('sq-help-open-child-v12','');
+    
   }else{
     item.classList.add('child-open');
-    setNavState('sq-help-open-child-v12',item.dataset.itemHref||'');
+    
   }
 }));
 host.querySelectorAll('.hc-nav-link,.hc-sub-link').forEach(a=>a.addEventListener('click',()=>{if(innerWidth<=860)host.classList.remove('open');}));
