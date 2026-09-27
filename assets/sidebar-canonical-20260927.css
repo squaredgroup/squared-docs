@@ -348,3 +348,37 @@ html[data-theme="dark"] .hc-nav-link.active-parent{
    padding:8px 32px 8px 8px!important;
  }
 }
+
+/* Final active item geometry — identical box model to normal nav items. */
+@media(min-width:861px){
+ .hc-item>.hc-nav-link,
+ .hc-item>.hc-nav-link.active,
+ .hc-item>.hc-nav-link.active-parent{
+   width:100%!important;
+   height:auto!important;
+   min-height:0!important;
+   max-height:none!important;
+   margin:0!important;
+   padding:8px!important;
+   box-sizing:border-box!important;
+   line-height:1.2!important;
+ }
+ .hc-item.has-children>.hc-nav-link,
+ .hc-item.has-children>.hc-nav-link.active,
+ .hc-item.has-children>.hc-nav-link.active-parent{
+   padding:8px 32px 8px 8px!important;
+ }
+}
+@media(max-width:860px){
+ .hc-item>.hc-nav-link,
+ .hc-item>.hc-nav-link.active,
+ .hc-item>.hc-nav-link.active-parent{
+   width:100%!important;
+   height:auto!important;
+   min-height:0!important;
+   max-height:none!important;
+   margin:0!important;
+   padding:8px!important;
+   box-sizing:border-box!important;
+ }
+}
