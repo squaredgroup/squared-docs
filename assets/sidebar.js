@@ -91,6 +91,12 @@ const ensureModernStack=()=>{
   }
 };
 ensureModernStack();
+if(!document.querySelector('link[data-sq-help-loader]')){
+ const l=document.createElement('link');l.rel='stylesheet';l.href=localHref('assets/help-loader.css');l.dataset.sqHelpLoader='1';document.head.appendChild(l);
+}
+if(!document.querySelector('script[data-sq-help-loader]')){
+ const s=document.createElement('script');s.src=localHref('assets/help-loader.js');s.defer=true;s.dataset.sqHelpLoader='1';document.head.appendChild(s);
+}
 if(!document.querySelector('link[data-sq-editorial-media]')){
  const l=document.createElement('link');l.rel='stylesheet';l.href=localHref('assets/editorial-media.css');l.dataset.sqEditorialMedia='1';document.head.appendChild(l);
 }
