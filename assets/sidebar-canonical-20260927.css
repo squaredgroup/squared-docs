@@ -85,3 +85,30 @@ html[data-theme="dark"] .hc-nav-link.active-parent{
  border-color:#292E29!important;
  color:#F1F3F0!important;
 }
+
+/* Sidebar visual alignment v2 — match content canvas and tighten horizontal gutters. */
+@media(min-width:861px){
+ .sidebar.hc-sidebar{padding-left:4px!important;padding-right:4px!important}
+ .hc-search{margin-left:0!important;margin-right:0!important}
+ .hc-nav-link{
+   width:100%!important;
+   margin-left:0!important;margin-right:0!important;
+   padding-left:2px!important;padding-right:2px!important;
+ }
+ .hc-nav-group-trigger{padding-left:2px!important;padding-right:2px!important}
+ .hc-sub-link{padding-left:3px!important;padding-right:3px!important}
+ .hc-nav-link.active,
+ .hc-nav-link.active-parent{
+   background:#F7F8F6!important;
+   border-color:#F7F8F6!important;
+   border-radius:10px!important;
+   box-shadow:none!important;
+ }
+}
+@media(max-width:860px){
+ .sidebar.hc-sidebar{padding-left:5px!important;padding-right:5px!important}
+ .hc-nav-link{padding-left:3px!important;padding-right:3px!important}
+ .hc-nav-link.active,.hc-nav-link.active-parent{
+   background:#F7F8F6!important;border-color:#F7F8F6!important;box-shadow:none!important;
+ }
+}
