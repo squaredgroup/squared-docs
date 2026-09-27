@@ -226,3 +226,103 @@ html[data-theme="dark"] .hc-nav-link.active-parent{
    display:flex!important;align-items:center!important;
  }
 }
+
+
+/* Sidebar four-zone layout — one shared spacing system.
+   Zones: brand/hero, search, navigation buttons, help card. */
+@media(min-width:861px){
+ .sidebar.hc-sidebar{
+   width:232px!important;
+   padding:12px!important;
+   display:flex!important;
+   flex-direction:column!important;
+   gap:12px!important;
+   background:#F8F9F7!important;
+   border-right:1px solid #E2E5E0!important;
+   overflow:auto!important;
+ }
+ .hc-sidebar-head{
+   display:contents!important;
+ }
+ .hc-brand{
+   min-height:0!important;
+   margin:0!important;
+   padding:0!important;
+   gap:8px!important;
+   border:0!important;
+   background:transparent!important;
+ }
+ .hc-search{
+   width:100%!important;
+   height:auto!important;
+   min-height:0!important;
+   margin:0!important;
+   padding:8px 12px!important;
+   gap:7px!important;
+   box-sizing:border-box!important;
+   border-radius:8px!important;
+ }
+ .hc-collapse{display:none!important}
+ .hc-nav{
+   padding:0!important;
+   margin:0!important;
+   display:flex!important;
+   flex-direction:column!important;
+   gap:8px!important;
+ }
+ .hc-nav-primary,.hc-nav-group-body{
+   width:100%!important;
+   padding:0!important;
+   margin:0!important;
+ }
+ .hc-nav-primary{display:flex!important;flex-direction:column!important;gap:2px!important}
+ .hc-nav-group{margin:0!important;padding:0!important}
+ .hc-nav-group+.hc-nav-group{margin-top:6px!important}
+ .hc-nav-group-trigger{padding:4px 12px!important;margin:0!important}
+ .hc-item{width:100%!important;margin:0!important;padding:0!important}
+ .hc-nav-link{
+   width:100%!important;
+   height:auto!important;
+   min-height:0!important;
+   max-height:none!important;
+   margin:0!important;
+   padding:8px 12px!important;
+   box-sizing:border-box!important;
+   gap:7px!important;
+   line-height:1.2!important;
+   border-radius:8px!important;
+ }
+ .hc-item.has-children>.hc-nav-link{padding:8px 32px 8px 12px!important}
+ .hc-nav-ico{
+   width:18px!important;
+   min-width:18px!important;
+   height:18px!important;
+ }
+ .hc-nav-ico .sq-iconly{width:14px!important;height:14px!important}
+ .hc-sub-toggle{width:24px!important;height:24px!important;right:5px!important;top:5px!important}
+ .hc-sub-links{margin:2px 0 4px 18px!important;padding-left:10px!important}
+ .hc-sub-link{padding:6px 8px!important}
+ .hc-nav-link.active,.hc-nav-link.active-parent{
+   background:#F7F8F6!important;
+   border:1px solid #D9DED7!important;
+   border-radius:8px!important;
+   box-shadow:none!important;
+ }
+ .hc-sidebar-foot{
+   width:100%!important;
+   min-height:0!important;
+   margin:0!important;
+   padding:12px!important;
+   box-sizing:border-box!important;
+   border-radius:10px!important;
+ }
+}
+@media(max-width:860px){
+ .sidebar.hc-sidebar{padding:12px!important;gap:12px!important}
+ .hc-sidebar-head{display:contents!important}
+ .hc-brand{padding:0!important;margin:0!important}
+ .hc-search{width:100%!important;margin:0!important;padding:8px 12px!important;height:auto!important}
+ .hc-nav-link{width:100%!important;margin:0!important;padding:8px 12px!important;height:auto!important;min-height:0!important}
+ .hc-item.has-children>.hc-nav-link{padding:8px 32px 8px 12px!important}
+ .hc-sidebar-foot{width:100%!important;margin:0!important;padding:12px!important}
+}
