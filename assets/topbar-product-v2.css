@@ -1,0 +1,55 @@
+/* Squared Help — Product Topbar v2 */
+@media(min-width:861px){
+ .topbar{
+   position:sticky!important;top:0!important;z-index:90!important;
+   height:58px!important;min-height:58px!important;
+   padding:0 16px!important;
+   display:grid!important;grid-template-columns:minmax(150px,1fr) minmax(240px,360px) minmax(260px,1fr)!important;
+   align-items:center!important;gap:12px!important;
+   background:rgba(250,251,249,.92)!important;
+   border-bottom:1px solid #E2E5E0!important;
+   box-shadow:none!important;backdrop-filter:blur(18px) saturate(1.15)!important;
+ }
+ .crumbs{min-width:0!important;display:flex!important;align-items:center!important;gap:7px!important;font-size:10px!important;color:#8B928B!important;white-space:nowrap!important;overflow:hidden!important}
+ .crumbs a{color:#8B928B!important;text-decoration:none!important}.crumbs strong{font-weight:560!important;color:#4E554F!important;overflow:hidden!important;text-overflow:ellipsis!important}.crumbs span{color:#B4BAB4!important}
+ .topbar .command-search{
+   grid-column:2!important;justify-self:stretch!important;
+   width:100%!important;height:36px!important;min-height:36px!important;
+   padding:0 10px!important;margin:0!important;
+   display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:8px!important;
+   border:1px solid #E0E4DE!important;border-radius:10px!important;
+   background:#FFF!important;color:#7B827C!important;box-shadow:0 1px 2px rgba(18,24,18,.025)!important;
+   font-size:9.5px!important;font-weight:500!important;
+ }
+ .topbar .command-search:hover{border-color:#D1D7CF!important;background:#FDFEFC!important;color:#3D433E!important}
+ .topbar .command-search:before{content:"⌕";font-size:17px;line-height:1;color:#777E78}
+ .topbar .keyboard-hint{margin-left:auto!important;padding:3px 5px!important;border-radius:6px!important;background:#F2F4F1!important;color:#9AA19A!important;font-size:7px!important;letter-spacing:.02em!important}
+ .top-actions{
+   grid-column:3!important;justify-self:end!important;
+   display:flex!important;align-items:center!important;gap:4px!important;
+   min-width:0!important;
+ }
+ #forumAccount{display:flex!important;align-items:center!important}
+ #forumAccount :is(a,button,.forum-account,.account-chip){
+   min-height:34px!important;height:34px!important;padding:0 9px!important;border:1px solid #E1E4DF!important;border-radius:9px!important;background:#FFF!important;box-shadow:none!important;
+ }
+ .top-actions>.btn:not(.command-search),.top-actions>.icon-btn{
+   width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;
+   border:1px solid transparent!important;border-radius:9px!important;background:transparent!important;color:#717871!important;box-shadow:none!important;
+ }
+ .top-actions>.btn:not(.command-search):hover,.top-actions>.icon-btn:hover{background:#F0F2EF!important;border-color:#E3E6E1!important;color:#252A25!important}
+ .top-actions>.btn:not(.command-search):focus-visible,.top-actions>.icon-btn:focus-visible,.topbar .command-search:focus-visible{outline:0!important;box-shadow:0 0 0 2px rgba(123,232,78,.22)!important}
+ .top-actions:after{content:"";width:1px;height:20px;background:#E4E7E2;margin-left:3px}
+}
+@media(max-width:1100px) and (min-width:861px){
+ .topbar{grid-template-columns:minmax(110px,1fr) minmax(190px,280px) auto!important}
+ .topbar .command-search{height:34px!important;min-height:34px!important}
+}
+@media(max-width:860px){
+ .topbar{height:56px!important;min-height:56px!important;padding:0 10px!important;display:flex!important;gap:7px!important;background:rgba(250,251,249,.94)!important}
+ .crumbs{font-size:9px!important;min-width:0!important;flex:1!important;overflow:hidden!important;white-space:nowrap!important}
+ .top-actions{gap:3px!important}.top-actions>.icon-btn{width:34px!important;height:34px!important;border-radius:9px!important}
+}
+html[data-theme="dark"] .topbar{background:rgba(16,18,16,.92)!important;border-bottom-color:#292E29!important}
+html[data-theme="dark"] .topbar .command-search,html[data-theme="dark"] #forumAccount :is(a,button,.forum-account,.account-chip){background:#181B18!important;border-color:#2A2E2A!important;color:#A5ACA5!important}
+html[data-theme="dark"] .top-actions>.icon-btn:hover{background:#202420!important;border-color:#303530!important;color:#F1F3F0!important}
