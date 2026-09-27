@@ -1,0 +1,45 @@
+/* Topbar v4 — one bounded zone, no grid overflow, search always visible. */
+@media(min-width:861px){
+ .topbar{
+   width:auto!important;max-width:none!important;
+   height:58px!important;min-height:58px!important;
+   margin:0!important;padding:0 16px!important;
+   box-sizing:border-box!important;overflow:visible!important;
+   display:flex!important;align-items:center!important;gap:12px!important;
+   background:rgba(250,251,249,.94)!important;border-bottom:1px solid #E2E5E0!important;
+ }
+ .topbar>*{min-width:0!important}
+ .crumbs{flex:0 1 180px!important;min-width:80px!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+ .top-actions{
+   flex:1 1 auto!important;width:auto!important;max-width:none!important;min-width:0!important;
+   display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:5px!important;
+   overflow:visible!important;
+ }
+ .topbar .command-search{
+   display:flex!important;visibility:visible!important;opacity:1!important;
+   flex:1 1 280px!important;min-width:160px!important;max-width:360px!important;
+   width:auto!important;height:36px!important;margin:0 auto 0 0!important;
+ }
+ .sq-top-tools{flex:0 0 auto!important;overflow:visible!important}
+ #forumAccount{flex:0 1 auto!important;min-width:0!important;max-width:160px!important;overflow:hidden!important}
+ .top-actions>.icon-btn{flex:0 0 34px!important}
+}
+@media(max-width:1180px) and (min-width:861px){
+ .crumbs{flex-basis:120px!important}
+ .topbar .command-search{min-width:150px!important;max-width:280px!important}
+ .sq-top-tool-label{display:none!important}.sq-top-tool{width:34px!important;padding:0!important}
+ .sq-top-status{display:none!important}.sq-top-divider{display:none!important}
+}
+@media(max-width:1000px) and (min-width:861px){
+ .sq-top-tools .sq-top-tool:nth-of-type(n+3){display:none!important}
+ #forumAccount{max-width:105px!important}
+}
+@media(max-width:900px) and (min-width:861px){
+ .crumbs{flex:0 1 90px!important}
+ .topbar{padding-left:10px!important;padding-right:10px!important;gap:5px!important}
+ .topbar .command-search{min-width:130px!important;max-width:none!important}
+}
+@media(max-width:860px){
+ .topbar{width:100%!important;max-width:100%!important;overflow:hidden!important;display:flex!important}
+ .topbar .command-search{display:none!important}
+}
