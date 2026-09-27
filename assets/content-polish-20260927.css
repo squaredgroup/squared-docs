@@ -1,0 +1,21 @@
+/* Content polish — 16px inner canvas + softer component radii + entry loader */
+:root{--sq-content-pad:16px;--sq-radius-card:16px;--sq-radius-control:12px}
+.main>.shell,.main>.forum-shell{padding:var(--sq-content-pad)!important}
+.main>.shell :is(.help-search,.sq-hero-aside,.sq-personal-home,.sq-guide-card,.sq-task-card,.sq-quick-grid>a,.sq-home-routes>a,.popular-article,.doc-block,.article-tool-card,.home-status-card,.home-discussions,.status-product-card,.forum-panel,.forum-auth-card,.sq-knowledge-path),
+.main>.forum-shell :is(.help-search,.universal-search-box,.forum-hero,.forum-panel,.forum-auth-card,.topic-row,.doc-block,.status-product-card){
+ border-radius:var(--sq-radius-card)!important;
+}
+.main>.shell :is(.btn,.chip,.filter-chip,input,textarea,select),
+.main>.forum-shell :is(.btn,.chip,.filter-chip,input,textarea,select){border-radius:var(--sq-radius-control)!important}
+.sq-loader{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#F8F9F7;opacity:1;visibility:visible;transition:opacity .32s ease,visibility .32s ease}
+.sq-loader.is-done{opacity:0;visibility:hidden;pointer-events:none}
+.sq-loader-inner{display:flex;flex-direction:column;align-items:center;gap:14px}
+.sq-loader-mark{width:44px;height:44px;border-radius:12px;background:#111;display:grid;place-items:center;overflow:hidden;animation:sqLoaderPulse 1.15s ease-in-out infinite}
+.sq-loader-mark img{width:100%;height:100%;object-fit:cover}
+.sq-loader-copy{font:600 11px/1 "Space Grotesk",sans-serif;letter-spacing:.08em;color:#252A25}
+.sq-loader-track{width:104px;height:3px;border-radius:99px;background:#E2E5E0;overflow:hidden}
+.sq-loader-bar{height:100%;width:38%;border-radius:inherit;background:#7BE84E;animation:sqLoaderMove .9s ease-in-out infinite}
+@keyframes sqLoaderPulse{50%{transform:scale(.96);opacity:.88}}
+@keyframes sqLoaderMove{0%{transform:translateX(-110%)}100%{transform:translateX(290%)}}
+html[data-theme="dark"] .sq-loader{background:#101210}.sq-loader-copy{color:#252A25}html[data-theme="dark"] .sq-loader-copy{color:#F1F3F0}
+@media(prefers-reduced-motion:reduce){.sq-loader-mark,.sq-loader-bar{animation:none}.sq-loader{transition:none}}
