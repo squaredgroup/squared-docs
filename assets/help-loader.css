@@ -1,0 +1,19 @@
+/* Content canvas + Help Center boot loader */
+.main>.shell,.main>.forum-shell{padding:16px!important;box-sizing:border-box!important}
+
+.sq-boot-loader{
+ position:fixed;inset:0;z-index:99999;display:grid;place-items:center;
+ background:#F7F8F6;opacity:1;visibility:visible;
+ transition:opacity .32s ease,visibility .32s ease;
+}
+.sq-boot-loader.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
+.sq-boot-card{display:flex;flex-direction:column;align-items:center;gap:14px}
+.sq-boot-logo{width:44px;height:44px;object-fit:cover;border-radius:11px;background:#000}
+.sq-boot-name{font:700 11px/1 "Space Grotesk",sans-serif;letter-spacing:.055em;color:#171A17}
+.sq-boot-track{width:112px;height:2px;overflow:hidden;border-radius:999px;background:#E1E5DF}
+.sq-boot-bar{display:block;width:42%;height:100%;border-radius:inherit;background:#7BE84E;animation:sqBoot 1s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes sqBoot{0%{transform:translateX(-120%)}55%{transform:translateX(100%)}100%{transform:translateX(260%)}}
+html[data-theme="dark"] .sq-boot-loader{background:#101210}
+html[data-theme="dark"] .sq-boot-name{color:#F1F3F0}
+html[data-theme="dark"] .sq-boot-track{background:#292E29}
+@media(prefers-reduced-motion:reduce){.sq-boot-bar{animation:none;width:100%}.sq-boot-loader{transition:none}}
