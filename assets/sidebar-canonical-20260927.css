@@ -186,3 +186,43 @@ html[data-theme="dark"] .hc-nav-link.active-parent{
  }
  .hc-nav-link{min-height:32px!important;padding:2px 6px!important}
 }
+
+
+/* Sidebar compact buttons v5 — explicit geometry, no residual oversized hit surface. */
+@media(min-width:861px){
+ .hc-nav-primary,.hc-nav-group-body,.hc-item{width:100%!important;box-sizing:border-box!important}
+ .hc-nav-link{
+   width:calc(100% - 2px)!important;
+   height:22px!important;
+   min-height:22px!important;
+   max-height:22px!important;
+   margin:0 1px!important;
+   padding:0 4px!important;
+   display:flex!important;
+   align-items:center!important;
+   line-height:1!important;
+   border-radius:6px!important;
+ }
+ .hc-nav-ico{
+   width:17px!important;min-width:17px!important;height:17px!important;
+   display:grid!important;place-items:center!important;
+ }
+ .hc-nav-ico .sq-iconly{width:12px!important;height:12px!important}
+ .hc-nav-primary{gap:0!important}
+ .hc-item{margin:0!important;padding:0!important}
+ .hc-nav-group{margin-bottom:2px!important}
+ .hc-item.has-children>.hc-nav-link{padding-right:20px!important}
+ .hc-sub-toggle{width:18px!important;height:18px!important;top:2px!important;right:2px!important}
+ .hc-nav-link.active,.hc-nav-link.active-parent{
+   height:22px!important;min-height:22px!important;
+   background:#F7F8F6!important;border:1px solid #D9DED7!important;border-radius:6px!important;
+ }
+}
+@media(max-width:860px){
+ .hc-nav-link{
+   width:calc(100% - 4px)!important;
+   min-height:34px!important;height:34px!important;
+   margin:0 2px!important;padding:0 5px!important;
+   display:flex!important;align-items:center!important;
+ }
+}
