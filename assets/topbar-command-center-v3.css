@@ -1,0 +1,44 @@
+/* Squared Help — Command Center Topbar v3 */
+@media(min-width:861px){
+ .topbar{
+   width:calc(100vw - 232px)!important;max-width:calc(100vw - 232px)!important;
+   box-sizing:border-box!important;overflow:hidden!important;
+   grid-template-columns:minmax(110px,.7fr) minmax(200px,340px) minmax(0,1.35fr)!important;
+ }
+ .topbar>*{min-width:0!important}
+ .top-actions{width:100%!important;max-width:100%!important;overflow:hidden!important;justify-content:flex-end!important}
+ .sq-top-tools{display:flex;align-items:center;gap:3px;min-width:0;overflow:hidden}
+ .sq-top-tool{height:34px;min-width:34px;padding:0 8px;border:1px solid transparent;border-radius:9px;background:transparent;color:#697069;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;font:500 8.5px/1 "Space Grotesk",sans-serif;white-space:nowrap;cursor:pointer}
+ .sq-top-tool:hover{background:#F0F2EF;border-color:#E2E5E0;color:#202520}
+ .sq-top-tool svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+ .sq-top-tool-label{display:inline}
+ .sq-top-status{height:28px;padding:0 8px;border:1px solid #E2E5E0;border-radius:999px;background:#FFF;color:#697069;display:inline-flex;align-items:center;gap:6px;font:500 8px/1 "Space Grotesk",sans-serif;white-space:nowrap;text-decoration:none}
+ .sq-top-status-dot{width:6px;height:6px;border-radius:50%;background:#22B266;box-shadow:0 0 0 3px rgba(34,178,102,.10)}
+ .sq-top-divider{width:1px;height:20px;background:#E2E5E0;flex:none;margin:0 2px}
+ .top-actions:after{display:none!important}
+}
+@media(max-width:1240px) and (min-width:861px){
+ .topbar{grid-template-columns:minmax(90px,.55fr) minmax(180px,280px) minmax(0,1.45fr)!important}
+ .sq-top-tool-label{display:none}
+ .sq-top-tool{padding:0;width:34px}
+ .sq-top-status span:last-child{display:none}.sq-top-status{width:28px;padding:0;justify-content:center}
+}
+@media(max-width:1020px) and (min-width:861px){
+ .topbar{grid-template-columns:minmax(80px,.5fr) minmax(160px,230px) minmax(0,1fr)!important;gap:7px!important;padding-left:10px!important;padding-right:10px!important}
+ .sq-top-tools .sq-top-tool:nth-of-type(3),.sq-top-tools .sq-top-tool:nth-of-type(4){display:none}
+ #forumAccount{max-width:118px!important;overflow:hidden!important}
+}
+@media(max-width:920px) and (min-width:861px){
+ .sq-top-status,.sq-top-divider{display:none}
+ .topbar{grid-template-columns:minmax(70px,.45fr) minmax(145px,190px) minmax(0,1fr)!important}
+}
+@media(max-width:860px){
+ .topbar{width:100%!important;max-width:100vw!important;box-sizing:border-box!important;overflow:hidden!important}
+ .sq-top-tools{display:flex;align-items:center;gap:2px;margin-left:auto;min-width:0}
+ .sq-top-tool{width:34px;height:34px;padding:0;border:0;border-radius:9px;background:transparent;display:grid;place-items:center;color:#697069}
+ .sq-top-tool svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7}
+ .sq-top-tool-label,.sq-top-status,.sq-top-divider{display:none}
+ .sq-top-tools .sq-top-tool:nth-of-type(n+3){display:none}
+}
+html[data-theme="dark"] .sq-top-tool:hover{background:#202420;border-color:#303530;color:#F1F3F0}
+html[data-theme="dark"] .sq-top-status{background:#181B18;border-color:#2A2E2A;color:#A5ACA5}
