@@ -224,11 +224,11 @@ host.classList.add('hc-sidebar');
     
   }
 }
-if(innerWidth>860&&getNavState('sq-help-sidebar-mini')==='1')document.body.classList.add('sidebar-mini');
+if(innerWidth>860)document.body.classList.remove('sidebar-mini');
 const collapseButton=document.getElementById('sidebarCollapse');
 const syncCollapseLabel=()=>collapseButton?.setAttribute('aria-label',document.body.classList.contains('sidebar-mini')?'Développer la navigation':'Réduire la navigation');
 syncCollapseLabel();
-collapseButton?.addEventListener('click',()=>{document.body.classList.toggle('sidebar-mini');setNavState('sq-help-sidebar-mini',document.body.classList.contains('sidebar-mini')?'1':'0');syncCollapseLabel();});
+collapseButton?.addEventListener('click',()=>{document.body.classList.toggle('sidebar-mini');syncCollapseLabel();});
 host.querySelectorAll('.hc-nav-group-trigger').forEach(btn=>{btn.setAttribute('aria-expanded','true');btn.setAttribute('aria-disabled','true');});
 host.querySelectorAll('.hc-sub-toggle').forEach(btn=>btn.addEventListener('click',e=>{
   e.preventDefault();
