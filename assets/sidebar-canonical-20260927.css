@@ -150,3 +150,39 @@ html[data-theme="dark"] .hc-nav-link.active-parent{
    box-shadow:none!important;
  }
 }
+
+
+/* Sidebar item spacing v4 — same horizontal surface as search, tighter vertically. */
+@media(min-width:861px){
+ .hc-search,
+ .hc-nav-link{
+   width:calc(100% - 4px)!important;
+   margin-left:2px!important;
+   margin-right:2px!important;
+   box-sizing:border-box!important;
+ }
+ .hc-nav-link{
+   min-height:24px!important;
+   padding:1px 5px!important;
+   gap:5px!important;
+ }
+ .hc-nav-ico{
+   width:18px!important;
+   min-width:18px!important;
+   height:18px!important;
+ }
+ .hc-nav-ico .sq-iconly{width:12.5px!important;height:12.5px!important}
+ .hc-nav-primary{gap:0!important}
+ .hc-item{margin:0!important;padding:0!important}
+ .hc-nav-group{margin-bottom:3px!important}
+ .hc-item.has-children>.hc-nav-link{padding-right:22px!important}
+ .hc-sub-toggle{width:19px!important;height:19px!important;top:2px!important;right:3px!important}
+}
+@media(max-width:860px){
+ .hc-search,.hc-nav-link{
+   width:calc(100% - 6px)!important;
+   margin-left:3px!important;margin-right:3px!important;
+   box-sizing:border-box!important;
+ }
+ .hc-nav-link{min-height:32px!important;padding:2px 6px!important}
+}
