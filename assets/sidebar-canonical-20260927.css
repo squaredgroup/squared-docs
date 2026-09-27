@@ -52,3 +52,36 @@
  .hc-sidebar-foot-icon:after{content:"";position:absolute;right:-2px;bottom:-2px;width:9px;height:9px;border-radius:50%;background:#22B266;border:2px solid #FFF;box-sizing:border-box}
  .hc-sidebar-foot strong{font-size:10.5px!important}.hc-sidebar-foot small{font-size:8.6px!important}
 }
+
+/* Active item = same visual language as the right content canvas. */
+@media(min-width:861px){
+ .hc-nav-link.active,
+ .hc-nav-link.active-parent{
+   background:#F7F8F6!important;
+   border:1px solid #E2E5E0!important;
+   border-radius:10px!important;
+   color:#171A17!important;
+   box-shadow:none!important;
+ }
+ .hc-nav-link.active .hc-nav-ico,
+ .hc-nav-link.active-parent .hc-nav-ico{
+   background:transparent!important;
+   color:#343A34!important;
+ }
+}
+@media(max-width:860px){
+ .hc-nav-link.active,
+ .hc-nav-link.active-parent{
+   background:#F7F8F6!important;
+   border:1px solid #E2E5E0!important;
+   border-radius:10px!important;
+   color:#171A17!important;
+   box-shadow:none!important;
+ }
+}
+html[data-theme="dark"] .hc-nav-link.active,
+html[data-theme="dark"] .hc-nav-link.active-parent{
+ background:#151815!important;
+ border-color:#292E29!important;
+ color:#F1F3F0!important;
+}
