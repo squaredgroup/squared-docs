@@ -1,0 +1,11 @@
+(()=>{if(window.__sqMobileV3)return;window.__sqMobileV3=true;
+const mount=()=>{const sidebar=document.getElementById('sidebar'),btn=document.getElementById('menuBtn');if(!sidebar||!btn)return;
+ const sync=()=>document.body.classList.toggle('sidebar-open',sidebar.classList.contains('open'));
+ btn.addEventListener('click',()=>requestAnimationFrame(sync));
+ document.addEventListener('click',e=>{if(innerWidth>860)return;if(document.body.classList.contains('sidebar-open')&&!sidebar.contains(e.target)&&!btn.contains(e.target)){sidebar.classList.remove('open');sync()}});
+ sidebar.addEventListener('click',e=>{const a=e.target.closest('a');if(a&&innerWidth<=860){setTimeout(()=>{sidebar.classList.remove('open');sync()},80)}});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sidebar.classList.contains('open')){sidebar.classList.remove('open');sync();btn.focus()}});
+ addEventListener('resize',()=>{if(innerWidth>860){sidebar.classList.remove('open');document.body.classList.remove('sidebar-open')}},{passive:true});
+};
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',mount,{once:true}):mount();
+})();
