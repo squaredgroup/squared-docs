@@ -1,0 +1,38 @@
+/* Mobile Topbar v5 — clean contextual header, no menu button */
+@media(max-width:860px){
+ .topbar{
+   height:68px!important;min-height:68px!important;
+   padding:0 14px!important;gap:8px!important;
+   display:flex!important;align-items:center!important;
+   background:rgba(250,251,249,.98)!important;
+   border-bottom:1px solid #E2E5E0!important;
+ }
+ .mobile-menu,#menuBtn{display:none!important}
+ .sq-mobile-location{
+   order:1!important;flex:1 1 auto!important;min-width:0!important;
+   height:48px!important;display:flex!important;align-items:center!important;gap:10px!important;
+ }
+ .sq-mobile-location-logo{width:36px!important;height:36px!important;flex:0 0 36px!important;border-radius:10px!important}
+ .sq-mobile-location-copy{min-width:0!important;gap:3px!important}
+ .sq-mobile-location-brand{font-size:7.5px!important;letter-spacing:.09em!important;color:#8D948E!important}
+ .sq-mobile-location-page{font-size:13px!important;line-height:1!important;color:#1C211D!important;font-weight:650!important}
+ .top-actions{
+   order:2!important;flex:0 0 auto!important;width:auto!important;
+   display:flex!important;align-items:center!important;gap:5px!important;
+ }
+ .topbar>.crumbs,.sq-top-tools,#forumAccount,.topbar .command-search{display:none!important}
+ .top-actions>.icon-btn{display:none!important}
+ #quickActionsBtn,#themeBtn{
+   display:grid!important;place-items:center!important;
+   width:38px!important;height:38px!important;flex:0 0 38px!important;
+   border:1px solid #E0E4DE!important;border-radius:11px!important;
+   background:#FFF!important;color:#263027!important;
+ }
+ #quickActionsBtn:hover,#themeBtn:hover{background:#F1F3F0!important}
+}
+@media(max-width:390px){
+ .topbar{padding:0 10px!important;gap:6px!important}
+ .sq-mobile-location-logo{width:34px!important;height:34px!important;flex-basis:34px!important}
+ .sq-mobile-location-brand{font-size:7px!important}.sq-mobile-location-page{font-size:12px!important}
+ #themeBtn{display:none!important}
+}
