@@ -1,0 +1,32 @@
+/* Mobile Context Topbar v4 — identity + current location first */
+@media(max-width:860px){
+ .topbar{
+   height:64px!important;min-height:64px!important;
+   padding:0 12px!important;gap:9px!important;
+   display:flex!important;align-items:center!important;
+   background:rgba(250,251,249,.97)!important;border-bottom:1px solid #E2E5E0!important;
+ }
+ .mobile-menu{order:1!important;width:40px!important;height:40px!important;flex:0 0 40px!important;border-radius:11px!important}
+ .sq-mobile-location{
+   order:2;flex:1 1 auto;min-width:0;height:44px;
+   display:flex;align-items:center;gap:9px;
+ }
+ .sq-mobile-location-logo{width:30px;height:30px;flex:0 0 30px;border-radius:8px;object-fit:cover;background:#111}
+ .sq-mobile-location-copy{min-width:0;display:flex;flex-direction:column;gap:2px}
+ .sq-mobile-location-brand{font:650 8px/1 "Space Grotesk",sans-serif;letter-spacing:.075em;color:#8B928B;text-transform:uppercase;white-space:nowrap}
+ .sq-mobile-location-page{font:650 12px/1.15 "Space Grotesk",sans-serif;color:#1E231F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .topbar>.crumbs{display:none!important}
+ .top-actions{order:3!important;flex:0 0 auto!important;width:auto!important;gap:4px!important}
+ .sq-top-tools{display:none!important}
+ #forumAccount{display:none!important}
+ .top-actions>.icon-btn{display:none!important}
+ #quickActionsBtn,#themeBtn{display:grid!important;width:38px!important;height:38px!important;flex:0 0 38px!important;border:1px solid #E2E5E0!important;background:#FFF!important;border-radius:10px!important}
+ .topbar .command-search{display:none!important}
+}
+@media(max-width:390px){
+ .topbar{padding-left:8px!important;padding-right:8px!important;gap:6px!important}
+ .sq-mobile-location-logo{width:28px;height:28px;flex-basis:28px}
+ .sq-mobile-location-brand{font-size:7px}.sq-mobile-location-page{font-size:11px}
+ #themeBtn{display:none!important}
+}
+html[data-theme="dark"] .sq-mobile-location-brand{color:#8E958E}html[data-theme="dark"] .sq-mobile-location-page{color:#F2F4F1}
