@@ -1,0 +1,14 @@
+/.git/**
+/.github/**
+/.wrangler/**
+/scripts/**
+/src/**
+/tests/**
+/node_modules/**
+/output/**
+/test-results/**
+/*.md
+/package.json
+/package-lock.json
+/.env*
+/.DS_Store
