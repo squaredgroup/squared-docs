@@ -280,3 +280,53 @@ window.addEventListener('sq:backend-ready',async()=>{
   }catch{}
 },{once:true});
 })();
+
+// Site-wide settings published from Squared Workspace. The static page remains usable offline.
+(()=>{
+  const endpoint='https://workspace.squaredgroup.studio/v1/public/web-content/docs/settings';
+  let lastVersion=0;
+  const metadata=(selector,attribute,value)=>{
+    if(!value)return;
+    let node=document.head.querySelector(selector);
+    if(!node){node=document.createElement('meta');node.setAttribute(attribute,selector.includes('property=')?'og:image':'description');document.head.append(node);}
+    node.content=value;
+  };
+  async function refresh(){
+    try{
+      const response=await fetch(endpoint,{cache:'no-store',headers:{Accept:'application/json'}});
+      if(!response.ok)return;
+      const payload=await response.json();
+      const settings=payload?.settings;
+      if(!settings||!payload.version||payload.version===lastVersion)return;
+      lastVersion=payload.version;
+      if(/^\/(?:index\.html)?$/.test(location.pathname)){
+        document.title=settings.seoTitle||document.title;
+        metadata('meta[name="description"]','name',settings.seoDescription);
+      }
+      if(/^#[0-9a-f]{6}$/i.test(settings.accentColor||'')){
+        document.documentElement.style.setProperty('--green',settings.accentColor);
+        document.documentElement.style.setProperty('--green-2',settings.accentColor);
+      }
+      if(settings.fontFamily==='INTER')document.body.style.fontFamily='Inter,system-ui,sans-serif';
+      else if(settings.fontFamily==='SYSTEM')document.body.style.fontFamily='system-ui,sans-serif';
+      else document.body.style.fontFamily='"Space Grotesk",Inter,system-ui,sans-serif';
+      if(/^https:\/\//.test(settings.faviconURL||'')){
+        let icon=document.head.querySelector('link[rel="icon"]');
+        if(!icon){icon=document.createElement('link');icon.rel='icon';document.head.append(icon);}
+        icon.href=settings.faviconURL;
+      }
+      if(/^https:\/\//.test(settings.socialImageURL||''))metadata('meta[property="og:image"]','property',settings.socialImageURL);
+      let banner=document.getElementById('sq-workspace-site-announcement');
+      if(!settings.announcementText){banner?.remove();return;}
+      if(!banner){banner=document.createElement('aside');banner.id='sq-workspace-site-announcement';banner.setAttribute('aria-label','Annonce du site');document.body.prepend(banner);}
+      banner.replaceChildren();
+      const message=/^https:\/\//.test(settings.announcementURL||'')?document.createElement('a'):document.createElement('span');
+      if(message instanceof HTMLAnchorElement)message.href=settings.announcementURL;
+      message.textContent=settings.announcementText;
+      banner.append(message);
+      Object.assign(banner.style,{position:'relative',zIndex:'110',padding:'10px 16px',textAlign:'center',fontWeight:'600',background:settings.accentColor,color:'#101014'});
+    }catch{}
+  }
+  void refresh();
+  setInterval(()=>{if(!document.hidden)void refresh();},20000);
+})();
