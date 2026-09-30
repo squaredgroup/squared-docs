@@ -288,7 +288,7 @@ window.addEventListener('sq:backend-ready',async()=>{
   const metadata=(selector,attribute,value)=>{
     if(!value)return;
     let node=document.head.querySelector(selector);
-    if(!node){node=document.createElement('meta');node.setAttribute(attribute,selector.includes('property=')?'og:image':'description');document.head.append(node);}
+    if(!node){node=document.createElement('meta');node.setAttribute(attribute,selector.includes('application-name')?'application-name':selector.includes('property=')?'og:image':'description');document.head.append(node);}
     node.content=value;
   };
   async function refresh(){
@@ -299,6 +299,7 @@ window.addEventListener('sq:backend-ready',async()=>{
       const settings=payload?.settings;
       if(!settings||!payload.version||payload.version===lastVersion)return;
       lastVersion=payload.version;
+      metadata('meta[name="application-name"]','name',settings.siteName);
       if(/^\/(?:index\.html)?$/.test(location.pathname)){
         document.title=settings.seoTitle||document.title;
         metadata('meta[name="description"]','name',settings.seoDescription);

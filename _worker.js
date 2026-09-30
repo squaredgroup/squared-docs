@@ -44,6 +44,7 @@ export default {
       .on('head', { element(element) {
         const image = safeURL(settings.socialImageURL);
         const icon = safeURL(settings.faviconURL);
+        if (settings.siteName) element.append(`<meta name="application-name" content="${htmlAttribute(settings.siteName)}">`, { html: true });
         if (image) element.append(`<meta property="og:image" content="${htmlAttribute(image)}">`, { html: true });
         if (icon) element.append(`<link rel="icon" href="${htmlAttribute(icon)}">`, { html: true });
       } });
