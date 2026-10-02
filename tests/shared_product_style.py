@@ -39,7 +39,7 @@ try:
    page=context.new_page()
    for name in PAGES:
     page.goto(origin+'/'+name,wait_until='networkidle')
-    page.wait_for_selector('.hc-nav-link')
+    page.wait_for_selector('.hc-nav-link',state='attached')
     for theme in ['light','dark']:
      page.evaluate('(theme)=>document.documentElement.dataset.theme=theme',theme)
      page.evaluate('()=>document.fonts.ready')
@@ -84,6 +84,9 @@ try:
    checks.append({'width':width,'menu_search_theme':True})
    context.close()
   browser.close()
+except Exception:
+ if 'page' in locals():page.screenshot(path=str(OUT/'failure.png'))
+ raise
 finally:
  server.shutdown()
  (OUT/'checks.json').write_text(json.dumps(checks,ensure_ascii=False,indent=2))
