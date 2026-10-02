@@ -146,3 +146,5 @@ html:root[data-theme] body .sq-wix-guide-shell :is(.content,.module-label-inner)
 html:root[data-theme] body .sq-wix-guide-shell{min-width:0;overflow-wrap:anywhere}
 html:root[data-theme] body .sq-wix-guide-shell pre{min-width:0;max-width:100%;overflow-x:auto}
 html:root[data-theme] body .sq-wix-guide-shell table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse}
+
+html:root[data-theme] body .sq-wix-guide-shell :is(img,svg,video,iframe){max-width:100%!important;height:auto}

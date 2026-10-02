@@ -85,6 +85,20 @@ try:
    assert page.locator('html').get_attribute('data-theme')!=before
    checks.append({'width':width,'menu_search_theme':True})
    context.close()
+  MOCK=MOCK.replace('"anon"','"member"')
+  for width in [390,1440]:
+   context=browser.new_context(viewport={'width':width,'height':960},reduced_motion='reduce')
+   context.route('**/*',route)
+   page=context.new_page()
+   page.goto(origin+'/support.html',wait_until='networkidle')
+   page.wait_for_selector('#ticketForm')
+   assert not page.locator('#supportGuest').is_visible()
+   for theme in ['light','dark']:
+    page.evaluate('(theme)=>document.documentElement.dataset.theme=theme',theme)
+    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+    page.screenshot(path=str(OUT/f'support-member-{theme}-{width}.png'),animations='disabled')
+    checks.append({'page':'support.html','role':'member','width':width,'theme':theme,'ticket_form':True})
+   context.close()
   browser.close()
 finally:
  server.shutdown()
