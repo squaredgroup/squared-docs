@@ -148,3 +148,7 @@ html:root[data-theme] body .sq-wix-guide-shell pre{min-width:0;max-width:100%;ov
 html:root[data-theme] body .sq-wix-guide-shell table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse}
 
 html:root[data-theme] body .sq-wix-guide-shell :is(img,svg,video,iframe){max-width:100%!important;height:auto}
+html:root[data-theme] body :is(#themeBtn,#quickActionsBtn){color:var(--sq-text)!important}
+html:root[data-theme] body .sq-search-suggestions,html:root[data-theme] body .sq-search-suggestions>span{color:var(--sq-muted)!important}
+html:root[data-theme] body .sq-search-suggestions a{background:var(--sq-card)!important;border:1px solid var(--sq-border)!important;color:var(--sq-muted)!important;border-radius:8px!important;padding:7px 10px;font-size:11px!important}
+html:root[data-theme] body .topbar .command-search:before{display:none!important;content:none!important}
