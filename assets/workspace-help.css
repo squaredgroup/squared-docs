@@ -121,3 +121,24 @@ html:root[data-theme] body .topbar{width:100%!important;max-width:100%!important
 html:root[data-theme] body .sq-context-help-trigger{width:44px!important;height:44px!important;border:1px solid var(--sq-border)!important;border-radius:12px!important;background:var(--sq-card)!important;color:var(--sq-text)!important;box-shadow:var(--sq-shadow-panel)!important;display:grid;place-items:center}
 html:root[data-theme] body .sq-context-help-head button{display:grid;place-items:center;border:0;background:transparent;color:var(--sq-muted);width:40px;height:40px}
 @media(max-width:860px){html:root[data-theme] body .sq-context-help-trigger{bottom:calc(var(--sq-dock-height,68px) + 16px)!important;right:16px!important}}
+
+html:root[data-theme] body .topbar{display:flex!important;overflow:visible!important}
+html:root[data-theme] body .sq-top-tools{display:none!important}
+html:root[data-theme] body .top-actions{flex:1 1 auto!important;min-width:0!important;justify-content:flex-end!important;width:auto!important;overflow:visible!important}
+html:root[data-theme] body .top-actions .icon-btn{color:var(--sq-text)!important;width:40px!important;height:40px!important;min-width:40px!important;flex:0 0 40px!important;padding:0!important}
+html:root[data-theme] body .top-actions .sq-command-label{display:none!important}
+html:root[data-theme] body .topbar .command-search{height:40px!important;min-height:40px!important;max-width:320px!important;flex:0 1 320px!important;margin:0 auto 0 0!important;background:var(--sq-control)!important;color:var(--sq-muted)!important;justify-content:space-between!important}
+html:root[data-theme] body .help-search :is(svg,.help-search-label,kbd){color:var(--sq-muted)!important}
+html:root[data-theme] body .help-search kbd{background:var(--sq-control)!important;border-color:var(--sq-border)!important}
+html:root[data-theme] body .sq-editorial-media[hidden]{display:none!important}
+html:root[data-theme] body .sq-wix-guide-shell .hero{padding:24px 0!important;background:transparent!important}
+html:root[data-theme] body .sq-wix-guide-shell :is(.content,.module-label-inner){max-width:100%;margin-inline:0;padding-inline:0}
+@media(min-width:861px){
+ html:root[data-theme] body #menuBtn,html:root[data-theme] body .sq-mobile-close{display:none!important}
+ html:root[data-theme] body .crumbs{flex:0 1 260px!important;min-width:80px!important;justify-content:flex-start!important}
+}
+@media(max-width:860px){
+ html:root[data-theme] body .top-actions{flex:0 0 auto!important}
+ html:root[data-theme] body .topbar .command-search{display:none!important}
+ html:root[data-theme] body .top-actions .icon-btn{width:44px!important;height:44px!important;min-width:44px!important;flex-basis:44px!important}
+}

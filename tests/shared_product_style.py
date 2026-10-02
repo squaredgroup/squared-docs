@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'test-results/shared-product';OUT.mkdir(parents=True,exist_ok=True)
 source=ast.parse((ROOT/'tests/help_center_acceptance.py').read_text())
 MOCK=next(ast.literal_eval(n.value) for n in source.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='MOCK' for t in n.targets)).replace('ROLE','"anon"')
-PAGES=['index.html','guides.html','support.html','forum.html','login.html','faq.html','search.html','profile.html','server-status.html','workspace/workspace-login.html','wix/wix-responsive.html']
+PAGES=['index.html','guides.html','support.html','forum.html','login.html','faq.html','search.html','profile.html','server-status.html','workspace/workspace-login.html','wix/wix-responsive.html','wix-studio.html']
 checks=[]
 for path in ROOT.rglob('*.html'):
  if any(part in {'.git','node_modules','test-results'} for part in path.parts):continue
