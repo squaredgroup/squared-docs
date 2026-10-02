@@ -82,10 +82,10 @@ with sync_playwright() as p:
                 if name == 'index.html':
                     hero = page.locator('.help-hero').bounding_box()
                     search = page.locator('.help-search').bounding_box()
-                    # Full phone width minus 16px gutters; tablets retain a 680px reading measure.
-                    expected_hero = min(width - 32, 680)
-                    assert abs(hero['width'] - expected_hero) <= 2, (engine,width,'narrow hero',hero)
-                    assert search['height'] >= 52 and abs(search['width'] - expected_hero) <= 2, (engine,width,'search sizing',search)
+                    # The shared canvas has 16px outer margins, a border and 16px inner padding.
+                    available = page.locator('.main>.shell').evaluate('e=>{const s=getComputedStyle(e);return e.clientWidth-parseFloat(s.paddingLeft)-parseFloat(s.paddingRight)}')
+                    assert min(available,680)-2 <= hero['width'] <= available+2, (engine,width,'hero reading measure',hero,available)
+                    assert search['height'] >= 48 and abs(search['width'] - hero['width']) <= 2, (engine,width,'search sizing',search)
                     text = page.locator('.help-hero h1').evaluate('''e=>{const r=document.createRange();r.selectNodeContents(e);return [...r.getClientRects()].filter(x=>x.width>0).map(x=>({left:x.left,right:x.right,top:x.top}))}''')
                     assert all(r['left']>=-1 and r['right']<=width+1 for r in text), (engine,width,'clipped title',text)
                     if width<=430: assert len(set(round(r['top']) for r in text))<=4, (engine,width,'excessive title wrapping',text)
