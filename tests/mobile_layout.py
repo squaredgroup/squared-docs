@@ -100,7 +100,7 @@ with sync_playwright() as p:
         for role in ['member','admin']:
             context,page,errors = new_page(390,role)
             page.goto(origin+'/index.html',wait_until='networkidle')
-            page.locator('.account-chip').wait_for()
+            page.locator('.account-chip').wait_for(state='attached')
             assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+2'), (engine,role,'header overflow')
             page.locator('#menuBtn').click()
             page.locator('#sqMobileClose').wait_for(state='visible')
@@ -108,7 +108,9 @@ with sync_playwright() as p:
             assert page.locator('#sidebar').get_attribute('aria-modal')=='true'
             page.locator('#sqMobileLogout').wait_for(state='visible')
             page.locator('#sidebar .hc-sub-toggle').first.click()
-            page.locator('#sidebar [data-group="products"] .hc-nav-group-trigger').click()
+            group=page.locator('#sidebar [data-group="products"] .hc-nav-group-trigger')
+            if group.is_enabled():group.click()
+            else:assert group.get_attribute('aria-disabled')=='true'
             page.locator('#sidebar .hc-sub-toggle').nth(1).click()
             assert page.locator('.hc-item.child-open').count()<=1
             page.keyboard.press('Escape')

@@ -152,3 +152,8 @@ html:root[data-theme] body :is(#themeBtn,#quickActionsBtn){color:var(--sq-text)!
 html:root[data-theme] body .sq-search-suggestions,html:root[data-theme] body .sq-search-suggestions>span{color:var(--sq-muted)!important}
 html:root[data-theme] body .sq-search-suggestions a{background:var(--sq-card)!important;border:1px solid var(--sq-border)!important;color:var(--sq-muted)!important;border-radius:8px!important;padding:7px 10px;font-size:11px!important}
 html:root[data-theme] body .topbar .command-search:before{display:none!important;content:none!important}
+
+html:root[data-theme] body .sq-editorial-media{height:240px;min-height:0!important;aspect-ratio:auto!important;border-color:var(--sq-border)!important;background:var(--sq-control)!important;border-radius:12px!important}
+html:root[data-theme] body .sq-editorial-media img{width:100%;height:100%!important;object-fit:cover}
+html:root[data-theme] body .sq-editorial-gallery{align-items:start;grid-auto-rows:240px;gap:12px}
+@media(max-width:860px){html:root[data-theme] body .sq-editorial-media{height:190px}html:root[data-theme] body .sq-editorial-gallery{grid-auto-rows:190px}}
