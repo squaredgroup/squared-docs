@@ -245,7 +245,7 @@
   // Shared intelligence layer: loaded from the same public asset root on every Help Center page.
   if (!document.querySelector('script[data-sq-help-intelligence]')) {
     const intelligence=document.createElement('script');
-    intelligence.src=new URL('help-intelligence.js?v=20260926.3', assetBase).href;
+    intelligence.src=new URL('help-intelligence.js?v=20261002.1', assetBase).href;
     intelligence.defer=true; intelligence.dataset.sqHelpIntelligence='1';
     document.head.append(intelligence);
   }
