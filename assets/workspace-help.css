@@ -117,3 +117,7 @@ html:root[data-theme] body .topbar{width:100%!important;max-width:100%!important
  html:root[data-theme] body .sq-mobile-dock-item{color:var(--sq-muted)!important;border-radius:10px!important}
  html:root[data-theme] body .sq-mobile-dock-item[aria-current=page],html:root[data-theme] body .sq-mobile-dock-item[aria-expanded=true]{background:var(--sq-control)!important;color:var(--sq-text)!important;box-shadow:inset 0 -2px var(--sq-accent)}
 }
+
+html:root[data-theme] body .sq-context-help-trigger{width:44px!important;height:44px!important;border:1px solid var(--sq-border)!important;border-radius:12px!important;background:var(--sq-card)!important;color:var(--sq-text)!important;box-shadow:var(--sq-shadow-panel)!important;display:grid;place-items:center}
+html:root[data-theme] body .sq-context-help-head button{display:grid;place-items:center;border:0;background:transparent;color:var(--sq-muted);width:40px;height:40px}
+@media(max-width:860px){html:root[data-theme] body .sq-context-help-trigger{bottom:calc(var(--sq-dock-height,68px) + 16px)!important;right:16px!important}}

@@ -51,11 +51,11 @@
     const g=await graphLoad(),path=location.pathname.replace(base.pathname,'').replace(/^\//,'')||'index.html';
     const current=(g.nodes||[]).find(n=>n.href===path);
     const candidates=current?(current.next||[]).map(id=>g.nodes.find(n=>n.id===id)).filter(Boolean):[];
-    const btn=document.createElement('button');btn.type='button';btn.className='sq-context-help-trigger';btn.setAttribute('aria-label','Aide contextuelle');btn.textContent='?';
+    const btn=document.createElement('button');btn.type='button';btn.className='sq-context-help-trigger';btn.setAttribute('aria-label','Aide contextuelle');btn.innerHTML=window.SQIconly.icon('faq','outline','lg');
     const panel=document.createElement('aside');panel.className='sq-context-help';panel.hidden=true;
     const generic=[{title:'Rechercher une réponse',href:'search.html',product:'Help Center'},{title:'Dépannage guidé',href:'diagnostic.html',product:'Help Center'},{title:'Support privé',href:'support.html',product:'Help Center'}];
     const rows=(candidates.length?candidates:generic).slice(0,4);
-    panel.innerHTML='<div class="sq-context-help-head"><div><small>Aide contextuelle</small><strong>'+(current?esc(current.product):'Squared Help')+'</strong></div><button type="button" aria-label="Fermer">×</button></div><p>'+(current?'Continuez depuis « '+esc(current.title)+' ».':'Choisissez la prochaine étape adaptée à votre besoin.')+'</p><nav>'+rows.map(n=>'<a href="'+esc(local(n.href))+'"><span>'+esc(n.product||'Help Center')+'</span><strong>'+esc(n.title)+'</strong><em>→</em></a>').join('')+'</nav><a class="btn green" href="'+esc(local('diagnostic.html'))+'">Me guider</a>';
+    panel.innerHTML='<div class="sq-context-help-head"><div><small>Aide contextuelle</small><strong>'+(current?esc(current.product):'Squared Help')+'</strong></div><button type="button" aria-label="Fermer">'+window.SQIconly.icon('close','outline','md')+'</button></div><p>'+(current?'Continuez depuis « '+esc(current.title)+' ».':'Choisissez la prochaine étape adaptée à votre besoin.')+'</p><nav>'+rows.map(n=>'<a href="'+esc(local(n.href))+'"><span>'+esc(n.product||'Help Center')+'</span><strong>'+esc(n.title)+'</strong><em>→</em></a>').join('')+'</nav><a class="btn green" href="'+esc(local('diagnostic.html'))+'">Me guider</a>';
     document.body.append(btn,panel);
     const close=()=>{panel.hidden=true;btn.setAttribute('aria-expanded','false')};
     btn.addEventListener('click',()=>{panel.hidden=!panel.hidden;btn.setAttribute('aria-expanded',String(!panel.hidden))});
