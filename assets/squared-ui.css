@@ -1,0 +1,65 @@
+/* Squared product foundations — Workspace / Help Center / Build, revision 1.
+   The same file is shipped with each product; adapters only own page layout. */
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:400;font-display:swap;src:url("fonts/space-grotesk-regular.woff") format("woff")}
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:500;font-display:swap;src:url("fonts/space-grotesk-medium.woff") format("woff")}
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:600;font-display:swap;src:url("fonts/space-grotesk-semibold.woff") format("woff")}
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:700;font-display:swap;src:url("fonts/space-grotesk-bold.woff") format("woff")}
+:root,html[data-theme="dark"]{
+ --sq-font:"Space Grotesk";--sq-bg:#0e1013;--sq-shell:#101216;--sq-card:#15171b;
+ --sq-control:#1e2127;--sq-control-hover:#262a31;--sq-border:#2b2e33;--sq-border-strong:#3a3c43;
+ --sq-text:#f7f8f6;--sq-text-soft:#d7dad4;--sq-muted:#a1a7b0;--sq-subtle:#a1a7b0;
+ --sq-accent:#7be84e;--sq-accent-ink:#9ceb7b;--sq-on-accent:#0a1207;
+ --sq-radius:10px;--sq-radius-card:16px;--sq-space-1:4px;--sq-space-2:8px;
+ --sq-space-3:12px;--sq-space-4:16px;--sq-space-5:24px;--sq-space-6:32px;
+ --sq-accent-surface:#1b2b17;--sq-shadow-panel:0 16px 64px rgba(0,0,0,.16);
+ --bg:var(--sq-bg);--bg-2:var(--sq-shell);--panel:var(--sq-card);--panel-2:var(--sq-control);
+ --soft:var(--sq-control);--text:var(--sq-text);--muted:var(--sq-muted);--muted-2:var(--sq-subtle);
+ --line:var(--sq-border);--green:var(--sq-accent);--green-2:var(--sq-accent);
+ --green-soft:var(--sq-accent-surface);--surface:var(--sq-card);--surface2:var(--sq-control);
+ --ink:var(--sq-text);--green-ink:var(--sq-on-accent);--radius:var(--sq-radius-card);
+ --sq-page-canvas:var(--sq-bg);--sq-page-line:var(--sq-border);--shadow:none;
+}
+html[data-theme="light"]{
+ color-scheme:light;--sq-bg:#f6f7f9;--sq-shell:#fcfcfd;--sq-card:#ffffff;
+ --sq-control:#f3f4f6;--sq-control-hover:#eaeef2;--sq-border:#e2e6eb;--sq-border-strong:#c3cad3;
+ --sq-text:#17212b;--sq-text-soft:#374151;--sq-muted:#626d7d;--sq-subtle:#626d7d;
+ --sq-accent-ink:#2a651a;--sq-accent-surface:#edf7e8;--sq-shadow-panel:0 16px 64px rgba(30,42,60,.09);
+ --sq-page-canvas:var(--sq-bg);--sq-page-line:var(--sq-border);
+}
+html[data-theme="dark"]{color-scheme:dark}
+html[data-theme]{--bg:var(--sq-bg);--bg-2:var(--sq-shell);--panel:var(--sq-card);--panel-2:var(--sq-control);--soft:var(--sq-control);--text:var(--sq-text);--muted:var(--sq-muted);--muted-2:var(--sq-subtle);--line:var(--sq-border);--green:var(--sq-accent);--green-2:var(--sq-accent);--green-soft:var(--sq-accent-surface);--surface:var(--sq-card);--surface2:var(--sq-control);--ink:var(--sq-text);--green-ink:var(--sq-on-accent);--sq-page-canvas:var(--sq-bg);--sq-page-line:var(--sq-border)}
+html body,html body :is(button,input,textarea,select,option,pre,code,kbd,samp,h1,h2,h3,h4,p,a,span,strong,small,label){font-family:var(--sq-font)!important;font-synthesis:none}
+html body{background:var(--sq-bg)!important;color:var(--sq-text);-webkit-font-smoothing:antialiased}
+html body:before{display:none!important}
+html body :is(.btn,.sq-button){display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;height:auto!important;padding:10px 14px!important;border:1px solid var(--sq-border)!important;border-radius:9px!important;background:var(--sq-control)!important;color:var(--sq-text)!important;font-size:12px!important;font-weight:500!important;line-height:1.4!important;letter-spacing:0!important;box-shadow:none!important;transform:none!important;text-decoration:none;cursor:pointer}
+html body :is(.btn,.sq-button):hover{background:var(--sq-control-hover)!important;border-color:var(--sq-border-strong)!important}
+html body :is(.btn.primary,.btn.green,.sq-button.primary){background:var(--sq-accent)!important;border-color:var(--sq-accent)!important;color:var(--sq-on-accent)!important}
+html body :is(.btn.primary,.btn.green,.sq-button.primary):hover{background:color-mix(in srgb,var(--sq-accent) 88%,white)!important}
+html body .btn.ghost{background:transparent!important}
+html body :is(.btn,.sq-button):disabled{opacity:.45;cursor:default}
+html body :is(.icon-btn,.icon-button){display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;min-height:40px;padding:0;border:1px solid var(--sq-border)!important;border-radius:10px!important;background:var(--sq-control)!important;color:var(--sq-text)!important;box-shadow:none!important;flex-shrink:0}
+html body :is(.icon-btn,.icon-button):hover{background:var(--sq-control-hover)!important}
+html body :is(input,textarea,select):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="hidden"]){min-height:44px;padding:12px 14px;border:1px solid var(--sq-border)!important;border-radius:10px!important;background-color:var(--sq-control)!important;color:var(--sq-text)!important;box-shadow:none!important;max-width:100%;min-width:0;font-size:13px;line-height:1.5}
+html body :is(input,textarea)::placeholder{color:var(--sq-muted);opacity:1}
+html body textarea{resize:vertical}
+html body :is(.badge,.pill,.status,.course-meta>span){border:1px solid var(--sq-border);border-radius:6px!important;background:var(--sq-control);color:var(--sq-text-soft);font-size:10px!important;font-weight:500!important;letter-spacing:0!important;text-transform:none;line-height:1.45;padding:4px 7px;height:auto}
+html body :is(.badge.green,.pill.live,.status.live){background:var(--sq-accent-surface);color:var(--sq-accent-ink)}
+html body :is(.filter-chip,.chip){border:1px solid var(--sq-border);border-radius:8px!important;background:var(--sq-card);color:var(--sq-muted);font-size:12px!important;font-weight:500!important;min-height:36px;padding:8px 12px;line-height:1.4}
+html body :is(.filter-chip.active,.chip.active){background:var(--sq-control)!important;border-color:var(--sq-border-strong)!important;color:var(--sq-text)!important;box-shadow:none!important}
+html body :is(.card,.category-card,.sq-guide-card,.sq-task-card,.forum-panel,.article-tool-card,.home-status-card,.home-discussions,.course-card,.feature,.note-box,.quiz-card,.purchase-panel,.course-progress,.empty){background:var(--sq-card)!important;border:1px solid var(--sq-border)!important;border-radius:var(--sq-radius-card)!important;box-shadow:none!important;transform:none!important}
+html body :is(.card,.category-card,.sq-guide-card,.sq-task-card,.course-card):hover{border-color:var(--sq-border-strong)!important;transform:none!important;box-shadow:none!important}
+html body :is(.card,.category-card,.sq-task-card):after{display:none!important}
+html body :is(.search-box,.quick-actions-menu,.sq-context-help){background:var(--sq-card)!important;border:1px solid var(--sq-border)!important;border-radius:16px!important;box-shadow:var(--sq-shadow-panel)!important;color:var(--sq-text)}
+html body :is(.card-icon,.cat-ico,.sq-task-icon,.sq-quick-icon,.home-command-icon){background:var(--sq-control)!important;border:1px solid var(--sq-border)!important;border-radius:10px!important;color:var(--sq-text)!important;box-shadow:none!important}
+html body :is(.toast,.forum-alert,.callout,.note){border-radius:10px;box-shadow:none}
+html body :is(.section-head h2,.card h3,.category-card h3,.sq-task-card strong,.forum-panel-head h2,.feature h3){color:var(--sq-text);font-weight:500!important;letter-spacing:-.02em!important;line-height:1.4!important}
+html body :is(.card p,.category-card p,.sq-task-card p,.feature p,.course-card p){color:var(--sq-muted)!important;font-size:13px!important;line-height:1.7!important}
+html body :is(.eyebrow,.sq-section-index,.sq-hero-kicker,.section-kicker){color:var(--sq-muted)!important;font-size:10px!important;font-weight:500!important;letter-spacing:.07em!important;line-height:1.5!important}
+html body :is(button,a,input,textarea,select,summary):focus-visible{outline:2px solid var(--sq-accent-ink)!important;outline-offset:3px}
+html body .sq-iconly{flex-shrink:0}
+@media(max-width:860px){
+ html body :is(.btn,.sq-button,.icon-btn,.icon-button,.filter-chip,.chip){min-height:44px}
+ html body :is(.icon-btn,.icon-button){width:44px;height:44px}
+ html body :is(input,textarea,select):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]){font-size:16px!important}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}

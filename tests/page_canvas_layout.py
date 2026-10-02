@@ -112,7 +112,7 @@ def run():
                         assert abs(c['x'] - m['main']['x'] - 16) < 1, (key, 'left gutter', m)
                         assert abs(m['main']['right'] - c['right'] - 16) < 1, (key, 'right gutter', m)
                         assert c['border'] == ['1px'] * 4, (key, 'outer frame', c)
-                        expected = 'rgb(247, 248, 246)' if theme == 'light' else 'rgb(21, 24, 21)'
+                        expected = 'rgb(246, 247, 249)' if theme == 'light' else 'rgb(14, 16, 19)'
                         assert c['background'] == expected, (key, 'canvas color', c)
                         if path.name in ('index.html', 'guides.html'):
                             intro = m['intro']

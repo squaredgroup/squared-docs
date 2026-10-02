@@ -116,6 +116,13 @@ if(!document.querySelector('script[data-sq-editorial-media]')){
 }
 
 const getNavState=k=>{try{return localStorage.getItem(k)}catch{return null}};
+// Keep the shared component system after progressively loaded legacy layouts.
+document.documentElement.dataset.sqProduct='help';
+for(const [marker,path] of [['data-sq-shared-ui','assets/squared-ui.css'],['data-sq-workspace-help','assets/workspace-help.css']]){
+ let sheet=document.querySelector('link['+marker+']');
+ if(!sheet){sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href=localHref(path+'?v=20261002.1');sheet.setAttribute(marker,'');}
+ document.head.appendChild(sheet);
+}
 const setNavState=(k,v)=>{try{localStorage.setItem(k,v)}catch{}};
 if(!document.querySelector('link[rel="icon"]')){const icon=document.createElement('link');icon.rel='icon';icon.type='image/png';icon.href=localHref('assets/logo-squared.png');document.head.appendChild(icon);}
 const quickLinks=[
