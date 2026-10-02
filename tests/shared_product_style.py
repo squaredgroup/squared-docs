@@ -26,7 +26,7 @@ origin=f'http://127.0.0.1:{server.server_port}'
 try:
  with sync_playwright() as pw:
   browser=pw.chromium.launch()
-  for width in [320,390,768,1440]:
+  for width in [390,320,768,1440]:
    context=browser.new_context(viewport={'width':width,'height':960},reduced_motion='reduce')
    def route(request):
     url=request.request.url
@@ -80,13 +80,11 @@ try:
    page.keyboard.press('Escape')
    before=page.locator('html').get_attribute('data-theme')
    page.locator('#themeBtn').click()
+   page.locator('[name="sq-appearance"][value="'+('dark' if before=='light' else 'light')+'"]').check()
    assert page.locator('html').get_attribute('data-theme')!=before
    checks.append({'width':width,'menu_search_theme':True})
    context.close()
   browser.close()
-except Exception:
- if 'page' in locals():page.screenshot(path=str(OUT/'failure.png'))
- raise
 finally:
  server.shutdown()
  (OUT/'checks.json').write_text(json.dumps(checks,ensure_ascii=False,indent=2))
