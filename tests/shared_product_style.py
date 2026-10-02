@@ -49,6 +49,7 @@ try:
       return {scroll:document.documentElement.scrollWidth,main:document.querySelector('.app>.main').getBoundingClientRect().x,
        background:root.getPropertyValue('--sq-bg').trim(),font:document.fonts.check('13px "Space Grotesk"'),
        navFont:getComputedStyle(document.querySelector('.hc-nav-link')).fontSize,
+       overflowElements:[...document.querySelectorAll('.main *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(0,12).map(e=>({tag:e.tagName,cls:e.className,width:Math.round(e.getBoundingClientRect().width)})),
        bad:[...bar.querySelectorAll('a,button')].filter(visible).filter(e=>{const r=e.getBoundingClientRect();return r.x<0||r.right>innerWidth+1}).map(e=>e.outerHTML.slice(0,150)),
        nonIconly:[...bar.querySelectorAll('svg')].filter(visible).filter(e=>!e.classList.contains('sq-iconly')).length,
        menu:document.querySelector('#menuBtn').getBoundingClientRect().x,

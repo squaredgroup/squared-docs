@@ -142,3 +142,7 @@ html:root[data-theme] body .sq-wix-guide-shell :is(.content,.module-label-inner)
  html:root[data-theme] body .topbar .command-search{display:none!important}
  html:root[data-theme] body .top-actions .icon-btn{width:44px!important;height:44px!important;min-width:44px!important;flex-basis:44px!important}
 }
+
+html:root[data-theme] body .sq-wix-guide-shell{min-width:0;overflow-wrap:anywhere}
+html:root[data-theme] body .sq-wix-guide-shell pre{min-width:0;max-width:100%;overflow-x:auto}
+html:root[data-theme] body .sq-wix-guide-shell table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse}
