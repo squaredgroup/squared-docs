@@ -21,6 +21,8 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Check shared components, themes and mobile interactions
         run: python tests/shared_product_style.py
+      - name: Check admin, articles and keyboard search against isolated accounts
+        run: python tests/help_center_acceptance.py
       - name: Check the existing 16px page canvas contract
         run: python tests/page_canvas_layout.py
       - name: Preserve desktop and mobile previews

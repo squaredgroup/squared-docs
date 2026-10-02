@@ -139,12 +139,12 @@ with sync_playwright() as p:
         assert current.count()==1,(route,current.all_text_contents())
         assert current.inner_text().strip()==active,(route,current.inner_text())
         assert page.locator('.hc-nav-link[aria-label="Accueil"].active').count()==(1 if route=='/' else 0),route
-        assert current.evaluate('(el)=>getComputedStyle(el).backgroundColor')=='rgb(236, 237, 239)',route
+        assert current.evaluate('(el)=>getComputedStyle(el).backgroundColor')=='rgb(243, 244, 246)',route
     page.locator('.hc-nav-link[aria-label="Guides pratiques"]').hover()
-    page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav-link[aria-label=\\"Guides pratiques\\"]")).backgroundColor === "rgb(242, 242, 244)"')
+    page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav-link[aria-label=\\"Guides pratiques\\"]")).backgroundColor === "rgb(243, 244, 246)"')
     page.evaluate('document.documentElement.dataset.theme="dark"')
-    page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav [aria-current=\\"page\\"]")).backgroundColor === "rgb(37, 37, 41)"')
-    page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav-link[aria-label=\\"Guides pratiques\\"]")).backgroundColor === "rgb(29, 29, 32)"')
+    page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav [aria-current=\\"page\\"]")).backgroundColor === "rgb(30, 33, 39)"')
+    page.wait_for_function('getComputedStyle(document.querySelector(".hc-nav-link[aria-label=\\"Guides pratiques\\"]")).backgroundColor === "rgb(30, 33, 39)"')
     assert not errors,errors
     checks.append('Sidebar : page active et fonds gris sur les routes publiques')
     context.close()
