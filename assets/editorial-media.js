@@ -12,7 +12,7 @@ const pick=()=>{
  if(/ecosystem|parcours|workspace|build|community/.test(key))return media.architecture;
  return media.studio;
 };
-const card=(m,cls='')=>{const f=document.createElement('figure');f.className='sq-editorial-media '+cls;f.innerHTML='<img loading="lazy" decoding="async" src="'+m.src+'" alt="'+m.alt+'"><figcaption>Photo · <a href="'+m.page+'" target="_blank" rel="noreferrer">'+m.credit+' / Unsplash</a></figcaption>';return f};
+const card=(m,cls='')=>{const f=document.createElement('figure');f.className='sq-editorial-media '+cls;f.innerHTML='<img loading="lazy" decoding="async" src="'+m.src+'" alt="'+m.alt+'"><figcaption>Photo · <a href="'+m.page+'" target="_blank" rel="noreferrer">'+m.credit+' / Unsplash</a></figcaption>';f.querySelector('img').addEventListener('error',()=>{f.hidden=true});return f};
 const mount=()=>{
  const shell=document.querySelector('.main>.shell,.main>.forum-shell');if(!shell||shell.querySelector('.sq-editorial-media'))return;
  if(key===''||key==='index.html'){

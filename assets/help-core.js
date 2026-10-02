@@ -166,7 +166,7 @@
     appearance=['light','dark','system'].includes(value)?value:'light';
     document.documentElement.dataset.theme=appearance==='system'?(media.matches?'dark':'light'):appearance;
     if(save)try{localStorage.setItem('sq-docs-theme',appearance);}catch{}
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content',document.documentElement.dataset.theme==='dark'?'#0D0D0E':'#F7F7F4');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content',document.documentElement.dataset.theme==='dark'?'#0e1013':'#f6f7f9');
     document.querySelectorAll('[name="sq-appearance"]').forEach(r=>r.checked=r.value===appearance);
   }
   applyTheme();media.addEventListener('change',()=>{if(appearance==='system')applyTheme();});
@@ -245,7 +245,7 @@
   // Shared intelligence layer: loaded from the same public asset root on every Help Center page.
   if (!document.querySelector('script[data-sq-help-intelligence]')) {
     const intelligence=document.createElement('script');
-    intelligence.src=new URL('help-intelligence.js?v=20260926.3', assetBase).href;
+    intelligence.src=new URL('help-intelligence.js?v=20261002.1', assetBase).href;
     intelligence.defer=true; intelligence.dataset.sqHelpIntelligence='1';
     document.head.append(intelligence);
   }
