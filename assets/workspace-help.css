@@ -157,3 +157,8 @@ html:root[data-theme] body .sq-editorial-media{height:240px;min-height:0!importa
 html:root[data-theme] body .sq-editorial-media img{width:100%;height:100%!important;object-fit:cover}
 html:root[data-theme] body .sq-editorial-gallery{align-items:start;grid-auto-rows:240px;gap:12px}
 @media(max-width:860px){html:root[data-theme] body .sq-editorial-media{height:190px}html:root[data-theme] body .sq-editorial-gallery{grid-auto-rows:190px}}
+@media(max-width:860px){
+ html:root[data-theme] body .sidebar.hc-sidebar{z-index:520!important}
+ html:root[data-theme] body .sq-mobile-backdrop{z-index:510!important}
+ html:root[data-theme] body.sq-mobile-menu-open .sq-context-help-trigger{display:none!important}
+}

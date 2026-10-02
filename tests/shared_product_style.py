@@ -72,6 +72,9 @@ try:
     page.locator('#menuBtn').click()
     assert page.locator('#sidebar').get_attribute('aria-hidden')=='false'
     assert page.locator('.app>.main').evaluate('e=>e.inert')
+    first=page.locator('#sidebar .hc-sub-toggle').first
+    first.click()
+    assert first.get_attribute('aria-expanded')=='true'
     page.keyboard.press('Escape')
     assert page.locator('#sidebar').get_attribute('aria-hidden')=='true'
     assert not page.locator('.app>.main').evaluate('e=>e.inert')
