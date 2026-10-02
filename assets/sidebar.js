@@ -123,6 +123,9 @@ for(const [marker,path] of [['data-sq-shared-ui','assets/squared-ui.css'],['data
  if(!sheet){sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href=localHref(path+'?v=20261002.1');sheet.setAttribute(marker,'');}
  document.head.appendChild(sheet);
 }
+document.addEventListener('DOMContentLoaded',()=>{
+ document.querySelectorAll('link[data-sq-shared-ui],link[data-sq-workspace-help]').forEach(sheet=>document.head.appendChild(sheet));
+},{once:true});
 const setNavState=(k,v)=>{try{localStorage.setItem(k,v)}catch{}};
 if(!document.querySelector('link[rel="icon"]')){const icon=document.createElement('link');icon.rel='icon';icon.type='image/png';icon.href=localHref('assets/logo-squared.png');document.head.appendChild(icon);}
 const quickLinks=[
